@@ -21,7 +21,7 @@
         >
         </base-text-input>
         <div class="tw-py-3 tw-text-right">
-          <a href="#">Forgot password?</a>
+          <a @click="selectPath('buttonForgotPassword')">Forgot password?</a>
         </div>
         <base-button
           buttonID="buttonCreateAnAccount"
@@ -29,7 +29,7 @@
           buttonTextColor="blue5"
           buttonBgColor="bg-white"
           buttonBorderColor="border-blue5"
-          :callback="showHello"
+          :callback="selectPath"
         ></base-button>
         <base-button
           class="tw-pt-3"
@@ -37,7 +37,6 @@
           buttonText="Login"
           buttonTextColor="white"
           buttonBgColor="bg-blue5"
-          :callback="showHello"
         ></base-button>
         <span class="tw-pt-3 light16 grey5 tw-text-center">
           Copyright © 2021 Freya
@@ -78,8 +77,12 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
-    showHello () {
-      console.log('Hello')
+    selectPath (nameButton) {
+      if(nameButton === 'buttonCreateAnAccount') {
+        this.$router.push('/createanaccount')
+      }else if(nameButton === 'buttonForgotPassword'){
+        this.$router.push('/forgotpassword')
+      }
     }
   }
 }
@@ -138,5 +141,6 @@ a{
 a:hover{
   color: #4098D7;
   text-decoration: underline;
+  cursor: pointer;
 }
 </style>

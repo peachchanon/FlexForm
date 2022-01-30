@@ -1,8 +1,5 @@
 module.exports = {
-  purge: [
-    './public/**/*.html',
-    './src/**/*.vue',
-  ],
+  purge: ['./public/**/*.html','./src/**/*.vue',],
   prefix: 'tw-',
   darkMode: false,
   theme: {

@@ -1,14 +1,15 @@
 ﻿<template>
   <div class="navbar">
     <div class="">
-      <div v-if="!showContent" class="button tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doSidebarExpand">
+      <div v-if="!showContent" class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doSidebarExpand">
         <Icon class="icon semibold24" icon="heroicons-outline:menu"/>
       </div>
     </div>
     <img v-if="!showContent" class="logo" src="../assets/logo/FlexForm-medium-color-logo.png" alt="FlexForm">
     <div class="tw-flex tw-flex-row">
+      <!--Notifications-->
       <div class="tw-relative tw-inline-block">
-        <div class="button tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doShowNotifications">
+        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doShowNotifications">
           <Icon class="icon semibold24" icon="heroicons-outline:bell"/>
         </div>
         <div class="notification-content" v-if="showNotifications">
@@ -23,14 +24,15 @@
           </div>
         </div>
       </div>
+      <!--Profile-->
       <div class="tw-relative tw-inline-block">
-        <div class="button tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doShowProfile">
+        <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doShowProfile">
           <span v-if="showContent" class="tw-mr-2">Chanon Panarong</span>
           <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
         </div>
         <div class="profile-content" v-if="showProfile">
           <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
-            <div class="tw-mr-1.5">
+            <div class="tw-mr-3">
               <Icon class="icon blue10" style="font-size: 3rem" icon="heroicons-outline:user-circle"/>
             </div>
             <div class="tw-flex tw-flex-col tw-content-start">
@@ -38,15 +40,15 @@
               <div class="medium16 grey7">ID : 61070501014</div>
             </div>
           </div>
-          <div class="button tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
             <Icon class="icon semibold24" icon="heroicons-outline:eye"/>
             <span class="tw-mt-0.5 tw-ml-3">View More</span>
           </div>
-          <div class="button tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
             <Icon class="icon semibold24" icon="heroicons-outline:cog"/>
             <span class="tw-mt-0.5 tw-ml-3">Setting</span>
           </div>
-          <div class="button tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
             <Icon class="icon semibold24" icon="heroicons-outline:logout"/>
             <span class="tw-mt-0.5 tw-ml-3">Logout</span>
           </div>
@@ -103,15 +105,8 @@ export default {
         this.showNotifications=false
       }
     },
-    /*doSidebarExpand() {
-      if(this.propstateSidebarExpand){
-        this.$emit('emitStateSidebarExpand',false)
-      }else{
-        this.$emit('emitStateSidebarExpand',true)
-      }
-    }*/
     doSidebarExpand(){
-      console.log('Active')
+      this.$emit('emitStateSidebarExpand',true)
     }
   }
 }
@@ -125,7 +120,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
-.button{
+.button-blue{
   color: #102A43;
   padding: 0.75rem;
   transition: all .1s ease-in;
@@ -133,8 +128,22 @@ export default {
   margin: 0.25rem 0;
   cursor: pointer;
 }
-.button:hover{
+.button-blue:hover{
   color: #4098D7;
+  background-color: white;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+  width: 100%;
+}
+.button-red{
+  color: #D64545;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+}
+.button-red:hover{
+  color: #E66A6A;
   background-color: white;
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
   width: 100%;

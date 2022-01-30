@@ -20,4 +20,19 @@ html, body {
   height: 100%;
   margin: 0;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px 4;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $grey3;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  width: 10px;
+  background: $grey2;
+}
 </style>

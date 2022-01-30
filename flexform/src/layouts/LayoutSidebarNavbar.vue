@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="tw-flex tw-flex-row tw-w-full">
-    <div>
+    <div v-show="showSidebar">
       <sidebar
           @path="selectMenu"
           :propstateSidebarExpand="stateSidebar"
@@ -57,9 +57,8 @@ export default {
     doSidebarExpandForSidebar (state) {
       this.stateSidebar = state
     },
-    doSidebarExpandForNavbar (state){
-      this.stateSidebar = state
-      console.log(this.stateSidebar)
+    doSidebarExpandForNavbar (){
+      this.showSidebar = !this.showSidebar;
     }
   }
 }

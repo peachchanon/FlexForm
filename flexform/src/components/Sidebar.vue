@@ -30,9 +30,9 @@
     </ul>
     <ul class="tw-w-full tw-h-full tw-flex tw-items-end">
       <li class="tw-w-full">
-        <div class="button tw-flex tw-items-center medium18">
-          <Icon class="icon tw-ml-2 tw-mr-2 semibold24" icon="heroicons-outline:user"/>
-          <span class="tw-mt-1" v-if="stateSidebarExpand">Account</span>
+        <div class="button tw-flex tw-items-center medium18" @click="selectMenu('/manageusers')">
+          <Icon class="icon tw-ml-2 tw-mr-2 semibold24" icon="heroicons-outline:user-group"/>
+          <span class="tw-mt-1" v-if="stateSidebarExpand">Manage Users</span>
         </div>
       </li>
     </ul>
@@ -60,17 +60,9 @@ export default {
     selectMenu (path) {
       this.$emit('path', path)
     },
-    doSidebarExpand (state) {
-      this.stateSidebarExpand = this.stateSidebarExpand !== true
-      this.$emit('emitStateSidebarExpand',state)
-      console.log(this.propstateSidebarExpand)
-      /*if(this.propstateSidebarExpand === true){
-        this.stateSidebarExpand = false
-        this.$emit('emitStateSidebarExpand',false)
-      }else{
-        this.stateSidebarExpand = true
-        this.$emit('emitStateSidebarExpand',true)
-      }*/
+    doSidebarExpand () {
+      this.stateSidebarExpand = this.stateSidebarExpand === false;
+      this.$emit('emitStateSidebarExpand',this.stateSidebarExpand)
     }
   }
 }
@@ -78,10 +70,11 @@ export default {
 
 <style scoped>
 .sidebar-open-expand {
+  z-index: 1;
   width: 256px;
   position: fixed;
   left: 0;
-  overflow: auto;
+  /*overflow: auto;*/
   background-color: #003E6B;
   height: 100%;
   border-radius: 0 12px 12px 0;
@@ -93,10 +86,11 @@ export default {
   transition: all .1s ease-in;
 }
 .sidebar-close-expand {
+  z-index: 1;
   width: 95px;
   position: fixed;
   left: 0;
-  overflow: auto;
+  /*overflow: auto;*/
   background-color: #003E6B;
   height: 100%;
   border-radius: 0 12px 12px 0;

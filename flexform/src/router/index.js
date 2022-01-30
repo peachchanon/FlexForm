@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
+import CreateAnAccount from '@/views/CreateAnAccount'
+import ForgotPassword from '@/views/ForgotPassword'
 import Dashboard from '../views/Dashboard'
 import Form from '../views/Form'
 import Report from '../views/Report'
+import ManageUsers from '@/views/ManageUsers'
+
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -15,6 +19,22 @@ const routes = [
     component: Login,
     meta: {
       title: 'Login'
+    }
+  },
+  {
+    path: '/createanaccount',
+    name: 'CreateAnAccount',
+    component: CreateAnAccount,
+    meta: {
+      title: 'Create An Account'
+    }
+  },
+  {
+    path: '/forgotpassword',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+    meta: {
+      title: 'Forgot Password'
     }
   },
   {
@@ -39,6 +59,14 @@ const routes = [
     component: Report,
     meta: {
       title: 'Report'
+    }
+  },
+  {
+    path: '/ManageUsers',
+    name: 'manageusers',
+    component: ManageUsers,
+    meta: {
+      title: 'Manage Users'
     }
   },
   {

@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  emits: ['valueSelected'],
   data () {
     return {
       valueOptions: ''
