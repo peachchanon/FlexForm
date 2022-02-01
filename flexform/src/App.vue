@@ -22,17 +22,18 @@ html, body {
 }
 ::-webkit-scrollbar {
   width: 10px;
+  background: white;
 }
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 3px 4;
+  box-shadow: inset 0px 0px 20px 0px rgba(0,0,0,0.1);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: $grey3;
+  background: $grey4;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
   width: 10px;
-  background: $grey2;
+  background: $grey5;
 }
 </style>

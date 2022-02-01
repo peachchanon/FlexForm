@@ -37,6 +37,7 @@
           buttonText="Login"
           buttonTextColor="white"
           buttonBgColor="bg-blue5"
+          :callback="selectPath"
         ></base-button>
         <span class="tw-pt-3 light16 grey5 tw-text-center">
           Copyright © 2021 Freya
@@ -79,9 +80,11 @@ export default {
     ...mapActions(['flapWindowResize']),
     selectPath (nameButton) {
       if(nameButton === 'buttonCreateAnAccount') {
-        this.$router.push('/createanaccount')
+        this.$router.push('/create-an-account')
       }else if(nameButton === 'buttonForgotPassword'){
-        this.$router.push('/forgotpassword')
+        this.$router.push('/forgot-password')
+      }else if(nameButton === 'buttonLogin'){
+        this.$router.push('/dashboard')
       }
     }
   }

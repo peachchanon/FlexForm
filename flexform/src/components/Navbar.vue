@@ -9,7 +9,7 @@
     <div class="tw-flex tw-flex-row">
       <!--Notifications-->
       <div class="tw-relative tw-inline-block">
-        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doShowNotifications">
+        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doNotifications">
           <Icon class="icon semibold24" icon="heroicons-outline:bell"/>
         </div>
         <div class="notification-content" v-if="showNotifications">
@@ -26,7 +26,7 @@
       </div>
       <!--Profile-->
       <div class="tw-relative tw-inline-block">
-        <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doShowProfile">
+        <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doProfile">
           <span v-if="showContent" class="tw-mr-2">Chanon Panarong</span>
           <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
         </div>
@@ -40,15 +40,15 @@
               <div class="medium16 grey7">ID : 61070501014</div>
             </div>
           </div>
-          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile">
             <Icon class="icon semibold24" icon="heroicons-outline:eye"/>
             <span class="tw-mt-0.5 tw-ml-3">View More</span>
           </div>
-          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile">
             <Icon class="icon semibold24" icon="heroicons-outline:cog"/>
             <span class="tw-mt-0.5 tw-ml-3">Setting</span>
           </div>
-          <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doShowNotifications">
+          <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonLogout')">
             <Icon class="icon semibold24" icon="heroicons-outline:logout"/>
             <span class="tw-mt-0.5 tw-ml-3">Logout</span>
           </div>
@@ -93,13 +93,16 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
-    doShowNotifications () {
+    doNotifications () {
       this.showNotifications = this.showNotifications !== true
       if(this.showProfile){
         this.showProfile=false
       }
     },
-    doShowProfile () {
+    doProfile (buttonName) {
+      if(buttonName==='buttonLogout'){
+        this.$router.push('/')
+      }
       this.showProfile = this.showProfile !== true
       if(this.showNotifications){
         this.showNotifications=false

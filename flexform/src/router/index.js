@@ -22,7 +22,7 @@ const routes = [
     }
   },
   {
-    path: '/createanaccount',
+    path: '/create-an-account',
     name: 'CreateAnAccount',
     component: CreateAnAccount,
     meta: {
@@ -30,7 +30,7 @@ const routes = [
     }
   },
   {
-    path: '/forgotpassword',
+    path: '/forgot-password',
     name: 'ForgotPassword',
     component: ForgotPassword,
     meta: {
@@ -46,7 +46,7 @@ const routes = [
     }
   },
   {
-    path: '/Form',
+    path: '/form',
     name: 'form',
     component: Form,
     meta: {
@@ -54,7 +54,7 @@ const routes = [
     }
   },
   {
-    path: '/Report',
+    path: '/report',
     name: 'report',
     component: Report,
     meta: {
@@ -62,8 +62,8 @@ const routes = [
     }
   },
   {
-    path: '/ManageUsers',
-    name: 'manageusers',
+    path: '/manage-users',
+    name: 'ManageUsers',
     component: ManageUsers,
     meta: {
       title: 'Manage Users'

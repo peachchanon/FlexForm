@@ -30,7 +30,7 @@
     </ul>
     <ul class="tw-w-full tw-h-full tw-flex tw-items-end">
       <li class="tw-w-full">
-        <div class="button tw-flex tw-items-center medium18" @click="selectMenu('/manageusers')">
+        <div class="button tw-flex tw-items-center medium18" @click="selectMenu('/manage-users')">
           <Icon class="icon tw-ml-2 tw-mr-2 semibold24" icon="heroicons-outline:user-group"/>
           <span class="tw-mt-1" v-if="stateSidebarExpand">Manage Users</span>
         </div>
