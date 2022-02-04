@@ -19,9 +19,10 @@
 html, body {
   height: 100%;
   margin: 0;
+  background-color: $grey1;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
   background: white;
 }
 ::-webkit-scrollbar-track {
@@ -33,7 +34,7 @@ html, body {
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  width: 10px;
+  width: 6px;
   background: $grey5;
 }
 </style>

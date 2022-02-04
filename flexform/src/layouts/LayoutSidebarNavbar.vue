@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="tw-flex tw-flex-row tw-w-full">
+  <div class="tw-flex tw-flex-row tw-w-full tw-h-full">
     <div v-show="showSidebar">
       <sidebar
           @path="selectMenu"
@@ -78,6 +78,6 @@ export default {
   transition: all .1s ease-in;
 }
 .main-content{
-
+  height: fit-content;
 }
 </style>

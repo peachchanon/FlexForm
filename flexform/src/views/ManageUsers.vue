@@ -1,24 +1,40 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 tw-h-full sm:tw-p-4">
+      <div class="bg-grey1 content-height sm:tw-p-4">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:user-group"/>
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
         </div>
         <div class="box bg-white tw-h-full">
-          <div class="tw-flex tw-flex-row tw-justify-between">
-            <div>Filter Box</div>
-            <div style="width: fit-content">
-              <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowCreateAnAccountButton(true)">
+          <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
+            <!-- Filter Box -->
+            <div class="tw-pr-4" :class="{'tw-w-full': !showContentForWindowSize, 'tw-w-2/5':showContentForWindowSize}">
+              <base-filter-box 
+                  :propOptions="dataTable.columnName"
+                  propBlankDataText= "Column: Show All"
+                  @callbackDataFilter="doFilterColumn"
+              ></base-filter-box>
+            </div>
+            <div class="">
+              <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowCreateAnAccountButton(true)" style="width: fit-content">
                 <span v-if="showContentForWindowSize" class="tw-mt-0.5 tw-mr-3 tw-ml-2">Create an Account</span>
                 <Icon class="icon semibold24" icon="heroicons-outline:plus"/>
               </div>
             </div>
           </div>
           <!-- Table -->
-          <div>
-            <base-data-table></base-data-table>
+          <div class="tw-mt-4 tw-mb-4 tw-w-full tw-flex tw-flex-col">
+            <BeeGridTable
+                border
+                :columns="dataTable.columnShow"
+                :data="dataTable.data"
+                :pageSize="dataTable.pageSize"
+                :pageCount="dataTable.pageCount"
+                :showPager="dataTable.showPager"
+                class="radius12px"
+            ></BeeGridTable>
+            
           </div>
           
           <!-- Create an Account Modal -->
@@ -31,7 +47,7 @@
                     <Icon class="icon semibold24" icon="heroicons-outline:x"/>
                   </div>
                 </header>
-                <section class="base-padding">
+                <section class="base-padding overflow-x-auto">
                   <div class="tw-flex tw-flex-col tw-items-start">
                     <span class="grey10 medium16 tw-my-3 tw-ml-1">Username</span>
                     <div class="tw-w-full">
@@ -247,23 +263,165 @@
 import { Icon } from '@iconify/vue2'
 import { mapGetters, mapActions } from 'vuex'
 import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
-import BaseDataTable from '@/components/BaseDataTable'
 import BaseButton from '@/components/BaseButton'
 import BaseTextInput from '@/components/BaseTextInput'
 import BaseDropdown from '@/components/BaseDropdown'
+import BaseFilterBox from '@/components/BaseFilterBox'
 
 export default {
   name: 'ManageUsers',
   components: {
     Icon,
     LayoutSidebarNavbar,
-    BaseDataTable,
     BaseButton,
     BaseTextInput,
-    BaseDropdown
+    BaseDropdown,
+    BaseFilterBox
   },
   data() {
     return {
+      dataTable: {
+        columnName: ['Employee ID','Name','Job Title','Job Division','Email','Phone Number'
+          ,'Username','Password','Gender','Date of Birth'],
+        columnShow: [
+          { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
+          { title: 'Name', key: 'name',align: 'left', resizable: true},
+          { title: 'Job Title', key: 'jobTitle', align: 'left', resizable: true},
+          { title: 'Job Division', key: 'division', align: 'left', resizable: true},
+          { title: 'Email', key: 'email',align: 'left', resizable: true},
+          { title: 'Phone Number', key: 'phoneNumber',align: 'left', resizable: true},
+          { title: 'Username', key: 'username', align: 'left', resizable: true},
+          { title: 'Password', key: 'password', align: 'left', resizable: true},
+          { title: 'Gender', key: 'gender',align: 'left', resizable: true },
+          { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
+        ],
+        data: [
+          { 
+            employeeID: '61070501014', 
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+          {
+            employeeID: '61070501014',
+            name: 'Mr. Chanon Panarong',
+            jobTitle: 'NOC',
+            division: 'CAT THIX',
+            email: 'chanon.peach@mail.com',
+            phoneNumber: '(096) 111-2222',
+            username: 'peach_chanon',
+            password: '012345',
+            gender: 'male',
+            dob: '12/12/19'
+          },
+            
+        ],
+        pageSize: 10,
+        pageCount: 1,
+        showPager: true,
+      },
       showContentForWindowSize: true,
       showCreateAnAccountModal: false,
       dataRegister: {
@@ -422,12 +580,19 @@ export default {
       this.stateRegister.jobTitle = this.dataRegister.jobTitle !== '';
       this.stateRegister.division = this.dataRegister.division !== '';
       console.log(this.dataRegister)
+    },
+    doFilterColumn(value) {
+      console.log(value)
+      
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.content-height{
+  height: 85vh;
+}
 .button-blue{
   color: #102A43;
   padding: 0.75rem;
@@ -452,20 +617,20 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 2;
 }
 .theme-modal {
-  margin: 1rem;
+  margin: 2rem;
   min-width: 375px;
   width: 768px;
   background-color: white;
   padding: 1rem;
   box-shadow: 0 0 0.5px rgba(10, 10, 10, 0.5);
   border-radius: 12px;
-  overflow-x: auto;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
   height: 92%;
   .button-close{
     color: #102A43;

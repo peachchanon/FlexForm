@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 .sidebar-open-expand {
-  z-index: 1;
+  z-index: 2;
   width: 256px;
   position: fixed;
   left: 0;
@@ -86,7 +86,7 @@ export default {
   transition: all .1s ease-in;
 }
 .sidebar-close-expand {
-  z-index: 1;
+  z-index: 2;
   width: 95px;
   position: fixed;
   left: 0;

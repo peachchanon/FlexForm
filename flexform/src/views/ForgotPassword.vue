@@ -60,7 +60,6 @@ export default {
       this.$router.push(path).catch(()=>{})
     },
     inputEmail(email){
-      console.log(email)
       this.emailValue = email
     },
     doButton(buttonName){
