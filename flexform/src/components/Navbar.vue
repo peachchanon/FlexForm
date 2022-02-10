@@ -28,7 +28,9 @@
       <div class="tw-relative tw-inline-block">
         <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doProfile">
           <span v-if="showContent" class="tw-mr-2">Chanon Panarong</span>
-          <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
+          <div class="icon-config-white radiusFull tw-p-0.5">
+            <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
+          </div>
         </div>
         <div class="profile-content" v-if="showProfile">
           <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
@@ -115,7 +117,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .navbar{
   padding: 0.5rem 1.5rem;
   background-color: white;

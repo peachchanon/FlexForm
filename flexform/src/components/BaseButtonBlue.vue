@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="button-white tw-flex tw-flex-row tw-items-center medium16" @click="buttonClicked">
-    <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" v-if="showContentForWindowSize">{{buttonText}}</span>
     <Icon class="icon semibold24" :icon="buttonIcon"/>
+    <span class="tw-mt-0.5 tw-ml-3 tw-mr-1" v-if="showContentForWindowSize">{{buttonText}}</span>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import { Icon } from '@iconify/vue2'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  name: 'BaseButtonWhite',
+  name: "BaseButtonBlue",
   components: {
     Icon
   },
@@ -50,16 +50,19 @@ export default {
 
 <style lang="scss" scoped>
 .button-white {
-  color: $blue10;
+  color: $blue5;
   padding: 0.75rem;
   transition: all .1s ease-in;
   border-radius: 12px;
   margin: 0.25rem 0;
   cursor: pointer;
+  border-width: 1px;
+  border-color: $blue5;
+  background-color: white;
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
   &:hover{
-    color: $blue5;
-    background-color: white;
+    color: $blue3;
+    border-color: $blue3;
   }
 }
 </style>

@@ -46,11 +46,15 @@ $baseshadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
 //Border Radius
 $radius10px: 10px;
 $radius12px: 12px;
+$radiusFull: 9999px;
 .radius10px{
   border-radius: $radius10px;
 }
 .radius12px{
   border-radius: $radius12px;
+}
+.radiusFull{
+  border-radius: $radiusFull;
 }
 //box
 .box{

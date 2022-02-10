@@ -6,7 +6,7 @@
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:user-group"/>
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
         </div>
-        <div class="box bg-white tw-h-full">
+        <div class="box bg-white">
           <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
             <!-- Filter Box -->
             <div class="tw-pr-4" :class="{'tw-w-full': !showContentForWindowSize, 'tw-w-2/5':showContentForWindowSize}">
@@ -284,6 +284,18 @@ export default {
         columnName: ['Employee ID','Name','Job Title','Job Division','Email','Phone Number'
           ,'Username','Password','Gender','Date of Birth'],
         columnShow: [
+          { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
+          { title: 'Name', key: 'name',align: 'left', resizable: true},
+          { title: 'Job Title', key: 'jobTitle', align: 'left', resizable: true},
+          { title: 'Job Division', key: 'division', align: 'left', resizable: true},
+          { title: 'Email', key: 'email',align: 'left', resizable: true},
+          { title: 'Phone Number', key: 'phoneNumber',align: 'left', resizable: true},
+          { title: 'Username', key: 'username', align: 'left', resizable: true},
+          { title: 'Password', key: 'password', align: 'left', resizable: true},
+          { title: 'Gender', key: 'gender',align: 'left', resizable: true },
+          { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
+        ],
+        columnInitial: [
           { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
           { title: 'Name', key: 'name',align: 'left', resizable: true},
           { title: 'Job Title', key: 'jobTitle', align: 'left', resizable: true},
@@ -582,8 +594,22 @@ export default {
       console.log(this.dataRegister)
     },
     doFilterColumn(value) {
-      console.log(value)
-      
+      this.dataTable.columnShow = []
+      if(value.length === 0 ) this.dataTable.columnShow = this.dataTable.columnInitial
+      else {
+        for (let i = 0; i < value.length; i++) {
+          if(value[i]==='Employee ID') this.dataTable.columnShow[i] = this.dataTable.columnInitial[0]
+          else if(value[i]==='Name') this.dataTable.columnShow[i] = this.dataTable.columnInitial[1]
+          else if(value[i]==='Job Title') this.dataTable.columnShow[i] = this.dataTable.columnInitial[2]
+          else if(value[i]==='Job Division') this.dataTable.columnShow[i] = this.dataTable.columnInitial[3]
+          else if(value[i]==='Email') this.dataTable.columnShow[i] = this.dataTable.columnInitial[4]
+          else if(value[i]==='Phone Number') this.dataTable.columnShow[i] = this.dataTable.columnInitial[5]
+          else if(value[i]==='Username') this.dataTable.columnShow[i] = this.dataTable.columnInitial[6]
+          else if(value[i]==='Password') this.dataTable.columnShow[i] = this.dataTable.columnInitial[7]
+          else if(value[i]==='Gender') this.dataTable.columnShow[i] = this.dataTable.columnInitial[8]
+          else this.dataTable.columnShow[i] = this.dataTable.columnInitial[9] // Date of Birth
+        }
+      }
     }
   }
 }

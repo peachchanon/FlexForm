@@ -52,7 +52,7 @@ button{
   border-width: 1px;
 }
 .icon{
-  margin: 0 0.875rem 0 0.875rem;
+  margin: 0 0.4rem 0 0.4rem;
   font-size: 1.5rem;
 }
 .bg-grey10:hover {

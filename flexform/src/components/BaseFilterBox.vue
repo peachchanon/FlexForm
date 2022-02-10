@@ -16,15 +16,12 @@
           BadgeColor="white"
           BadgeBgColor="bg-green5"
           BadgeBroderColor="border-gray1"
-          class="tw-cursor-pointer"
+          class="tw-cursor-pointer tw-mx-0.5"
       ></base-badge>
     </div>
     <div class="tw-flex tw-flex-row tw-items-center">
-      <div class="button-filter base-padding" @click="doFilterModal(true)">
+      <div class="button-filter" @click="doFilterModal(true)">
         <Icon class="icon semibold24" icon="heroicons-outline:filter"/>
-      </div>
-      <div class="button-search base-padding" @click="buttonFilter">
-        <Icon class="icon semibold24" icon="heroicons-outline:search"/>
       </div>
     </div>
     <!-- Filter Modal -->
@@ -120,10 +117,11 @@ export default {
   width: 500px;
 }
 .button-filter{
-  border-radius: 12px 0 0 12px;
+  border-radius: 0 12px 12px 0;
   cursor: pointer;
   transition: all .1s ease-in;
   color: $grey5;
+  padding: 1rem;
   &:hover{
     color: $blue5;
     background-color: white;
@@ -132,23 +130,6 @@ export default {
   &:active {
     color: white;
     background-color: $grey5;
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
-  }
-}
-.button-search {
-  border-radius: 0 12px 12px 0;
-  cursor: pointer;
-  transition: all .1s ease-in;
-  color: $grey5;
-  &:hover {
-    color: $blue5;
-    background-color: white;
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
-  }
-  &:active {
-    color: white;
-    background-color: $grey5;
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
   }
 }
 .theme-modal-backdrop {
