@@ -70,7 +70,7 @@ export default {
   transition: all .1s ease-in;
 }
 .navbar-open-sidebar{
-  margin: 0 0 0 90px;
+  margin: 0 0 0 95px;
   transition: all .1s ease-in;
 }
 .navbar-close-sidebar{

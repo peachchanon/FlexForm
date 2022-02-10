@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import CreateAnAccount from '@/views/CreateAnAccount'
 import ForgotPassword from '@/views/ForgotPassword'
 import Dashboard from '../views/Dashboard'
+import Profile from '../views/Profile'
 import Form from '../views/Form'
 import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
@@ -43,6 +44,14 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard'
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: {
+      title: 'Profile'
     }
   },
   {

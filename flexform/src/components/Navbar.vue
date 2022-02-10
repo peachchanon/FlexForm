@@ -1,15 +1,15 @@
 ﻿<template>
   <div class="navbar">
-    <div class="">
-      <div v-if="!showContent" class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doSidebarExpand">
+    <div class="tw-flex tw-flex-row">
+      <div v-if="!showContent" class="button-blue tw-flex tw-flex-row tw-items-center medium18" @click="doSidebarExpand">
         <Icon class="icon semibold24" icon="heroicons-outline:menu"/>
       </div>
     </div>
     <img v-if="!showContent" class="logo" src="../assets/logo/FlexForm-medium-color-logo.png" alt="FlexForm">
     <div class="tw-flex tw-flex-row">
       <!--Notifications-->
-      <div class="tw-relative tw-inline-block">
-        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" style="width: fit-content" @click="doNotifications">
+      <div class="tw-relative tw-inline-block tw-h-full">
+        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" @click="doNotifications">
           <Icon class="icon semibold24" icon="heroicons-outline:bell"/>
         </div>
         <div class="notification-content" v-if="showNotifications">
@@ -27,7 +27,7 @@
       <!--Profile-->
       <div class="tw-relative tw-inline-block">
         <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doProfile">
-          <span v-if="showContent" class="tw-mr-2">Chanon Panarong</span>
+          <span v-if="showContent" class="tw-mr-1">Chanon Panarong</span>
           <div class="icon-config-white radiusFull tw-p-0.5">
             <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
           </div>
@@ -42,13 +42,13 @@
               <div class="medium16 grey7">ID : 61070501014</div>
             </div>
           </div>
-          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile">
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonViewMore')">
             <Icon class="icon semibold24" icon="heroicons-outline:eye"/>
             <span class="tw-mt-0.5 tw-ml-3">View More</span>
           </div>
           <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile">
-            <Icon class="icon semibold24" icon="heroicons-outline:cog"/>
-            <span class="tw-mt-0.5 tw-ml-3">Setting</span>
+            <Icon class="icon semibold24" icon="heroicons-outline:pencil-alt"/>
+            <span class="tw-mt-0.5 tw-ml-3">Edit Profile</span>
           </div>
           <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonLogout')">
             <Icon class="icon semibold24" icon="heroicons-outline:logout"/>
@@ -104,6 +104,8 @@ export default {
     doProfile (buttonName) {
       if(buttonName==='buttonLogout'){
         this.$router.push('/')
+      } else if (buttonName==='buttonViewMore') {
+        this.$router.push('/profile')
       }
       this.showProfile = this.showProfile !== true
       if(this.showNotifications){
@@ -119,7 +121,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbar{
-  padding: 0.5rem 1.5rem;
+  padding: 0.3rem 1.5rem;
   background-color: white;
   display: flex;
   flex-direction: row;
@@ -127,7 +129,7 @@ export default {
 }
 .button-blue{
   color: #102A43;
-  padding: 0.75rem;
+  padding: 0.6rem;
   transition: all .1s ease-in;
   border-radius: 12px;
   margin: 0.25rem 0;
@@ -141,7 +143,7 @@ export default {
 }
 .button-red{
   color: #D64545;
-  padding: 0.75rem;
+  padding: 0.6rem;
   transition: all .1s ease-in;
   border-radius: 12px;
   margin: 0.25rem 0;
@@ -166,7 +168,7 @@ export default {
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
   z-index: 1;
   margin: 0 0 0 1rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 12px;
   transition: all .1s ease-in;
 }
@@ -190,7 +192,7 @@ export default {
   box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
   z-index: 1;
   margin: 0 0 0 1rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 12px;
   transition: all .1s ease-in;
 }

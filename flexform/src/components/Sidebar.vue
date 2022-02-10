@@ -74,7 +74,6 @@ export default {
   width: 256px;
   position: fixed;
   left: 0;
-  /*overflow: auto;*/
   background-color: #003E6B;
   height: 100%;
   border-radius: 0 12px 12px 0;
@@ -90,7 +89,6 @@ export default {
   width: 95px;
   position: fixed;
   left: 0;
-  /*overflow: auto;*/
   background-color: #003E6B;
   height: 100%;
   border-radius: 0 12px 12px 0;

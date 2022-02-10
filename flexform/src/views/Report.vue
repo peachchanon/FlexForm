@@ -1,7 +1,7 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 tw-h-full sm:tw-p-5">
+      <div class="bg-grey1 tw-h-full sm:tw-p-2">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-report"/>
           <span class="semibold24 blue10 tw-pl-1">Report</span>

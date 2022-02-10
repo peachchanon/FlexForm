@@ -196,7 +196,7 @@
               ></base-dropdown>
             </div>
             <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.division">
-              <span class="red5 medium14 tw-my-2" >* Enter Division</span>
+              <span class="red5 medium14 tw-my-2">* Enter Division</span>
             </div>
           </div>
         </div>

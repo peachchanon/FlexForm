@@ -60,8 +60,8 @@ $radiusFull: 9999px;
 .box{
   border-radius: $radius10px;
   background-color: white;
-  padding: 1rem;
-  margin: 1rem;
+  padding: 0.75rem;
+  margin: 0.75rem;
   box-shadow: $baseshadow;
 }
 // Color
@@ -270,10 +270,10 @@ $red1:#FFEEEE;
 .border-red2{border-color: $red2;}
 .border-red1{border-color: $red1;}
 .base-margin{
-  margin: 0.725rem;
+  margin: 0.75rem;
 }
 .base-padding{
-  padding: 0.725rem;
+  padding: 0.75rem;
 }
 .base-shadow{
   box-shadow: $baseshadow;

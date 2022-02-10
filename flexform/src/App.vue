@@ -21,20 +21,4 @@ html, body {
   margin: 0;
   background-color: $grey1;
 }
-::-webkit-scrollbar {
-  width: 6px;
-  background: white;
-}
-::-webkit-scrollbar-track {
-  box-shadow: inset 0px 0px 20px 0px rgba(0,0,0,0.1);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: $grey4;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  width: 6px;
-  background: $grey5;
-}
 </style>

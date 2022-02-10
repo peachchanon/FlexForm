@@ -1,68 +1,31 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 tw-h-full sm:tw-p-5">
+      <div class="bg-grey1 tw-h-full sm:tw-p-2">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:home"/>
           <span class="semibold24 blue10 tw-pl-1">Dashboard</span>
         </div>
         <div class="md:tw-flex md:tw-flex-row-reverse tw-w-full">
-          <!-- Notifications -->
+          <!-- Bookmark -->
           <div class="box bg-white md:tw-w-1/2">
             <div class="tw-flex tw-flex-row tw-items-center">
-              <Icon class="semibold24 icon blue10" icon="heroicons-outline:bell"/>
-              <span class="semibold24 blue10 tw-m-2">Notifications</span>
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:bookmark-alt"/>
+              <span class="semibold24 blue10 tw-m-2">Bookmark</span>
             </div>
             <!-- Notifications | Card list -->
             <div class="tw-flex tw-flex-col tw-scroll-auto">
 
               <div class="base-padding base-shadow radius12px bg-white tw-flex tw-flex-row tw-items-center tw-justify-between tw-mb-2 tw-scroll-auto">
-                <div class="tw-grow-0 tw-inline-block semibold24 tw-mx-1.5">
+                <div class="semibold24 tw-mx-1.5">
                     <Icon class="icon blue10" icon="heroicons-outline:folder"/>
                 </div>
                 <div class="tw-grow tw-whitespace-nowrap tw-truncate tw-overflow-hidden tw-w-full">
                   <span>ได้มีการเพิ่มคุณลงใน Form ของ Ticket System 2</span>
                 </div>
-                <div class="tw-grow-0">
-                  <base-button
-                    buttonID="buttonDelete"
-                    buttonTextColor="red5"
-                    buttonBgColor="bg-white"
-                    buttonBorderColor="border-red5"
-                    buttonIconLeft="heroicons-outline:trash"
-                    :callback="buttonClick"
-                    style="width: 4rem"
-                  >
-                  </base-button>
-                </div>
               </div>
 
-              <div class="base-padding base-shadow radius12px bg-white tw-flex tw-flex-row tw-items-center tw-justify-between">
-                <div class="tw-grow-0 tw-inline-block semibold24 tw-mx-1.5">
-                  <base-badge
-                    BadgeText="Finish"
-                    BadgeColor="white"
-                    BadgeBgColor="bg-green7"
-                    BadgeBroderColor="border-green10"
-                  >
-                  </base-badge>
-                </div>
-                <div class="tw-grow tw-whitespace-nowrap tw-truncate tw-overflow-hidden tw-w-full">
-                  <span>ได้ปิดงานโดยสมบูรณ์</span>
-                </div>
-                <div class="tw-grow-0">
-                  <base-button
-                    buttonID="buttonDelete"
-                    buttonTextColor="red5"
-                    buttonBgColor="bg-white"
-                    buttonBorderColor="border-red5"
-                    buttonIconLeft="heroicons-outline:trash"
-                    :callback="buttonClick"
-                    style="width: 4rem"
-                  >
-                  </base-button>
-                </div>
-              </div>
+              
 
             </div>
           </div>
@@ -134,15 +97,11 @@
 <script>
 import { Icon } from '@iconify/vue2'
 import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
-import BaseButton from '@/components/BaseButton'
-import BaseBadge from '@/components/BaseBadge'
 export default {
   name: 'Dashboard',
   components: {
     Icon,
     LayoutSidebarNavbar,
-    BaseButton,
-    BaseBadge
   },
   methods: {
     buttonClick (e) {

@@ -1,7 +1,7 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 content-height sm:tw-p-4">
+      <div class="bg-grey1 tw-h-full sm:tw-p-2">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:user-group"/>
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <!-- Table -->
-          <div class="tw-mt-4 tw-mb-4 tw-w-full tw-flex tw-flex-col">
+          <div class="tw-mt-4 tw-mb-4 tw-flex tw-flex-col" style="width: 99%">
             <BeeGridTable
                 border
                 :columns="dataTable.columnShow"
@@ -32,9 +32,10 @@
                 :pageSize="dataTable.pageSize"
                 :pageCount="dataTable.pageCount"
                 :showPager="dataTable.showPager"
-                class="radius12px"
-            ></BeeGridTable>
-            
+                class="radius12px hover:tw-overflow-x-scroll"
+            >
+              
+            </BeeGridTable>
           </div>
           
           <!-- Create an Account Modal -->
@@ -47,7 +48,7 @@
                     <Icon class="icon semibold24" icon="heroicons-outline:x"/>
                   </div>
                 </header>
-                <section class="base-padding overflow-x-auto">
+                <section class="base-padding tw-overflow-x-hidden">
                   <div class="tw-flex tw-flex-col tw-items-start">
                     <span class="grey10 medium16 tw-my-3 tw-ml-1">Username</span>
                     <div class="tw-w-full">
@@ -282,7 +283,7 @@ export default {
     return {
       dataTable: {
         columnName: ['Employee ID','Name','Job Title','Job Division','Email','Phone Number'
-          ,'Username','Password','Gender','Date of Birth'],
+          ,'Username','Password','Gender','Date of Birth','Properties'],
         columnShow: [
           { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
           { title: 'Name', key: 'name',align: 'left', resizable: true},
@@ -294,6 +295,7 @@ export default {
           { title: 'Password', key: 'password', align: 'left', resizable: true},
           { title: 'Gender', key: 'gender',align: 'left', resizable: true },
           { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
+          { title: 'Properties', key: 'properties',align: 'left', resizable: true},
         ],
         columnInitial: [
           { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
@@ -306,6 +308,7 @@ export default {
           { title: 'Password', key: 'password', align: 'left', resizable: true},
           { title: 'Gender', key: 'gender',align: 'left', resizable: true },
           { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
+          { title: 'Properties', key: 'properties',align: 'left', resizable: true},
         ],
         data: [
           { 
@@ -320,115 +323,6 @@ export default {
             gender: 'male',
             dob: '12/12/19'
           },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-          {
-            employeeID: '61070501014',
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
-            
         ],
         pageSize: 10,
         pageCount: 1,
@@ -437,35 +331,15 @@ export default {
       showContentForWindowSize: true,
       showCreateAnAccountModal: false,
       dataRegister: {
-        username: '',
-        password: '',
-        confirmPassword: '',
-        employeeID: '',
-        gender: '',
-        title: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        dob: '',
-        phoneNumber: '',
-        jobTitle: '',
-        division: ''
+        username: '', password: '', confirmPassword: '', employeeID: '', gender: '', title: '', firstName: '',
+        lastName: '', email: '', dob: '', phoneNumber: '', jobTitle: '', division: ''
       },
       stateRegister: {
         username: Boolean,
-        password: Boolean,
-        confirmPassword: Boolean,
-        confirmPasswordHaveValue: false,
-        employeeID: Boolean,
-        gender: Boolean,
-        title: Boolean,
-        firstName: Boolean,
-        lastName: Boolean,
-        email: Boolean,
-        dob: Boolean,
-        phoneNumber: Boolean,
-        jobTitle: Boolean,
-        division: Boolean
+        password: Boolean, confirmPassword: Boolean, confirmPasswordHaveValue: false,
+        employeeID: Boolean, gender: Boolean,
+        title: Boolean, firstName: Boolean, lastName: Boolean,
+        email: Boolean, dob: Boolean, phoneNumber: Boolean, jobTitle: Boolean, division: Boolean
       }
     }
   },
@@ -617,7 +491,7 @@ export default {
 
 <style lang="scss" scoped>
 .content-height{
-  height: 85vh;
+  //height: 85vh;
 }
 .button-blue{
   color: #102A43;
@@ -656,7 +530,6 @@ export default {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  overflow-x: auto;
   height: 92%;
   .button-close{
     color: #102A43;
