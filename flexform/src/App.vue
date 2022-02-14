@@ -21,4 +21,22 @@ html, body {
   margin: 0;
   background-color: $grey1;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: $grey1;
+  border-radius: 12px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $grey5;
+  border-radius: 12px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $grey6;
+}
 </style>

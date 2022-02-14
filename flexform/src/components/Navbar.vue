@@ -46,10 +46,12 @@
             <Icon class="icon semibold24" icon="heroicons-outline:eye"/>
             <span class="tw-mt-0.5 tw-ml-3">View More</span>
           </div>
-          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile">
+          <!--
+          <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonViewMore')">
             <Icon class="icon semibold24" icon="heroicons-outline:pencil-alt"/>
             <span class="tw-mt-0.5 tw-ml-3">Edit Profile</span>
           </div>
+          -->
           <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonLogout')">
             <Icon class="icon semibold24" icon="heroicons-outline:logout"/>
             <span class="tw-mt-0.5 tw-ml-3">Logout</span>
@@ -106,6 +108,7 @@ export default {
         this.$router.push('/')
       } else if (buttonName==='buttonViewMore') {
         this.$router.push('/profile')
+        
       }
       this.showProfile = this.showProfile !== true
       if(this.showNotifications){

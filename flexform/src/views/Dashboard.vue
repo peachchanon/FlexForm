@@ -17,11 +17,14 @@
             <div class="tw-flex tw-flex-col tw-scroll-auto">
 
               <div class="base-padding base-shadow radius12px bg-white tw-flex tw-flex-row tw-items-center tw-justify-between tw-mb-2 tw-scroll-auto">
-                <div class="semibold24 tw-mx-1.5">
-                    <Icon class="icon blue10" icon="heroicons-outline:folder"/>
+                <div class="semibold24 base-padding bg-blue1 radius12px">
+                  <Icon class="icon blue10" icon="heroicons-outline:folder"/>
                 </div>
-                <div class="tw-grow tw-whitespace-nowrap tw-truncate tw-overflow-hidden tw-w-full">
-                  <span>ได้มีการเพิ่มคุณลงใน Form ของ Ticket System 2</span>
+                <div class="base-padding tw-w-full tw-whitespace-nowrap tw-truncate tw-overflow-hidden">
+                  <span>National Telecom Public Company Limited Ticket (NOC)</span>
+                </div>
+                <div class="base-padding">
+                  <Icon class="icon semibold24  red5" icon="heroicons-outline:minus"/>
                 </div>
               </div>
 

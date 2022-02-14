@@ -19,7 +19,7 @@
                 @callBackString="inputUsername"
             ></base-text-input>
           </div>
-          <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.username">
+          <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.username">
             <span class="red5 medium14 tw-my-2" >* Enter username</span>
           </div>
         </div>
@@ -33,7 +33,7 @@
                   @callBackString="inputPassword"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.password">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.password">
               <span class="red5 medium14 tw-my-2" >* Enter password</span>
             </div>
           </div>
@@ -46,10 +46,10 @@
                   @callBackString="inputConfirmPassword"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.confirmPassword && stateRegister.confirmPasswordHaveValue">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.confirmPassword && stateProfile.confirmPasswordHaveValue">
               <span class="red5 medium14 tw-my-2" >* Password did't match</span>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="stateRegister.confirmPassword && stateRegister.confirmPasswordHaveValue">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="stateProfile.confirmPassword && stateProfile.confirmPasswordHaveValue">
               <div class="tw-flex tw-flex-row tw-items-center">
                 <Icon class="icon green5 medium14 tw-my-2 tw-mr-2" icon="heroicons-outline:check"/>
                 <span class="green5 medium14 tw-my-2" >Password did match</span>
@@ -67,7 +67,7 @@
                   @callBackString="inputEmployeeID"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.employeeID">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.employeeID">
               <span class="red5 medium14 tw-my-2" >* Enter employee id</span>
             </div>
           </div>
@@ -80,7 +80,7 @@
                   @valueSelected="inputGender"
               ></base-dropdown>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.gender">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.gender">
               <span class="red5 medium14 tw-my-2" >* Select Gender</span>
             </div>
           </div>
@@ -98,7 +98,7 @@
                       class="tw-w-full"
                   ></base-dropdown>
                 </div>
-                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.title">
+                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.title">
                   <span class="red5 medium14 tw-my-2" >* Select Title</span>
                 </div>
               </div>
@@ -109,7 +109,7 @@
                     @callBackString="inputFirstName"
                     class="tw-w-full"
                 ></base-text-input>
-                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.firstName">
+                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.firstName">
                   <span class="red5 medium14 tw-my-2" >* Enter First Name</span>
                 </div>
               </div>
@@ -124,7 +124,7 @@
                   @callBackString="inputLastName"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.lastName">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.lastName">
               <span class="red5 medium14 tw-my-2" >* Enter Last Name</span>
             </div>
           </div>
@@ -139,7 +139,7 @@
                   @callBackString="inputEmail"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.email">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.email">
               <span class="red5 medium14 tw-my-2" >* Enter Email</span>
             </div>
           </div>
@@ -152,7 +152,7 @@
                   @callBackDate="inputDOB"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.dob">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.dob">
               <span class="red5 medium14 tw-my-2" >* Enter Date of Birth</span>
             </div>
           </div>
@@ -167,7 +167,7 @@
                   @callBackString="inputPhoneNumber"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.phoneNumber">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.phoneNumber">
               <span class="red5 medium14 tw-my-2" >* Enter Phone Number</span>
             </div>
           </div>
@@ -182,7 +182,7 @@
                   @valueSelected="inputJob"
               ></base-dropdown>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.jobTitle">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.jobTitle">
               <span class="red5 medium14 tw-my-2" >* Enter Job</span>
             </div>
           </div>
@@ -195,7 +195,7 @@
                   @valueSelected="inputDivision"
               ></base-dropdown>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateRegister.division">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.division">
               <span class="red5 medium14 tw-my-2">* Enter Division</span>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default {
     return {
       showContentForWindowSize: true,
       showCreateAnAccountModal: false,
-      dataRegister: {
+      dataEditProfile: {
         username: '',
         password: '',
         confirmPassword: '',
@@ -248,7 +248,7 @@ export default {
         jobTitle: '',
         division: ''
       },
-      stateRegister: {
+      stateProfile: {
         username: Boolean,
         password: Boolean,
         confirmPassword: Boolean,
@@ -269,110 +269,110 @@ export default {
   methods: {
     doShowCreateAnAccountButton (state) {
       if(!this.showCreateAnAccountModal){
-        this.stateRegister.username = true
-        this.stateRegister.password = true
-        this.stateRegister.confirmPasswordHaveValue = false
-        this.stateRegister.employeeID = true
-        this.stateRegister.gender = true
-        this.stateRegister.title = true
-        this.stateRegister.firstName = true
-        this.stateRegister.lastName = true
-        this.stateRegister.email = true
-        this.stateRegister.dob = true
-        this.stateRegister.phoneNumber = true
-        this.stateRegister.jobTitle = true
-        this.stateRegister.division = true
+        this.stateProfile.username = true
+        this.stateProfile.password = true
+        this.stateProfile.confirmPasswordHaveValue = false
+        this.stateProfile.employeeID = true
+        this.stateProfile.gender = true
+        this.stateProfile.title = true
+        this.stateProfile.firstName = true
+        this.stateProfile.lastName = true
+        this.stateProfile.email = true
+        this.stateProfile.dob = true
+        this.stateProfile.phoneNumber = true
+        this.stateProfile.jobTitle = true
+        this.stateProfile.division = true
         this.showCreateAnAccountModal = state
       }else{
-        this.stateRegister.username = false
-        this.stateRegister.password = false
-        this.stateRegister.confirmPasswordHaveValue = false
-        this.stateRegister.employeeID = false
-        this.stateRegister.gender = false
-        this.stateRegister.title = false
-        this.stateRegister.firstName = false
-        this.stateRegister.lastName = false
-        this.stateRegister.email = false
-        this.stateRegister.dob = false
-        this.stateRegister.phoneNumber = false
-        this.stateRegister.jobTitle = false
-        this.stateRegister.division = false
+        this.stateProfile.username = false
+        this.stateProfile.password = false
+        this.stateProfile.confirmPasswordHaveValue = false
+        this.stateProfile.employeeID = false
+        this.stateProfile.gender = false
+        this.stateProfile.title = false
+        this.stateProfile.firstName = false
+        this.stateProfile.lastName = false
+        this.stateProfile.email = false
+        this.stateProfile.dob = false
+        this.stateProfile.phoneNumber = false
+        this.stateProfile.jobTitle = false
+        this.stateProfile.division = false
         this.showCreateAnAccountModal = state
       }
     },
     inputUsername(username){
-      this.dataRegister.username = username
-      this.stateRegister.username = this.dataRegister.username !== '';
+      this.dataEditProfile.username = username
+      this.stateProfile.username = this.dataEditProfile.username !== '';
     },
     inputPassword(password){
-      this.dataRegister.password = password
-      this.stateRegister.password = this.dataRegister.password !== '';
-      this.stateRegister.confirmPassword = this.dataRegister.confirmPassword === this.dataRegister.password;
+      this.dataEditProfile.password = password
+      this.stateProfile.password = this.dataEditProfile.password !== '';
+      this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.dataRegister.confirmPassword = confirmPassword
-      if(this.dataRegister.password !== ''){
-        this.stateRegister.confirmPasswordHaveValue = true
-        this.stateRegister.confirmPassword = this.dataRegister.confirmPassword === this.dataRegister.password;
+      this.dataEditProfile.confirmPassword = confirmPassword
+      if(this.dataEditProfile.password !== ''){
+        this.stateProfile.confirmPasswordHaveValue = true
+        this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
       }else{
-        this.stateRegister.confirmPasswordHaveValue = false
+        this.stateProfile.confirmPasswordHaveValue = false
       }
     },
     inputEmployeeID(employeeID){
-      this.dataRegister.employeeID = employeeID
-      this.stateRegister.employeeID = this.dataRegister.employeeID !== '';
+      this.dataEditProfile.employeeID = employeeID
+      this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
     },
     inputGender(gender){
-      this.dataRegister.gender = gender
-      this.stateRegister.gender = this.dataRegister.gender !== '';
+      this.dataEditProfile.gender = gender
+      this.stateProfile.gender = this.dataEditProfile.gender !== '';
     },
     inputTitle(title){
-      this.dataRegister.title = title
-      this.stateRegister.title = this.dataRegister.title !== '';
+      this.dataEditProfile.title = title
+      this.stateProfile.title = this.dataEditProfile.title !== '';
     },
     inputFirstName(firstName){
-      this.dataRegister.firstName = firstName
-      this.stateRegister.firstName = this.dataRegister.firstName !== '';
+      this.dataEditProfile.firstName = firstName
+      this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
     },
     inputLastName(lastName){
-      this.dataRegister.lastName = lastName
-      this.stateRegister.lastName = this.dataRegister.lastName !== '';
+      this.dataEditProfile.lastName = lastName
+      this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
     },
     inputEmail(email){
-      this.dataRegister.email = email
-      this.stateRegister.email = this.dataRegister.email !== '';
+      this.dataEditProfile.email = email
+      this.stateProfile.email = this.dataEditProfile.email !== '';
     },
     inputDOB(dob){
-      this.dataRegister.dob = dob
-      this.stateRegister.dob = this.dataRegister.dob !== '';
+      this.dataEditProfile.dob = dob
+      this.stateProfile.dob = this.dataEditProfile.dob !== '';
     },
     inputPhoneNumber(phoneNumber){
-      this.dataRegister.phoneNumber = phoneNumber
-      this.stateRegister.phoneNumber = this.dataRegister.phoneNumber !== '';
+      this.dataEditProfile.phoneNumber = phoneNumber
+      this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
     },
     inputJob(job){
-      this.dataRegister.jobTitle = job
-      this.stateRegister.jobTitle = this.dataRegister.jobTitle !== '';
+      this.dataEditProfile.jobTitle = job
+      this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
     },
     inputDivision(division){
-      this.dataRegister.division = division
-      this.stateRegister.division = this.dataRegister.division !== '';
+      this.dataEditProfile.division = division
+      this.stateProfile.division = this.dataEditProfile.division !== '';
     },
     doRegister(e){
       console.log(e)
-      this.stateRegister.username = this.dataRegister.username !== '';
-      this.stateRegister.password = this.dataRegister.password !== '';
-      this.stateRegister.employeeID = this.dataRegister.employeeID !== '';
-      this.stateRegister.gender = this.dataRegister.gender !== '';
-      this.stateRegister.title = this.dataRegister.title !== '';
-      this.stateRegister.firstName = this.dataRegister.firstName !== '';
-      this.stateRegister.lastName = this.dataRegister.lastName !== '';
-      this.stateRegister.email = this.dataRegister.email !== '';
-      this.stateRegister.dob = this.dataRegister.dob !== '';
-      this.stateRegister.phoneNumber = this.dataRegister.phoneNumber !== '';
-      this.stateRegister.jobTitle = this.dataRegister.jobTitle !== '';
-      this.stateRegister.division = this.dataRegister.division !== '';
-      console.log(this.dataRegister)
+      this.stateProfile.username = this.dataEditProfile.username !== '';
+      this.stateProfile.password = this.dataEditProfile.password !== '';
+      this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
+      this.stateProfile.gender = this.dataEditProfile.gender !== '';
+      this.stateProfile.title = this.dataEditProfile.title !== '';
+      this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
+      this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
+      this.stateProfile.email = this.dataEditProfile.email !== '';
+      this.stateProfile.dob = this.dataEditProfile.dob !== '';
+      this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
+      this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
+      this.stateProfile.division = this.dataEditProfile.division !== '';
+      console.log(this.dataEditProfile)
     },
     doPath(path) {
       this.$router.push(path).catch(()=>{})
