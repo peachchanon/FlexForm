@@ -9,6 +9,8 @@ import Form from '../views/Form'
 import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
 
+import FormBuilder from '@/views/formbuilder/FormBuilder'
+
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -76,6 +78,14 @@ const routes = [
     component: ManageUsers,
     meta: {
       title: 'Manage Users'
+    }
+  },
+  {
+    path: '/form-builder',
+    name: 'FormBuilder',
+    component: FormBuilder,
+    meta: {
+      title: 'Form Builder'
     }
   },
   {

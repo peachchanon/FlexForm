@@ -38,7 +38,42 @@
                       buttonID="buttonCreateForm"
                       buttonText="Created Form"
                       buttonIcon="heroicons-outline:plus"
+                      :callback="doButton"
                   ></base-button-white>
+                </div>
+              </div>
+            </div>
+            <!-- Form list-->
+            <div class="tw-my-2">
+              <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                <div class="tw-flex tw-flex-row">
+                  <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
+                    <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+                  </div>
+                  <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                    <label v-if="showContentForWindowSize" class="medium16 grey5">Form name</label>
+                    <label class="medium16 blue10">National Telecom Public Company Limited Ticket (NOC)</label>
+                  </div>
+                  <div v-if="showContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                    <label class="medium16 grey5">Description</label>
+                    <label class="light16 grey7">Ticket สำหรับใช้ภายในองค์กรบริษัท เพื่อรับเรื่องปัญหาของ NOC</label>
+                  </div>
+                </div>
+                <div class="tw-flex tw-flex-row">
+                  <div class="">
+                    <BaseButtonDelete
+                        buttonID="buttonDelete"
+                        buttonText="Delete"
+                        buttonIcon="heroicons-outline:trash"
+                    ></BaseButtonDelete>
+                  </div>
+                  <div class="">
+                    <base-button-blue
+                        buttonID="buttonViewMore"
+                        buttonText="View More"
+                        buttonIcon="heroicons-outline:eye"
+                    ></base-button-blue>
+                  </div>
                 </div>
               </div>
             </div>
@@ -66,6 +101,7 @@ import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
 import BaseFilterBox from '@/components/BaseFilterBox'
 import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
+import BaseButtonDelete from '@/components/BaseButtonDelete'
 
 export default {
   name: 'Form.vue',
@@ -75,7 +111,8 @@ export default {
     Icon,
     BaseFilterBox,
     BaseButtonWhite,
-    BaseButtonBlue
+    BaseButtonBlue,
+    BaseButtonDelete
   },
   data() {
     return {
@@ -102,6 +139,11 @@ export default {
     ...mapActions(['flapWindowResize']),
     doHorizontalNavigation(page) {
       this.namePage = page
+    },
+    doButton(nameButton){
+      if(nameButton==='buttonCreateForm'){
+        this.$router.push('/form-builder').catch(()=>{})
+      }
     }
   }
 }

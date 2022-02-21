@@ -105,9 +105,9 @@ export default {
     },
     doProfile (buttonName) {
       if(buttonName==='buttonLogout'){
-        this.$router.push('/')
+        this.$router.push('/').catch(()=>{})
       } else if (buttonName==='buttonViewMore') {
-        this.$router.push('/profile')
+        this.$router.push('/profile').catch(()=>{})
         
       }
       this.showProfile = this.showProfile !== true

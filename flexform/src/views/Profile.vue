@@ -1,7 +1,7 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 tw-h-full sm:tw-p-2">
+      <div class="bg-grey1 tw-h-full sm:tw-p-2" style="height: 90%">
         <div class="box bg-white tw-h-full tw-relative">
           <!-- Banner -->
           <div class="bg-blue10 tw-w-full tw-absolute" style="height: 130px; border-radius: 12px 12px 0 0; left: 0; top: 0;"></div>

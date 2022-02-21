@@ -6,7 +6,7 @@
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:user-group"/>
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
         </div>
-        <div class="box bg-white">
+        <div class="box bg-white" style="height: 80vh">
           <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
             <!-- Filter Box -->
             <div class="tw-pr-4" :class="{'tw-w-full': !showContentForWindowSize, 'tw-w-2/5':showContentForWindowSize}">
@@ -269,6 +269,8 @@ import BaseTextInput from '@/components/BaseTextInput'
 import BaseDropdown from '@/components/BaseDropdown'
 import BaseFilterBox from '@/components/BaseFilterBox'
 
+import axios from 'axios'
+
 export default {
   name: 'ManageUsers',
   components: {
@@ -281,6 +283,7 @@ export default {
   },
   data() {
     return {
+      user: [],
       dataTable: {
         columnName: ['Employee ID','Name','Job Title','Job Division','Email','Phone Number'
           ,'Username','Password','Gender','Date of Birth','Properties'],
@@ -311,18 +314,7 @@ export default {
           { title: 'Properties', key: 'properties',align: 'left', resizable: true},
         ],
         data: [
-          { 
-            employeeID: '61070501014', 
-            name: 'Mr. Chanon Panarong',
-            jobTitle: 'NOC',
-            division: 'CAT THIX',
-            email: 'chanon.peach@mail.com',
-            phoneNumber: '(096) 111-2222',
-            username: 'peach_chanon',
-            password: '012345',
-            gender: 'male',
-            dob: '12/12/19'
-          },
+          { employeeID: String, name: String, jobTitle: String }
         ],
         pageSize: 10,
         pageCount: 1,
@@ -349,13 +341,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
   },
   async mounted () {
     window.onresize = () => {
       this.flapWindowResize()
     }
     this.showContentForWindowSize = window.innerWidth >= 768
+    axios.get('http://localhost:4000/api/User').then(
+    (response)=>{
+      this.user = response.data
+    })
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -490,9 +486,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content-height{
-  //height: 85vh;
-}
 .button-blue{
   color: #102A43;
   padding: 0.75rem;

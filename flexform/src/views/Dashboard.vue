@@ -13,24 +13,24 @@
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:bookmark-alt"/>
               <span class="semibold24 blue10 tw-m-2">Bookmark</span>
             </div>
-            <!-- Notifications | Card list -->
+            <!-- Bookmark | Card list -->
             <div class="tw-flex tw-flex-col tw-scroll-auto">
 
               <div class="base-padding base-shadow radius12px bg-white tw-flex tw-flex-row tw-items-center tw-justify-between tw-mb-2 tw-scroll-auto">
-                <div class="semibold24 base-padding bg-blue1 radius12px">
+                <div class="semibold24 base-padding bg-blue1 radius12px tw-relative">
+                  <Icon class="icon blue10 tw-absolute tw-bottom-7 tw-left-0" icon="heroicons-solid:bookmark"/>
                   <Icon class="icon blue10" icon="heroicons-outline:folder"/>
                 </div>
-                <div class="base-padding tw-w-full tw-whitespace-nowrap tw-truncate tw-overflow-hidden">
+                <div class="base-padding">
                   <span>National Telecom Public Company Limited Ticket (NOC)</span>
                 </div>
-                <div class="base-padding">
-                  <Icon class="icon semibold24  red5" icon="heroicons-outline:minus"/>
+                <div class="base-padding radius12px tw-cursor-pointer">
+                  <Icon class="icon semibold24 red5" icon="heroicons-outline:minus"/>
                 </div>
               </div>
-
               
-
             </div>
+            
           </div>
           <!-- Report -->
           <div class="box bg-white md:tw-w-1/2">
