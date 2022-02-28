@@ -18,7 +18,7 @@
           <div v-if="namePage==='All Ticket'" class="tw-px-3">
             <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
               <!-- Filter Box -->
-              <div class="tw-pr-4" :class="{'tw-w-full': !showContentForWindowSize, 'tw-w-2/5':showContentForWindowSize}">
+              <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
                 <base-filter-box
                     propBlankDataText= "Form: Show All"
                 ></base-filter-box>
@@ -36,7 +36,7 @@
                 <div class="tw-mx-1">
                   <base-button-white
                       buttonID="buttonCreateForm"
-                      buttonText="Created Form"
+                      buttonText="Creat Form"
                       buttonIcon="heroicons-outline:plus"
                       :callback="doButton"
                   ></base-button-white>
@@ -51,10 +51,10 @@
                     <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
                   </div>
                   <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
-                    <label v-if="showContentForWindowSize" class="medium16 grey5">Form name</label>
+                    <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                     <label class="medium16 blue10">National Telecom Public Company Limited Ticket (NOC)</label>
                   </div>
-                  <div v-if="showContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                     <label class="medium16 grey5">Description</label>
                     <label class="light16 grey7">Ticket สำหรับใช้ภายในองค์กรบริษัท เพื่อรับเรื่องปัญหาของ NOC</label>
                   </div>
@@ -118,12 +118,12 @@ export default {
     return {
       horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
       namePage: 'All Ticket',
-      showContentForWindowSize: true,
+      StateShowContentForWindowSize: true,
     }
   },
   watch:{
     windowResize () {
-      this.showContentForWindowSize = window.innerWidth >= 768
+      this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
   computed: {
@@ -133,7 +133,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.showContentForWindowSize = window.innerWidth >= 768
+    this.StateShowContentForWindowSize = window.innerWidth >= 768
   },
   methods: {
     ...mapActions(['flapWindowResize']),
