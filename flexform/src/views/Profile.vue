@@ -36,7 +36,7 @@
           <!-- Data -->
           <div 
             class="tw-flex xl:tw-flex-row tw-flex-col tw-w-full"
-            :class="{'box-data-768': !showContentForWindowSize,'box-data': showContentForWindowSize}"
+            :class="{'box-data-768': !StateShowContentForWindowSize,'box-data': StateShowContentForWindowSize}"
           >
             <!-- Account -->
             <div class="base-padding tw-w-full">
@@ -363,13 +363,13 @@ export default {
   },
   data() {
     return {
-      showContentForWindowSize: true,
+      StateShowContentForWindowSize: true,
       showEditProfileModal: false,
       dataUser: {
         username: 'peach_1014', password: '1441', employeeID: '40010144', gender: 'Male', title: 'Mr.', firstName: 'Chanon',
         lastName: 'Panarong', email: 'peach@mail.com', dob: '25 August 1999', phoneNumber: '(096) 9134 053', jobTitle: 'NOC Engineer', division: 'NOC Engineer', imgUser: ''
       },
-      dataEditProfile: {
+      StateShowRenameForm: {
         username: '', password: '', confirmPassword: '', employeeID: '', gender: '', title: '', firstName: '',
         lastName: '', email: '', dob: '', phoneNumber: '', jobTitle: '', division: ''
       },
@@ -384,7 +384,7 @@ export default {
   },
   watch:{
     windowResize () {
-      this.showContentForWindowSize = window.innerWidth >= 768
+      this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
   computed: {
@@ -394,7 +394,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.showContentForWindowSize = window.innerWidth >= 768
+    this.StateShowContentForWindowSize = window.innerWidth >= 768
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -402,19 +402,19 @@ export default {
       if(buttonName === 'buttonEditProfile'){
         this.showEditProfileModal = !this.showEditProfileModal;
       } else if(buttonName === 'buttonSave') {
-        this.stateProfile.username = this.dataEditProfile.username !== '';
-        this.stateProfile.password = this.dataEditProfile.password !== '';
-        this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
-        this.stateProfile.gender = this.dataEditProfile.gender !== '';
-        this.stateProfile.title = this.dataEditProfile.title !== '';
-        this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
-        this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
-        this.stateProfile.email = this.dataEditProfile.email !== '';
-        this.stateProfile.dob = this.dataEditProfile.dob !== '';
-        this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
-        this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
-        this.stateProfile.division = this.dataEditProfile.division !== '';
-        console.log(this.dataEditProfile)
+        this.stateProfile.username = this.StateShowRenameForm.username !== '';
+        this.stateProfile.password = this.StateShowRenameForm.password !== '';
+        this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
+        this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
+        this.stateProfile.title = this.StateShowRenameForm.title !== '';
+        this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
+        this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
+        this.stateProfile.email = this.StateShowRenameForm.email !== '';
+        this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
+        this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
+        this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
+        this.stateProfile.division = this.StateShowRenameForm.division !== '';
+        console.log(this.StateShowRenameForm)
       }
     },
     doShowCreateAnAccountButton (state) {
@@ -451,63 +451,63 @@ export default {
       }
     },
     inputUsername(username){
-      this.dataEditProfile.username = username
-      this.stateProfile.username = this.dataEditProfile.username !== '';
+      this.StateShowRenameForm.username = username
+      this.stateProfile.username = this.StateShowRenameForm.username !== '';
     },
     inputPassword(password){
-      this.dataEditProfile.password = password
-      this.stateProfile.password = this.dataEditProfile.password !== '';
-      this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
+      this.StateShowRenameForm.password = password
+      this.stateProfile.password = this.StateShowRenameForm.password !== '';
+      this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.dataEditProfile.confirmPassword = confirmPassword
-      if(this.dataEditProfile.password !== ''){
+      this.StateShowRenameForm.confirmPassword = confirmPassword
+      if(this.StateShowRenameForm.password !== ''){
         this.stateProfile.confirmPasswordHaveValue = true
-        this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
+        this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
       }else{
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
     inputEmployeeID(employeeID){
-      this.dataEditProfile.employeeID = employeeID
-      this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
+      this.StateShowRenameForm.employeeID = employeeID
+      this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
     },
     inputGender(gender){
-      this.dataEditProfile.gender = gender
-      this.stateProfile.gender = this.dataEditProfile.gender !== '';
+      this.StateShowRenameForm.gender = gender
+      this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
     },
     inputTitle(title){
-      this.dataEditProfile.title = title
-      this.stateProfile.title = this.dataEditProfile.title !== '';
+      this.StateShowRenameForm.title = title
+      this.stateProfile.title = this.StateShowRenameForm.title !== '';
     },
     inputFirstName(firstName){
-      this.dataEditProfile.firstName = firstName
-      this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
+      this.StateShowRenameForm.firstName = firstName
+      this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
     },
     inputLastName(lastName){
-      this.dataEditProfile.lastName = lastName
-      this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
+      this.StateShowRenameForm.lastName = lastName
+      this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
     },
     inputEmail(email){
-      this.dataEditProfile.email = email
-      this.stateProfile.email = this.dataEditProfile.email !== '';
+      this.StateShowRenameForm.email = email
+      this.stateProfile.email = this.StateShowRenameForm.email !== '';
     },
     inputDOB(dob){
-      this.dataEditProfile.dob = dob
-      this.stateProfile.dob = this.dataEditProfile.dob !== '';
+      this.StateShowRenameForm.dob = dob
+      this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
     },
     inputPhoneNumber(phoneNumber){
-      this.dataEditProfile.phoneNumber = phoneNumber
+      this.StateShowRenameForm.phoneNumber = phoneNumber
       console.log(phoneNumber)
-      this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
+      this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
     },
     inputJob(job){
-      this.dataEditProfile.jobTitle = job
-      this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
+      this.StateShowRenameForm.jobTitle = job
+      this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
     },
     inputDivision(division){
-      this.dataEditProfile.division = division
-      this.stateProfile.division = this.dataEditProfile.division !== '';
+      this.StateShowRenameForm.division = division
+      this.stateProfile.division = this.StateShowRenameForm.division !== '';
     },
   }
 }
