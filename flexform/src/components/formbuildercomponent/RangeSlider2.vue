@@ -1,189 +1,38 @@
 ﻿<template>
-  <div @mousemove="doDrag" class="outercontainer">
-    <range-slider
-      class="slider" multiple
-      min="10"
-      max="1000"
-      step="10"
-      v-model="sliderValue">
-    </range-slider>
-    <div class="slider-container">
-      <p>{{ SliderText }}</p>
-      <input type="text" v-model="min" @keyup="setMin" />
-      <input type="text" v-model="max" @keyup="setMax" />
-      <p>{{ numberLeft }}</p>
-      <p>{{ numberRight }}</p>
-      <div class="slider-content-container">
-        <div
-          @mousedown="startDrag"
-          class="drag-1"
-          :style="{ left: drag1.left + 'px' }"
-        ></div>
-        <div class="slider-value-background" id="slider-background"></div>
-        <div
-          class="slider-value"
-          :style="{ width: width + 'px', left: drag1.left + 'px' }"
-        ></div>
-        <div
-          @mousedown="startDrag2"
-          class="drag-2"
-          :style="{ left: drag2.left + 'px' }"
-        ></div>
-      </div>
-    </div>
+  <div>
+    <label
+        :class="[labelColor]"
+        :style="{fontSize: labelSize + 'px'}">{{labelText}}</label>
+    <vue-range-slider v-model="value" :min="min" :max="max" :formatter="formatter"></vue-range-slider>
   </div>
 </template>
 <script>
-import 'vue-range-slider/dist/vue-range-slider.css'
-import RangeSlider from 'vue-range-slider'
+import 'vue-range-component/dist/vue-range-slider.css' //npm install vue-range-component --save
+import VueRangeSlider from 'vue-range-component' // https://www.codecheef.org/article/vue-js-range-slider-example-with-code
 export default {
-  name: 'SupplierDetSliderail',
   components: {
-    RangeSlider
+    VueRangeSlider
   },
   props: {
-    SliderText: String
+    min : Number,
+    max : Number,
+    labelText: String,
+    labelColor: String,
+    labelSize: String,
   },
-  data () {
+  data() {
     return {
-      min: '0',
-      max: '100',
-      minNumber: 0,
-      maxNumber: 100,
-      numberLeft: 0,
-      numberRight: 0,
-      sliderValue: 50,
-      width: 0,
-      drag1: {
-        left: 0
-      },
-      drag2: {
-        left: 200
-      },
-
-      dragging: false,
-      dragging2: false,
-      draggable: 0,
-      disabledKeys: [8, 13, 16, 17, 18, 27, 37, 38, 39, 40, 91, 93]
+      value: [10, 50] //started default value
     }
   },
   computed: {
-    calcWidth () {
-      return this.drag2.left - this.drag1.left + 5
-    },
-    isNumberKey (evt) {
-      const charCode = evt.which ? evt.which : event.keyCode
-      return !(charCode > 31 && (charCode < 48 || charCode > 57))
-    }
   },
-  created () {
-    this.width = this.calcWidth
+  created() {
+    //this.min = 0
+    //this.max = 100
+    this.formatter = value => `${value}`
   },
   methods: {
-    numberWithCommas (x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'")
-    },
-    setMin () {
-      if (
-        (/[0-9]|\./.test(String.fromCharCode(event.keyCode)) &&
-          !event.shiftKey) ||
-        this.disabledKeys.includes(event.keyCode)
-      ) {
-        const number = this.min.replace(/'/g, '')
-        this.minNumber = Number(number)
-        this.min = this.numberWithCommas(number)
-      } else {
-        this.min = this.min
-          .replace(String.fromCharCode(event.keyCode).toLowerCase(), '')
-          .replace(String.fromCharCode(event.keyCode), '')
-      }
-    },
-
-    setMax () {
-      if (
-        (/[0-9]|\./.test(String.fromCharCode(event.keyCode)) &&
-          !event.shiftKey) ||
-        this.disabledKeys.includes(event.keyCode)
-      ) {
-        const number = this.max.replace(/ /g, '_').replace(/'/g, '')
-        this.maxNumber = Number(number)
-        this.max = this.numberWithCommas(number)
-      } else {
-        this.max = this.max
-          .replace(String.fromCharCode(event.keyCode).toLowerCase(), '')
-          .replace(String.fromCharCode(event.keyCode), '')
-      }
-    },
-
-    startDrag () {
-      this.dragging = true
-      this.draggable = 1
-    },
-
-    startDrag2 () {
-      this.dragging2 = true
-      this.draggable = 2
-    },
-    stopDrag () {
-      this.dragging = false
-      this.draggable = 0
-    },
-    stopDrag2 () {
-      this.dragging2 = false
-      this.draggable = 0
-    },
-
-    doDrag (event) {
-      if (this.dragging || this.dragging2) {
-        if (this.draggable === 1 && this.drag1.left + 20 < this.drag2.left) {
-          const newLeft = event.clientX - 100
-          if (
-            newLeft > 0 &&
-            newLeft + 5 <=
-            document.getElementById('slider-background').offsetWidth
-          ) {
-            this.width = this.calcWidth
-            this.drag1.left = newLeft
-            this.calcPercentLeft()
-          }
-        } else if (
-          this.draggable === 2 &&
-          this.drag2.left - 20 > this.drag1.left
-        ) {
-          const newLeft = event.clientX - 100
-          if (
-            newLeft > 0 &&
-            newLeft + 5 <=
-            document.getElementById('slider-background').offsetWidth
-          ) {
-            this.width = this.calcWidth
-            this.drag2.left = newLeft
-            this.calcPercentRight()
-          }
-        }
-      }
-    },
-    calcPercentLeft () {
-      this.numberLeft = 0
-      const percent =
-        (100 / document.getElementById('slider-background').offsetWidth) *
-        this.drag1.left
-      this.numberLeft =
-        (this.maxNumber + this.minNumber) * (percent / 100).toFixed(4)
-    },
-
-    calcPercentRight () {
-      this.numberRight = 0
-      const percent =
-        (100 / document.getElementById('slider-background').offsetWidth) *
-        this.drag2.left
-      this.numberRight =
-        (this.maxNumber + this.minNumber) * (percent / 100).toFixed(4)
-    }
-  },
-  mounted () {
-    window.addEventListener('mouseup', this.stopDrag)
-    window.addEventListener('mouseup', this.stopDrag2)
   },
   watch: {
   }
@@ -191,66 +40,56 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.outercontainer {
-  position: absolute;
-  top: 70;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 100px;
-  .slider-container {
-    position: relative;
-    .slider-content-container {
-      position: relative;
-      width: 100%;
-      height: 10px;
-
-      .slider-value-background {
-        position: absolute;
-        left: 0;
-        display: block;
-        width: 100%;
-        border-radius: 5px;
-        height: 25%;
-        background: #9fb3c8;
-      }
-      .slider-value {
-        position: absolute;
-        left: 0;
-        display: block;
-        width: 25%;
-        border-radius: 5px;
-        height: 20%;
-        background: #4098d7;
-      }
-
-      .drag-1,
-      .drag-2 {
-        position: absolute;
-        top: 25%;
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        z-index: 2;
-        transform: translateY(-50%);
-        cursor: pointer;
-      }
-
-      .drag-1 {
-        left: 100px;
-        background-color: white;
-        border-color: #d9e2e3;
-        border-width: 1px;
-      }
-
-      .drag-2 {
-        left: 150px;
-        background-color: white;
-        border-color: #d9e2e3;
-        border-width: 1px;
-      }
-    }
-  }
-}
-
+.white{color: white;}
+.grey10{color:$grey10;}
+.grey9{color:$grey9;}
+.grey8{color:$grey8;}
+.grey7{color:$grey7;}
+.grey6{color:$grey6;}
+.grey5{color:$grey5;}
+.grey4{color:$grey4;}
+.grey3{color:$grey3;}
+.grey2{color:$grey2;}
+.grey1{color:$grey1;}
+.blue10{color:$blue10;}
+.blue9{color:$blue9;}
+.blue8{color:$blue8;}
+.blue7{color:$blue7;}
+.blue6{color:$blue6;}
+.blue5{color:$blue5;}
+.blue4{color:$blue4;}
+.blue3{color:$blue3;}
+.blue2{color:$blue2;}
+.blue1{color:$blue1;}
+.green10{color:$green10;}
+.green9{color:$green9;}
+.green8{color:$green8;}
+.green7{color:$green7;}
+.green6{color:$green6;}
+.green5{color:$green5;}
+.green4{color:$green4;}
+.green3{color:$green3;}
+.green2{color:$green2;}
+.green1{color:$green1;}
+.yellow10{color:$yellow10;}
+.yellow9{color:$yellow9;}
+.yellow8{color:$yellow8;}
+.yellow7{color:$yellow7;}
+.yellow6{color:$yellow6;}
+.yellow5{color:$yellow5;}
+.yellow4{color:$yellow4;}
+.yellow3{color:$yellow3;}
+.yellow2{color:$yellow2;}
+.yellow1{color:$yellow1;}
+.red10{color:$red10;}
+.red9{color:$red10;}
+.red9{color:$red9;}
+.red8{color:$red8;}
+.red7{color:$red7;}
+.red6{color:$red6;}
+.red5{color:$red5;}
+.red4{color:$red4;}
+.red3{color:$red3;}
+.red2{color:$red2;}
+.red1{color:$red1;}
 </style>
