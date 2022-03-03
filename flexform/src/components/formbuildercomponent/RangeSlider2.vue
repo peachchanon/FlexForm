@@ -10,7 +10,7 @@
 import 'vue-range-component/dist/vue-range-slider.css' //npm install vue-range-component --save
 import VueRangeSlider from 'vue-range-component' // https://www.codecheef.org/article/vue-js-range-slider-example-with-code
 export default {
-  components: {
+  components: { 
     VueRangeSlider
   },
   props: {
