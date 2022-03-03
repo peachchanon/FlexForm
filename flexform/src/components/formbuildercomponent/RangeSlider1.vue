@@ -120,7 +120,7 @@ export default {
 }
 
 .slider .knobby .tooltip .tooltiptext {
-  visibility: visible;
+  visibility: visible;  
   opacity: 1;
 }
 .white{color: white;}
