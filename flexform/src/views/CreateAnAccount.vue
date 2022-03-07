@@ -231,9 +231,9 @@ export default {
   },
   data() {
     return {
-      showContentForWindowSize: true,
-      showCreateAnAccountModal: false,
-      dataEditProfile: {
+      StateShowContentForWindowSize: true,
+      stateShowCreateAndAccountModal: false,
+      stateRegister: {
         username: '',
         password: '',
         confirmPassword: '',
@@ -268,7 +268,7 @@ export default {
   },
   methods: {
     doShowCreateAnAccountButton (state) {
-      if(!this.showCreateAnAccountModal){
+      if(!this.stateShowCreateAndAccountModal){
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
@@ -282,7 +282,7 @@ export default {
         this.stateProfile.phoneNumber = true
         this.stateProfile.jobTitle = true
         this.stateProfile.division = true
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
@@ -297,82 +297,82 @@ export default {
         this.stateProfile.phoneNumber = false
         this.stateProfile.jobTitle = false
         this.stateProfile.division = false
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }
     },
     inputUsername(username){
-      this.dataEditProfile.username = username
-      this.stateProfile.username = this.dataEditProfile.username !== '';
+      this.stateRegister.username = username
+      this.stateProfile.username = this.stateRegister.username !== '';
     },
     inputPassword(password){
-      this.dataEditProfile.password = password
-      this.stateProfile.password = this.dataEditProfile.password !== '';
-      this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
+      this.stateRegister.password = password
+      this.stateProfile.password = this.stateRegister.password !== '';
+      this.stateProfile.confirmPassword = this.stateRegister.confirmPassword === this.stateRegister.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.dataEditProfile.confirmPassword = confirmPassword
-      if(this.dataEditProfile.password !== ''){
+      this.stateRegister.confirmPassword = confirmPassword
+      if(this.stateRegister.password !== ''){
         this.stateProfile.confirmPasswordHaveValue = true
-        this.stateProfile.confirmPassword = this.dataEditProfile.confirmPassword === this.dataEditProfile.password;
+        this.stateProfile.confirmPassword = this.stateRegister.confirmPassword === this.stateRegister.password;
       }else{
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
     inputEmployeeID(employeeID){
-      this.dataEditProfile.employeeID = employeeID
-      this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
+      this.stateRegister.employeeID = employeeID
+      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
     },
     inputGender(gender){
-      this.dataEditProfile.gender = gender
-      this.stateProfile.gender = this.dataEditProfile.gender !== '';
+      this.stateRegister.gender = gender
+      this.stateProfile.gender = this.stateRegister.gender !== '';
     },
     inputTitle(title){
-      this.dataEditProfile.title = title
-      this.stateProfile.title = this.dataEditProfile.title !== '';
+      this.stateRegister.title = title
+      this.stateProfile.title = this.stateRegister.title !== '';
     },
     inputFirstName(firstName){
-      this.dataEditProfile.firstName = firstName
-      this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
+      this.stateRegister.firstName = firstName
+      this.stateProfile.firstName = this.stateRegister.firstName !== '';
     },
     inputLastName(lastName){
-      this.dataEditProfile.lastName = lastName
-      this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
+      this.stateRegister.lastName = lastName
+      this.stateProfile.lastName = this.stateRegister.lastName !== '';
     },
     inputEmail(email){
-      this.dataEditProfile.email = email
-      this.stateProfile.email = this.dataEditProfile.email !== '';
+      this.stateRegister.email = email
+      this.stateProfile.email = this.stateRegister.email !== '';
     },
     inputDOB(dob){
-      this.dataEditProfile.dob = dob
-      this.stateProfile.dob = this.dataEditProfile.dob !== '';
+      this.stateRegister.dob = dob
+      this.stateProfile.dob = this.stateRegister.dob !== '';
     },
     inputPhoneNumber(phoneNumber){
-      this.dataEditProfile.phoneNumber = phoneNumber
-      this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
+      this.stateRegister.phoneNumber = phoneNumber
+      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
     },
     inputJob(job){
-      this.dataEditProfile.jobTitle = job
-      this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
+      this.stateRegister.jobTitle = job
+      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
     },
     inputDivision(division){
-      this.dataEditProfile.division = division
-      this.stateProfile.division = this.dataEditProfile.division !== '';
+      this.stateRegister.division = division
+      this.stateProfile.division = this.stateRegister.division !== '';
     },
     doRegister(e){
       console.log(e)
-      this.stateProfile.username = this.dataEditProfile.username !== '';
-      this.stateProfile.password = this.dataEditProfile.password !== '';
-      this.stateProfile.employeeID = this.dataEditProfile.employeeID !== '';
-      this.stateProfile.gender = this.dataEditProfile.gender !== '';
-      this.stateProfile.title = this.dataEditProfile.title !== '';
-      this.stateProfile.firstName = this.dataEditProfile.firstName !== '';
-      this.stateProfile.lastName = this.dataEditProfile.lastName !== '';
-      this.stateProfile.email = this.dataEditProfile.email !== '';
-      this.stateProfile.dob = this.dataEditProfile.dob !== '';
-      this.stateProfile.phoneNumber = this.dataEditProfile.phoneNumber !== '';
-      this.stateProfile.jobTitle = this.dataEditProfile.jobTitle !== '';
-      this.stateProfile.division = this.dataEditProfile.division !== '';
-      console.log(this.dataEditProfile)
+      this.stateProfile.username = this.stateRegister.username !== '';
+      this.stateProfile.password = this.stateRegister.password !== '';
+      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
+      this.stateProfile.gender = this.stateRegister.gender !== '';
+      this.stateProfile.title = this.stateRegister.title !== '';
+      this.stateProfile.firstName = this.stateRegister.firstName !== '';
+      this.stateProfile.lastName = this.stateRegister.lastName !== '';
+      this.stateProfile.email = this.stateRegister.email !== '';
+      this.stateProfile.dob = this.stateRegister.dob !== '';
+      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
+      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
+      this.stateProfile.division = this.stateRegister.division !== '';
+      console.log(this.stateRegister)
     },
     doPath(path) {
       this.$router.push(path).catch(()=>{})

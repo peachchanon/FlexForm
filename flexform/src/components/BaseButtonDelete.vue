@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="button-white tw-flex tw-flex-row tw-items-center medium16" @click="buttonClicked">
     <Icon class="icon semibold24" :icon="buttonIcon"/>
-    <span class="tw-mt-0.5 tw-ml-3 tw-mr-1" v-if="showContentForWindowSize">{{buttonText}}</span>
+    <span class="tw-mt-0.5 tw-ml-3 tw-mr-1" v-if="StateShowContentForWindowSize">{{buttonText}}</span>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      showContentForWindowSize: true
+      StateShowContentForWindowSize: true
     }
   },
   props: {
@@ -27,7 +27,7 @@ export default {
   },
   watch:{
     windowResize () {
-      this.showContentForWindowSize = window.innerWidth >= 768
+      this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
   computed: {
@@ -37,7 +37,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.showContentForWindowSize = window.innerWidth >= 768
+    this.StateShowContentForWindowSize = window.innerWidth >= 768
   },
   methods: {
     ...mapActions(['flapWindowResize']),

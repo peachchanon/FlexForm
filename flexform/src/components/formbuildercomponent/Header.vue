@@ -1,44 +1,41 @@
 ﻿<template>
-  <div>
-    <label
-        :class="[labelColor]"
-        :style="{fontSize: labelSize + 'px'}">{{labelText}}</label>
-    <vue-range-slider v-model="value" :min="min" :max="max" :formatter="formatter"></vue-range-slider>
-  </div>
+<div>
+  <input type="text" class="base-padding tw-items-center"
+         :placeholder="placeholder"
+  :class="[fontColor]"
+  :style="{fontSize: fontSize + 'px'}" v-model="valueString"
+  @input="doString">
+</div> <!--text box! {{HText}}-->
 </template>
+
 <script>
-import 'vue-range-component/dist/vue-range-slider.css' //npm install vue-range-component --save
-import VueRangeSlider from 'vue-range-component' // https://www.codecheef.org/article/vue-js-range-slider-example-with-code
 export default {
-  components: { 
-    VueRangeSlider
+  props:{
+    HText: String,
+    fontColor: String,
+    fontSize: String,
+    placeholder: String,
+    propName: String,
   },
-  props: {
-    min : Number,
-    max : Number,
-    labelText: String,
-    labelColor: String,
-    labelSize: String,
-  },
-  data() {
-    return {
-      value: [10, 50] //started default value
+  data(){
+    return{
+      valueString: this.propName
     }
   },
-  computed: {
-  },
-  created() {
-    //this.min = 0
-    //this.max = 100
-    this.formatter = value => `${value}`
-  },
   methods: {
-  },
-  watch: {
+    doString() {
+      console.log(this.valueString)
+      if(this.valueString === '') {
+        this.$emit('callBackString', this.placeholder)
+      } else {
+        this.$emit('callBackString', this.valueString)
+        
+      }
+    }
   }
 }
-
 </script>
+
 <style lang="scss" scoped>
 .white{color: white;}
 .grey10{color:$grey10;}
