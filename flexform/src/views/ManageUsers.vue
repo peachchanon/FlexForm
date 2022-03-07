@@ -17,7 +17,7 @@
               ></base-filter-box>
             </div>
             <div class="">
-              <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowCreateAnAccountButton(true)" style="width: fit-content">
+              <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" @click="doShowRenameButton(true)" style="width: fit-content">
                 <span v-if="StateShowContentForWindowSize" class="tw-mt-0.5 tw-mr-3 tw-ml-2">Create an Account</span>
                 <Icon class="icon semibold24" icon="heroicons-outline:plus"/>
               </div>
@@ -39,12 +39,12 @@
           </div>
           
           <!-- Create an Account Modal -->
-          <transition name="theme-modal-fade" v-if="showCreateAnAccountModal">
+          <transition name="theme-modal-fade" v-if="stateShowCreateAndAccountModal">
             <div class="theme-modal-backdrop">
               <div class="theme-modal">
                 <header class="base-padding tw-flex tw-flex-col tw-items-center tw-relative">
                   <span class="semibold24 grey10">Create An Account</span>
-                  <div class="button-close tw-flex tw-flex-col tw-items-center medium16 tw-absolute tw-top-0 tw-right-0" style="width: fit-content" @click="doShowCreateAnAccountButton(false)">
+                  <div class="button-close tw-flex tw-flex-col tw-items-center medium16 tw-absolute tw-top-0 tw-right-0" style="width: fit-content" @click="doShowRenameButton(false)">
                     <Icon class="icon semibold24" icon="heroicons-outline:x"/>
                   </div>
                 </header>
@@ -321,8 +321,8 @@ export default {
         showPager: true,
       },
       StateShowContentForWindowSize: true,
-      showCreateAnAccountModal: false,
-      StateShowRenameForm: {
+      stateShowCreateAndAccountModal: false,
+      stateCreateAndAccount: {
         username: '', password: '', confirmPassword: '', employeeID: '', gender: '', title: '', firstName: '',
         lastName: '', email: '', dob: '', phoneNumber: '', jobTitle: '', division: ''
       },
@@ -355,8 +355,8 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
-    doShowCreateAnAccountButton (state) {
-      if(!this.showCreateAnAccountModal){
+    doShowRenameButton (state) {
+      if(!this.stateShowCreateAndAccountModal){
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
@@ -370,7 +370,7 @@ export default {
         this.stateProfile.phoneNumber = true
         this.stateProfile.jobTitle = true
         this.stateProfile.division = true
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
@@ -385,83 +385,83 @@ export default {
         this.stateProfile.phoneNumber = false
         this.stateProfile.jobTitle = false
         this.stateProfile.division = false
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }
     },
     inputUsername(username){
-      this.StateShowRenameForm.username = username
-      this.stateProfile.username = this.StateShowRenameForm.username !== '';
+      this.stateCreateAndAccount.username = username
+      this.stateProfile.username = this.stateCreateAndAccount.username !== '';
     },
     inputPassword(password){
-      this.StateShowRenameForm.password = password
-      this.stateProfile.password = this.StateShowRenameForm.password !== '';
-      this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
+      this.stateCreateAndAccount.password = password
+      this.stateProfile.password = this.stateCreateAndAccount.password !== '';
+      this.stateProfile.confirmPassword = this.stateCreateAndAccount.confirmPassword === this.stateCreateAndAccount.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.StateShowRenameForm.confirmPassword = confirmPassword
-      if(this.StateShowRenameForm.password !== ''){
+      this.stateCreateAndAccount.confirmPassword = confirmPassword
+      if(this.stateCreateAndAccount.password !== ''){
         this.stateProfile.confirmPasswordHaveValue = true
-        this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
+        this.stateProfile.confirmPassword = this.stateCreateAndAccount.confirmPassword === this.stateCreateAndAccount.password;
       }else{
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
     inputEmployeeID(employeeID){
-      this.StateShowRenameForm.employeeID = employeeID
-      this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
+      this.stateCreateAndAccount.employeeID = employeeID
+      this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
     },
     inputGender(gender){
-      this.StateShowRenameForm.gender = gender
-      this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
+      this.stateCreateAndAccount.gender = gender
+      this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
     },
     inputTitle(title){
-      this.StateShowRenameForm.title = title
-      this.stateProfile.title = this.StateShowRenameForm.title !== '';
+      this.stateCreateAndAccount.title = title
+      this.stateProfile.title = this.stateCreateAndAccount.title !== '';
     },
     inputFirstName(firstName){
-      this.StateShowRenameForm.firstName = firstName
-      this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
+      this.stateCreateAndAccount.firstName = firstName
+      this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
     },
     inputLastName(lastName){
-      this.StateShowRenameForm.lastName = lastName
-      this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
+      this.stateCreateAndAccount.lastName = lastName
+      this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
     },
     inputEmail(email){
-      this.StateShowRenameForm.email = email
-      this.stateProfile.email = this.StateShowRenameForm.email !== '';
+      this.stateCreateAndAccount.email = email
+      this.stateProfile.email = this.stateCreateAndAccount.email !== '';
     },
     inputDOB(dob){
-      this.StateShowRenameForm.dob = dob
-      this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
+      this.stateCreateAndAccount.dob = dob
+      this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
     },
     inputPhoneNumber(phoneNumber){
-      this.StateShowRenameForm.phoneNumber = phoneNumber
+      this.stateCreateAndAccount.phoneNumber = phoneNumber
       console.log(phoneNumber)
-      this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
+      this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
     },
     inputJob(job){
-      this.StateShowRenameForm.jobTitle = job
-      this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
+      this.stateCreateAndAccount.jobTitle = job
+      this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
     },
     inputDivision(division){
-      this.StateShowRenameForm.division = division
-      this.stateProfile.division = this.StateShowRenameForm.division !== '';
+      this.stateCreateAndAccount.division = division
+      this.stateProfile.division = this.stateCreateAndAccount.division !== '';
     },
     doRegister(e){
       console.log(e)
-      this.stateProfile.username = this.StateShowRenameForm.username !== '';
-      this.stateProfile.password = this.StateShowRenameForm.password !== '';
-      this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
-      this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
-      this.stateProfile.title = this.StateShowRenameForm.title !== '';
-      this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
-      this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
-      this.stateProfile.email = this.StateShowRenameForm.email !== '';
-      this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
-      this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
-      this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
-      this.stateProfile.division = this.StateShowRenameForm.division !== '';
-      console.log(this.StateShowRenameForm)
+      this.stateProfile.username = this.stateCreateAndAccount.username !== '';
+      this.stateProfile.password = this.stateCreateAndAccount.password !== '';
+      this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
+      this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
+      this.stateProfile.title = this.stateCreateAndAccount.title !== '';
+      this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
+      this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
+      this.stateProfile.email = this.stateCreateAndAccount.email !== '';
+      this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
+      this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
+      this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
+      this.stateProfile.division = this.stateCreateAndAccount.division !== '';
+      console.log(this.stateCreateAndAccount)
     },
     doFilterColumn(value) {
       this.dataTable.columnShow = []

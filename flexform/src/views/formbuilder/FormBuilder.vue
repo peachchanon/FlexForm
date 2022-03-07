@@ -36,311 +36,332 @@
     </div>
     -->
     <!-- Form Builder -->
+    <!-- Not Support Builder -->
     <div class="tw-h-full" v-if="!StateShowContentForWindowSize">
       <div class="tw-h-full tw-flex tw-flex-col tw-items-center tw-justify-center">
         <div class="tw-relative">
           <Icon class="tw-absolute grey5" icon="bi:window-x" style="font-size: 32px; top:22px; left:33px;"/> 
           <Icon class="grey5" icon="iconoir:computer" style="font-size: 96px"/>
         </div>
-        <span class="tw-mt-4 tw-text-xl grey5 tw-font-medium">Unsupported Smaller Screens </span>
+        <span class="tw-mt-4 tw-text-xl grey5 tw-font-medium tw-text-center">Unsupported Smaller Screens </span>
       </div>
     </div>
-    <div class="tw-h-full" v-if="StateShowContentForWindowSize">
-      <div class="tw-w-full bg-white base-padding">
-        <div class="tw-flex tw-flex-row tw-items-center">
-          <div class="tw-mr-4">
-            <div class="button__circle">
-              <Icon class="icon__style__large blue10" icon="heroicons-outline:chevron-left"/>
+    <!-- Support Builder -->
+    <div class="tw-h-full tw-w-full" v-if="StateShowContentForWindowSize" >
+      <!-- Header Navbar -->
+      <div class="tw-w-full tw-fixed" style="top: 0">
+        <!-- Form Name Navbar -->
+        <div class="tw-w-full bg-white base-padding">
+          <div class="tw-flex tw-flex-row tw-items-center">
+            <div class="tw-mr-4">
+              <div class="button__circle">
+                <Icon class="icon__style__large blue10" icon="heroicons-outline:chevron-left"/>
+              </div>
             </div>
-          </div>
-          <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:folder"/>
-          <base-text-input-rename-form-builder
-              v-if="StateShowRenameForm"
-              :propName="FormStructure.FormName"
-              type="text"
-              placeholder="Untitled Form"
-              @callBackString="doRenameForm"
-          ></base-text-input-rename-form-builder>
-          <div class="tw-ml-4" v-if="StateShowRenameForm">
-            <div class="button__circle green" @click="doShowRenameForm(true)">
-              <Icon class="icon__style__small white" icon="heroicons-outline:check"/>
+            <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:folder"/>
+            <base-text-input-rename-form-builder
+                v-if="StateShowRenameForm"
+                :propName="FormStructure.FormName"
+                type="text"
+                placeholder="Untitled Form"
+                @callBackString="doRenameForm"
+            ></base-text-input-rename-form-builder>
+            <div class="tw-ml-4" v-if="StateShowRenameForm">
+              <div class="button__circle green" @click="doShowRenameForm(true)">
+                <Icon class="icon__style__small white" icon="heroicons-outline:check"/>
+              </div>
             </div>
-          </div>
-          <div class="tw-ml-1" v-if="StateShowRenameForm">
-            <div class="button__circle red" @click="doShowRenameForm(false)">
-              <Icon class="icon__style__small white" icon="heroicons-outline:x"/>
+            <div class="tw-ml-1" v-if="StateShowRenameForm">
+              <div class="button__circle red" @click="doShowRenameForm(false)">
+                <Icon class="icon__style__small white" icon="heroicons-outline:x"/>
+              </div>
             </div>
-          </div>
-          <label v-if="!StateShowRenameForm" class="semibold18 blue10">{{FormStructure.FormName}}</label>
-          <div class="tw-ml-4" v-if="!StateShowRenameForm">
-            <div class="button__circle" @click="doShowRenameForm">
-              <Icon class="icon__style__small blue10" icon="heroicons-outline:pencil"/>
+            <label v-if="!StateShowRenameForm" class="semibold18 blue10">{{FormStructure.FormName}}</label>
+            <div class="tw-ml-4" v-if="!StateShowRenameForm">
+              <div class="button__circle" @click="doShowRenameForm">
+                <Icon class="icon__style__small blue10" icon="heroicons-outline:pencil"/>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="tw-w-full tw-flex tw-flex-row bg-blue10" style="padding: 0.5rem">
-        <div class="tw-w-full tw-flex tw-flex-row tw-justify-start">
-          <div 
-              class="button__text white"
-              :class="{'button__text white': !StateShowToolsSidebar, 'active': StateShowToolsSidebar}" 
-              v-if="StatePage==='Build'" 
-              @click="doButtonNameOnNavigation('ButtonTools')"
-          >
-            <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil"/>
-            <span>Tools</span>
+        <!-- Blue Navbar -->
+        <div class="tw-w-full tw-flex tw-flex-row bg-blue10" style="padding: 0.5rem">
+          <div class="tw-w-full tw-flex tw-flex-row tw-justify-start">
+            <div
+                class="button__text white"
+                :class="{'button__text white': !StateShowToolsSidebar, 'active': StateShowToolsSidebar}"
+                v-if="StatePage==='Build'"
+                @click="doButtonNameOnNavigation('ButtonTools')"
+            >
+              <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil"/>
+              <span>Tools</span>
+            </div>
+            <!--
+            <div class="button__text green" v-if="StatePage==='Build'">
+              <Icon class="icon__style__large tw-mr-2" icon="iconoir:save-floppy-disk"/>
+              <span>Save Form</span>
+            </div>
+            -->
           </div>
-          <div class="button__text green" v-if="StatePage==='Build'">
-            <Icon class="icon__style__large tw-mr-2" icon="iconoir:save-floppy-disk"/>
-            <span>Save Form</span>
+          <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-justify-center">
+            <BaseNavigationFormBuilder
+                v-bind:field="Page"
+                @callbackField="doNavigationFormBuilder"
+            ></BaseNavigationFormBuilder>
+          </div>
+          <div class="tw-w-full tw-flex tw-flex-row tw-justify-end">
+            <!--
+            <div class="button__text white" v-if="StatePage==='Build'">
+              <Icon class="icon__style__large tw-mr-2" icon="bi:arrow-90deg-left"/>
+              <span>Undo</span>
+            </div>
+            <div class="button__text white" v-if="StatePage==='Build'">
+              <Icon class="icon__style__large tw-mr-2" icon="bi:arrow-90deg-right"/>
+              <span>Redo</span>
+            </div>
+            -->
+            <div
+                class="button__text white"
+                :class="{'button__text white': !StateShowPropertiesSidebar, 'active': StateShowPropertiesSidebar}"
+                v-if="StatePage==='Build'"
+                @click="doButtonNameOnNavigation('ButtonProperties')"
+            >
+              <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil-alt"/>
+              <span>Properties</span>
+            </div>
           </div>
         </div>
-        <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-justify-center">
-          <BaseNavigationFormBuilder
-              v-bind:field="Page"
-              @callbackField="doNavigationFormBuilder"
-          ></BaseNavigationFormBuilder>
-        </div>
-        <div class="tw-w-full tw-flex tw-flex-row tw-justify-end">
-          <div class="button__text white" v-if="StatePage==='Build'">
-            <Icon class="icon__style__large tw-mr-2" icon="bi:arrow-90deg-left"/>
-            <span>Undo</span>
-          </div>
-          <div class="button__text white" v-if="StatePage==='Build'">
-            <Icon class="icon__style__large tw-mr-2" icon="bi:arrow-90deg-right"/>
-            <span>Redo</span>
-          </div>
-          <div 
-              class="button__text white"
-              :class="{'button__text white': !StateShowPropertiesSidebar, 'active': StateShowPropertiesSidebar}"
-              v-if="StatePage==='Build'"
-              @click="doButtonNameOnNavigation('ButtonProperties')"
-          >
-            <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil-alt"/>
-            <span>Properties</span>
-          </div>
-        </div>
-      </div>
-      <!-- Layout -->
-      <div class="tw-w-full tw-relative">
         <!-- Sections Navbar -->
-        <div class="tw-w-full tw-flex tw-flex-row tw-justify-center bg-white base-shadow" style="padding: 0.5rem;" v-if="StatePage!=='Setting'">
+        <div
+            class="tw-w-full tw-flex tw-flex-row tw-justify-center bg-white base-shadow" style="padding: 0.5rem;"
+            v-if="StatePage!=='Setting'"
+        >
           <base-navigation-section-form-builder
               v-bind:field="FormStructure.Sections"
               @callbackField="doNavigationSectionFormBuilder"
           ></base-navigation-section-form-builder>
         </div>
-        <!-- Tools Sidebar -->
-        <div 
-            class="tw-fixed"
-            :class="{'sidebar left': !StateShowToolsSidebar, 'sidebar left active': StateShowToolsSidebar}"
-        >
-          <div class="tw-w-full tw-flex tw-flex-row tw-justify-start bg-grey8 tw-py-4 tw-px-6" style="border-radius: 0 0 8px 8px;">
-            <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil"/>
-            <span class="medium16 white tw-select-none">Tools</span>
+      </div>
+      <!-- Tools Sidebar -->
+      <div
+          class="tw-fixed"
+          :class="{'sidebar left': !StateShowToolsSidebar, 'sidebar left active': StateShowToolsSidebar}"
+      >
+        <div class="tw-w-full tw-flex tw-flex-row tw-justify-start bg-grey8 tw-py-4 tw-px-6" style="border-radius: 0 0 8px 8px;">
+          <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil"/>
+          <span class="medium16 white tw-select-none">Tools</span>
+        </div>
+        <div class="tw-w-full tw-flex tw-flex-col bg-grey6" style="padding:0.3rem 1rem; height: calc(100vh - 180px); overflow-y: auto;">
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Short Input</span></div>
+            </div>
+            <div class="bar"></div>
           </div>
-          <div class="tw-w-full tw-flex tw-flex-col bg-grey6" style="padding:0.3rem 1rem; height: calc(100vh - 180px); overflow-y: auto;">
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Short Input</span></div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">L</span></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Long Input</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">L</span></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Long Input</span></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Number Input</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Number Input</span></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row"><Icon class="icon__style__large tw-mr-1" icon="bi:text-paragraph"/><span class="text__style__icon">P</span></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Paragraph</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row"><Icon class="icon__style__large tw-mr-1" icon="bi:text-paragraph"/><span class="text__style__icon">P</span></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Paragraph</span></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-2"><span class="text__style__icon">H</span></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Heading</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-2"><span class="text__style__icon">H</span></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Heading</span></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-items-center"><Icon class="icon__style__large" icon="bi:textarea-resize"/><Icon class="text__style__icon tw-mr-1" icon="bi:caret-down"/></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Dropdown</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-items-center"><Icon class="icon__style__large" icon="bi:textarea-resize"/><Icon class="text__style__icon tw-mr-1" icon="bi:caret-down"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Dropdown</span></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:ui-checks"/></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Choice</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:ui-checks"/></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-relative tw-w-full tw-flex tw-flex-row tw-justify-center">
+                  <div class="icon__component radius10px tw-mr-2" style="width: 25px; height: 3px"></div>
+                  <div class="icon__component radius10px tw-absolute" style="width: 7px; height: 7px; left: 10px; bottom:-2.4px"></div>
+                  <div class="icon__component radius10px tw-absolute" style="width: 7px; height: 7px; right: 18px; bottom:-2.4px"></div>
                 </div>
-                <div class="tw-w-4/5"><span class="medium16">Choice</span></div>
               </div>
-              <div class="bar"></div>
+              <div class="tw-w-4/5"><span class="medium16">Range Slider</span></div>
             </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-relative tw-w-full tw-flex tw-flex-row tw-justify-center">
-                    <div class="icon__component radius10px tw-mr-2" style="width: 25px; height: 3px"></div>
-                    <div class="icon__component radius10px tw-absolute" style="width: 7px; height: 7px; left: 10px; bottom:-2.4px"></div>
-                    <div class="icon__component radius10px tw-absolute" style="width: 7px; height: 7px; right: 18px; bottom:-2.4px"></div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:image"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Image</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:person-video"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Video</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:upload"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">File Upload</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:calendar2-date"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Date Time Picker</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:table"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Table</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:map"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Map</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:star"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Scale Rating</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+          <div class="button__component">
+            <div class="bar"></div>
+            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
+              <div class="tw-w-1/5">
+                <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="akar-icons:arrow-cycle"/></div>
+              </div>
+              <div class="tw-w-4/5"><span class="medium16">Captcha</span></div>
+            </div>
+            <div class="bar"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Properties Sidebar -->
+      <div
+          class="tw-fixed"
+          :class="{'sidebar right': !StateShowPropertiesSidebar, 'sidebar right active': StateShowPropertiesSidebar}"
+      >
+        <div class="tw-w-full tw-flex tw-flex-row tw-justify-start bg-grey8 tw-py-4 tw-px-6" style="border-radius: 0 0 8px 8px;">
+          <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil-alt"/>
+          <span class="medium16 white tw-select-none">Properties</span>
+        </div>
+        <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
+          <span>Properties</span>
+        </div>
+      </div>
+      <!-- Layout -->
+      <div class="tw-w-full" style="padding-top: 170px">
+        <!-- Sections Canvas -->
+        <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
+          <div 
+              class="tw-w-full tw-flex tw-flex-col tw-items-center"
+              v-for="(item, index) in FormStructure.Sections" :key="index"
+          >
+            <base-navigation-tools-section-form-builder 
+              :PropSectionIndex="index"
+              :PropSectionName="item.SectionName"
+              :PropSectionLength="FormStructure.Sections.length"
+              :PropSections="FormStructure.Sections"
+              @callbackSections="doMoveSections"
+              @callbackAction="doNavigationToolsSectionFormBuilder"
+              @callbackValueRename="doRenameSection"
+            ></base-navigation-tools-section-form-builder>
+              <div class="section__style">
+                <div class="tw-w-full tw-flex tw-flex-col">
+                  <span class="medium16">Blank Data</span>
+                  
+                  <div>
+                    <div v-for="(buttonItem, indexItem) in FormStructure.Sections[index].ActionButton" :key="indexItem">
+                      {{buttonItem}}
+                    </div>
                   </div>
                 </div>
-                <div class="tw-w-4/5"><span class="medium16">Range Slider</span></div>
               </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:image"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Image</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:person-video"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Video</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:upload"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">File Upload</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:calendar2-date"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Date Time Picker</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:table"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Table</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:map"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Map</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="bi:star"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Scale Rating</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
-            <div class="button__component">
-              <div class="bar"></div>
-              <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-                <div class="tw-w-1/5">
-                  <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1"><Icon class="icon__style__large" icon="akar-icons:arrow-cycle"/></div>
-                </div>
-                <div class="tw-w-4/5"><span class="medium16">Captcha</span></div>
-              </div>
-              <div class="bar"></div>
-            </div>
           </div>
         </div>
-        <!-- Properties Sidebar -->
-        <div
-            class="tw-fixed"
-            :class="{'sidebar right': !StateShowPropertiesSidebar, 'sidebar right active': StateShowPropertiesSidebar}"
-        >
-          <div class="tw-w-full tw-flex tw-flex-row tw-justify-start bg-grey8 tw-py-4 tw-px-6" style="border-radius: 0 0 8px 8px;">
-            <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil-alt"/>
-            <span class="medium16 white tw-select-none">Properties</span>
-          </div>
-          <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
-            <span>Properties</span>
-          </div>
-        </div>
-        <!-- Sections Canvas -->
-        <div 
-            class="tw-w-full tw-flex tw-flex-col tw-items-center" 
-            v-for="(item,index) in this.FormStructure.Sections" :key="item.SectionName"
-        >
-          <base-navigation-tools-section-form-builder 
-            v-bind:PropSectionName="item.SectionName"
-          ></base-navigation-tools-section-form-builder>
-            <div class="section__style">
-              Form {{index}}
-              <!-- Footer -->
-              <div class="tw-w-full tw-flex tw-flex-row">
-                <div
-                    class="tw-w-full tw-flex tw-flex-row tw-justify-end"
-                >
-                  <span>Open</span>
-                  
-                </div>
-              </div>
-            </div>
-        </div>
-        <base-dnd-drop></base-dnd-drop>
+        
       </div>
     </div>
   </div>
@@ -354,19 +375,19 @@ import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/
 import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/BaseTextInputRenameFormBuilder'
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
-
 // Import Component
-import BaseDndDrop from "@/components/formbuildercomponent/BaseDndDrop";
+//import RangeSliderComponent from '@/components/formbuildercomponent/RangeSlider1'
 
 export default {
   name: "FormBuilder.vue",
   components: {
-    BaseDndDrop,
     Icon,
     BaseTextInputRenameFormBuilder,
     BaseNavigationFormBuilder,
     BaseNavigationSectionFormBuilder,
-    BaseNavigationToolsSectionFormBuilder
+    BaseNavigationToolsSectionFormBuilder,
+    // Import Component
+    //RangeSliderComponent,
   },
   data() {
     return {
@@ -385,24 +406,28 @@ export default {
       StateShowContentForWindowSize: true,
       // Form Structure
       FormStructure : {
-        FormName: 'National Telecom Public Company Limited Ticket (NOC)',
+        FormName: 'Untitled Form',
         Sections: [
           {
-            SectionName: 'Section 1',
-          },
-          {
-            SectionName: 'Section 2'
-          },
-          {
-            SectionName: 'Section 3'
+            SectionName: 'Untitled Section 1',
+            ActionButton: [
+              {
+                ActionButtonName: 'Next',
+                ActionButtonProperties: {
+                  FontColor: '',
+                  BackgroundColor: String
+                }
+              }
+            ]
           },
         ]
       },
+      
     }
   },
   watch:{
     windowResize () {
-      this.StateShowContentForWindowSize = window.innerWidth >= 820
+      this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
   computed: {
@@ -412,7 +437,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.StateShowContentForWindowSize = window.innerWidth >= 820
+    this.StateShowContentForWindowSize = window.innerWidth >= 768
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -447,7 +472,6 @@ export default {
         this.StateShowRenameForm = true
       } else {
         if (stateSave === true) {
-          console.log(this.ValueRenameForm)
           if(this.ValueRenameForm === '')
             this.ValueRenameForm = this.FormStructure.FormName
           this.FormStructure.FormName = this.ValueRenameForm
@@ -462,6 +486,42 @@ export default {
       this.ValueRenameForm = nameValue
     },
     // Sections
+    doNavigationToolsSectionFormBuilder(event){
+      if(event[0] === 'delete') {
+        if(this.FormStructure.Sections.length>1)
+          this.FormStructure.Sections.splice(event[2],1)
+        else{
+          console.log('Delete Error, Length!!!')
+        }
+        //console.log(this.FormStructure.Sections)
+      } else if(event[0] === 'add') {
+        // Check 'Untitled Section'
+        let valueArray = []
+        for(let [index,element] of Object.values(this.FormStructure.Sections).map((element) => element.SectionName).entries()) {
+          if(/^Untitled Section /.test(element)){
+            valueArray[index] = element.match(/\d+/g).values().next().value
+          }
+        }
+        let maxValue = 0
+        for(let element of valueArray) {
+          if(parseInt(element) >= maxValue){
+            maxValue = parseInt(element)
+          }
+        }
+        // Create Name: 'Untitled Section' For Max Value
+        this.FormStructure.Sections.splice(event[2]+1,0,
+            {
+              SectionName: 'Untitled Section '+ (maxValue+1)
+            }
+        )
+      }
+    },
+    doRenameSection(index,valueRename){
+      this.FormStructure.Sections[index].SectionName = valueRename
+    },
+    doMoveSections(newSections){
+      this.FormStructure.Sections = newSections
+    },
     doNavigationSectionFormBuilder(e) {
       console.log(e)
     }
@@ -522,7 +582,7 @@ export default {
   }
 }*/
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: $grey6;
