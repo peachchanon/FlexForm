@@ -327,8 +327,31 @@
           <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil-alt"/>
           <span class="medium16 white tw-select-none">Properties</span>
         </div>
+        <!-- Action Button -->
         <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
-          <span>Properties</span>
+          <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col">
+            <span class="medium16 white tw-mt-2 tw-mb-1">Name</span>
+            <base-text-input-properties-form-builder
+                type="text"
+                :propValue="FormStructure.ActionButton.ActionButtonName"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonName"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonFontColor"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Background Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor.substring(3)"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonBgColor"
+            ></base-text-input-properties-form-builder>
+          </div>
         </div>
       </div>
       <!-- Layout -->
@@ -337,11 +360,11 @@
         <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
           <div 
               class="tw-w-full tw-flex tw-flex-col tw-items-center"
-              v-for="(item, index) in FormStructure.Sections" :key="index"
+              v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
           >
             <base-navigation-tools-section-form-builder 
-              :PropSectionIndex="index"
-              :PropSectionName="item.SectionName"
+              :PropSectionIndex="indexSection"
+              :PropSectionName="itemSection.SectionName"
               :PropSectionLength="FormStructure.Sections.length"
               :PropSections="FormStructure.Sections"
               @callbackSections="doMoveSections"
@@ -351,14 +374,23 @@
               <div class="section__style">
                 <div class="tw-w-full tw-flex tw-flex-col">
                   <span class="medium16">Blank Data</span>
-                  
-                  <div>
-                    <div v-for="(buttonItem, indexItem) in FormStructure.Sections[index].ActionButton" :key="indexItem">
-                      {{buttonItem}}
-                    </div>
-                  </div>
                 </div>
               </div>
+          </div>
+          <div 
+              class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end"
+              :class="{'active__prop__action__button': StatePropSelectActionButton, '': !StatePropSelectActionButton}"
+          >
+            <div
+                @click="doStateActionButtonProperties"
+                :class="[{'select__component__inactive': !StatePropSelectActionButton},{'select__component__active':StatePropSelectActionButton}]"
+            >
+              <button-section
+                  :propDataName="this.FormStructure.ActionButton.ActionButtonName"
+                  :propDataFontColor="this.FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                  :propDataBgColor="this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+              ></button-section>
+            </div>
           </div>
         </div>
         
@@ -368,7 +400,6 @@
 </template>
 
 <script>
-
 import { Icon } from '@iconify/vue2'
 import BaseNavigationFormBuilder from '@/components/formbuildercomponent/BaseNavigationFormBuilder'
 import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationSectionFormBuilder'
@@ -376,7 +407,8 @@ import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/Ba
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
 // Import Component
-//import RangeSliderComponent from '@/components/formbuildercomponent/RangeSlider1'
+import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
+import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
 
 export default {
   name: "FormBuilder.vue",
@@ -387,7 +419,8 @@ export default {
     BaseNavigationSectionFormBuilder,
     BaseNavigationToolsSectionFormBuilder,
     // Import Component
-    //RangeSliderComponent,
+    ButtonSection,
+    BaseTextInputPropertiesFormBuilder
   },
   data() {
     return {
@@ -407,22 +440,23 @@ export default {
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
+        ActionButton: {
+          ActionButtonName: 'Submit',
+          ActionButtonProperties: {
+            FontColor: 'white',
+            BackgroundColor: 'bg-blue5'
+          }
+        },
         Sections: [
           {
             SectionName: 'Untitled Section 1',
-            ActionButton: [
-              {
-                ActionButtonName: 'Next',
-                ActionButtonProperties: {
-                  FontColor: '',
-                  BackgroundColor: String
-                }
-              }
-            ]
           },
         ]
       },
+      // Global Select Component
       
+      // Action Button
+      StatePropSelectActionButton: false,
     }
   },
   watch:{
@@ -461,9 +495,17 @@ export default {
     // Button
     doButtonNameOnNavigation(nameButton) {
       if(nameButton === 'ButtonTools'){
-        this.StateShowToolsSidebar = !this.StateShowToolsSidebar;
+        this.StateShowToolsSidebar = !this.StateShowToolsSidebar
       } else if(nameButton === 'ButtonProperties') {
-        this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
+        if(this.StateShowPropertiesSidebar){
+          this.StateShowPropertiesSidebar = false
+          // Clear Properties
+          // Action Button
+          this.StatePropSelectActionButton = false
+          // Add Properties
+        } else {
+          this.StateShowPropertiesSidebar = true
+        }
       }
     },
     // Rename Form
@@ -522,6 +564,44 @@ export default {
     doMoveSections(newSections){
       this.FormStructure.Sections = newSections
     },
+    // Component Properties
+    // Action Button
+    doStateActionButtonProperties() {
+      if(this.StatePropSelectActionButton === false) {
+        // Close Properties Setting ของ Section
+        // เปิด Properties ของ Action Button
+        this.StatePropSelectActionButton = true
+        this.StateShowPropertiesSidebar = true
+      } else {
+        // ปิด Properties ของ Action Button
+        this.StatePropSelectActionButton = false
+        this.StateShowPropertiesSidebar = false
+        // Show Properties Setting ของ Section
+      }
+    },
+    doPropActionButtonName(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonName = 'Action Button'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonName = value
+      }
+    },
+    doPropActionButtonFontColor(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonProperties.FontColor = 'white'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonProperties.FontColor = value
+      }
+    },
+    doPropActionButtonBgColor(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor = 'bg-blue5'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor = 'bg-'+value
+      }
+    },
+    
+    
     doNavigationSectionFormBuilder(e) {
       console.log(e)
     }
@@ -733,12 +813,46 @@ export default {
   color: white;
   background-color: $green5;
 }
+
 .section__style{
-  width: 100%;
-  max-width: 960px;
-  padding: 0.75rem;
   box-shadow: $baseshadow;
   background-color: white;
   border-radius: $radius12px;
+  padding: 0.75rem;
 }
+@media only screen and (min-width: 1023px) {
+  .section__style{
+    width: 768px;
+  }
+  .section__bottom__style{
+    width: 768px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .section__style{
+    width: 640px;
+  }
+  .section__bottom__style{
+    width: 640px;
+    transition: all .1s ease-in;
+  }
+  .section__bottom__style.active__prop__action__button{
+    transition: all .1s ease-in;
+    width: 200px;
+  }
+}
+
+.select__component__active{
+  outline: 2px solid $blue10;
+  border: none;
+  border-radius: 12px;
+  transition: all .1s ease-in;
+}
+.select__component__inactive{
+  outline: 0px solid transparent;
+  border: none;
+  border-radius: 12px;
+  transition: all .1s ease-in;
+}
+
 </style>

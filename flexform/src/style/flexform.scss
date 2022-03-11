@@ -119,6 +119,7 @@ $red4:#E66A6A;
 $red3:#F29B9B;
 $red2:#FACDCD;
 $red1:#FFEEEE;
+$rainbow: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
 .white{color: white;}
 .grey10{color:$grey10;}
 .grey9{color:$grey9;}
@@ -171,6 +172,11 @@ $red1:#FFEEEE;
 .red3{color:$red3;}
 .red2{color:$red2;}
 .red1{color:$red1;}
+.rainbow{
+  background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .bg-white{background-color: white;}
 .bg-grey10{background-color: $grey10;}
 .bg-grey9{background-color: $grey9;}
