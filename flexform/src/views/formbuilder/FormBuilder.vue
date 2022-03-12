@@ -327,8 +327,8 @@
           <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil-alt"/>
           <span class="medium16 white tw-select-none">Properties</span>
         </div>
-        <!-- Action Button -->
         <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
+          <!-- Action Button -->
           <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col">
             <span class="medium16 white tw-mt-2 tw-mb-1">Name</span>
             <base-text-input-properties-form-builder
@@ -351,6 +351,10 @@
                 class="tw-mb-2"
                 @callBackString="doPropActionButtonBgColor"
             ></base-text-input-properties-form-builder>
+          </div>
+          <!-- Section -->
+          <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
+            <span class="semibold24 white tw-my-3">Section</span>
           </div>
         </div>
       </div>
@@ -379,7 +383,7 @@
           </div>
           <div 
               class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end"
-              :class="{'active__prop__action__button': StatePropSelectActionButton, '': !StatePropSelectActionButton}"
+              :class="{'active__action__button__properties': StatePropSelectActionButton, '': !StatePropSelectActionButton}"
           >
             <div
                 @click="doStateActionButtonProperties"
@@ -455,7 +459,9 @@ export default {
       },
       // Global Select Component
       
-      // Action Button
+      // Properties Sections
+      StatePropSelectSection: false,
+      // Properties Action Button
       StatePropSelectActionButton: false,
     }
   },
@@ -499,11 +505,11 @@ export default {
       } else if(nameButton === 'ButtonProperties') {
         if(this.StateShowPropertiesSidebar){
           this.StateShowPropertiesSidebar = false
-          // Clear Properties
+          this.StatePropSelectSection = false
           // Action Button
           this.StatePropSelectActionButton = false
-          // Add Properties
         } else {
+          this.StatePropSelectSection = true
           this.StateShowPropertiesSidebar = true
         }
       }
@@ -568,15 +574,13 @@ export default {
     // Action Button
     doStateActionButtonProperties() {
       if(this.StatePropSelectActionButton === false) {
-        // Close Properties Setting ของ Section
-        // เปิด Properties ของ Action Button
+        this.StatePropSelectSection = false
         this.StatePropSelectActionButton = true
         this.StateShowPropertiesSidebar = true
       } else {
-        // ปิด Properties ของ Action Button
+        this.StatePropSelectSection = true
         this.StatePropSelectActionButton = false
         this.StateShowPropertiesSidebar = false
-        // Show Properties Setting ของ Section
       }
     },
     doPropActionButtonName(value) {
@@ -813,19 +817,32 @@ export default {
   color: white;
   background-color: $green5;
 }
-
 .section__style{
   box-shadow: $baseshadow;
   background-color: white;
   border-radius: $radius12px;
   padding: 0.75rem;
 }
-@media only screen and (min-width: 1023px) {
+
+@media only screen and (min-width: 1024px) {
   .section__style{
     width: 768px;
   }
   .section__bottom__style{
     width: 768px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .section__style{
+    width: 640px;
+  }
+  .section__bottom__style{
+    width: 640px;
+    transition: all .1s ease-in;
+  }
+  .section__bottom__style.active__action__button__properties{
+    transition: all .1s ease-in;
+    width: 320px;
   }
 }
 @media only screen and (max-width: 1024px) {
@@ -836,12 +853,11 @@ export default {
     width: 640px;
     transition: all .1s ease-in;
   }
-  .section__bottom__style.active__prop__action__button{
+  .section__bottom__style.active__action__button__properties{
     transition: all .1s ease-in;
-    width: 200px;
+    width: 320px;
   }
 }
-
 .select__component__active{
   outline: 2px solid $blue10;
   border: none;
@@ -854,5 +870,4 @@ export default {
   border-radius: 12px;
   transition: all .1s ease-in;
 }
-
 </style>
