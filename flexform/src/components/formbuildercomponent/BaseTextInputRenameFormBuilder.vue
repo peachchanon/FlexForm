@@ -31,6 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 input{
+  width: 500px;
   padding: 0.5rem 0;
   border-bottom: 2px solid $grey3;
   background-color: white;

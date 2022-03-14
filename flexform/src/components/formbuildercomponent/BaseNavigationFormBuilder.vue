@@ -2,7 +2,7 @@
   <div>
     <div style="padding: 0.3rem">
       <span
-          v-for="(item,index) in field" :key="item.field"
+          v-for="(item,index) in field" :key="index"
           class="tw-mr-5"
           :class="[
               {'navigation-button-active':selectField===item.field || item === 0,'navigation-button':selectField!==item.field},

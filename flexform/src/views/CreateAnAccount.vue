@@ -232,8 +232,8 @@ export default {
   data() {
     return {
       StateShowContentForWindowSize: true,
-      showCreateAnAccountModal: false,
-      StateShowRenameForm: {
+      stateShowCreateAndAccountModal: false,
+      stateRegister: {
         username: '',
         password: '',
         confirmPassword: '',
@@ -268,7 +268,7 @@ export default {
   },
   methods: {
     doShowCreateAnAccountButton (state) {
-      if(!this.showCreateAnAccountModal){
+      if(!this.stateShowCreateAndAccountModal){
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
@@ -282,7 +282,7 @@ export default {
         this.stateProfile.phoneNumber = true
         this.stateProfile.jobTitle = true
         this.stateProfile.division = true
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
@@ -297,82 +297,82 @@ export default {
         this.stateProfile.phoneNumber = false
         this.stateProfile.jobTitle = false
         this.stateProfile.division = false
-        this.showCreateAnAccountModal = state
+        this.stateShowCreateAndAccountModal = state
       }
     },
     inputUsername(username){
-      this.StateShowRenameForm.username = username
-      this.stateProfile.username = this.StateShowRenameForm.username !== '';
+      this.stateRegister.username = username
+      this.stateProfile.username = this.stateRegister.username !== '';
     },
     inputPassword(password){
-      this.StateShowRenameForm.password = password
-      this.stateProfile.password = this.StateShowRenameForm.password !== '';
-      this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
+      this.stateRegister.password = password
+      this.stateProfile.password = this.stateRegister.password !== '';
+      this.stateProfile.confirmPassword = this.stateRegister.confirmPassword === this.stateRegister.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.StateShowRenameForm.confirmPassword = confirmPassword
-      if(this.StateShowRenameForm.password !== ''){
+      this.stateRegister.confirmPassword = confirmPassword
+      if(this.stateRegister.password !== ''){
         this.stateProfile.confirmPasswordHaveValue = true
-        this.stateProfile.confirmPassword = this.StateShowRenameForm.confirmPassword === this.StateShowRenameForm.password;
+        this.stateProfile.confirmPassword = this.stateRegister.confirmPassword === this.stateRegister.password;
       }else{
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
     inputEmployeeID(employeeID){
-      this.StateShowRenameForm.employeeID = employeeID
-      this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
+      this.stateRegister.employeeID = employeeID
+      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
     },
     inputGender(gender){
-      this.StateShowRenameForm.gender = gender
-      this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
+      this.stateRegister.gender = gender
+      this.stateProfile.gender = this.stateRegister.gender !== '';
     },
     inputTitle(title){
-      this.StateShowRenameForm.title = title
-      this.stateProfile.title = this.StateShowRenameForm.title !== '';
+      this.stateRegister.title = title
+      this.stateProfile.title = this.stateRegister.title !== '';
     },
     inputFirstName(firstName){
-      this.StateShowRenameForm.firstName = firstName
-      this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
+      this.stateRegister.firstName = firstName
+      this.stateProfile.firstName = this.stateRegister.firstName !== '';
     },
     inputLastName(lastName){
-      this.StateShowRenameForm.lastName = lastName
-      this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
+      this.stateRegister.lastName = lastName
+      this.stateProfile.lastName = this.stateRegister.lastName !== '';
     },
     inputEmail(email){
-      this.StateShowRenameForm.email = email
-      this.stateProfile.email = this.StateShowRenameForm.email !== '';
+      this.stateRegister.email = email
+      this.stateProfile.email = this.stateRegister.email !== '';
     },
     inputDOB(dob){
-      this.StateShowRenameForm.dob = dob
-      this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
+      this.stateRegister.dob = dob
+      this.stateProfile.dob = this.stateRegister.dob !== '';
     },
     inputPhoneNumber(phoneNumber){
-      this.StateShowRenameForm.phoneNumber = phoneNumber
-      this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
+      this.stateRegister.phoneNumber = phoneNumber
+      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
     },
     inputJob(job){
-      this.StateShowRenameForm.jobTitle = job
-      this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
+      this.stateRegister.jobTitle = job
+      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
     },
     inputDivision(division){
-      this.StateShowRenameForm.division = division
-      this.stateProfile.division = this.StateShowRenameForm.division !== '';
+      this.stateRegister.division = division
+      this.stateProfile.division = this.stateRegister.division !== '';
     },
     doRegister(e){
       console.log(e)
-      this.stateProfile.username = this.StateShowRenameForm.username !== '';
-      this.stateProfile.password = this.StateShowRenameForm.password !== '';
-      this.stateProfile.employeeID = this.StateShowRenameForm.employeeID !== '';
-      this.stateProfile.gender = this.StateShowRenameForm.gender !== '';
-      this.stateProfile.title = this.StateShowRenameForm.title !== '';
-      this.stateProfile.firstName = this.StateShowRenameForm.firstName !== '';
-      this.stateProfile.lastName = this.StateShowRenameForm.lastName !== '';
-      this.stateProfile.email = this.StateShowRenameForm.email !== '';
-      this.stateProfile.dob = this.StateShowRenameForm.dob !== '';
-      this.stateProfile.phoneNumber = this.StateShowRenameForm.phoneNumber !== '';
-      this.stateProfile.jobTitle = this.StateShowRenameForm.jobTitle !== '';
-      this.stateProfile.division = this.StateShowRenameForm.division !== '';
-      console.log(this.StateShowRenameForm)
+      this.stateProfile.username = this.stateRegister.username !== '';
+      this.stateProfile.password = this.stateRegister.password !== '';
+      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
+      this.stateProfile.gender = this.stateRegister.gender !== '';
+      this.stateProfile.title = this.stateRegister.title !== '';
+      this.stateProfile.firstName = this.stateRegister.firstName !== '';
+      this.stateProfile.lastName = this.stateRegister.lastName !== '';
+      this.stateProfile.email = this.stateRegister.email !== '';
+      this.stateProfile.dob = this.stateRegister.dob !== '';
+      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
+      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
+      this.stateProfile.division = this.stateRegister.division !== '';
+      console.log(this.stateRegister)
     },
     doPath(path) {
       this.$router.push(path).catch(()=>{})
