@@ -358,22 +358,22 @@
           <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
             <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectIndexSection].SectionName}}</span>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Style</span>
-            <dropdown
-                :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontName"
+            <base-dropdown-form-builder
+                :value="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontName"
                 :propList="FontNameList"
-                propType="basic"
+                propType="font"
                 propDropdownWidth="252"
                 @callBackValue="doPropSectionFontName"
-            ></dropdown>
+            ></base-dropdown-form-builder>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
             <div class="tw-flex tw-flex-row tw-items-center">
-              <dropdown
-                  :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontSize.toString()"
+              <base-dropdown-form-builder
+                  :value="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontSize.toString()"
                   :propList="FontSizeList"
                   propType="font"
                   propDropdownWidth="70"
                   @callBackValue="doPropSectionFontSize"
-              ></dropdown>
+              ></base-dropdown-form-builder>
               <span class="medium16 white tw-ml-3">px</span>
             </div>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
@@ -457,10 +457,11 @@ import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/
 import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/BaseTextInputRenameFormBuilder'
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
+import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
+import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder";
+
 // Import Component
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
-import Dropdown from "@/components/formbuildercomponent/Dropdown";
-import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
 
 export default {
   name: "FormBuilder.vue",
@@ -472,7 +473,7 @@ export default {
     BaseNavigationToolsSectionFormBuilder,
     BaseTextInputPropertiesFormBuilder,
     // Import Component
-    Dropdown,
+    BaseDropdownFormBuilder,
     ButtonSection,
   },
   data() {

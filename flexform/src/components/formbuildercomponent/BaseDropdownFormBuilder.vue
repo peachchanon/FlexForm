@@ -1,23 +1,26 @@
 ﻿<template>
-  <div
-      v-if="propType === 'basic'"
-      class="select" :data-value="value" :data-list="list" :style="cssDropdown"
-  >
+  <div>
+    <!-- Font Name Type -->
+    <div
+        v-if="propType === 'font'"
+        class="select" :data-value="value" :data-list="list" :style="cssDropdown"
+    >
       <span class="selector" @click="toggle()">
-        <input readonly :placeholder="placeholder" :style="cssDropdown" :value="value">
+        <input readonly :placeholder="value" :style="cssDropdown" :value="value">
         <span class="arrow" :class="{ expanded : visible }"></span>
       </span>
-    <div :class="{ hidden : !visible, visible }">
-      <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
-        <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
-      </ul>
+      <div :class="{ hidden : !visible, visible }">
+        <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
+          <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "dropdown",
+  name: "BaseDropdownFormBuilder",
   emits: ['callBackValue',],
   props: {
     value: {
@@ -26,8 +29,7 @@ export default {
     },
     propDropdownWidth: String,
     propList: [],
-    propType: String,
-    placeholder: String,
+    propType: String
   },
   data() {
     return {
