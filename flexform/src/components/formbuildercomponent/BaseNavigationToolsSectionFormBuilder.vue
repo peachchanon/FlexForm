@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3" style="max-width: 960px;">
+  <div class="section__top__style tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3">
     <div class="medium16 blue10">
       {{PropSectionName}}
     </div>
@@ -170,7 +170,7 @@ export default {
   },
   watch:{
     windowResize () {
-      this.StateShowContentForWindowSize = window.innerWidth >= 768
+      this.StateShowContentForWindowSize = window.innerWidth >= 1024
     },
   },
   computed: {
@@ -180,7 +180,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.StateShowContentForWindowSize = window.innerWidth >= 768
+    this.StateShowContentForWindowSize = window.innerWidth >= 1024
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -352,6 +352,16 @@ input:focus{
   background-color: $red5;
   &:hover{
     background-color: $red6;
+  }
+}
+@media only screen and (min-width: 1023px) {
+  .section__top__style{
+    width: 768px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .section__top__style{
+    width: 640px;
   }
 }
 </style>

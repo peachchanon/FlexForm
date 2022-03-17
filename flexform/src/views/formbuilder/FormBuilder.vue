@@ -137,8 +137,9 @@
             v-if="StatePage!=='Setting'"
         >
           <base-navigation-section-form-builder
-              v-bind:field="FormStructure.Sections"
-              @callbackField="doNavigationSectionFormBuilder"
+              v-bind:propField="FormStructure.Sections"
+              v-bind:propStateIndexSection = "StateSelectIndexSection"
+              @callbackIndexField="doSelectSection"
           ></base-navigation-section-form-builder>
         </div>
       </div>
@@ -328,7 +329,68 @@
           <span class="medium16 white tw-select-none">Properties</span>
         </div>
         <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
-          <span>Properties</span>
+          <!-- Action Button -->
+          <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col">
+            <span class="semibold24 white tw-my-1">Submit Button</span>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Name</span>
+            <base-text-input-properties-form-builder
+                type="text"
+                :propValue="FormStructure.ActionButton.ActionButtonName"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonName"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonFontColor"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Background Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor.substring(3)"
+                class="tw-mb-2"
+                @callBackString="doPropActionButtonBgColor"
+            ></base-text-input-properties-form-builder>
+          </div>
+          <!-- Section -->
+          <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
+            <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectIndexSection].SectionName}}</span>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Style</span>
+            <dropdown
+                :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontName"
+                :propList="FontNameList"
+                propType="basic"
+                propDropdownWidth="252"
+                @callBackValue="doPropSectionFontName"
+            ></dropdown>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <dropdown
+                  :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontSize.toString()"
+                  :propList="FontSizeList"
+                  propType="font"
+                  propDropdownWidth="70"
+                  @callBackValue="doPropSectionFontSize"
+              ></dropdown>
+              <span class="medium16 white tw-ml-3">px</span>
+            </div>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontColor"
+                class="tw-mb-2"
+                @callBackString="doPropSectionFontColor"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Background Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.BackgroundColor.substring(3)"
+                class="tw-mb-2"
+                @callBackString="doPropSectionBgColor"
+            ></base-text-input-properties-form-builder>
+          </div>
         </div>
       </div>
       <!-- Layout -->
@@ -337,28 +399,49 @@
         <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
           <div 
               class="tw-w-full tw-flex tw-flex-col tw-items-center"
-              v-for="(item, index) in FormStructure.Sections" :key="index"
+              v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
           >
             <base-navigation-tools-section-form-builder 
-              :PropSectionIndex="index"
-              :PropSectionName="item.SectionName"
+              :PropSectionIndex="indexSection"
+              :PropSectionName="itemSection.SectionName"
               :PropSectionLength="FormStructure.Sections.length"
               :PropSections="FormStructure.Sections"
               @callbackSections="doMoveSections"
               @callbackAction="doNavigationToolsSectionFormBuilder"
               @callbackValueRename="doRenameSection"
             ></base-navigation-tools-section-form-builder>
-              <div class="section__style">
+              <div
+                  class="section__style"
+                  :class="[
+                      {
+                        'select__component__active':indexSection === StateSelectIndexSection,
+                        'select__component__inactive': indexSection !== StateSelectIndexSection
+                      },
+                      FormStructure.Sections[indexSection].SectionProperties.FontColor,
+                      FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
+                      ]"
+                  @click="doSelectSection(indexSection)"
+                  :style="doSectionStyleConfig(indexSection)"
+              >
                 <div class="tw-w-full tw-flex tw-flex-col">
-                  <span class="medium16">Blank Data</span>
-                  
-                  <div>
-                    <div v-for="(buttonItem, indexItem) in FormStructure.Sections[index].ActionButton" :key="indexItem">
-                      {{buttonItem}}
-                    </div>
-                  </div>
+                  Blank Data
                 </div>
               </div>
+          </div>
+          <div 
+              class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end"
+              :class="{'active__action__button__properties': StatePropSelectActionButton, '': !StatePropSelectActionButton}"
+          >
+            <div
+                @click="doStateActionButtonProperties"
+                :class="[{'select__component__inactive': !StatePropSelectActionButton},{'select__component__active':StatePropSelectActionButton}]"
+            >
+              <button-section
+                  :propDataName="this.FormStructure.ActionButton.ActionButtonName"
+                  :propDataFontColor="this.FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                  :propDataBgColor="this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+              ></button-section>
+            </div>
           </div>
         </div>
         
@@ -368,7 +451,6 @@
 </template>
 
 <script>
-
 import { Icon } from '@iconify/vue2'
 import BaseNavigationFormBuilder from '@/components/formbuildercomponent/BaseNavigationFormBuilder'
 import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationSectionFormBuilder'
@@ -376,7 +458,9 @@ import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/Ba
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
 // Import Component
-//import RangeSliderComponent from '@/components/formbuildercomponent/RangeSlider1'
+import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
+import Dropdown from "@/components/formbuildercomponent/Dropdown";
+import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
 
 export default {
   name: "FormBuilder.vue",
@@ -386,8 +470,10 @@ export default {
     BaseNavigationFormBuilder,
     BaseNavigationSectionFormBuilder,
     BaseNavigationToolsSectionFormBuilder,
+    BaseTextInputPropertiesFormBuilder,
     // Import Component
-    //RangeSliderComponent,
+    Dropdown,
+    ButtonSection,
   },
   data() {
     return {
@@ -398,31 +484,45 @@ export default {
       StateShowRenameForm: false,
       ValueRenameForm: '',
       StateSaveRenameForm: false,
-      // Tools
+      // Tools Sidebar
       StateShowToolsSidebar: false,
-      // Properties
+      // Properties Sidebar
       StateShowPropertiesSidebar: false,
       // Window Size
       StateShowContentForWindowSize: true,
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
+        ActionButton: {
+          ActionButtonName: 'Submit',
+          ActionButtonProperties: {
+            FontColor: 'white',
+            BackgroundColor: 'bg-blue5'
+          }
+        },
         Sections: [
           {
             SectionName: 'Untitled Section 1',
-            ActionButton: [
-              {
-                ActionButtonName: 'Next',
-                ActionButtonProperties: {
-                  FontColor: '',
-                  BackgroundColor: String
-                }
-              }
-            ]
+            SectionProperties: {
+              FontName : 'Prompt',
+              FontSize : 16,
+              FontColor: 'grey10',
+              BackgroundColor: 'bg-white'
+            }
           },
-        ]
+        ],
+        
       },
-      
+      // State Sections
+      StateSelectIndexSection: 0,
+      // Global Select Component
+      // Value Config
+      FontSizeList: [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72],
+      FontNameList: ['Prompt','Arial','Times New Roman'],
+      // Properties Sections
+      StatePropSelectSection: false,
+      // Properties Action Button
+      StatePropSelectActionButton: false,
     }
   },
   watch:{
@@ -431,7 +531,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
   },
   async mounted () {
     window.onresize = () => {
@@ -461,9 +561,17 @@ export default {
     // Button
     doButtonNameOnNavigation(nameButton) {
       if(nameButton === 'ButtonTools'){
-        this.StateShowToolsSidebar = !this.StateShowToolsSidebar;
+        this.StateShowToolsSidebar = !this.StateShowToolsSidebar
       } else if(nameButton === 'ButtonProperties') {
-        this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
+        if(this.StateShowPropertiesSidebar){
+          this.StateShowPropertiesSidebar = false
+          this.StatePropSelectSection = false
+          // Action Button
+          this.StatePropSelectActionButton = false
+        } else {
+          this.StatePropSelectSection = true
+          this.StateShowPropertiesSidebar = true
+        }
       }
     },
     // Rename Form
@@ -488,12 +596,24 @@ export default {
     // Sections
     doNavigationToolsSectionFormBuilder(event){
       if(event[0] === 'delete') {
-        if(this.FormStructure.Sections.length>1)
-          this.FormStructure.Sections.splice(event[2],1)
+        if(this.FormStructure.Sections.length>=1){
+          // Check State if state select or event[2] is equal StateSelectIndexSection variable
+          if(this.StateSelectIndexSection === event[2]) {
+            if(this.StateSelectIndexSection !== 0){
+              this.StateSelectIndexSection = event[2] - 1
+            } else {
+              console.log('Check')
+              this.StateSelectIndexSection = event[2]
+              console.log(this.StateSelectIndexSection)
+            }
+            this.FormStructure.Sections.splice(event[2],1)
+          } else {
+            this.FormStructure.Sections.splice(event[2],1)
+          }
+        }
         else{
           console.log('Delete Error, Length!!!')
         }
-        //console.log(this.FormStructure.Sections)
       } else if(event[0] === 'add') {
         // Check 'Untitled Section'
         let valueArray = []
@@ -511,7 +631,13 @@ export default {
         // Create Name: 'Untitled Section' For Max Value
         this.FormStructure.Sections.splice(event[2]+1,0,
             {
-              SectionName: 'Untitled Section '+ (maxValue+1)
+              SectionName: 'Untitled Section '+ (maxValue+1),
+              SectionProperties: {
+                FontName : 'Prompt',
+                FontSize : 16,
+                FontColor: 'grey10',
+                BackgroundColor: 'bg-white'
+              }
             }
         )
       }
@@ -522,9 +648,69 @@ export default {
     doMoveSections(newSections){
       this.FormStructure.Sections = newSections
     },
-    doNavigationSectionFormBuilder(e) {
-      console.log(e)
-    }
+    doSelectSection(indexSection){
+      this.StateSelectIndexSection = indexSection
+      this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
+      this.StatePropSelectActionButton = false
+      this.StatePropSelectSection = true
+    },
+    // Section Style Config
+    doSectionStyleConfig(indexSection) {
+      return {
+        '--section--style--font--name': this.FormStructure.Sections[indexSection].SectionProperties.FontName,
+        '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.FontSize+'px',
+      }
+    },
+    // Component Properties
+    // Section
+    doPropSectionFontName(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontName = value
+    },
+    doPropSectionFontSize(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontSize = value
+    },
+    doPropSectionFontColor(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontColor = value
+    },
+    doPropSectionBgColor(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.BackgroundColor = 'bg-'+value
+    },
+    // Action Button
+    doStateActionButtonProperties() {
+      if(this.StatePropSelectActionButton === false) {
+        this.StatePropSelectSection = false
+        this.StatePropSelectActionButton = true
+        this.StateShowPropertiesSidebar = true
+      } else {
+        this.StatePropSelectSection = true
+        this.StatePropSelectActionButton = false
+        this.StateShowPropertiesSidebar = false
+      }
+    },
+    doPropActionButtonName(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonName = 'Action Button'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonName = value
+      }
+    },
+    doPropActionButtonFontColor(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonProperties.FontColor = 'white'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonProperties.FontColor = value
+      }
+    },
+    doPropActionButtonBgColor(value) {
+      if(value === ''){
+        this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor = 'bg-blue5'
+      } else {
+        this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor = 'bg-'+value
+      }
+    },
+    
+    
+    
   }
 }
 </script>
@@ -581,6 +767,7 @@ export default {
     .text__grey {color: $grey4;}
   }
 }*/
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -733,12 +920,60 @@ export default {
   color: white;
   background-color: $green5;
 }
+// Section Style
 .section__style{
-  width: 100%;
-  max-width: 960px;
-  padding: 0.75rem;
   box-shadow: $baseshadow;
-  background-color: white;
+  //background-color: white;
   border-radius: $radius12px;
+  padding: 0.75rem;
+  // Section Style Config
+  font-family: var(--section--style--font--name);
+  font-size: var(--section--style--font--size);
+}
+@media only screen and (min-width: 1024px) {
+  .section__style{
+    width: 768px;
+  }
+  .section__bottom__style{
+    width: 768px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .section__style{
+    width: 640px;
+  }
+  .section__bottom__style{
+    width: 640px;
+    transition: all .1s ease-in;
+  }
+  .section__bottom__style.active__action__button__properties{
+    transition: all .1s ease-in;
+    width: 320px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .section__style{
+    width: 640px;
+  }
+  .section__bottom__style{
+    width: 640px;
+    transition: all .1s ease-in;
+  }
+  .section__bottom__style.active__action__button__properties{
+    transition: all .1s ease-in;
+    width: 320px;
+  }
+}
+.select__component__active{
+  outline: 2px solid $blue10;
+  border: none;
+  border-radius: 12px;
+  transition: all .1s ease-in;
+}
+.select__component__inactive{
+  outline: 0px solid transparent;
+  border: none;
+  border-radius: 12px;
+  transition: all .1s ease-in;
 }
 </style>
