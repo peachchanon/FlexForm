@@ -19,7 +19,7 @@
             <Icon class="icon__style__large" icon="heroicons-outline:x"/>
           </div>
         </div>
-        <div class="tw-overflow-x-hidden" style="height: 100%; max-height: 250px">
+        <div class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
           <span class="grey7 medium14">White</span>
           <div class="tw-flex tw-flex-wrap">
             <div v-for="(color,index) in dataColorWhite" :key="index" :class="['bg-'+color,{'tw-border-2 tw-border-blue5': showString === color,'': showString !== color}]" 
