@@ -1,15 +1,15 @@
 ﻿<template>
   <div
       v-if="propType === 'basic'"
-      class="select" :data-value="value" :data-list="list" :style="cssDropdown"
+      class="select" :data-value="dropdownValue" :data-list="list" :style="cssDropdown"
   >
       <span class="selector" @click="toggle()">
-        <input readonly :placeholder="placeholder" :style="cssDropdown" :value="value">
+        <input readonly :placeholder="placeholder" :style="cssDropdown" :value="dropdownValue">
         <span class="arrow" :class="{ expanded : visible }"></span>
       </span>
     <div :class="{ hidden : !visible, visible }">
       <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
-        <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
+        <li :class="{ current : item === dropdownValue }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
       </ul>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
   name: "dropdown",
   emits: ['callBackValue',],
   props: {
-    value: {
+    dropdownValue: {
       type: String,
       default: ''
     },

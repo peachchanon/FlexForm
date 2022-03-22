@@ -1,25 +1,71 @@
 ﻿<template>
-<div>
-  <input type="text" class="base-padding tw-items-center"
-         :placeholder="placeholder"
-  :class="[fontColor]"
-  :style="{fontSize: fontSize + 'px'}" v-model="valueString"
-  @input="doString">
-</div> <!--text box! {{HText}}-->
+  <div class="tw-flex tw-flex-col" :class="componentStyle">
+    <span 
+        :style="headingStyle"
+        :class="['heading__theme',data.HeadingFontColor]"
+    >
+      {{data.HeadingText}}
+    </span>
+    <span
+        :style="subheadingStyle"
+        :class="['subheading__theme',data.SubheadingFontColor]"
+    >
+      {{data.SubheadingText}}
+    </span>
+    <!--
+    <input type="text" class="base-padding tw-items-center"
+           :placeholder="placeholder"
+    :class="[fontColor]"
+    :style="{fontSize: fontSize + 'px'}" v-model="valueString"
+    @input="doString"> -->
+  </div> 
 </template>
 
 <script>
 export default {
-  props:{
+  props: {
     HText: String,
     fontColor: String,
     fontSize: String,
     placeholder: String,
     propName: String,
+    
+    data: {
+      HeadingText: String,
+      SubheadingText: String,
+      Alignment: String,
+      HeadingFontColor: String,
+      HeadingFontSize: Number,
+      SubheadingFontColor: String,
+      SubheadingFontSize: Number,
+    }
+    
   },
-  data(){
-    return{
-      valueString: this.propName
+  data() {
+    return {
+      
+    }
+  },
+
+  computed: {
+    componentStyle() {
+      if(this.data.Alignment === 'left')
+        return 'tw-items-start'
+      else if(this.data.Alignment === 'center')
+        return 'tw-items-center'
+      else{
+        return 'tw-items-end'
+      }
+    },
+    headingStyle() {
+      return {
+        '--heading--font--size': this.data.HeadingFontSize+'px',
+      }
+    },
+    subheadingStyle() {
+      return {
+        '--subheading--font--size': this.data.SubheadingFontSize+'px',
+      }
     }
   },
   methods: {
@@ -29,7 +75,6 @@ export default {
         this.$emit('callBackString', this.placeholder)
       } else {
         this.$emit('callBackString', this.valueString)
-        
       }
     }
   }
@@ -37,6 +82,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.component__theme {
+  
+}
+.heading__theme {
+  font-size: var(--heading--font--size);
+  font-weight: 700;
+}
+.subheading__theme {
+  font-size: var(--subheading--font--size);
+  font-weight: 500;
+}
+
+
 .white{color: white;}
 .grey10{color:$grey10;}
 .grey9{color:$grey9;}
