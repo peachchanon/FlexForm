@@ -3,15 +3,15 @@
     <!-- Font Name Type -->
     <div
         v-if="propType === 'font'"
-        class="select" :data-value="value" :data-list="list" :style="cssDropdown"
+        class="select" :data-value="dropdownValue" :data-list="list" :style="css__font__style"
     >
       <span class="selector" @click="toggle()">
-        <input readonly :placeholder="value" :style="cssDropdown" :value="value">
+        <input readonly :style="css__font__style" :value="dropdownValue">
         <span class="arrow" :class="{ expanded : visible }"></span>
       </span>
       <div :class="{ hidden : !visible, visible }">
-        <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
-          <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
+        <ul :style="css__font__style" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
+          <li :class="{ current : item === dropdownValue }" v-for="(item,i) in list" :key="i" @click="select(item)" :style="fontStyle(item)">{{item}}</li>
         </ul>
       </div>
     </div>
@@ -23,7 +23,7 @@ export default {
   name: "BaseDropdownFormBuilder",
   emits: ['callBackValue',],
   props: {
-    value: {
+    dropdownValue: {
       type: String,
       default: ''
     },
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       list: this.propList,
-      visible: false
+      visible: false,
     }
   },
   watch: {},
@@ -51,21 +51,28 @@ export default {
       if (!this.$el.contains(e.target)) {
         this.visible = false;
       }
+    },
+    fontStyle(item){
+      return {
+        '--font--style--item': item,
+      }
     }
   },
   computed: {
-    cssDropdown() {
+    css__font__style() {
       if(this.propDropdownWidth !== 'full'){
         return{
           '--dropdown-width': this.propDropdownWidth+"px",
+          '--font--style--value': this.value,
         }
       }
       else{
         return {
-          '--dropdown-width': 100+'%'
+          '--dropdown-width': 100+'%',
+          '--font--style--value': this.value,
         }
       }
-    }
+    },
   },
   mounted () {
     document.addEventListener('click', this.close)
@@ -81,6 +88,7 @@ export default {
     z-index: 1;
     display: block;
     input{
+      font-family: var(--font--style--value);
       width: var(--dropdown-width);
       cursor: pointer;
       background: $grey1;
@@ -130,6 +138,8 @@ export default {
     box-shadow: $baseshadow;
   }
   li{
+    font-family: var(--font--style--item);
+    font-weight: 500;
     padding: 12px;
     color: $grey10;
     &:hover {

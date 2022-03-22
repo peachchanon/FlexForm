@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="section__top__style tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3">
     <div class="medium16 blue10">
-      {{PropSectionName}}
+      {{sectionName}}
     </div>
     <div class="tw-flex tw-flex-row">
       <div 
@@ -28,7 +28,7 @@
       <div 
           class="tw-mx-2 red5 hover:tw-text-red4 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
           @click="doShowDeleteModal"
-          v-if="PropSectionLength>=2"
+          v-if="sectionLength>=2"
       >
         <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:trash"/>
         <span class="medium16" v-if="StateShowContentForWindowSize">Delete</span>
@@ -66,8 +66,8 @@
     <!-- Rename Section Alert : Complete -->
     <base-alert-form-builder
         v-if="StateBadgeRenameComplete"
-        propType="success"
-        propData="Rename Complete"
+        type="success"
+        data="Rename Complete"
         @callbackClose="doRenameSectionAlertBadge"
     ></base-alert-form-builder>
     <!-- Move Section Modal -->
@@ -114,7 +114,7 @@
             <span class="semibold24 red5">Delete Section ?</span>
           </header>
           <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
-            <span class="medium16 grey10">You're about to delete {{this.PropSectionName}}.</span>
+            <span class="medium16 grey10">You're about to delete {{this.sectionName}}.</span>
           </section>
           <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
             <div class="tw-w-1/3 tw-mr-1">
@@ -142,31 +142,28 @@ export default {
   components: {
     Icon,
     BaseAlertFormBuilder,
-
     draggable
   },
-  emits: ['callbackAction','callbackValueRename','callbackSections'],
+  emits: ['callbackAction','callbackRenameValue','callbackSection'],
   data() {
     return {
       StateShowContentForWindowSize: true,
       // Rename
       StateRenameModal: false,
-      ValueRenameString: this.PropSectionName,
+      ValueRenameString: this.sectionName,
       StateBadgeRenameComplete: false,
       // Move
       StateMoveModal: false,
-      SectionsData: this.PropSections,
-      
+      SectionsData: this.sectionList,
       // Delete
       StateDeleteModal: false,
-
     }
   },
   props: {
-    PropSectionName: String,
-    PropSectionIndex: Number,
-    PropSectionLength: Number,
-    PropSections: Array
+    sectionName: String,
+    sectionIndex: Number,
+    sectionList: Array,
+    sectionLength: Number,
   },
   watch:{
     windowResize () {
@@ -186,14 +183,14 @@ export default {
     ...mapActions(['flapWindowResize']),
     // Rename Section
     doShowRenameModal () {
-      this.ValueRenameString = this.PropSectionName
+      this.ValueRenameString = this.sectionName
       this.StateRenameModal = this.StateRenameModal !== true
     },
     doRename(){
       if(this.ValueRenameString === '') {
-        this.$emit('callbackValueRename', this.PropSectionIndex,this.PropSectionName)
+        this.$emit('callbackRenameValue', this.sectionIndex,this.sectionName)
       } else {
-        this.$emit('callbackValueRename', this.PropSectionIndex,this.ValueRenameString)
+        this.$emit('callbackRenameValue', this.sectionIndex,this.ValueRenameString)
         this.StateBadgeRenameComplete = true
       }
       this.StateRenameModal = this.StateRenameModal !== true
@@ -203,11 +200,11 @@ export default {
     },
     // Move Section
     doShowMoveModal () {
-      this.SectionsData = this.PropSections
+      this.SectionsData = this.sectionList
       this.StateMoveModal = this.StateMoveModal !== true
     },
     doMove() {
-      this.$emit('callbackSections',this.SectionsData)
+      this.$emit('callbackSection',this.SectionsData)
       this.StateMoveModal = false
     },
     // Delete Section
@@ -223,10 +220,8 @@ export default {
       } else if(action === 'delete') {
         this.StateDeleteModal = false
       }
-      this.$emit('callbackAction', [action,this.PropSectionName,this.PropSectionIndex])
+      this.$emit('callbackAction', [action,this.sectionName,this.sectionIndex])
     },
-
-    
   },
 }
 </script>
