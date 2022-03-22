@@ -2,14 +2,16 @@
   <div>
     <div style="padding: 0.3rem">
       <span
-          v-for="(item,index) in field" :key="item.SectionName"
+          v-for="(element, index) in field" :key="index"
           class="tw-mr-5"
-          :class="[
-              {'navigation-button-active':selectField===item.SectionName,'navigation-button':selectField!==item.SectionName},
-              {'navigation-button-active':index===0 && initialIndex,'navigation-button': index!==0 && !initialIndex},
-              ]"
-          @click="doHorizontalNavigation(item.SectionName)"
-      >{{item.SectionName}}</span>
+          :class="{
+            'navigation-button-active': index === propStateIndexSection,
+            'navigation-button': index !== propStateIndexSection
+          }"
+          @click="doHorizontalNavigation(index)"
+      >
+      {{element.SectionName}}
+      </span>
     </div>
   </div>
 </template>
@@ -17,21 +19,19 @@
 <script>
 export default {
   name: "BaseNavigationSectionFormBuilder",
-  emits: ['callbackField'],
+  emits: ['callbackIndexField'],
   props: {
-    field: Array
+    propStateIndexSection: Number,
+    propField: Array
   },
   data() {
     return {
-      initialIndex: true,
-      selectField: this.field[0]
+      field: this.propField,
     }
   },
   methods: {
-    doHorizontalNavigation(sectionName) {
-      this.initialIndex = false
-      this.selectField = sectionName
-      this.$emit('callbackField', sectionName)
+    doHorizontalNavigation(sectionIndex) {
+      this.$emit('callbackIndexField', sectionIndex)
     }
   }
 }

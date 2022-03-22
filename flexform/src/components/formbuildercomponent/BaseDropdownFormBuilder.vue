@@ -1,36 +1,39 @@
 ﻿<template>
   <div>
-  <div class="select" :data-value="value" :data-list="list" :style="cssDropdown">
-    <span class="selector" @click="toggle()">
-        <input readonly :placeholder="placeholder" :style="cssDropdown" :value="value">
-      <span class="arrow" :class="{ expanded : visible }"></span>
-    </span>
-    <div :class="{ hidden : !visible, visible }">
-      <ul :style="cssDropdown">
-        <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{ item }}</li>
-      </ul>
+    <!-- Font Name Type -->
+    <div
+        v-if="propType === 'font'"
+        class="select" :data-value="value" :data-list="list" :style="cssDropdown"
+    >
+      <span class="selector" @click="toggle()">
+        <input readonly :placeholder="value" :style="cssDropdown" :value="value">
+        <span class="arrow" :class="{ expanded : visible }"></span>
+      </span>
+      <div :class="{ hidden : !visible, visible }">
+        <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
+          <li :class="{ current : item === value }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
+        </ul>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "dropdown",
+  name: "BaseDropdownFormBuilder",
+  emits: ['callBackValue',],
   props: {
-    placeholder: {
+    value: {
       type: String,
-      default: 'Hello'
+      default: ''
     },
-    dropdownWidth:{
-      type: Number,
-      default: 400
-    }
+    propDropdownWidth: String,
+    propList: [],
+    propType: String
   },
   data() {
     return {
-      list: ['1','2'],
-      value: this.placeholder.toString(),
+      list: this.propList,
       visible: false
     }
   },
@@ -40,6 +43,7 @@ export default {
       this.visible = !this.visible;
     },
     select(option) {
+      this.$emit('callBackValue', option)
       this.value = option;
       this.toggle();
     },
@@ -50,18 +54,22 @@ export default {
     }
   },
   computed: {
-    cssDropdown(){
-      return{
-        '--dropdown-width': this.dropdownWidth + "px",
+    cssDropdown() {
+      if(this.propDropdownWidth !== 'full'){
+        return{
+          '--dropdown-width': this.propDropdownWidth+"px",
+        }
+      }
+      else{
+        return {
+          '--dropdown-width': 100+'%'
+        }
       }
     }
   },
   mounted () {
     document.addEventListener('click', this.close)
   },
-  // beforeDestroy () {
-  //   document.removeEventListener('click',this.close)
-  // }
 }
 </script>
 
@@ -79,19 +87,19 @@ export default {
       padding: 12px;
       z-index: 1;
       font-size: 16px;
-      outline:1px solid white;
-      color: $grey5;
+      outline: 2px solid white;
+      color: $grey10;
       border-radius: 10px;
     }
-    & :focus{
+    &:focus{
       background: white;
-      outline: 1px solid $blue5;
-      color: black;
+      color: $grey10;
+      outline: 2px solid red;
     }
     input:focus::placeholder {
-      color: black;
+      color: $grey10;
     }
-    .arrow {
+    .arrow{
       position: absolute;
       right: 10px;
       top: 40%;
@@ -99,16 +107,16 @@ export default {
       height: 0;
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
-      border-top: 10px solid $grey5;
+      border-top: 10px solid $grey10;
       transform: rotateZ(0deg) translateY(0px);
       transition-duration: 0.3s;
       transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
     }
-    .expanded {
+    .expanded{
       transform: rotateZ(180deg) translateY(2px);
     }
   }
-  ul {
+  ul{
     width: var(--dropdown-width);
     list-style-type: none;
     padding: 0;
@@ -116,29 +124,34 @@ export default {
     font-size: 16px;
     border: 1px solid white;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     background: $grey1;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: $radius10px;
+    box-shadow: $baseshadow;
   }
-  li {
+  li{
     padding: 12px;
-    color: $grey5;
+    color: $grey10;
     &:hover {
+      transition: all .1s ease-in;
+      cursor: pointer;
       color: white;
       background: $blue5;
-      border-radius: 0px 0px 10px 10px;
+      border-radius: $radius10px;
     }
   }
-  .current {
+  .current{
+    color: $blue7;
     background: $grey2;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: $radius10px;
   }
-  .hidden {
+  .hidden{
+    transition: all .1s ease-in;
     visibility: hidden;
   }
   .visible {
+    transition: all .1s ease-in;
     visibility: visible;
   }
 }
-
 </style>

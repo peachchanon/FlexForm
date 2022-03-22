@@ -137,8 +137,9 @@
             v-if="StatePage!=='Setting'"
         >
           <base-navigation-section-form-builder
-              v-bind:field="FormStructure.Sections"
-              @callbackField="doNavigationSectionFormBuilder"
+              v-bind:propField="FormStructure.Sections"
+              v-bind:propStateIndexSection = "StateSelectIndexSection"
+              @callbackIndexField="doSelectSection"
           ></base-navigation-section-form-builder>
         </div>
       </div>
@@ -330,6 +331,7 @@
         <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
           <!-- Action Button -->
           <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col">
+            <span class="semibold24 white tw-my-1">Submit Button</span>
             <span class="medium16 white tw-mt-2 tw-mb-1">Name</span>
             <base-text-input-properties-form-builder
                 type="text"
@@ -354,7 +356,40 @@
           </div>
           <!-- Section -->
           <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
-            <span class="semibold24 white tw-my-3">Section</span>
+            <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectIndexSection].SectionName}}</span>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Style</span>
+            <base-dropdown-form-builder
+                :value="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontName"
+                :propList="FontNameList"
+                propType="font"
+                propDropdownWidth="252"
+                @callBackValue="doPropSectionFontName"
+            ></base-dropdown-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <base-dropdown-form-builder
+                  :value="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontSize.toString()"
+                  :propList="FontSizeList"
+                  propType="font"
+                  propDropdownWidth="70"
+                  @callBackValue="doPropSectionFontSize"
+              ></base-dropdown-form-builder>
+              <span class="medium16 white tw-ml-3">px</span>
+            </div>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontColor"
+                class="tw-mb-2"
+                @callBackString="doPropSectionFontColor"
+            ></base-text-input-properties-form-builder>
+            <span class="medium16 white tw-mt-2 tw-mb-1">Background Color</span>
+            <base-text-input-properties-form-builder
+                type="color"
+                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.BackgroundColor.substring(3)"
+                class="tw-mb-2"
+                @callBackString="doPropSectionBgColor"
+            ></base-text-input-properties-form-builder>
           </div>
         </div>
       </div>
@@ -375,9 +410,21 @@
               @callbackAction="doNavigationToolsSectionFormBuilder"
               @callbackValueRename="doRenameSection"
             ></base-navigation-tools-section-form-builder>
-              <div class="section__style">
+              <div
+                  class="section__style"
+                  :class="[
+                      {
+                        'select__component__active':indexSection === StateSelectIndexSection,
+                        'select__component__inactive': indexSection !== StateSelectIndexSection
+                      },
+                      FormStructure.Sections[indexSection].SectionProperties.FontColor,
+                      FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
+                      ]"
+                  @click="doSelectSection(indexSection)"
+                  :style="doSectionStyleConfig(indexSection)"
+              >
                 <div class="tw-w-full tw-flex tw-flex-col">
-                  <span class="medium16">Blank Data</span>
+                  Blank Data
                 </div>
               </div>
           </div>
@@ -410,9 +457,11 @@ import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/
 import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/BaseTextInputRenameFormBuilder'
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
+import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
+import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder";
+
 // Import Component
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
-import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
 
 export default {
   name: "FormBuilder.vue",
@@ -422,9 +471,10 @@ export default {
     BaseNavigationFormBuilder,
     BaseNavigationSectionFormBuilder,
     BaseNavigationToolsSectionFormBuilder,
+    BaseTextInputPropertiesFormBuilder,
     // Import Component
+    BaseDropdownFormBuilder,
     ButtonSection,
-    BaseTextInputPropertiesFormBuilder
   },
   data() {
     return {
@@ -435,9 +485,9 @@ export default {
       StateShowRenameForm: false,
       ValueRenameForm: '',
       StateSaveRenameForm: false,
-      // Tools
+      // Tools Sidebar
       StateShowToolsSidebar: false,
-      // Properties
+      // Properties Sidebar
       StateShowPropertiesSidebar: false,
       // Window Size
       StateShowContentForWindowSize: true,
@@ -454,11 +504,22 @@ export default {
         Sections: [
           {
             SectionName: 'Untitled Section 1',
+            SectionProperties: {
+              FontName : 'Prompt',
+              FontSize : 16,
+              FontColor: 'grey10',
+              BackgroundColor: 'bg-white'
+            }
           },
-        ]
+        ],
+        
       },
+      // State Sections
+      StateSelectIndexSection: 0,
       // Global Select Component
-      
+      // Value Config
+      FontSizeList: [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72],
+      FontNameList: ['Prompt','Arial','Times New Roman'],
       // Properties Sections
       StatePropSelectSection: false,
       // Properties Action Button
@@ -471,7 +532,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
   },
   async mounted () {
     window.onresize = () => {
@@ -536,12 +597,24 @@ export default {
     // Sections
     doNavigationToolsSectionFormBuilder(event){
       if(event[0] === 'delete') {
-        if(this.FormStructure.Sections.length>1)
-          this.FormStructure.Sections.splice(event[2],1)
+        if(this.FormStructure.Sections.length>=1){
+          // Check State if state select or event[2] is equal StateSelectIndexSection variable
+          if(this.StateSelectIndexSection === event[2]) {
+            if(this.StateSelectIndexSection !== 0){
+              this.StateSelectIndexSection = event[2] - 1
+            } else {
+              console.log('Check')
+              this.StateSelectIndexSection = event[2]
+              console.log(this.StateSelectIndexSection)
+            }
+            this.FormStructure.Sections.splice(event[2],1)
+          } else {
+            this.FormStructure.Sections.splice(event[2],1)
+          }
+        }
         else{
           console.log('Delete Error, Length!!!')
         }
-        //console.log(this.FormStructure.Sections)
       } else if(event[0] === 'add') {
         // Check 'Untitled Section'
         let valueArray = []
@@ -559,7 +632,13 @@ export default {
         // Create Name: 'Untitled Section' For Max Value
         this.FormStructure.Sections.splice(event[2]+1,0,
             {
-              SectionName: 'Untitled Section '+ (maxValue+1)
+              SectionName: 'Untitled Section '+ (maxValue+1),
+              SectionProperties: {
+                FontName : 'Prompt',
+                FontSize : 16,
+                FontColor: 'grey10',
+                BackgroundColor: 'bg-white'
+              }
             }
         )
       }
@@ -570,7 +649,33 @@ export default {
     doMoveSections(newSections){
       this.FormStructure.Sections = newSections
     },
+    doSelectSection(indexSection){
+      this.StateSelectIndexSection = indexSection
+      this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
+      this.StatePropSelectActionButton = false
+      this.StatePropSelectSection = true
+    },
+    // Section Style Config
+    doSectionStyleConfig(indexSection) {
+      return {
+        '--section--style--font--name': this.FormStructure.Sections[indexSection].SectionProperties.FontName,
+        '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.FontSize+'px',
+      }
+    },
     // Component Properties
+    // Section
+    doPropSectionFontName(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontName = value
+    },
+    doPropSectionFontSize(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontSize = value
+    },
+    doPropSectionFontColor(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontColor = value
+    },
+    doPropSectionBgColor(value){
+      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.BackgroundColor = 'bg-'+value
+    },
     // Action Button
     doStateActionButtonProperties() {
       if(this.StatePropSelectActionButton === false) {
@@ -606,9 +711,7 @@ export default {
     },
     
     
-    doNavigationSectionFormBuilder(e) {
-      console.log(e)
-    }
+    
   }
 }
 </script>
@@ -665,6 +768,7 @@ export default {
     .text__grey {color: $grey4;}
   }
 }*/
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -817,13 +921,16 @@ export default {
   color: white;
   background-color: $green5;
 }
+// Section Style
 .section__style{
   box-shadow: $baseshadow;
-  background-color: white;
+  //background-color: white;
   border-radius: $radius12px;
   padding: 0.75rem;
+  // Section Style Config
+  font-family: var(--section--style--font--name);
+  font-size: var(--section--style--font--size);
 }
-
 @media only screen and (min-width: 1024px) {
   .section__style{
     width: 768px;

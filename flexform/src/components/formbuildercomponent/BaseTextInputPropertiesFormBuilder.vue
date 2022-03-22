@@ -3,7 +3,7 @@
     <input v-if="type === 'text'" type="text" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString">
     <div v-if="type === 'color'" class="input medium16 radius10px tw-w-full tw-flex tw-flex-row tw-items-center tw-relative">
       <div class="base-padding tw-w-full tw-h-full radius10px">
-        <div :class="'bg-'+showString" style="height: 24px; border-radius: 6px"></div>
+        <div :class="'bg-'+propValue" style="height: 24px; border-radius: 6px"></div>
       </div>
       <div class="tw-bg-grey9 hover:tw-bg-grey7 tw-transition tw-ease-in tw-cursor-pointer tw-p-2 tw-mr-2 radius10px tw-w-fit tw-h-fit tw-text-white hover:tw-text-grey1" @click="doStateBoardColor">
         <Icon class="icon__style__large" icon="clarity:color-palette-solid"/>
@@ -19,7 +19,7 @@
             <Icon class="icon__style__large" icon="heroicons-outline:x"/>
           </div>
         </div>
-        <div class="tw-overflow-x-hidden" style="height: 100%; max-height: 250px">
+        <div class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
           <span class="grey7 medium14">White</span>
           <div class="tw-flex tw-flex-wrap">
             <div v-for="(color,index) in dataColorWhite" :key="index" :class="['bg-'+color,{'tw-border-2 tw-border-blue5': showString === color,'': showString !== color}]" 
