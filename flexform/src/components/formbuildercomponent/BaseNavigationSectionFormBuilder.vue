@@ -5,8 +5,8 @@
           v-for="(element, index) in field" :key="index"
           class="tw-mr-5"
           :class="{
-            'navigation-button-active': index === propStateIndexSection,
-            'navigation-button': index !== propStateIndexSection
+            'navigation-button-active': index === stateSectionIndex,
+            'navigation-button': index !== stateSectionIndex
           }"
           @click="doHorizontalNavigation(index)"
       >
@@ -19,19 +19,14 @@
 <script>
 export default {
   name: "BaseNavigationSectionFormBuilder",
-  emits: ['callbackIndexField'],
+  emits: ['callbackFieldIndex'],
   props: {
-    propStateIndexSection: Number,
-    propField: Array
-  },
-  data() {
-    return {
-      field: this.propField,
-    }
+    field: Array,
+    stateSectionIndex: Number,
   },
   methods: {
     doHorizontalNavigation(sectionIndex) {
-      this.$emit('callbackIndexField', sectionIndex)
+      this.$emit('callbackFieldIndex', sectionIndex)
     }
   }
 }

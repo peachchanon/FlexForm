@@ -91,7 +91,7 @@
                 class="button__text white"
                 :class="{'button__text white': !StateShowToolsSidebar, 'active': StateShowToolsSidebar}"
                 v-if="StatePage==='Build'"
-                @click="doButtonNameOnNavigation('ButtonTools')"
+                @click="doButtonOnBlueNavigation('ButtonTools')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil"/>
               <span>Tools</span>
@@ -104,10 +104,10 @@
             -->
           </div>
           <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-justify-center">
-            <BaseNavigationFormBuilder
-                v-bind:field="Page"
+            <base-navigation-form-builder
+                v-bind:field="PageList"
                 @callbackField="doNavigationFormBuilder"
-            ></BaseNavigationFormBuilder>
+            ></base-navigation-form-builder>
           </div>
           <div class="tw-w-full tw-flex tw-flex-row tw-justify-end">
             <!--
@@ -124,7 +124,7 @@
                 class="button__text white"
                 :class="{'button__text white': !StateShowPropertiesSidebar, 'active': StateShowPropertiesSidebar}"
                 v-if="StatePage==='Build'"
-                @click="doButtonNameOnNavigation('ButtonProperties')"
+                @click="doButtonOnBlueNavigation('ButtonProperties')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil-alt"/>
               <span>Properties</span>
@@ -137,9 +137,9 @@
             v-if="StatePage!=='Setting'"
         >
           <base-navigation-section-form-builder
-              v-bind:propField="FormStructure.Sections"
-              v-bind:propStateIndexSection = "StateSelectIndexSection"
-              @callbackIndexField="doSelectSection"
+              :field = "FormStructure.Sections"
+              :stateSectionIndex = "StateSelectSectionIndex"
+              @callbackFieldIndex="doSelectSection"
           ></base-navigation-section-form-builder>
         </div>
       </div>
@@ -356,40 +356,45 @@
           </div>
           <!-- Section -->
           <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
-            <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectIndexSection].SectionName}}</span>
+            <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectSectionIndex].SectionName}}</span>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Style</span>
-            <dropdown
-                :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontName"
+            <base-dropdown-form-builder
+                :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.FontName"
                 :propList="FontNameList"
-                propType="basic"
+                propType="font"
                 propDropdownWidth="252"
                 @callBackValue="doPropSectionFontName"
-            ></dropdown>
+            ></base-dropdown-form-builder>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
             <div class="tw-flex tw-flex-row tw-items-center">
-              <dropdown
-                  :placeholder="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontSize.toString()"
+              <base-dropdown-form-builder
+                  :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.FontSize.toString()"
                   :propList="FontSizeList"
                   propType="font"
                   propDropdownWidth="70"
                   @callBackValue="doPropSectionFontSize"
-              ></dropdown>
+              ></base-dropdown-form-builder>
               <span class="medium16 white tw-ml-3">px</span>
             </div>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
             <base-text-input-properties-form-builder
                 type="color"
-                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.FontColor"
+                :propValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.FontColor"
                 class="tw-mb-2"
                 @callBackString="doPropSectionFontColor"
             ></base-text-input-properties-form-builder>
             <span class="medium16 white tw-mt-2 tw-mb-1">Background Color</span>
             <base-text-input-properties-form-builder
                 type="color"
-                :propValue="FormStructure.Sections[StateSelectIndexSection].SectionProperties.BackgroundColor.substring(3)"
+                :propValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.BackgroundColor.substring(3)"
                 class="tw-mb-2"
                 @callBackString="doPropSectionBgColor"
             ></base-text-input-properties-form-builder>
+          </div>
+          <!-- All Component -->
+          <!-- Heading -->
+          <div v-if="StatePropSelectHeading" class="tw-flex tw-flex-col">
+            Heading Properties
           </div>
         </div>
       </div>
@@ -402,20 +407,20 @@
               v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
           >
             <base-navigation-tools-section-form-builder 
-              :PropSectionIndex="indexSection"
-              :PropSectionName="itemSection.SectionName"
-              :PropSectionLength="FormStructure.Sections.length"
-              :PropSections="FormStructure.Sections"
-              @callbackSections="doMoveSections"
+              :sectionName="itemSection.SectionName"
+              :sectionIndex="indexSection"
+              :sectionList="FormStructure.Sections"
+              :sectionLength="FormStructure.Sections.length"
+              @callbackSection="doMoveSections"
               @callbackAction="doNavigationToolsSectionFormBuilder"
-              @callbackValueRename="doRenameSection"
+              @callbackRenameValue="doRenameSection"
             ></base-navigation-tools-section-form-builder>
               <div
                   class="section__style"
                   :class="[
                       {
-                        'select__component__active':indexSection === StateSelectIndexSection,
-                        'select__component__inactive': indexSection !== StateSelectIndexSection
+                        'select__component__active':indexSection === StateSelectSectionIndex,
+                        'select__component__inactive': indexSection !== StateSelectSectionIndex
                       },
                       FormStructure.Sections[indexSection].SectionProperties.FontColor,
                       FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
@@ -424,7 +429,18 @@
                   :style="doSectionStyleConfig(indexSection)"
               >
                 <div class="tw-w-full tw-flex tw-flex-col">
-                  Blank Data
+                  <!-- Blank data -->
+                  <div 
+                      v-if="FormStructure.Sections[indexSection].Components.length === 0" 
+                      class="semibold24 grey5 tw-flex tw-flex-col tw-items-center"
+                  >Blank Section</div>
+                  <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
+                    <!-- Heading Component -->
+                    <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer">
+                      <header-component :data="componentElement.ComponentProperties"></header-component>
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
           </div>
@@ -437,9 +453,9 @@
                 :class="[{'select__component__inactive': !StatePropSelectActionButton},{'select__component__active':StatePropSelectActionButton}]"
             >
               <button-section
-                  :propDataName="this.FormStructure.ActionButton.ActionButtonName"
-                  :propDataFontColor="this.FormStructure.ActionButton.ActionButtonProperties.FontColor"
-                  :propDataBgColor="this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+                  :propDataName="FormStructure.ActionButton.ActionButtonName"
+                  :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                  :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
               ></button-section>
             </div>
           </div>
@@ -457,10 +473,13 @@ import BaseNavigationSectionFormBuilder from '@/components/formbuildercomponent/
 import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/BaseTextInputRenameFormBuilder'
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
-// Import Component
-import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
-import Dropdown from "@/components/formbuildercomponent/Dropdown";
 import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
+import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder";
+
+// Import Component
+
+import HeaderComponent from "@/components/formbuildercomponent/Header";
+import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
 
 export default {
   name: "FormBuilder.vue",
@@ -471,14 +490,15 @@ export default {
     BaseNavigationSectionFormBuilder,
     BaseNavigationToolsSectionFormBuilder,
     BaseTextInputPropertiesFormBuilder,
+    BaseDropdownFormBuilder,
     // Import Component
-    Dropdown,
+    HeaderComponent,
     ButtonSection,
   },
   data() {
     return {
       // Page
-      Page: [{field:'Build'},{field:'Preview'},{field:'Setting'}],
+      PageList: [{field:'Build'},{field:'Preview'},{field:'Setting'}],
       StatePage: 'Build',
       // Rename Form
       StateShowRenameForm: false,
@@ -486,6 +506,7 @@ export default {
       StateSaveRenameForm: false,
       // Tools Sidebar
       StateShowToolsSidebar: false,
+
       // Properties Sidebar
       StateShowPropertiesSidebar: false,
       // Window Size
@@ -508,19 +529,35 @@ export default {
               FontSize : 16,
               FontColor: 'grey10',
               BackgroundColor: 'bg-white'
-            }
+            },
+            Components: [
+              {
+                ComponentType: 'heading',
+                ComponentProperties: {
+                  HeadingText: 'Untitled Section',
+                  SubheadingText: 'Descriptive Section',
+                  Alignment: 'left',
+                  HeadingFontColor: 'grey10',
+                  HeadingFontSize: 48,
+                  SubheadingFontColor: 'grey5',
+                  SubheadingFontSize: 16,
+                }
+              },
+            ]
           },
         ],
         
       },
       // State Sections
-      StateSelectIndexSection: 0,
+      StateSelectSectionIndex: 0,
       // Global Select Component
       // Value Config
       FontSizeList: [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72],
-      FontNameList: ['Prompt','Arial','Times New Roman'],
+      FontNameList: ['Prompt','Arial','Brush Script MT','Courier New','Garamond','Georgia','Tahoma','Times New Roman','Trebuchet MS','Verdana','Helvetica'],
       // Properties Sections
       StatePropSelectSection: false,
+      // Properties Heading
+      StatePropSelectHeading: false,
       // Properties Action Button
       StatePropSelectActionButton: false,
     }
@@ -559,7 +596,7 @@ export default {
       }
     },
     // Button
-    doButtonNameOnNavigation(nameButton) {
+    doButtonOnBlueNavigation(nameButton) {
       if(nameButton === 'ButtonTools'){
         this.StateShowToolsSidebar = !this.StateShowToolsSidebar
       } else if(nameButton === 'ButtonProperties') {
@@ -597,14 +634,14 @@ export default {
     doNavigationToolsSectionFormBuilder(event){
       if(event[0] === 'delete') {
         if(this.FormStructure.Sections.length>=1){
-          // Check State if state select or event[2] is equal StateSelectIndexSection variable
-          if(this.StateSelectIndexSection === event[2]) {
-            if(this.StateSelectIndexSection !== 0){
-              this.StateSelectIndexSection = event[2] - 1
+          // Check State if state select or event[2] is equal StateSelectSectionIndex variable
+          if(this.StateSelectSectionIndex === event[2]) {
+            if(this.StateSelectSectionIndex !== 0){
+              this.StateSelectSectionIndex = event[2] - 1
             } else {
               console.log('Check')
-              this.StateSelectIndexSection = event[2]
-              console.log(this.StateSelectIndexSection)
+              this.StateSelectSectionIndex = event[2]
+              console.log(this.StateSelectSectionIndex)
             }
             this.FormStructure.Sections.splice(event[2],1)
           } else {
@@ -637,7 +674,8 @@ export default {
                 FontSize : 16,
                 FontColor: 'grey10',
                 BackgroundColor: 'bg-white'
-              }
+              },
+              Components: []
             }
         )
       }
@@ -649,7 +687,7 @@ export default {
       this.FormStructure.Sections = newSections
     },
     doSelectSection(indexSection){
-      this.StateSelectIndexSection = indexSection
+      this.StateSelectSectionIndex = indexSection
       this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
       this.StatePropSelectActionButton = false
       this.StatePropSelectSection = true
@@ -664,17 +702,18 @@ export default {
     // Component Properties
     // Section
     doPropSectionFontName(value){
-      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontName = value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontName = value
     },
     doPropSectionFontSize(value){
-      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontSize = value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontSize = value
     },
     doPropSectionFontColor(value){
-      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.FontColor = value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontColor = value
     },
     doPropSectionBgColor(value){
-      this.FormStructure.Sections[this.StateSelectIndexSection].SectionProperties.BackgroundColor = 'bg-'+value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.BackgroundColor = 'bg-'+value
     },
+    
     // Action Button
     doStateActionButtonProperties() {
       if(this.StatePropSelectActionButton === false) {
