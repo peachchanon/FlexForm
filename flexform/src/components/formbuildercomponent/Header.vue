@@ -1,36 +1,24 @@
 ﻿<template>
-  <div class="tw-flex tw-flex-col" :class="componentStyle">
+  <div class="tw-flex tw-flex-col base-padding" :class="componentStyle">
     <span 
         :style="headingStyle"
-        :class="['heading__theme',data.HeadingFontColor]"
+        :class="['heading__theme',dataHeading.HeadingFontColor]"
     >
-      {{data.HeadingText}}
+      {{dataHeading.HeadingText}}
     </span>
     <span
         :style="subheadingStyle"
-        :class="['subheading__theme',data.SubheadingFontColor]"
+        :class="['subheading__theme',dataHeading.SubheadingFontColor]"
     >
-      {{data.SubheadingText}}
+      {{dataHeading.SubheadingText}}
     </span>
-    <!--
-    <input type="text" class="base-padding tw-items-center"
-           :placeholder="placeholder"
-    :class="[fontColor]"
-    :style="{fontSize: fontSize + 'px'}" v-model="valueString"
-    @input="doString"> -->
   </div> 
 </template>
 
 <script>
 export default {
   props: {
-    HText: String,
-    fontColor: String,
-    fontSize: String,
-    placeholder: String,
-    propName: String,
-    
-    data: {
+    dataHeading: {
       HeadingText: String,
       SubheadingText: String,
       Alignment: String,
@@ -49,9 +37,9 @@ export default {
 
   computed: {
     componentStyle() {
-      if(this.data.Alignment === 'left')
+      if(this.dataHeading.Alignment === 'left')
         return 'tw-items-start'
-      else if(this.data.Alignment === 'center')
+      else if(this.dataHeading.Alignment === 'center')
         return 'tw-items-center'
       else{
         return 'tw-items-end'
@@ -59,12 +47,12 @@ export default {
     },
     headingStyle() {
       return {
-        '--heading--font--size': this.data.HeadingFontSize+'px',
+        '--heading--font--size': this.dataHeading.HeadingFontSize+'px',
       }
     },
     subheadingStyle() {
       return {
-        '--subheading--font--size': this.data.SubheadingFontSize+'px',
+        '--subheading--font--size': this.dataHeading.SubheadingFontSize+'px',
       }
     }
   },
@@ -93,7 +81,6 @@ export default {
   font-size: var(--subheading--font--size);
   font-weight: 500;
 }
-
 
 .white{color: white;}
 .grey10{color:$grey10;}

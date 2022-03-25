@@ -193,7 +193,7 @@
             </div>
             <div class="bar"></div>
           </div>
-          <div class="button__component">
+          <div class="button__component" @click="addHeadingComponent">
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
               <div class="tw-w-1/5">
@@ -328,9 +328,9 @@
           <Icon class="icon__style__large white tw-mr-2" icon="heroicons-outline:pencil-alt"/>
           <span class="medium16 white tw-select-none">Properties</span>
         </div>
-        <div class="tw-w-full tw-flex tw-flex-col bg-grey6 base-padding" style="height: calc(100vh - 180px); overflow-y: auto;">
+        <div class="tw-w-full tw-flex tw-flex-col bg-grey6" style="height: calc(100vh - 180px); overflow-y: auto;">
           <!-- Action Button -->
-          <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col">
+          <div v-if="StatePropSelectActionButton" class="tw-flex tw-flex-col base-padding">
             <span class="semibold24 white tw-my-1">Submit Button</span>
             <span class="medium16 white tw-mt-2 tw-mb-1">Name</span>
             <base-text-input-properties-form-builder
@@ -355,13 +355,13 @@
             ></base-text-input-properties-form-builder>
           </div>
           <!-- Section -->
-          <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col">
+          <div v-if="StatePropSelectSection" class="tw-flex tw-flex-col base-padding">
             <span class="semibold24 white tw-my-1">{{this.FormStructure.Sections[StateSelectSectionIndex].SectionName}}</span>
             <span class="medium16 white tw-mt-2 tw-mb-1">Font Style</span>
             <base-dropdown-form-builder
                 :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.FontName"
                 :propList="FontNameList"
-                propType="font"
+                propType="fontstyle"
                 propDropdownWidth="252"
                 @callBackValue="doPropSectionFontName"
             ></base-dropdown-form-builder>
@@ -369,8 +369,7 @@
             <div class="tw-flex tw-flex-row tw-items-center">
               <base-dropdown-form-builder
                   :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].SectionProperties.FontSize.toString()"
-                  :propList="FontSizeList"
-                  propType="font"
+                  propType="fontsize"
                   propDropdownWidth="70"
                   @callBackValue="doPropSectionFontSize"
               ></base-dropdown-form-builder>
@@ -394,7 +393,72 @@
           <!-- All Component -->
           <!-- Heading -->
           <div v-if="StatePropSelectHeading" class="tw-flex tw-flex-col">
-            Heading Properties
+            <base-navigation-properties-form-builder
+                :itemList="['Basic','Style']"
+                @callbackName="doStatePropHeadingNavigation"
+            ></base-navigation-properties-form-builder>
+            <div v-if="StatePropSelectHeadingBasic" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Heading</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Heading Text</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your heading here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.HeadingText"
+                  class="tw-mb-2"
+                  @callBackString="doPropHeadingHeadingText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Subheading Text (Optional)</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Add your description here</span>
+              <base-text-input-properties-form-builder
+                  type="textarea"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubheadingText"
+                  class="tw-mb-2"
+                  @callBackString="doPropHeadingSubheadingText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Text Alignment</span>
+              <base-text-input-properties-form-builder
+                  type="alignment"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Alignment"
+                  class="tw-mb-2"
+                  @callBackString="doPropHeadingTextAlignment"
+              ></base-text-input-properties-form-builder>
+            </div>
+            <div v-if="StatePropSelectHeadingStyle" class="tw-flex tw-flex-col base-padding">
+              <span class="medium16 white tw-mt-2 tw-mb-1">Heading Font Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.HeadingFontColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropHeadingHeadingFontColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Heading Font Size</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <base-dropdown-form-builder
+                    :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.HeadingFontSize.toString()"
+                    propType="fontsize"
+                    propDropdownWidth="70"
+                    @callBackValue="doPropHeadingHeadingFontSize"
+                ></base-dropdown-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Subheading Font Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubheadingFontColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropHeadingSubheadingFontColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Subheading Font Size</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <base-dropdown-form-builder
+                    :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubheadingFontSize.toString()"
+                    propType="fontsize"
+                    propDropdownWidth="70"
+                    @callBackValue="doPropHeadingSubheadingFontSize"
+                ></base-dropdown-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -419,13 +483,12 @@
                   class="section__style"
                   :class="[
                       {
-                        'select__component__active':indexSection === StateSelectSectionIndex,
-                        'select__component__inactive': indexSection !== StateSelectSectionIndex
+                        'select__component__active':indexSection === StateSelectSectionIndex && StatePropSelectSection,
+                        'select__component__inactive':indexSection !== StateSelectSectionIndex && !StatePropSelectSection
                       },
                       FormStructure.Sections[indexSection].SectionProperties.FontColor,
                       FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
                       ]"
-                  @click="doSelectSection(indexSection)"
                   :style="doSectionStyleConfig(indexSection)"
               >
                 <div class="tw-w-full tw-flex tw-flex-col">
@@ -433,11 +496,18 @@
                   <div 
                       v-if="FormStructure.Sections[indexSection].Components.length === 0" 
                       class="semibold24 grey5 tw-flex tw-flex-col tw-items-center"
+                      @click="doSelectSection(indexSection)"
                   >Blank Section</div>
                   <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
                     <!-- Heading Component -->
-                    <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer">
-                      <header-component :data="componentElement.ComponentProperties"></header-component>
+                    <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer"  @click="doSelectSection(indexSection,componentIndex)">
+                      <header-component 
+                          :dataHeading="componentElement.ComponentProperties"
+                          :class="{
+                        'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading,
+                        'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectHeading
+                      }"
+                      ></header-component>
                     </div>
                   </div>
                   
@@ -480,10 +550,12 @@ import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropd
 
 import HeaderComponent from "@/components/formbuildercomponent/Header";
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
+import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercomponent/BaseNavigationPropertiesFormBuilder";
 
 export default {
   name: "FormBuilder.vue",
   components: {
+    BaseNavigationPropertiesFormBuilder,
     Icon,
     BaseTextInputRenameFormBuilder,
     BaseNavigationFormBuilder,
@@ -506,7 +578,6 @@ export default {
       StateSaveRenameForm: false,
       // Tools Sidebar
       StateShowToolsSidebar: false,
-
       // Properties Sidebar
       StateShowPropertiesSidebar: false,
       // Window Size
@@ -550,14 +621,18 @@ export default {
       },
       // State Sections
       StateSelectSectionIndex: 0,
+      // State Components
+      StateSelectComponentIndex: 0,
       // Global Select Component
       // Value Config
       FontSizeList: [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72],
       FontNameList: ['Prompt','Arial','Brush Script MT','Courier New','Garamond','Georgia','Tahoma','Times New Roman','Trebuchet MS','Verdana','Helvetica'],
       // Properties Sections
-      StatePropSelectSection: false,
+      StatePropSelectSection: true,
       // Properties Heading
       StatePropSelectHeading: false,
+      StatePropSelectHeadingBasic: false,
+      StatePropSelectHeadingStyle: false,
       // Properties Action Button
       StatePropSelectActionButton: false,
     }
@@ -600,15 +675,7 @@ export default {
       if(nameButton === 'ButtonTools'){
         this.StateShowToolsSidebar = !this.StateShowToolsSidebar
       } else if(nameButton === 'ButtonProperties') {
-        if(this.StateShowPropertiesSidebar){
-          this.StateShowPropertiesSidebar = false
-          this.StatePropSelectSection = false
-          // Action Button
-          this.StatePropSelectActionButton = false
-        } else {
-          this.StatePropSelectSection = true
-          this.StateShowPropertiesSidebar = true
-        }
+        this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
       }
     },
     // Rename Form
@@ -675,7 +742,20 @@ export default {
                 FontColor: 'grey10',
                 BackgroundColor: 'bg-white'
               },
-              Components: []
+              Components: [
+                {
+                  ComponentType: 'heading',
+                  ComponentProperties: {
+                    HeadingText: 'Untitled Section',
+                    SubheadingText: 'Descriptive Section',
+                    Alignment: 'left',
+                    HeadingFontColor: 'grey10',
+                    HeadingFontSize: 48,
+                    SubheadingFontColor: 'grey5',
+                    SubheadingFontSize: 16,
+                  }
+                },
+              ]
             }
         )
       }
@@ -686,11 +766,29 @@ export default {
     doMoveSections(newSections){
       this.FormStructure.Sections = newSections
     },
-    doSelectSection(indexSection){
-      this.StateSelectSectionIndex = indexSection
-      this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar;
+    doSelectSection(indexSection,indexComponent){
       this.StatePropSelectActionButton = false
+      this.StateSelectSectionIndex = indexSection
+      this.StateSelectComponentIndex = indexComponent
       this.StatePropSelectSection = true
+      if(typeof indexComponent === 'undefined') {
+        this.StatePropSelectSection = true
+        this.StatePropSelectHeading = false
+      } else {
+        if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'heading'){
+          if(!this.StatePropSelectHeading){
+            this.StatePropSelectHeading = true
+            this.StatePropSelectHeadingBasic = true
+            this.StatePropSelectHeadingStyle = false
+            this.StatePropSelectSection = false
+          } else {
+            this.StatePropSelectHeading = false
+            this.StatePropSelectHeadingBasic = false
+            this.StatePropSelectHeadingStyle = false
+            this.StatePropSelectSection = true
+          }
+        }
+      }
     },
     // Section Style Config
     doSectionStyleConfig(indexSection) {
@@ -713,17 +811,64 @@ export default {
     doPropSectionBgColor(value){
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.BackgroundColor = 'bg-'+value
     },
-    
+    // Heading
+    doStatePropHeadingNavigation(element){
+      if(element.name === 'Basic'){
+        this.StatePropSelectHeadingBasic = true
+        this.StatePropSelectHeadingStyle = false
+      } else if(element.name === 'Style'){
+        this.StatePropSelectHeadingBasic = false
+        this.StatePropSelectHeadingStyle = true
+      }
+    },
+    doPropHeadingHeadingText(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingText = 'Untitled Section'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingText = value
+      }
+    },
+    doPropHeadingSubheadingText(value){
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubheadingText = 'Descriptive Section'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubheadingText = value
+      }
+    },
+    doPropHeadingTextAlignment(value){
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = 'left'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = value
+      }
+    },
+    doPropHeadingHeadingFontColor(value){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingFontColor = value
+    },
+    doPropHeadingHeadingFontSize(value){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingFontSize = value
+    },
+    doPropHeadingSubheadingFontColor(value){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubheadingFontColor = value
+    },
+    doPropHeadingSubheadingFontSize(value){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubheadingFontSize = value
+    },
     // Action Button
     doStateActionButtonProperties() {
-      if(this.StatePropSelectActionButton === false) {
-        this.StatePropSelectSection = false
+      this.StateShowPropertiesSidebar = true
+      // Close Component Properties
+      this.StatePropSelectHeading = false
+      // อย่าลืมกลับมาเขียนแต่ละคอมโพเนนด้วย!!!!!
+      // อย่าลืมกลับมาเขียนแต่ละคอมโพเนนด้วย!!!!!
+      // อย่าลืมกลับมาเขียนแต่ละคอมโพเนนด้วย!!!!!
+      // อย่าลืมกลับมาเขียนแต่ละคอมโพเนนด้วย!!!!!
+      if(!this.StatePropSelectActionButton) {
         this.StatePropSelectActionButton = true
-        this.StateShowPropertiesSidebar = true
+        this.StatePropSelectSection = false
       } else {
-        this.StatePropSelectSection = true
         this.StatePropSelectActionButton = false
-        this.StateShowPropertiesSidebar = false
+        this.StatePropSelectSection = true
       }
     },
     doPropActionButtonName(value) {
@@ -747,7 +892,23 @@ export default {
         this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor = 'bg-'+value
       }
     },
-    
+    // Add Component
+    addHeadingComponent(){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.push(
+          {
+            ComponentType: 'heading',
+            ComponentProperties: {
+              HeadingText: 'Untitled Section',
+              SubheadingText: 'Descriptive Section',
+              Alignment: 'left',
+              HeadingFontColor: 'grey10',
+              HeadingFontSize: 48,
+              SubheadingFontColor: 'grey5',
+              SubheadingFontSize: 16,
+            }
+          },
+      )
+    }
     
     
   }
@@ -1004,7 +1165,7 @@ export default {
   }
 }
 .select__component__active{
-  outline: 2px solid $blue10;
+  outline: 2px solid $blue6;
   border: none;
   border-radius: 12px;
   transition: all .1s ease-in;

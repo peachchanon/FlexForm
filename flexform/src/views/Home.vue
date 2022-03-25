@@ -99,7 +99,7 @@
           @valueSelected="dropdownGender"
         ></base-dropdown>
       </div>
-        <range-slider></range-slider>
+      <range-slider></range-slider>
     </div>
   </div>
 </template>
@@ -118,7 +118,7 @@ export default {
     BaseButton,
     BaseBadge,
     BaseDropdown,
-    RangeSlider
+    RangeSlider,
   },
   methods: {
     buttonClick (e) {
