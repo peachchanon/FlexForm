@@ -499,15 +499,27 @@
                       @click="doSelectSection(indexSection)"
                   >Blank Section</div>
                   <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
-                    <!-- Heading Component -->
-                    <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer"  @click="doSelectSection(indexSection,componentIndex)">
-                      <header-component 
-                          :dataHeading="componentElement.ComponentProperties"
-                          :class="{
-                        'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading,
-                        'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectHeading
-                      }"
-                      ></header-component>
+                    <div style="position: relative">
+                      <!-- Heading Component -->
+                      <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer"
+                           @click="doSelectSection(indexSection,componentIndex)"
+                      >
+                        <header-component
+                            :dataHeading="componentElement.ComponentProperties"
+                            :class="{
+                          'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading,
+                          'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectHeading
+                        }"
+                        ></header-component>
+                      </div>
+                      <base-tools-component-form-builder
+                          v-if="componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading"
+                          style="position: absolute; right: -64px; top: 0; z-index: 0;"
+                          :componentLength="FormStructure.Sections[indexSection].Components.length"
+                          :componentIndex="componentIndex"
+                          :componentType="FormStructure.Sections[indexSection].Components[componentIndex].ComponentType"
+                          @callbackAction="doToolsComponent"
+                      ></base-tools-component-form-builder>
                     </div>
                   </div>
                   
@@ -544,13 +556,14 @@ import BaseTextInputRenameFormBuilder from '@/components/formbuildercomponent/Ba
 import BaseNavigationToolsSectionFormBuilder from '@/components/formbuildercomponent/BaseNavigationToolsSectionFormBuilder'
 import {mapActions, mapGetters} from 'vuex'
 import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponent/BaseTextInputPropertiesFormBuilder'
-import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder";
+import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder"
+import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercomponent/BaseNavigationPropertiesFormBuilder"
+import BaseToolsComponentFormBuilder from "@/components/formbuildercomponent/BaseToolsComponentFormBuilder"
 
 // Import Component
 
-import HeaderComponent from "@/components/formbuildercomponent/Header";
+import HeaderComponent from "@/components/formbuildercomponent/Header"
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
-import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercomponent/BaseNavigationPropertiesFormBuilder";
 
 export default {
   name: "FormBuilder.vue",
@@ -563,6 +576,7 @@ export default {
     BaseNavigationToolsSectionFormBuilder,
     BaseTextInputPropertiesFormBuilder,
     BaseDropdownFormBuilder,
+    BaseToolsComponentFormBuilder,
     // Import Component
     HeaderComponent,
     ButtonSection,
@@ -706,9 +720,7 @@ export default {
             if(this.StateSelectSectionIndex !== 0){
               this.StateSelectSectionIndex = event[2] - 1
             } else {
-              console.log('Check')
               this.StateSelectSectionIndex = event[2]
-              console.log(this.StateSelectSectionIndex)
             }
             this.FormStructure.Sections.splice(event[2],1)
           } else {
@@ -716,7 +728,7 @@ export default {
           }
         }
         else{
-          console.log('Delete Error, Length!!!')
+          console.log('Delete Error, Length')
         }
       } else if(event[0] === 'add') {
         // Check 'Untitled Section'
@@ -764,6 +776,8 @@ export default {
       this.FormStructure.Sections[index].SectionName = valueRename
     },
     doMoveSections(newSections){
+      this.StateSelectSectionIndex = 0
+      this.StateSelectComponentIndex = 0
       this.FormStructure.Sections = newSections
     },
     doSelectSection(indexSection,indexComponent){
@@ -804,12 +818,38 @@ export default {
     },
     doPropSectionFontSize(value){
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontSize = value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.forEach(
+          (element) => {
+            // Heading
+            if(element.ComponentType === 'heading'){
+              element.ComponentProperties.HeadingFontSize = value
+            }
+          }
+      )
     },
     doPropSectionFontColor(value){
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontColor = value
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.forEach(
+          (element) => {
+            // Heading
+            if(element.ComponentType === 'heading'){
+              element.ComponentProperties.HeadingFontColor = value
+            }
+          }
+      )
     },
     doPropSectionBgColor(value){
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.BackgroundColor = 'bg-'+value
+    },
+    doToolsComponent(component){
+      if(component.componentAction === 'delete'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(component.componentIndex,1)
+        if(this.StateSelectSectionIndex !== 0){
+          this.StateSelectComponentIndex = this.StateSelectComponentIndex - 1
+        } else{
+          this.StateSelectComponentIndex = 0
+        }
+      }
     },
     // Heading
     doStatePropHeadingNavigation(element){
@@ -894,7 +934,8 @@ export default {
     },
     // Add Component
     addHeadingComponent(){
-      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.push(
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
+          this.StateSelectComponentIndex+1,0,
           {
             ComponentType: 'heading',
             ComponentProperties: {
@@ -906,8 +947,9 @@ export default {
               SubheadingFontColor: 'grey5',
               SubheadingFontSize: 16,
             }
-          },
+          }
       )
+      this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
     }
     
     
