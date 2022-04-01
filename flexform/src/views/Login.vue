@@ -12,31 +12,34 @@
         <base-text-input
           type="text"
           placeholder="Enter Username"
+          @callBackString="inputUsername"
         >
         </base-text-input>
         <span class="tw-py-3">Password</span>
         <base-text-input
           type="password"
           placeholder="Enter Password"
+          @callBackString="inputPassword"
         >
         </base-text-input>
         <div class="tw-py-3 tw-text-right">
           <a @click="selectPath('buttonForgotPassword')">Forgot password?</a>
         </div>
         <base-button
+            buttonID="buttonLogin"
+            buttonText="Login"
+            buttonTextColor="white"
+            buttonBgColor="bg-blue5"
+            :callback="login"
+        ></base-button>
+        
+        <base-button 
+            class="tw-pt-3"
           buttonID="buttonCreateAnAccount"
           buttonText="Create an Account"
           buttonTextColor="blue5"
           buttonBgColor="bg-white"
           buttonBorderColor="border-blue5"
-          :callback="selectPath"
-        ></base-button>
-        <base-button
-          class="tw-pt-3"
-          buttonID="buttonLogin"
-          buttonText="Login"
-          buttonTextColor="white"
-          buttonBgColor="bg-blue5"
           :callback="selectPath"
         ></base-button>
         <span class="tw-pt-3 light16 grey5 tw-text-center">
@@ -51,6 +54,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import BaseTextInput from '@/components/BaseTextInput'
 import baseButton from '@/components/BaseButton'
+import axios from 'axios' 
 export default {
   name: 'login',
   components: {
@@ -59,7 +63,11 @@ export default {
   },
   data () {
     return {
-      showBanner: true
+      showBanner: true,
+      dataLogin :{
+        username:'',
+        password:''
+      }
     }
   },
   watch: {
@@ -83,8 +91,31 @@ export default {
         this.$router.push('/create-an-account')
       }else if(nameButton === 'buttonForgotPassword'){
         this.$router.push('/forgot-password')
-      }else if(nameButton === 'buttonLogin'){
-        this.$router.push('/dashboard')
+      }//else if(nameButton === 'buttonLogin'){
+       // this.$router.push('/dashboard')
+      //}
+    },
+    inputUsername(username){
+      this.dataLogin.username = username
+    },
+    inputPassword(password){
+      this.dataLogin.password = password
+    },
+    async login(){
+      //console.log(dataLogin)
+      try {
+        const response = await axios.post('http://localhost:4000/api/User/Authenticate', {
+          username :this.dataLogin.username,
+          password: this.dataLogin.password
+        })
+        console.log(response.data.username)
+        if(response.status===200 && response.data) {
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('role_id', response.data.role_id)
+          this.$router.push('/dashboard')
+        }
+      } catch(error){
+        console.log(error)
       }
     }
   }

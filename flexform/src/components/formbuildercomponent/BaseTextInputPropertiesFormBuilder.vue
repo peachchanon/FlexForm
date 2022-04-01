@@ -1,6 +1,7 @@
 ﻿<template>
   <div>
     <input v-if="type === 'text'" type="text" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString">
+    <textarea v-if="type === 'textarea'" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString"></textarea>
     <div v-if="type === 'color'" class="input medium16 radius10px tw-w-full tw-flex tw-flex-row tw-items-center tw-relative">
       <div class="base-padding tw-w-full tw-h-full radius10px">
         <div :class="'bg-'+propValue" style="height: 24px; border-radius: 6px"></div>
@@ -77,6 +78,26 @@
         </div>
       </div>
     </div>
+    <div v-if="type === 'alignment'" class="tw-flex tw-flex-row">
+      <div v-for="(element, index) in alignmentList" :key="index" class="tw-w-full">
+        <div 
+            class="radius10px tw-p-1 tw-text-center tw-mx-1 tw-transition tw-ease-in tw-cursor-pointer"
+            :class="{
+          'bg-grey8 hover:tw-bg-grey7':propValue === element.toLowerCase(),
+          'bg-grey5 hover:tw-bg-grey4':propValue !== element.toLowerCase(),
+            }"
+            @click="doAlignment(element.toLowerCase())"
+        >
+          <span 
+              class="medium16 tw-transition tw-ease-in"
+              :class="{
+          'white':propValue === element.toLowerCase(),
+          'grey3 hover:tw-text-white':propValue !== element.toLowerCase(),
+            }"
+          >{{element}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -109,7 +130,8 @@ export default {
       ],
       dataColorRed: [
         'red10','red9','red8','red7','red6','red5','red4','red3','red2','red1',
-      ]
+      ],
+      alignmentList: ['Left','Center','Right'],
     }
   },
   props: {
@@ -128,7 +150,10 @@ export default {
       this.showString = color
       this.stateBoardColor = false
       this.$emit('callBackString', this.showString)
-    }
+    },
+    doAlignment(value){
+      this.$emit('callBackString', value)
+    },
   }
 }
 </script>
