@@ -499,9 +499,9 @@
                       @click="doSelectSection(indexSection)"
                   >Blank Section</div>
                   <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
-                    <div style="position: relative">
-                      <!-- Heading Component -->
-                      <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer"
+                    <!-- Heading Component -->
+                    <div class="tw-flex tw-flex-row">
+                      <div v-if="componentElement.ComponentType === 'heading'" class="tw-cursor-pointer tw-w-full"
                            @click="doSelectSection(indexSection,componentIndex)"
                       >
                         <header-component
@@ -513,16 +513,15 @@
                         ></header-component>
                       </div>
                       <base-tools-component-form-builder
-                          v-if="componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading"
-                          style="position: absolute; right: -64px; top: 0; z-index: 0;"
-                          :componentLength="FormStructure.Sections[indexSection].Components.length"
-                          :componentIndex="componentIndex"
-                          :componentType="FormStructure.Sections[indexSection].Components[componentIndex].ComponentType"
-                          @callbackAction="doToolsComponent"
+                          class="tw-ml-1"
+                          v-if="componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectHeading" 
+                          :componentLength="FormStructure.Sections[indexSection].Components.length" 
+                          :componentIndex="componentIndex" 
+                          :componentType="FormStructure.Sections[indexSection].Components[componentIndex].ComponentType" 
+                          :componentData="FormStructure.Sections[indexSection].Components"
                       ></base-tools-component-form-builder>
                     </div>
                   </div>
-                  
                 </div>
               </div>
           </div>

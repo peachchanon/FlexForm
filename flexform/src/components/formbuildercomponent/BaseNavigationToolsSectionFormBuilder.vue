@@ -204,7 +204,6 @@ export default {
       this.StateMoveModal = this.StateMoveModal !== true
     },
     doMove() {
-      console.log(this.SectionsData)
       this.$emit('callbackSection',this.SectionsData)
       this.StateMoveModal = false
     },
