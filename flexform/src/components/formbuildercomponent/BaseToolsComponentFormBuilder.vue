@@ -2,12 +2,29 @@
   <div>
     <!-- Navigation -->
     <div>
-      <div class="bg-grey6 hover:tw-bg-grey7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in" style="width: fit-content">
+      <div 
+          class="bg-grey6 hover:tw-bg-grey7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in" 
+          style="width: fit-content"
+          @click="doButton('properties')"
+      >
         <Icon class="medium18 white" icon="ep:setting"/>
       </div>
-      <div class="bg-yellow6 hover:tw-bg-yellow7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in" style="width: fit-content">
+      <div
+          class="bg-blue6 hover:tw-bg-blue7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in"
+          style="width: fit-content"
+          @click="doButton('move')"
+      >
+        <Icon class="medium18 white" icon="heroicons-outline:cursor-click"/>
+      </div>
+      <!--
+      <div 
+          class="bg-yellow6 hover:tw-bg-yellow7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in" 
+          style="width: fit-content"
+          @click="doButton('duplicate')"
+      >
         <Icon class="medium18 white" icon="heroicons-outline:document-duplicate"/>
       </div>
+      -->
       <div 
           v-if="componentLength >= 2"
           class="bg-red6 hover:tw-bg-red7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in" style="width: fit-content"
@@ -69,8 +86,12 @@ export default {
     doButton(action){
       if(action === 'delete') {
         this.StateDeleteModal = false
+        this.$emit('callbackAction', {componentAction: 'delete',componentIndex: this.componentIndex})
+      } else if(action === 'properties'){
+        this.$emit('callbackAction', {componentAction: 'properties',componentIndex: this.componentIndex})
+      } else if(action === 'duplicate'){
+        this.$emit('callbackAction', {componentAction: 'duplicate',componentIndex: this.componentIndex})
       }
-      this.$emit('callbackAction', {componentAction: 'delete',componentIndex: this.componentIndex})
     },
   }
 }

@@ -542,7 +542,6 @@
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   </div>
@@ -842,12 +841,24 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.BackgroundColor = 'bg-'+value
     },
     doToolsComponent(component){
-      if(component.componentAction === 'delete'){
+      if(component.componentAction === 'properties'){
+        this.StateShowPropertiesSidebar = !this.StateShowPropertiesSidebar
+      }
+      else if(component.componentAction === 'duplicate'){
+        
+        let element = this.FormStructure.Sections[this.StateSelectSectionIndex].Components[component.componentIndex]
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
+            this.StateSelectComponentIndex,0,
+            element
+        )
+        this.StateSelectComponentIndex = (this.StateSelectComponentIndex + 1)
+      }
+      else if(component.componentAction === 'delete'){
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(component.componentIndex,1)
-        if(this.StateSelectSectionIndex !== 0){
-          this.StateSelectComponentIndex = this.StateSelectComponentIndex - 1
-        } else{
+        if(this.StateSelectComponentIndex === 0) {
           this.StateSelectComponentIndex = 0
+        } else {
+          this.StateSelectComponentIndex = (this.StateSelectComponentIndex - 1)
         }
       }
     },
@@ -862,11 +873,14 @@ export default {
       }
     },
     doPropHeadingHeadingText(value) {
+      console.log(value)
       if(value === ''){
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingText = 'Untitled Section'
       } else {
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingText = value
       }
+      console.log('Index: '+(this.StateSelectComponentIndex-1)+', Data: '+this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex-1].ComponentProperties.HeadingText)
+      console.log('Index: '+this.StateSelectComponentIndex+', Data: '+this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.HeadingText)
     },
     doPropHeadingSubheadingText(value){
       if(value === ''){
