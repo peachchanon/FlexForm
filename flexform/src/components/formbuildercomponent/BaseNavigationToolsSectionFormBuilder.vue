@@ -22,7 +22,7 @@
           class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
           @click="doButton('duplicate')"
       >
-        <Icon class="icon__style__large tw-mr-2" icon="ion:duplicate-outline"/>
+        <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-duplicate"/>
         <span class="medium16" v-if="StateShowContentForWindowSize">Duplicate</span>
       </div>
       <div 
@@ -204,6 +204,7 @@ export default {
       this.StateMoveModal = this.StateMoveModal !== true
     },
     doMove() {
+      console.log(this.SectionsData)
       this.$emit('callbackSection',this.SectionsData)
       this.StateMoveModal = false
     },

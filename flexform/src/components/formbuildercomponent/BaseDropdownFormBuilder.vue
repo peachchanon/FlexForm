@@ -1,17 +1,32 @@
 ﻿<template>
   <div>
-    <!-- Font Name Type -->
+    <!-- Font Style Type -->
     <div
-        v-if="propType === 'font'"
-        class="select" :data-value="dropdownValue" :data-list="list" :style="css__font__style"
+        v-if="propType === 'fontstyle'"
+        class="select" :data-value="dropdownValue" :data-list="propList" :style="css__font__style"
     >
       <span class="selector" @click="toggle()">
         <input readonly :style="css__font__style" :value="dropdownValue">
         <span class="arrow" :class="{ expanded : visible }"></span>
       </span>
-      <div :class="{ hidden : !visible, visible }">
+      <div :class="{ hidden : !visible, visible}" class="tw-relative">
         <ul :style="css__font__style" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
-          <li :class="{ current : item === dropdownValue }" v-for="(item,i) in list" :key="i" @click="select(item)" :style="fontStyle(item)">{{item}}</li>
+          <li :class="{ current : item === dropdownValue }" v-for="(item,i) in propList" :key="i" @click="select(item)" :style="fontStyle(item)">{{item}}</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Font Size Type -->
+    <div
+        v-if="propType === 'fontsize'"
+        class="select" :data-value="dropdownValue" :data-list="FontSizeList" :style="css__font__style"
+    >
+      <span class="selector" @click="toggle()">
+        <input readonly :style="css__font__style" :value="dropdownValue">
+        <span class="arrow" :class="{ expanded : visible }"></span>
+      </span>
+      <div :class="{ hidden : !visible, visible}" class="tw-relative">
+        <ul :style="css__font__style" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px;">
+          <li v-for="(item,i) in FontSizeList" :key="i" @click="select(item)" :class="{ current : item === dropdownValue }">{{item}}</li>
         </ul>
       </div>
     </div>
@@ -33,8 +48,8 @@ export default {
   },
   data() {
     return {
-      list: this.propList,
       visible: false,
+      FontSizeList: [8,9,10,11,12,14,16,18,20,22,24,28,36,48,72],
     }
   },
   watch: {},
@@ -125,14 +140,15 @@ export default {
     }
   }
   ul{
+    position: absolute;
+    top: 0;
+    z-index: 2;
     width: var(--dropdown-width);
     list-style-type: none;
     padding: 0;
     margin-top: 1px;
     font-size: 16px;
     border: 1px solid white;
-    position: absolute;
-    z-index: 2;
     background: $grey1;
     border-radius: $radius10px;
     box-shadow: $baseshadow;
