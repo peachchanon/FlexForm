@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: "Header",
   props: {
     dataHeading: {
       HeadingText: String,
@@ -27,14 +28,10 @@ export default {
       SubheadingFontColor: String,
       SubheadingFontSize: Number,
     }
-    
   },
   data() {
-    return {
-      
-    }
+    return {}
   },
-
   computed: {
     componentStyle() {
       if(this.dataHeading.Alignment === 'left')
