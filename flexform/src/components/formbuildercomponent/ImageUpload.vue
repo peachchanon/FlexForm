@@ -9,7 +9,7 @@
     >
     </base-button>
   
-    <transition name="theme-modal-fade" v-if="UploadPictureModal">
+    <transition name="theme-modal-fade" v-if="UploadImageModal">
     <div class="theme-modal-backdrop">
       <div class="theme-modal">
         <header class="tw-flex tw-justify-between base-padding tw-relative tw-items-center">
@@ -121,7 +121,7 @@ export default {
   },
   data() {
     return {
-      UploadPictureModal: false,
+      UploadImageModal: false,
       files: [],
       dragging: false,
       url: null,
@@ -133,14 +133,14 @@ export default {
   methods: {
     doButton(buttonName) {
       if (buttonName === 'buttonSave') {
-        this.UploadPictureModal = !this.UploadPictureModal;
+        this.UploadImageModal = !this.UploadImageModal;
       }
     },
     doClose(){
-        this.UploadPictureModal = !this.UploadPictureModal;
+        this.UploadImageModal = !this.UploadImageModal;
     },
     doUpload(){
-      this.UploadPictureModal = !this.UploadPictureModal;
+      this.UploadImageModal = !this.UploadImageModal;
       this.upload = !this.upload;
       console.log(this.upload)
       console.log(this.imageSet)
