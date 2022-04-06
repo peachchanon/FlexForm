@@ -153,7 +153,7 @@
           <span class="medium16 white tw-select-none">Tools</span>
         </div>
         <div class="tw-w-full tw-flex tw-flex-col bg-grey6" style="padding:0.3rem 1rem; height: calc(100vh - 180px); overflow-y: auto;">
-          <div class="button__component">
+          <div class="button__component" @click="addShortInputComponent">
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
               <div class="tw-w-1/5">
@@ -391,6 +391,90 @@
             ></base-text-input-properties-form-builder>
           </div>
           <!-- All Component -->
+          <!-- Short Input -->
+          <div v-if="StatePropSelectShortInput" class="tw-flex tw-flex-col">
+            <base-navigation-properties-form-builder
+                :itemList="['Basic','Advance','Style']"
+                @callbackName="doStatePropShortInputNavigation"
+            ></base-navigation-properties-form-builder>
+            <div v-if="StatePropSelectShortInputBasic" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Short</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Text</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your question here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputLabelText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Sub Label Text (Optional)</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Add your description here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubLabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputSubLabelText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Alignment</span>
+              <base-text-input-properties-form-builder
+                  type="alignment2"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Alignment"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputAlignment"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Required</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Required"
+                  @callBackBoolean="doPropShortInputRequired"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Placeholder</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your placeholder here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Placeholder"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputPlaceholder"
+              ></base-text-input-properties-form-builder>
+
+
+              <span class="medium16 white tw-mt-2 tw-mb-1">Width</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">You can change your field’s width</span>
+              <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
+                <span class="medium16 tw-mr-3 tw-ml-1 tw-ease-in tw-transition tw-my-2" :class="{
+                  'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width === 'full',
+                  'white': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width !== 'full' ,
+                }">Fixed</span>
+                <base-text-input-properties-form-builder
+                    type="toggle"
+                    :propValueToggle="valuePropParagraphWidth"
+                    @callBackBoolean="doPropParagraphWidth"
+                ></base-text-input-properties-form-builder>
+              </div>
+              <div
+                  v-if="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width !=='full' "
+                  class="tw-flex tw-flex-row tw-items-center tw-mb-2"
+              >
+                <base-text-input-properties-form-builder
+                    style="width: 100px"
+                    type="number"
+                    :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width"
+                    @callBackString="doPropShortInputWidth"
+                ></base-text-input-properties-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+              
+              
+              
+              
+            </div>
+            <div v-if="StatePropSelectShortInputAdvance" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Short Input 2</span>
+            </div>
+            <div v-if="StatePropSelectShortInputStyle" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Short Input 3</span>
+            </div>
+          </div>
           <!-- Paragraph -->
           <div v-if="StatePropSelectParagraph" class="tw-flex tw-flex-col">
             <base-navigation-properties-form-builder
@@ -571,6 +655,18 @@
                   <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
                     <!-- Paragraph Component -->
                     <div class="tw-flex tw-flex-row">
+                      <!-- Short Input Component -->
+                      <div v-if="componentElement.ComponentType === 'short-input'" class="tw-cursor-pointer tw-w-full"
+                           @click="doSelectSection(indexSection,componentIndex)"
+                      >
+                        <short-input
+                          :dataShortInput="componentElement.ComponentProperties"
+                          :class="{
+                          'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectShortInput,
+                          'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectShortInput
+                        }"
+                        ></short-input>
+                      </div>
                       <!-- Paragraph Component -->
                       <div v-if="componentElement.ComponentType === 'paragraph'" class="tw-cursor-pointer tw-w-full"
                            @click="doSelectSection(indexSection,componentIndex)"
@@ -643,8 +739,9 @@ import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropd
 import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercomponent/BaseNavigationPropertiesFormBuilder"
 import BaseToolsComponentFormBuilder from "@/components/formbuildercomponent/BaseToolsComponentFormBuilder"
 // Import Component
-import HeaderComponent from "@/components/formbuildercomponent/Header"
+import ShortInput from '@/components/formbuildercomponent/ShortInput'
 import ParagraphComponent from "@/components/formbuildercomponent/Paragraph"
+import HeaderComponent from "@/components/formbuildercomponent/Header"
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
 
 export default {
@@ -660,6 +757,7 @@ export default {
     BaseDropdownFormBuilder,
     BaseToolsComponentFormBuilder,
     // Import Component
+    ShortInput,
     HeaderComponent,
     ParagraphComponent,
     ButtonSection,
@@ -723,6 +821,11 @@ export default {
       StateSelectComponentIndex: 0,
       // Properties Sections
       StatePropSelectSection: true,
+      // Properties Paragraph
+      StatePropSelectShortInput: false,
+      StatePropSelectShortInputBasic: false,
+      StatePropSelectShortInputAdvance: false,
+      StatePropSelectShortInputStyle: false,
       // Properties Paragraph
       StatePropSelectParagraph: false,
       StatePropSelectParagraphBasic: false,
@@ -874,45 +977,58 @@ export default {
       if(typeof indexComponent === 'undefined') {
         this.StatePropSelectSection = true
         // อย่าลืมใส่
+        this.StatePropSelectShortInput = false
         this.StatePropSelectParagraph = false
         this.StatePropSelectHeading = false
       } else {
-        if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'paragraph'){
+        if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'short-input'){
+          if(!this.StatePropSelectShortInput){
+            this.StatePropSelectShortInput = true
+            this.StatePropSelectShortInputBasic = true
+            this.StatePropSelectShortInputAdvance = false
+            this.StatePropSelectShortInputStyle = false
+            this.StatePropSelectSection = false
+          } else {
+            this.StatePropSelectShortInput = false
+            this.StatePropSelectShortInputBasic = false
+            this.StatePropSelectShortInputAdvance = false
+            this.StatePropSelectShortInputStyle = false
+            this.StatePropSelectSection = true
+          }
+          // อย่าลืมใส่
+          this.StatePropSelectParagraph = false
+          this.StatePropSelectHeading = false  
+        }
+        else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'paragraph'){
           if(!this.StatePropSelectParagraph){
             this.StatePropSelectParagraph = true
             this.StatePropSelectParagraphBasic = true
             this.StatePropSelectParagraphStyle = false
             this.StatePropSelectSection = false
-            // อย่าลืมใส่
-            
-            this.StatePropSelectHeading = false
           } else {
             this.StatePropSelectParagraph = false
             this.StatePropSelectParagraphBasic = false
             this.StatePropSelectParagraphStyle = false
             this.StatePropSelectSection = true
-            // อย่าลืมใส่
-            
-            this.StatePropSelectHeading = false
           }
+          // อย่าลืมใส่
+          this.StatePropSelectShortInput = false
+          this.StatePropSelectHeading = false
         } else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'heading'){
           if(!this.StatePropSelectHeading){
             this.StatePropSelectHeading = true
             this.StatePropSelectHeadingBasic = true
             this.StatePropSelectHeadingStyle = false
             this.StatePropSelectSection = false
-            // อย่าลืมใส่
-            this.StatePropSelectParagraph = false
-            
           } else {
             this.StatePropSelectHeading = false
             this.StatePropSelectHeadingBasic = false
             this.StatePropSelectHeadingStyle = false
             this.StatePropSelectSection = true
-            // อย่าลืมใส่
-            this.StatePropSelectParagraph = false
-            
           }
+          // อย่าลืมใส่
+          this.StatePropSelectShortInput = false
+          this.StatePropSelectParagraph = false
         }
       }
     },
@@ -979,6 +1095,30 @@ export default {
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components = component.componentValue
       }
     },
+
+    // Short Input Detail
+    doStatePropShortInputNavigation(element){
+      if(element.name === 'Basic'){
+        this.StatePropSelectShortInputBasic = true
+        this.StatePropSelectShortInputAdvance = false
+        this.StatePropSelectShortInputStyle = false
+      } else if(element.name === 'Advance'){
+        this.StatePropSelectShortInputBasic = false
+        this.StatePropSelectShortInputAdvance = true
+        this.StatePropSelectShortInputStyle = false
+      } else if(element.name === 'Style'){
+        this.StatePropSelectShortInputBasic = false
+        this.StatePropSelectShortInputAdvance = false
+        this.StatePropSelectShortInputStyle = true
+      }
+    },
+    // Short Input Properties
+    doPropShortInputLabelText(){},
+    doPropShortInputSubLabelText(){},
+    doPropShortInputAlignment(){},
+    doPropShortInputRequired(){},
+    doPropShortInputPlaceholder(){},
+    doPropShortInputWidth(){},
     
     // Paragraph Detail
     doStatePropParagraphNavigation(element){
@@ -1110,6 +1250,30 @@ export default {
     },
     
     // Add Component
+    addShortInputComponent(){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
+          this.StateSelectComponentIndex+1,0,
+          {
+            ComponentType: 'short-input',
+            ComponentProperties: {
+              LabelText: 'Type a question',
+              SubLabelText: 'Type a description',
+              Alignment: 'center',
+              Required: false,
+              Placeholder: 'Enter',
+              Width: 'full',
+              ReadOnly: false,
+              CharacterLimit: false,
+              Validation: 'Alphabetic',
+              FontColor: 'grey10',
+              InputBgColor: 'grey1',
+              BorderColor: 'white',
+              LabelFontSize: 16,
+            }
+          }
+      )
+      this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
+    },
     addParagraphComponent(){
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,

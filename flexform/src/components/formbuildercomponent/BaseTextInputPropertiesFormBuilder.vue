@@ -83,7 +83,7 @@
       </div>
     </div>
     <div v-if="type === 'alignment'" class="tw-flex tw-flex-row">
-      <div v-for="(element, index) in alignmentList" :key="index" class="tw-w-full">
+      <div v-for="(element, index) in alignmentList1" :key="index" class="tw-w-full">
         <div 
             class="radius10px tw-p-1 tw-text-center tw-mx-1 tw-transition tw-ease-in tw-cursor-pointer"
             :class="{
@@ -93,6 +93,26 @@
             @click="doAlignment(element.toLowerCase())"
         >
           <span 
+              class="medium16 tw-transition tw-ease-in"
+              :class="{
+          'white':propValue === element.toLowerCase(),
+          'grey3 hover:tw-text-white':propValue !== element.toLowerCase(),
+            }"
+          >{{element}}</span>
+        </div>
+      </div>
+    </div>
+    <div v-if="type === 'alignment2'" class="tw-flex tw-flex-row">
+      <div v-for="(element, index) in alignmentList2" :key="index" class="tw-w-full">
+        <div
+            class="radius10px tw-p-1 tw-text-center tw-mx-1 tw-transition tw-ease-in tw-cursor-pointer"
+            :class="{
+          'bg-grey8 hover:tw-bg-grey7':propValue === element.toLowerCase(),
+          'bg-grey5 hover:tw-bg-grey4':propValue !== element.toLowerCase(),
+            }"
+            @click="doAlignment(element.toLowerCase())"
+        >
+          <span
               class="medium16 tw-transition tw-ease-in"
               :class="{
           'white':propValue === element.toLowerCase(),
@@ -137,7 +157,8 @@ export default {
       dataColorRed: [
         'red10','red9','red8','red7','red6','red5','red4','red3','red2','red1',
       ],
-      alignmentList: ['Left','Center','Right'],
+      alignmentList1: ['Left','Center','Right'],
+      alignmentList2: ['Left','Top'],
     }
   },
   props: {
