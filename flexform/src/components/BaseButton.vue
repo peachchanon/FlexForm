@@ -4,6 +4,7 @@
       @click="buttonClicked"
       :class="[buttonTextColor, buttonBgColor, buttonBorderColor]"
       class="medium16 base-padding radius10px tw-w-full button-border tw-flex tw-justify-center tw-items-center"
+      :disabled="disable"
     >
       <span v-if="buttonIconLeft !== ''" >
         <Icon class="IconStyle icon" :icon="buttonIconLeft"/>
@@ -30,7 +31,11 @@ export default {
     buttonBorderColor: String,
     buttonIconLeft: String,
     buttonIconRight: String,
-    callback: Function
+    callback: Function,
+    disable: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
