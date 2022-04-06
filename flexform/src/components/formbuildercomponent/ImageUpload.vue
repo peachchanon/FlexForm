@@ -14,8 +14,8 @@
       <div class="theme-modal">
         <header class="tw-flex tw-justify-between base-padding tw-relative tw-items-center">
           <div  class="tw-flex">
-            <Icon class="icon-upload semibold24 tw-mr-2 tw-mt-1 red5" icon="heroicons-outline:trash"/>
-            <span class="semibold24 blue8">Upload Image</span>
+            <Icon class="icon-upload semibold24 tw-mr-2 tw-mt-1 blue8" icon="heroicons-outline:photograph"/>
+            <span class="semibold24 blue8">Image</span>
           </div>
           <div class="button-close tw-flex tw-flex-col tw-items-center medium16 tw-absolute tw-top-0 tw-right-0" 
                style="width: fit-content" @click="doClose">
@@ -24,7 +24,7 @@
         </header>
         
         <div @dragover.prevent @drop.prevent>
-          <div v-if="files.length < 1" @change="onFileChange">
+          <div v-if="files.length < 1">
           <div :class="['dropZone', dragging ? 'dropZone-over' : false]" @dragenter="dragging = true" @dragleave="dragging = false"
                @drop="onChange">
             <div class="dropZone-info">
@@ -37,6 +37,7 @@
           </div>
           </div>
           <div v-if="files.length === 1">
+            hello
             <div class="imgPreview" >
               <div class="dropZone-info" >
                 <img class="imgDrop" v-if="url" :src="url" alt="picture">
@@ -64,8 +65,8 @@
         </div>
           <div v-if="files.length < 1">
           <BaseButton
-              buttonID="buttonSubmit"
-              buttonText="Submit"
+              buttonID="buttonUpload"
+              buttonText="Upload"
               buttonTextColor="white"
               buttonBgColor="bg-blue5"
               :callback="doUpload" 
@@ -74,8 +75,8 @@
         </div>
         <div v-if="files.length === 1">
           <BaseButton
-              buttonID="buttonSubmit"
-              buttonText="Submit"
+              buttonID="buttonUpload"
+              buttonText="Upload"
               buttonTextColor="white"
               buttonBgColor="bg-blue5"
               :callback="doUpload">
@@ -157,16 +158,14 @@ export default {
         this.finalHeight = this.imageHeight  + "px";
       }
     },
-    onFileChange(e) {
-      const file = e.target.files[0];
-      this.url = URL.createObjectURL(file);
-      console.log(this.url)
-    },
     onChange(e) {
       let files = e.target.files.length > 0 ? e.target.files : e.dataTransfer.files;
       files = Array.from(files)
       console.log(files)
-      console.log(this.FileType)
+      if(files.length === 1){
+        this.url = URL.createObjectURL(files[0]);
+        console.log(this.url)
+      }
       if(!files || files.length === 0) return;
       if (!files.every((file)=> file.type.match('image.*'))){
         alert('please select ' + this.FileType);
