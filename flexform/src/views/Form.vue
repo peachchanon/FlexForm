@@ -36,7 +36,7 @@
                 <div class="tw-mx-1">
                   <base-button-white
                       buttonID="buttonCreateForm"
-                      buttonText="Creat Form"
+                      buttonText="Create Form"
                       buttonIcon="heroicons-outline:plus"
                       :callback="doButton"
                   ></base-button-white>

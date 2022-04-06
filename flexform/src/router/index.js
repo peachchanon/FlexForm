@@ -8,7 +8,8 @@ import Profile from '../views/Profile'
 import Form from '../views/Form'
 import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
-
+import DataVisualization from "@/views/datavisualization/DataVisualization";
+import SelectGraph from "@/views/datavisualization/SelectGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 
 import Home from '../views/Home.vue'
@@ -21,7 +22,8 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: {
-      title: 'Login'
+      title: 'Login',
+      requireAuthen: false
     }
   },
   {
@@ -29,7 +31,8 @@ const routes = [
     name: 'CreateAnAccount',
     component: CreateAnAccount,
     meta: {
-      title: 'Create An Account'
+      title: 'Create An Account',
+      requireAuthen: false
     }
   },
   {
@@ -37,7 +40,8 @@ const routes = [
     name: 'ForgotPassword',
     component: ForgotPassword,
     meta: {
-      title: 'Forgot Password'
+      title: 'Forgot Password',
+      requireAuthen: false
     }
   },
   {
@@ -45,7 +49,8 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard,
     meta: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      //requireAuthen: true
     }
   },
   {
@@ -53,7 +58,8 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: {
-      title: 'Profile'
+      title: 'Profile',
+      //requireAuthen: true
     }
   },
   {
@@ -61,7 +67,8 @@ const routes = [
     name: 'form',
     component: Form,
     meta: {
-      title: 'Form'
+      title: 'Form',
+      //requireAuthen: true
     }
   },
   {
@@ -69,7 +76,8 @@ const routes = [
     name: 'report',
     component: Report,
     meta: {
-      title: 'Report'
+      title: 'Report',
+     // requireAuthen: true
     }
   },
   {
@@ -77,7 +85,9 @@ const routes = [
     name: 'ManageUsers',
     component: ManageUsers,
     meta: {
-      title: 'Manage Users'
+      title: 'Manage Users',
+      requireAuthen: true,
+      requireRole: ["003"]
     }
   },
   {
@@ -85,7 +95,26 @@ const routes = [
     name: 'FormBuilder',
     component: FormBuilder,
     meta: {
-      title: 'Form Builder'
+      title: 'Form Builder',
+      requireAuthen: true,
+    }
+  },
+  {
+    path: '/DataVisualization',
+    name: 'DataVisualization',
+    component: DataVisualization,
+    meta: {
+      title: 'Data Visualization',
+     // requireAuthen: true
+    }
+  },
+  {
+    path: '/DataVisualization/SelectGraph',
+    name: 'SelectGraph',
+    component: SelectGraph,
+    meta: {
+      title: 'SelectGraph',
+      // requireAuthen: true
     }
   },
   {
@@ -101,4 +130,26 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach(async(to, from, next)=> {
+  if (to.meta.requireAuthen) {
+    if (localStorage.getItem("token")) {
+      const role = localStorage.getItem("role_id")
+      console.log(role)
+      if (to.meta.requireRole && !to.meta.requireRole.find((requireRole) => requireRole === role)) {
+        return next({ name: "Dashboard" });
+      }
+      return next();
+    } else {
+      return next({ name: "Login" });
+    }
+  }
+
+  if (to.path === "/") {
+    if (localStorage.getItem("token") != null) {
+      return next({ name: "Dashboard" });
+    }
+  }
+
+  return next();
+})
 export default router
