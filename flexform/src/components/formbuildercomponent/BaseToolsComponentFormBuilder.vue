@@ -70,9 +70,9 @@
             <div class="tw-py-2">
               <span class="medium16 blue10">{{sectionName}}</span>
             </div>
-            <draggable v-model="componentData" group="people" class="bg-grey1 tw-pl-3 tw-pr-3 tw-pt-1.5 tw-pb-1.5 radius12px" >
+            <draggable v-model="moveData" group="people" class="bg-grey1 tw-pl-3 tw-pr-3 tw-pt-1.5 tw-pb-1.5 radius12px" >
               <div
-                  v-for="(item,index) in componentData" :key="index"
+                  v-for="(item,index) in moveData" :key="index"
                   class="tw-flex tw-flex-row tw-items-center radius12px base-padding base-shadow tw-my-1.5 tw-cursor-pointer 
                   tw-bg-white hover:tw-bg-grey1 tw-text-blue10 hover:tw-text-blue8 tw-border-2 hover:tw-border-blue5 tw-transition tw-ease-in"
               >
@@ -122,6 +122,7 @@ export default {
       StateDeleteModal: false,
       // Move
       StateMoveModal: false,
+      moveData: this.componentData
     }
   },
   props: {
@@ -138,7 +139,6 @@ export default {
     },
     // Move Section
     doShowMoveModal() {
-      //this.SectionsData = this.sectionList
       this.StateMoveModal = this.StateMoveModal !== true
     },
     // Other
@@ -152,7 +152,7 @@ export default {
         this.$emit('callbackAction', {componentAction: 'duplicate',componentIndex: this.componentIndex})
       } else if(action === 'move') {
         this.StateMoveModal = false
-        this.$emit('callbackAction', {componentAction: 'move',componentValue: 'Hi'})
+        this.$emit('callbackAction', {componentAction: 'move',componentValue: this.moveData})
       }
     },
   }

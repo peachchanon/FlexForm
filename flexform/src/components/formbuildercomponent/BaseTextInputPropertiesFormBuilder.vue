@@ -1,6 +1,10 @@
 ﻿<template>
   <div>
     <input v-if="type === 'text'" type="text" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString">
+    <input v-if="type === 'number'" type="number" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doNumber">
+    <div v-if="type === 'toggle'">
+      <toggle-button v-if="type === 'toggle'" :value="propValueToggle" :labels="propToggleLabel" @change="doToggle"/>
+    </div>
     <textarea v-if="type === 'textarea'" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString"></textarea>
     <div v-if="type === 'color'" class="input medium16 radius10px tw-w-full tw-flex tw-flex-row tw-items-center tw-relative">
       <div class="base-padding tw-w-full tw-h-full radius10px">
@@ -103,12 +107,14 @@
 
 <script>
 import { Icon } from '@iconify/vue2'
+import { ToggleButton } from 'vue-js-toggle-button'
 export default {
   name: "BaseTextInputPropertiesFormBuilder",
   components: {
-    Icon
+    Icon,
+    ToggleButton
   },
-  emits: ['callBackString'],
+  emits: ['callBackString','callBackBoolean'],
   data() {
     return {
       showString: this.propValue,
@@ -138,9 +144,17 @@ export default {
     type: String,
     placeholder: String,
     propValue: String,
+    propValueToggle: {
+      type: Boolean,
+      default: false
+    },
+    propToggleLabel: Object
   },
   methods: {
     doString() {
+      this.$emit('callBackString', this.showString)
+    },
+    doNumber() {
       this.$emit('callBackString', this.showString)
     },
     doStateBoardColor(){
@@ -154,6 +168,9 @@ export default {
     doAlignment(value){
       this.$emit('callBackString', value)
     },
+    doToggle(value){
+      this.$emit('callBackBoolean', value.value)
+    }
   }
 }
 </script>
