@@ -12,7 +12,7 @@
       <div
           class="bg-blue6 hover:tw-bg-blue7 tw-cursor-pointer radiusFull tw-p-2 base-shadow tw-m-1 tw-transition tw-ease-in"
           style="width: fit-content"
-          @click="doButton('move')"
+          @click="doShowMoveModal"
       >
         <Icon class="medium18 white" icon="heroicons-outline:cursor-click"/>
       </div>
@@ -55,32 +55,77 @@
         </div>
       </div>
     </transition>
+    <!-- Move Section Modal -->
+    <transition name="theme-modal-fade" v-if="StateMoveModal">
+      <div class="theme-modal-backdrop">
+        <div class="theme-modal">
+          <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+            <Icon class="icon__style__large tw-mr-2 blue10" icon="heroicons-outline:cursor-click"/>
+            <span class="semibold24 blue10">Move Section</span>
+          </header>
+          <section class="tw-pl-2.5 tw-pr-2.5 tw-overflow-x-hidden" style="height: 100%; max-height: 250px">
+            <div class="tw-p-2">
+              <span class="medium16 grey10">You can move section by drag and drop section component.</span>
+            </div>
+            <draggable v-model="componentData" group="people" class="bg-grey1 tw-pl-3 tw-pr-3 tw-pt-1.5 tw-pb-1.5 radius12px" >
+              <div
+                  v-for="(item,index) in componentData" :key="index"
+                  class="tw-flex tw-flex-row tw-items-center radius12px base-padding base-shadow tw-my-1.5 tw-cursor-pointer 
+                  tw-bg-white hover:tw-bg-grey1 tw-text-blue10 hover:tw-text-blue8 tw-border-2 hover:tw-border-blue5 tw-transition tw-ease-in"
+              >
+                <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document"/>
+                <span class="medium16 tw-w-full">{{item.ComponentType}}</span>
+                <Icon class="icon__style__large grey4" icon="heroicons-outline:dots-vertical"/>
+              </div>
+            </draggable>
+          </section>
+          <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
+            <div class="tw-w-1/3 tw-mr-1">
+              <div class="button__style__white" @click="doShowMoveModal">Cancel</div>
+            </div>
+            <div class="tw-w-1/3 tw-ml-1">
+              <div class="button__style__blue" @click="doButton('move')">Save</div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { Icon } from '@iconify/vue2'
+import draggable from 'vuedraggable'
 export default {
   name: "BaseToolsComponentFormBuilder",
   components: {
     Icon,
+    draggable
   },
   emits: ['callbackAction'],
   data() {
     return {
       // Delete
       StateDeleteModal: false,
+      // Move
+      StateMoveModal: false,
     }
   },
   props: {
     componentLength: Number,
     componentIndex: Number,
     componentType: String,
+    componentData: Array,
   },
   methods: {
     // Delete Component
     doShowDeleteComponent () {
       this.StateDeleteModal = this.StateDeleteModal !== true
+    },
+    // Move Section
+    doShowMoveModal() {
+      //this.SectionsData = this.sectionList
+      this.StateMoveModal = this.StateMoveModal !== true
     },
     // Other
     doButton(action){
@@ -91,6 +136,9 @@ export default {
         this.$emit('callbackAction', {componentAction: 'properties',componentIndex: this.componentIndex})
       } else if(action === 'duplicate'){
         this.$emit('callbackAction', {componentAction: 'duplicate',componentIndex: this.componentIndex})
+      } else if(action === 'move') {
+        this.StateMoveModal = false
+        this.$emit('callbackAction', {componentAction: 'move',componentValue: 'Hi'})
       }
     },
   }

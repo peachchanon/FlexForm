@@ -14,12 +14,13 @@ export default {
   props: {
     hasresults: Boolean,
     maxstars: Number,
-    disabled: Boolean
+    disabled: Boolean,
+    ratingdescription:Array
   },
   data() {
     return {
       star: 5, // show started default rating star
-      ratingdescription: [
+      /*ratingdescription: [
         {
           text: 'Poor',
           class: 'star-poor'
@@ -40,9 +41,9 @@ export default {
           text: 'Excellent',
           class: 'star-excellent'
         }
-      ],
+      ],*/
       //hasresults: true,
-      hasdescription: false,
+      hasdescription: true,
       starsize: 'lg', //[xs,lg,1x,2x,3x,4x,5x,6x,7x,8x,9x,10x],
       //maxstars: 6,
       //disabled: false

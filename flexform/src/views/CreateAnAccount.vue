@@ -58,34 +58,6 @@
           </div>
         </div>
         <div class="tw-flex tw-justify-between tw-w-full">
-          <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-2/3 sm:tw-mr-1" style="width: 100%">
-            <span class="grey10 medium16 tw-my-3 tw-ml-1">Employee ID</span>
-            <div class="tw-w-full">
-              <base-text-input
-                  type="text"
-                  placeholder="Enter employee id"
-                  @callBackString="inputEmployeeID"
-              ></base-text-input>
-            </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.employeeID">
-              <span class="red5 medium14 tw-my-2" >* Enter employee id</span>
-            </div>
-          </div>
-          <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-1/3 sm:tw-ml-1" style="width: 275px">
-            <span class="grey10 medium16 tw-my-3 tw-ml-1">Gender</span>
-            <div class="tw-w-full">
-              <base-dropdown
-                  placeholder="Select Gender"
-                  v-bind:optionsList="[{option:'Male'},{option:'Female'}]"
-                  @valueSelected="inputGender"
-              ></base-dropdown>
-            </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.gender">
-              <span class="red5 medium14 tw-my-2" >* Select Gender</span>
-            </div>
-          </div>
-        </div>
-        <div class="tw-flex tw-justify-between tw-w-full">
           <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-1/2 sm:tw-mr-1">
             <span class="grey10 medium16 tw-my-3 tw-ml-1">First Name</span>
             <div class="tw-w-full tw-flex tw-flex-row">
@@ -93,7 +65,7 @@
                 <div class="tw-w-full sm:tw-mr-1">
                   <base-dropdown
                       placeholder="Title"
-                      v-bind:optionsList="[{option:'Mr.'},{option:'Mrs.'}]"
+                      v-bind:optionsList="[{option:'Mr.'},{option:'Ms.'}]"
                       @valueSelected="inputTitle"
                       class="tw-w-full"
                   ></base-dropdown>
@@ -109,7 +81,7 @@
                     @callBackString="inputFirstName"
                     class="tw-w-full"
                 ></base-text-input>
-                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.firstName">
+                <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.first_name">
                   <span class="red5 medium14 tw-my-2" >* Enter First Name</span>
                 </div>
               </div>
@@ -124,7 +96,7 @@
                   @callBackString="inputLastName"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.lastName">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.last_name">
               <span class="red5 medium14 tw-my-2" >* Enter Last Name</span>
             </div>
           </div>
@@ -143,17 +115,32 @@
               <span class="red5 medium14 tw-my-2" >* Enter Email</span>
             </div>
           </div>
-          <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-1/2 sm:tw-ml-1" style="width: 100%">
+        </div>
+        <div class="tw-flex tw-justify-between tw-w-full">
+          <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-2/3 sm:tw-mr-1" style="width: 100%">
             <span class="grey10 medium16 tw-my-3 tw-ml-1">Date of Birth</span>
-            <div class="tw-w-full">
-              <base-text-input
-                  type="date"
-                  placeholder="dd/mm/yyyy"
-                  @callBackDate="inputDOB"
-              ></base-text-input>
-            </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.dob">
+          <div class="tw-w-full">
+            <base-text-input
+                type="date"
+                placeholder="dd/mm/yyyy"
+                @callBackDate="inputDOB"
+            ></base-text-input>
+          </div>
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.birth_date">
               <span class="red5 medium14 tw-my-2" >* Enter Date of Birth</span>
+            </div>
+          </div>
+          <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-1/3 sm:tw-ml-1" style="width: 275px">
+            <span class="grey10 medium16 tw-my-3 tw-ml-1">Gender</span>
+            <div class="tw-w-full">
+              <base-dropdown
+                  placeholder="Select Gender"
+                  v-bind:optionsList="[{option:'M'},{option:'F'}]"
+                  @valueSelected="inputGender"
+              ></base-dropdown>
+            </div>
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.gender">
+              <span class="red5 medium14 tw-my-2" >* Select Gender</span>
             </div>
           </div>
         </div>
@@ -167,7 +154,7 @@
                   @callBackString="inputPhoneNumber"
               ></base-text-input>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.phoneNumber">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.phone_number">
               <span class="red5 medium14 tw-my-2" >* Enter Phone Number</span>
             </div>
           </div>
@@ -178,11 +165,11 @@
             <div class="tw-w-full">
               <base-dropdown
                   placeholder="Select job"
-                  v-bind:optionsList="[{option:'NOC Engineer'},{option:'Network Admin'},{option:'Superuser'}]"
+                  v-bind:optionsList="[{option:'001'},{option:'002'},{option:'003'}]"
                   @valueSelected="inputJob"
               ></base-dropdown>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.jobTitle">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.role_id">
               <span class="red5 medium14 tw-my-2" >* Enter Job</span>
             </div>
           </div>
@@ -191,11 +178,11 @@
             <div class="tw-w-full">
               <base-dropdown
                   placeholder="Select division"
-                  v-bind:optionsList="[{option:'National Telecom Public Company Limited บางรัก'},{option:'CAT-THIX'}]"
+                  v-bind:optionsList="[{option:'001'},{option:'002'}]"
                   @valueSelected="inputDivision"
               ></base-dropdown>
             </div>
-            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.division">
+            <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.division_id">
               <span class="red5 medium14 tw-my-2">* Enter Division</span>
             </div>
           </div>
@@ -221,6 +208,7 @@ import { Icon } from '@iconify/vue2'
 import BaseButton from '@/components/BaseButton'
 import BaseTextInput from '@/components/BaseTextInput'
 import BaseDropdown from '@/components/BaseDropdown'
+import axios from 'axios'
 export default {
   name: "CreateAnAccount",
   components: {
@@ -237,32 +225,31 @@ export default {
         username: '',
         password: '',
         confirmPassword: '',
-        employeeID: '',
         gender: '',
         title: '',
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        dob: '',
-        phoneNumber: '',
-        jobTitle: '',
-        division: ''
+        birth_date: '',
+        phone_number: '',
+        role_id: '',
+        division_id: '',
+        profile_pic:'string1'
       },
       stateProfile: {
         username: Boolean,
         password: Boolean,
         confirmPassword: Boolean,
         confirmPasswordHaveValue: false,
-        employeeID: Boolean,
         gender: Boolean,
         title: Boolean,
-        firstName: Boolean,
-        lastName: Boolean,
+        first_name: Boolean,
+        last_name: Boolean,
         email: Boolean,
-        dob: Boolean,
-        phoneNumber: Boolean,
-        jobTitle: Boolean,
-        division: Boolean
+        birth_date: Boolean,
+        phone_number: Boolean,
+        role_id: Boolean,
+        division_id: Boolean
       }
     }
   },
@@ -272,31 +259,29 @@ export default {
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
-        this.stateProfile.employeeID = true
         this.stateProfile.gender = true
         this.stateProfile.title = true
-        this.stateProfile.firstName = true
-        this.stateProfile.lastName = true
+        this.stateProfile.first_name = true
+        this.stateProfile.last_name = true
         this.stateProfile.email = true
-        this.stateProfile.dob = true
-        this.stateProfile.phoneNumber = true
-        this.stateProfile.jobTitle = true
-        this.stateProfile.division = true
+        this.stateProfile.birth_date = true
+        this.stateProfile.phone_number = true
+        this.stateProfile.role_id = true
+        this.stateProfile.division_id = true
         this.stateShowCreateAndAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
         this.stateProfile.confirmPasswordHaveValue = false
-        this.stateProfile.employeeID = false
         this.stateProfile.gender = false
         this.stateProfile.title = false
-        this.stateProfile.firstName = false
-        this.stateProfile.lastName = false
+        this.stateProfile.first_name = false
+        this.stateProfile.last_name = false
         this.stateProfile.email = false
-        this.stateProfile.dob = false
-        this.stateProfile.phoneNumber = false
-        this.stateProfile.jobTitle = false
-        this.stateProfile.division = false
+        this.stateProfile.birth_date = false
+        this.stateProfile.phone_number = false
+        this.stateProfile.role_id = false
+        this.stateProfile.division_id = false
         this.stateShowCreateAndAccountModal = state
       }
     },
@@ -318,10 +303,6 @@ export default {
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
-    inputEmployeeID(employeeID){
-      this.stateRegister.employeeID = employeeID
-      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
-    },
     inputGender(gender){
       this.stateRegister.gender = gender
       this.stateProfile.gender = this.stateRegister.gender !== '';
@@ -330,53 +311,73 @@ export default {
       this.stateRegister.title = title
       this.stateProfile.title = this.stateRegister.title !== '';
     },
-    inputFirstName(firstName){
-      this.stateRegister.firstName = firstName
-      this.stateProfile.firstName = this.stateRegister.firstName !== '';
+    inputFirstName(first_name){
+      this.stateRegister.first_name = first_name
+      this.stateProfile.first_name = this.stateRegister.first_name !== '';
     },
-    inputLastName(lastName){
-      this.stateRegister.lastName = lastName
-      this.stateProfile.lastName = this.stateRegister.lastName !== '';
+    inputLastName(last_name){
+      this.stateRegister.last_name = last_name
+      this.stateProfile.last_name = this.stateRegister.last_name !== '';
     },
     inputEmail(email){
       this.stateRegister.email = email
       this.stateProfile.email = this.stateRegister.email !== '';
     },
-    inputDOB(dob){
-      this.stateRegister.dob = dob
-      this.stateProfile.dob = this.stateRegister.dob !== '';
+    inputDOB(birth_date){
+      const date = new Date(birth_date) //แปลง string เป็น Date
+      this.stateRegister.birth_date = date.toISOString() // แปลง Dateในรูปแบบของ IsoString ทำให้ส่ง api ได้ !!!
+      this.stateProfile.birth_date = this.stateRegister.birth_date !== '';
     },
-    inputPhoneNumber(phoneNumber){
-      this.stateRegister.phoneNumber = phoneNumber
-      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
+    inputPhoneNumber(phone_number){
+      this.stateRegister.phone_number = phone_number
+      this.stateProfile.phone_number = this.stateRegister.phone_number !== '';
     },
-    inputJob(job){
-      this.stateRegister.jobTitle = job
-      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
+    inputJob(role_id){
+      this.stateRegister.role_id = role_id
+      this.stateProfile.role_id = this.stateRegister.role_id !== '';
     },
-    inputDivision(division){
-      this.stateRegister.division = division
-      this.stateProfile.division = this.stateRegister.division !== '';
+    inputDivision(division_id){
+      this.stateRegister.division_id = division_id
+      this.stateProfile.division_id = this.stateRegister.division_id !== '';
     },
-    doRegister(e){
-      console.log(e)
+    async doRegister(){
       this.stateProfile.username = this.stateRegister.username !== '';
       this.stateProfile.password = this.stateRegister.password !== '';
-      this.stateProfile.employeeID = this.stateRegister.employeeID !== '';
       this.stateProfile.gender = this.stateRegister.gender !== '';
       this.stateProfile.title = this.stateRegister.title !== '';
-      this.stateProfile.firstName = this.stateRegister.firstName !== '';
-      this.stateProfile.lastName = this.stateRegister.lastName !== '';
+      this.stateProfile.first_name = this.stateRegister.first_name !== '';
+      this.stateProfile.last_name = this.stateRegister.last_name !== '';
       this.stateProfile.email = this.stateRegister.email !== '';
-      this.stateProfile.dob = this.stateRegister.dob !== '';
-      this.stateProfile.phoneNumber = this.stateRegister.phoneNumber !== '';
-      this.stateProfile.jobTitle = this.stateRegister.jobTitle !== '';
-      this.stateProfile.division = this.stateRegister.division !== '';
+      this.stateProfile.birth_date = this.stateRegister.birth_date !== '';
+      this.stateProfile.phone_number = this.stateRegister.phone_number !== '';
+      this.stateProfile.role_id = this.stateRegister.role_id !== '';
+      this.stateProfile.division_id = this.stateRegister.division_id !== '';
       console.log(this.stateRegister)
+      try{
+        const response = await axios.post('http://localhost:4000/api/User/Register', {
+          username :this.stateRegister.username,
+          password:this.stateRegister.password,
+          gender:this.stateRegister.gender,
+          title:this.stateRegister.title,
+          first_name:this.stateRegister.first_name,
+          last_name:this.stateRegister.last_name,
+          email:this.stateRegister.email,
+          birth_date:this.stateRegister.birth_date ,
+          phone_number:this.stateRegister.phone_number,
+          role_id: this.stateRegister.role_id,
+          division_id: this.stateRegister.division_id,
+          profile_pic: this.stateRegister.profile_pic
+        })
+        if(response.status===200 && response.data) {
+          this.$router.push('/')
+        }
+      }catch (error){
+        console.log(error)
+      }
     },
     doPath(path) {
       this.$router.push(path).catch(()=>{})
-    }
+    },
   }
 }
 </script>
