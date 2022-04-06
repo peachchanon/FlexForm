@@ -37,7 +37,6 @@
           </div>
           </div>
           <div v-if="files.length === 1">
-            hello
             <div class="imgPreview" >
               <div class="dropZone-info" >
                 <img class="imgDrop" v-if="url" :src="url" alt="picture">
