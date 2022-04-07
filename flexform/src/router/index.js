@@ -8,8 +8,8 @@ import Profile from '../views/Profile'
 import Form from '../views/Form'
 import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
-import DataVisualization from "@/views/DataVisualization";
-
+import DataVisualization from "@/views/datavisualization/DataVisualization";
+import SelectGraph from "@/views/datavisualization/SelectGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 
 import Home from '../views/Home.vue'
@@ -106,6 +106,15 @@ const routes = [
     meta: {
       title: 'Data Visualization',
      // requireAuthen: true
+    }
+  },
+  {
+    path: '/DataVisualization/SelectGraph',
+    name: 'SelectGraph',
+    component: SelectGraph,
+    meta: {
+      title: 'SelectGraph',
+      // requireAuthen: true
     }
   },
   {
