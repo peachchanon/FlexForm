@@ -2,7 +2,7 @@
   <div>
     <base-button
         buttonID="buttonSave"
-        buttonText="Save"
+        buttonText="Image"
         buttonTextColor="white"
         buttonBgColor="bg-green5"
         :callback="doButton"
@@ -14,7 +14,7 @@
       <div class="theme-modal">
         <header class="tw-flex tw-justify-between base-padding tw-relative tw-items-center">
           <div  class="tw-flex">
-            <Icon class="icon-upload semibold24 tw-mr-2 tw-mt-1 blue8" icon="heroicons-outline:photograph"/>
+            <Icon class="icon-upload semibold24 tw-mr-2 tw-mt-1 blue8" icon="bi:image"/>
             <span class="semibold24 blue8">Image</span>
           </div>
           <div class="button-close tw-flex tw-flex-col tw-items-center medium16 tw-absolute tw-top-0 tw-right-0" 
@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-          <div v-if="files.length < 1">
+          <div class="tw-mt-2.5" v-if="files.length < 1">
           <BaseButton
               buttonID="buttonUpload"
               buttonText="Upload"
