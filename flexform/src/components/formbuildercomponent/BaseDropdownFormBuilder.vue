@@ -30,6 +30,21 @@
         </ul>
       </div>
     </div>
+    <!-- Basic Type -->
+    <div
+        v-if="propType === 'basic'"
+        class="select" :data-value="dropdownValue" :data-list="propList" :style="css__font__style"
+    >
+      <span class="selector" @click="toggle()">
+        <input readonly :style="css__font__style" :value="dropdownValue">
+        <span class="arrow" :class="{ expanded : visible }"></span>
+      </span>
+      <div :class="{ hidden : !visible, visible}" class="tw-relative">
+        <ul :style="css__font__style" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px;">
+          <li v-for="(item,i) in propList" :key="i" @click="select(item)" :class="{ current : item === dropdownValue }">{{item}}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 

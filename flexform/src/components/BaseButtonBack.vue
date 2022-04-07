@@ -35,11 +35,11 @@ button{
 .button-back{
   background-color: white;
   padding: 5.5px;
-  margin-left: 5px;
-  margin-right: 5px;
   color: $blue10;
   border-radius: 100%;
   cursor: pointer ;
+  width: fit-content;
+  height: fit-content;
   &:hover{
    color: $blue5;
    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);

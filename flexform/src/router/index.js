@@ -96,7 +96,7 @@ const routes = [
     component: FormBuilder,
     meta: {
       title: 'Form Builder',
-      requireAuthen: true,
+      //requireAuthen: true,
     }
   },
   {

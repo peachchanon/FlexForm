@@ -1,5 +1,5 @@
 ﻿<template>
-  <div>
+  <div class="base-padding">
     InputText: {{dataShortInput}}
   </div>
 </template>

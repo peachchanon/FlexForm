@@ -1,53 +1,84 @@
 ﻿<template>
-  <div class="tw-w-full tw-h-full tw-flex tw-flex-row tw-justify-center bg-grey1 base-padding">
-    <div class="boxstyle bg-yellow4 tw-mt-7 tw-mb-7 tw-h-full" >
-      <div class="tw-mt-7 tw-ml-3 tw-flex tw-flex-row tw-items-center">
-        <base-button-back
-            :callback="PreviousPage"></base-button-back>
-        <Icon class="semibold24 icon blue10 tw-mr-1.5" icon="heroicons-outline:chart-pie"/>
-        <span class="semibold24 blue10 tw-pl-1">Data Visualization</span>
-      </div>
-      <div class="step-wizard">
-        <ul class="step-wizard-list">
-          <li class="step-wizard-item">
-            <span class="progress-count">1</span>
-            <span class="progress-label">List</span>
-          </li>
-          <li class="step-wizard-item current-item">
-            <span class="progress-count">2</span>
-            <span class="progress-label">Build</span>
-          </li>
-          <li class="step-wizard-item">
-            <span class="progress-count">3</span>
-            <span class="progress-label">Export</span>
-          </li>
-        </ul>
-      </div>
-      <div class="box2 tw-flex tw-flex-row tw-justify-center" style="min-height: 100%; ">
-        <div class="cardleft bg-red5 base-shadow tw-mt-5 tw-w-1/5 ">
-          <div>Hello ja</div>
-        </div>
-        <div class="cardright bg-blue5 base-shadow tw-mt-5 tw-w-8/12 ">
-          <div>Hello ja2</div>
+  <div class="tw-w-full tw-h-full tw-flex tw-flex-row tw-justify-center md:tw-items-center tw-items-start bg-grey1">
+    <div class="box__style radius12px bg-white base-shadow base-padding tw-w-full">
+      <div class="tw-flex tw-flex-row">
+        <base-button-back></base-button-back>
+        <div class="tw-ml-2 tw-flex tw-flex-row tw-items-center tw-flex-wrap">
+          <Icon class="semibold24 icon blue10 tw-mr-1.5" icon="heroicons-outline:chart-pie"/>
+          <span class="semibold24 blue10">Data Visualization</span>
         </div>
       </div>
+      <div class="tw-w-full">
+        <div class="tw-flex tw-flex-col tw-items-center">
+          Progress bar
+        </div>
+        <div class="tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
+          <div class="left__layout tw-border-0 md:tw-border-r-2 tw-p-2">
+            <div class="tw-flex tw-flex-row md:tw-flex-col">
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
+              </div>
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Line</span>
+              </div>
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Bar</span>
+              </div>
+            </div>
+          </div>
+          <div class="right__layout tw-p-2">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="semibold24 icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+              </div>
+              <div class="tw-flex tw-flex-row">
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBorderColor="border-green5"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </template>
 
 <script>
-import BaseButtonBack from "@/components/BaseButtonBack";
-import {Icon} from "@iconify/vue2/dist/iconify";
-import {mapActions, mapGetters} from "vuex";
+import { Icon } from "@iconify/vue2/dist/iconify"
+import { mapActions, mapGetters} from "vuex"
+import BaseButtonBack from "@/components/BaseButtonBack"
+import BaseButton from "@/components/BaseButton"
+
 export default {
   name: "SelectGraph.vue",
   components: {
     Icon,
     BaseButtonBack,
+    BaseButton
+  },
+  data() {
+    return {
+      ShowContent: true,
+    }
   },
   watch: {
     windowResize () {
-      this.showBanner = window.innerWidth >= 1440
+      this.ShowContent = window.innerWidth >= 1440
     }
   },
   computed: {
@@ -57,11 +88,7 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    this.showBanner = window.innerWidth >= 1440
-  },
-  data(){
-    return{
-    }
+    this.ShowContent = window.innerWidth >= 1440
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -73,112 +100,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.boxstyle{
-  border-radius: $radius10px;
-  width: 90%; // my vertical -> top bottom
+.icon{
+  font-size: 2rem;
 }
-.cardleft{
-  border-top-left-radius:$radius10px;
+@media only screen and (max-width: 767px){
+  .box__style {
+    height: 100%;
+    max-height: 736px;
+  }
 }
-.cardright{
-  border-top-right-radius:$radius10px;
-}
-.step-wizard {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
-.step-wizard-list{
-  color: $blue10;
-  list-style-type: none;
-  border-radius: 10px;
-  display: flex;
-  padding: 20px 10px;
-  position: relative;
-  z-index: 10;
-}
-
-.step-wizard-item{
-  padding: 0 20px;
-  flex-basis: 0;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  min-width: 170px;
-  position: relative;
-}
-.step-wizard-item + .step-wizard-item:after{
-  content: "";
-  clear: both;
-  position: absolute;
-  left: 0;
-  top: 19px;
-  background: $blue5;
-  width: 100%;
-  height: 3px;
-  transform: translateX(-50%);
-  z-index: -10;
-}
-.progress-count{
-  height: 40px;
-  width:40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-weight: 600;
-  margin: 0 auto;
-  position: relative;
-  z-index:10;
-  color: transparent;
-}
-.progress-count:after{
-  content: "";
-  height: 40px;
-  width: 40px;
-  background: $blue5;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: -10;
-}
-.progress-count:before{
-  content: "";
-  height: 10px;
-  width: 20px;
-  border-left: 3px solid #fff;
-  border-bottom: 3px solid #fff;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -60%) rotate(-45deg);
-  transform-origin: center center;
-}
-.progress-label{
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 10px;
-}
-.current-item .progress-count:before,
-.current-item ~ .step-wizard-item .progress-count:before{
-  display: none;
-}
-.current-item ~ .step-wizard-item .progress-count:after{
-  height:10px;
-  width:10px;
-}
-.current-item ~ .step-wizard-item .progress-label{
-  opacity: 0.5;
-}
-.current-item .progress-count:after{
-  background: #fff;
-  border: 2px solid $blue5;
-}
-.current-item .progress-count{
-  color: $blue5;
+@media only screen and (min-width: 768px) {
+  .box__style {
+    width: 100%;
+    max-width: 1024px;
+    height: 100%;
+    max-height: 560px;
+    .left__layout {
+      width: 100%;
+      max-width: 150px;
+    }
+    .right__layout {
+      width: 100%;
+    }
+  }
 }
 </style>

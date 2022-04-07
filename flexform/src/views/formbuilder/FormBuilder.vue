@@ -398,7 +398,7 @@
                 @callbackName="doStatePropShortInputNavigation"
             ></base-navigation-properties-form-builder>
             <div v-if="StatePropSelectShortInputBasic" class="tw-flex tw-flex-col base-padding">
-              <span class="semibold24 white tw-my-1">Short</span>
+              <span class="semibold24 white tw-my-1">Short Input</span>
               <span class="medium16 white tw-mt-2 tw-mb-1">Label Text</span>
               <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your question here</span>
               <base-text-input-properties-form-builder
@@ -425,6 +425,7 @@
               <span class="medium16 white tw-mt-2 tw-mb-1">Required</span>
               <base-text-input-properties-form-builder
                   type="toggle"
+                  class="tw-mb-2"
                   :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Required"
                   @callBackBoolean="doPropShortInputRequired"
               ></base-text-input-properties-form-builder>
@@ -436,8 +437,6 @@
                   class="tw-mb-2"
                   @callBackString="doPropShortInputPlaceholder"
               ></base-text-input-properties-form-builder>
-
-
               <span class="medium16 white tw-mt-2 tw-mb-1">Width</span>
               <span class="light14 grey2 tw-mb-2 tw-mb-1">You can change your field’s width</span>
               <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
@@ -448,7 +447,7 @@
                 <base-text-input-properties-form-builder
                     type="toggle"
                     :propValueToggle="valuePropParagraphWidth"
-                    @callBackBoolean="doPropParagraphWidth"
+                    @callBackBoolean="doPropShortInputWidth"
                 ></base-text-input-properties-form-builder>
               </div>
               <div
@@ -463,16 +462,65 @@
                 ></base-text-input-properties-form-builder>
                 <span class="medium16 white tw-ml-3">px</span>
               </div>
-              
-              
-              
-              
             </div>
             <div v-if="StatePropSelectShortInputAdvance" class="tw-flex tw-flex-col base-padding">
-              <span class="semibold24 white tw-my-1">Short Input 2</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Read Only</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Prevent to input this field</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.ReadOnly"
+                  class="tw-mb-2"
+                  @callBackBoolean="doPropShortInputLabelReadOnly"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Character Limit</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Limit the number of characters</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimit"
+                  class="tw-mb-2"
+                  @callBackBoolean="doPropShortInputCharacterLimit"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Validation</span>
+              <base-dropdown-form-builder
+                  :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Validation"
+                  propType="basic"
+                  propDropdownWidth="252"
+                  :propList="ShortInputValidationList"
+                  @callBackValue="doPropShortInputValidation"
+              ></base-dropdown-form-builder>
             </div>
             <div v-if="StatePropSelectShortInputStyle" class="tw-flex tw-flex-col base-padding">
-              <span class="semibold24 white tw-my-1">Short Input 3</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FontColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputFontColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Input Background Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.InputBgColor.substring(3)"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputFontInputBgColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Border Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.BorderColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputBorderColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <base-dropdown-form-builder
+                    :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelFontSize.toString()"
+                    propType="fontsize"
+                    propDropdownWidth="70"
+                    @callBackValue="doPropShortInputLabelFontSize"
+                ></base-dropdown-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
             </div>
           </div>
           <!-- Paragraph -->
@@ -778,6 +826,7 @@ export default {
       // Sidebar Properties
       StateShowPropertiesSidebar: false,
       // Value
+      ShortInputValidationList:['Alphabetic','Numeric','Email','URL'],
       FontNameList: ['Prompt','Arial','Brush Script MT','Courier New','Garamond','Georgia','Tahoma','Times New Roman','Trebuchet MS','Verdana','Helvetica'],
       // Form Structure
       FormStructure : {
@@ -1119,6 +1168,13 @@ export default {
     doPropShortInputRequired(){},
     doPropShortInputPlaceholder(){},
     doPropShortInputWidth(){},
+    doPropShortInputLabelReadOnly(){},
+    doPropShortInputCharacterLimit(){},
+    doPropShortInputValidation(){},
+    doPropShortInputFontColor(){},
+    doPropShortInputFontInputBgColor(){},
+    doPropShortInputBorderColor(){},
+    doPropShortInputLabelFontSize(){},
     
     // Paragraph Detail
     doStatePropParagraphNavigation(element){
