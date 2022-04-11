@@ -1,6 +1,101 @@
 ﻿<template>
-  <div class="base-padding">
-    InputText: {{dataShortInput}}
+  <div
+      class="tw-flex tw-flex-row"
+      :class="{
+    'tw-flex-row': dataShortInput.Alignment === 'left',
+    'tw-flex-col': dataShortInput.Alignment === 'top'
+      }"
+  >
+    <div 
+        :class="{
+      'tw-w-2/5': dataShortInput.Alignment === 'left',
+      'tw-w-full': dataShortInput.Alignment === 'top'
+        }"
+    >
+      <div
+          :class="{
+        'base-padding tw-my-4': dataShortInput.Alignment === 'left',
+        'tw-mx-4 tw-mt-2': dataShortInput.Alignment === 'top'
+          }"
+      >
+        <span class="medium16 grey10">{{dataShortInput.LabelText}}</span>
+        <span
+            class="red5 tw-mx-1"
+            v-if="dataShortInput.Required"
+        >*</span>
+      </div>
+    </div>
+    <div class="base-padding tw-flex tw-flex-col"
+         :class="{
+      'tw-w-3/5': dataShortInput.Alignment === 'left',
+      'tw-w-full': dataShortInput.Alignment === 'top'
+        }"
+    >
+      <!-- Alphabetic Type -->
+      <input 
+          v-if="dataShortInput.Validation==='Alphabetic'" 
+          type="text"
+          :placeholder="dataShortInput.Placeholder"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          class="input__style base-padding radius10px tw-w-full tw-border-2"
+          :style="[fontSizeStyle,widthStyle]"
+          :disabled="dataShortInput.ReadOnly"
+          v-model="valueShortInput.Text"
+          @input="doInput"
+          :maxlength="dataShortInput.CharacterLimitValue"
+      >
+      <!-- Numeric Type -->
+      <input
+          v-if="dataShortInput.Validation==='Numeric'"
+          type="number"
+          :placeholder="dataShortInput.Placeholder"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          class="input__style base-padding radius10px tw-w-full tw-border-2"
+          :style="[fontSizeStyle,widthStyle]"
+          :disabled="dataShortInput.ReadOnly"
+          v-model="valueShortInput.Number"
+          @input="doInput"
+          :maxlength="dataShortInput.CharacterLimitValue"
+      >
+      <!-- Email Type -->
+      <input
+          v-if="dataShortInput.Validation==='Email'"
+          type="email"
+          :placeholder="dataShortInput.Placeholder"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          class="input__style base-padding radius10px tw-w-full tw-border-2"
+          :style="[fontSizeStyle,widthStyle]"
+          :disabled="dataShortInput.ReadOnly"
+          v-model="valueShortInput.Text"
+          @input="doInput"
+          :maxlength="dataShortInput.CharacterLimitValue"
+      >
+      <!-- URL Type -->
+      <input
+          v-if="dataShortInput.Validation==='URL'"
+          type="url"
+          :placeholder="dataShortInput.Placeholder"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          class="input__style base-padding radius10px tw-w-full tw-border-2"
+          :style="[fontSizeStyle,widthStyle]"
+          :disabled="dataShortInput.ReadOnly"
+          v-model="valueShortInput.Text"
+          @input="doInput"
+          :maxlength="dataShortInput.CharacterLimitValue"
+      >
+      <div class="tw-flex tw-flex-row tw-justify-between">
+        <span class="tw-ml-1 light14 grey5">{{dataShortInput.SubLabelText}}</span>
+        <span 
+            v-if="dataShortInput.CharacterLimit" 
+            class="tw-ml-1 light14 grey5"
+            :class="{
+              'red5': valueShortInput.Text.length >= dataShortInput.CharacterLimitValue,
+              'grey5': valueShortInput.Text.length < dataShortInput.CharacterLimitValue,
+            }"
+        >{{valueShortInput.Text.length}}/{{dataShortInput.CharacterLimitValue}}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,24 +109,68 @@ export default {
       Alignment: String,
       Required: Boolean,
       Placeholder: String,
-      Width: String,
+      FixWidth: Boolean,
+      Width: Number,
       ReadOnly: Boolean,
       CharacterLimit: Boolean,
+      CharacterLimitValue: Number,
       Validation: String,
       FontColor: String,
       InputBgColor: String,
       BorderColor: String,
       LabelFontSize: Number,
+    },
+  },
+  emits: ['valueShortInput'],
+  data() {
+    return {
+      valueShortInput: {
+        Text: '',
+        Number: 0,
+      }
     }
   },
-  data() {
-    return {}
+  computed: {
+    fontSizeStyle() {
+      return {
+        '--font-size': this.dataShortInput.LabelFontSize+'px'
+      }
+    },
+    widthStyle() {
+      if(!this.dataShortInput.FixWidth){
+        return {
+          '--input-width': this.dataShortInput.Width+'px',
+        }
+      } else {
+        return {
+          '--input-width': '100%',
+        }
+      }
+    }
   },
-  computed: {},
-  methods: {}
+  methods: {
+    doInput() {
+      if(this.dataShortInput.Validation === 'Alphabetic') {
+        this.$emit('valueShortInput',this.valueShortInput.Text)
+      } else if(this.dataShortInput.Validation === 'Numeric') {
+        this.$emit('valueShortInput',~~this.valueShortInput.Number)
+      } else if(this.dataShortInput.Validation === 'Email') {
+        this.$emit('valueShortInput',this.valueShortInput.Text)
+      } else if(this.dataShortInput.Validation === 'URL') {
+        this.$emit('valueShortInput',this.valueShortInput.Text)
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.input__style {
+  font-size: var(--font-size);
+  width: var(--input-width)
+}
+.input__style:focus {
+  border: 2px solid $blue5;
+  outline: none !important;
+}
 </style>

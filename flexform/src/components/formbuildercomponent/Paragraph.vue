@@ -11,21 +11,18 @@ export default {
     dataParagraph: {
       LabelText: String,
       Alignment: String,
-      Width: String,
+      FixWidth: Boolean,
+      Width: Number,
       FontColor: String,
       FontSize: Number,
     }
   },
   computed:{
     widthStyle(){
-      if(this.dataParagraph.Width !== 'full'){
-        return {
-          '--dropdown-width': this.dataParagraph.Width+'px',
-        }
+      if(this.dataParagraph.FixWidth === true) {
+        return {'--width': '100%'}
       } else {
-        return {
-          '--dropdown-width': '100%',
-        }
+        return {'--width': this.dataParagraph.Width+'px'}
       }
     },
     alignmentStyle(){
@@ -48,7 +45,7 @@ export default {
 
 <style lang="scss" scoped>
 .paragraph__style{
-  width: var(--dropdown-width);
+  width: var(--width);
   font-size: var(--font-size);
 }
 </style>

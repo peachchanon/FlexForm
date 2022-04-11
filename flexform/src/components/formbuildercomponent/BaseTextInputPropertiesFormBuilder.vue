@@ -1,14 +1,14 @@
 ﻿<template>
   <div>
     <input v-if="type === 'text'" type="text" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString">
-    <input v-if="type === 'number'" type="number" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doNumber">
+    <input v-if="type === 'number'" type="number" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showNumber" @input="doNumber">
     <div v-if="type === 'toggle'">
       <toggle-button v-if="type === 'toggle'" :value="propValueToggle" :labels="propToggleLabel" @change="doToggle"/>
     </div>
     <textarea v-if="type === 'textarea'" :placeholder="placeholder" class="input medium16 base-padding radius10px tw-w-full" v-model="showString" @input="doString"></textarea>
     <div v-if="type === 'color'" class="input medium16 radius10px tw-w-full tw-flex tw-flex-row tw-items-center tw-relative">
       <div class="base-padding tw-w-full tw-h-full radius10px">
-        <div :class="'bg-'+propValue" style="height: 24px; border-radius: 6px"></div>
+        <div :class="'bg-'+propValue" style="height: 30px; border-radius: 6px" class="tw-drop-shadow-md md:tw-drop-shadow-xl"></div>
       </div>
       <div class="tw-bg-grey9 hover:tw-bg-grey7 tw-transition tw-ease-in tw-cursor-pointer tw-p-2 tw-mr-2 radius10px tw-w-fit tw-h-fit tw-text-white hover:tw-text-grey1" @click="doStateBoardColor">
         <Icon class="icon__style__large" icon="clarity:color-palette-solid"/>
@@ -134,10 +134,11 @@ export default {
     Icon,
     ToggleButton
   },
-  emits: ['callBackString','callBackBoolean'],
+  emits: ['callBackString','callBackNumber','callBackBoolean'],
   data() {
     return {
       showString: this.propValue,
+      showNumber: this.propValueNumber,
       stateBoardColor: false,
       dataColorWhite:[
         'white'
@@ -165,6 +166,7 @@ export default {
     type: String,
     placeholder: String,
     propValue: String,
+    propValueNumber: Number,
     propValueToggle: {
       type: Boolean,
       default: false
@@ -176,7 +178,7 @@ export default {
       this.$emit('callBackString', this.showString)
     },
     doNumber() {
-      this.$emit('callBackString', this.showString)
+      this.$emit('callBackNumber', parseInt(this.showNumber))
     },
     doStateBoardColor(){
       this.stateBoardColor = !this.stateBoardColor;
