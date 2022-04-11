@@ -163,7 +163,7 @@
             </div>
             <div class="bar"></div>
           </div>
-          <div class="button__component">
+          <div class="button__component" @click="addLongInputComponent">
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
               <div class="tw-w-1/5">
@@ -541,6 +541,148 @@
               </div>
             </div>
           </div>
+          <!-- Long Input -->
+          <div v-if="StatePropSelectLongInput" class="tw-flex tw-flex-col">
+            <base-navigation-properties-form-builder
+                :itemList="['Basic','Advance','Style']"
+                @callbackName="doStatePropLongInputNavigation"
+            ></base-navigation-properties-form-builder>
+            <div v-if="StatePropSelectLongInputBasic" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Long Input</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Text</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your question here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputLabelText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Sub Label Text (Optional)</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Add your description here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubLabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputSubLabelText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Alignment</span>
+              <base-text-input-properties-form-builder
+                  type="alignment2"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Alignment"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputAlignment"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Required</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  class="tw-mb-2"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Required"
+                  @callBackBoolean="doPropShortInputRequired"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Placeholder</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your placeholder here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Placeholder"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputPlaceholder"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Width</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">You can change your field’s width</span>
+              <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
+                <span class="medium16 tw-mr-3 tw-ml-1 tw-ease-in tw-transition tw-my-2" :class="{
+                  'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth,
+                  'grey3': !FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth,
+                }">Fixed</span>
+                <base-text-input-properties-form-builder
+                    type="toggle"
+                    :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth"
+                    @callBackBoolean="doPropShortInputWidth"
+                ></base-text-input-properties-form-builder>
+              </div>
+              <div
+                  v-if="!FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth"
+                  class="tw-flex tw-flex-row tw-items-center tw-mb-2"
+              >
+                <base-text-input-properties-form-builder
+                    style="width: 100px"
+                    type="number"
+                    :propValueNumber="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width"
+                    @callBackNumber="doPropShortInputWidth"
+                ></base-text-input-properties-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+            </div>
+            <div v-if="StatePropSelectLongInputAdvance" class="tw-flex tw-flex-col base-padding">
+              <span class="medium16 white tw-mt-2 tw-mb-1">Read Only</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Prevent to input this field</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.ReadOnly"
+                  class="tw-my-2"
+                  @callBackBoolean="doPropShortInputLabelReadOnly"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Character Limit</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Limit the number of characters</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <span class="medium16 tw-mr-3 tw-ml-1 tw-ease-in tw-transition tw-my-2" :class="{
+                    'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimit,
+                    'grey3': !FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimit,
+                  }">Limited</span>
+                <base-text-input-properties-form-builder
+                    type="toggle"
+                    :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimit"
+                    class="tw-my-2"
+                    @callBackBoolean="doPropShortInputCharacterLimit"
+                ></base-text-input-properties-form-builder>
+              </div>
+              <div
+                  v-if="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimit"
+                  class="tw-flex tw-flex-row tw-items-center tw-mb-2"
+              >
+                <base-text-input-properties-form-builder
+                    style="width: 100px"
+                    type="number"
+                    :propValueNumber="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.CharacterLimitValue"
+                    @callBackNumber="doPropShortInputCharacterLimitValue"
+                ></base-text-input-properties-form-builder>
+                <span class="medium16 white tw-ml-3">characters</span>
+              </div>
+            </div>
+            <div v-if="StatePropSelectLongInputStyle" class="tw-flex tw-flex-col base-padding">
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FontColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputFontColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Input Background Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.InputBgColor.substring(3)"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputFontInputBgColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Border Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.BorderColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropShortInputBorderColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <base-dropdown-form-builder
+                    :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelFontSize.toString()"
+                    propType="fontsize"
+                    propDropdownWidth="70"
+                    @callBackValue="doPropShortInputLabelFontSize"
+                ></base-dropdown-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+            </div>
+          </div>
           <!-- Paragraph -->
           <div v-if="StatePropSelectParagraph" class="tw-flex tw-flex-col">
             <base-navigation-properties-form-builder
@@ -732,6 +874,18 @@
                         }"
                         ></short-input>
                       </div>
+                      <!-- Long Input Component -->
+                      <div v-if="componentElement.ComponentType === 'long-input'" class="tw-cursor-pointer tw-w-full"
+                           @click="doSelectSection(indexSection,componentIndex)"
+                      >
+                        <long-input
+                            :dataLongInput="componentElement.ComponentProperties"
+                            :class="{
+                          'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectLongInput,
+                          'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectLongInput
+                        }"
+                        ></long-input>
+                      </div>
                       <!-- Paragraph Component -->
                       <div v-if="componentElement.ComponentType === 'paragraph'" class="tw-cursor-pointer tw-w-full"
                            @click="doSelectSection(indexSection,componentIndex)"
@@ -805,6 +959,7 @@ import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercompone
 import BaseToolsComponentFormBuilder from "@/components/formbuildercomponent/BaseToolsComponentFormBuilder"
 // Import Component
 import ShortInput from '@/components/formbuildercomponent/ShortInput'
+import LongInput from "@/components/formbuildercomponent/LongInput"
 import ParagraphComponent from "@/components/formbuildercomponent/Paragraph"
 import HeaderComponent from "@/components/formbuildercomponent/Header"
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
@@ -823,6 +978,7 @@ export default {
     BaseToolsComponentFormBuilder,
     // Import Component
     ShortInput,
+    LongInput,
     HeaderComponent,
     ParagraphComponent,
     ButtonSection,
@@ -887,11 +1043,16 @@ export default {
       StateSelectComponentIndex: 0,
       // Properties Sections
       StatePropSelectSection: true,
-      // Properties Paragraph
+      // Properties Short Input
       StatePropSelectShortInput: false,
       StatePropSelectShortInputBasic: false,
       StatePropSelectShortInputAdvance: false,
       StatePropSelectShortInputStyle: false,
+      // Properties Long Input
+      StatePropSelectLongInput: false,
+      StatePropSelectLongInputBasic: false,
+      StatePropSelectLongInputAdvance: false,
+      StatePropSelectLongInputStyle: false,
       // Properties Paragraph
       StatePropSelectParagraph: false,
       StatePropSelectParagraphBasic: false,
@@ -1040,6 +1201,7 @@ export default {
         this.StatePropSelectSection = true
         // อย่าลืมใส่
         this.StatePropSelectShortInput = false
+        this.StatePropSelectLongInput = false
         this.StatePropSelectParagraph = false
         this.StatePropSelectHeading = false
       } else {
@@ -1058,8 +1220,28 @@ export default {
             this.StatePropSelectSection = true
           }
           // อย่าลืมใส่
+          this.StatePropSelectLongInput = false
           this.StatePropSelectParagraph = false
           this.StatePropSelectHeading = false  
+        }
+        else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'long-input'){
+          if(!this.StatePropSelectLongInput){
+            this.StatePropSelectLongInput = true
+            this.StatePropSelectLongInputBasic = true
+            this.StatePropSelectLongInputAdvance = false
+            this.StatePropSelectLongInputStyle = false
+            this.StatePropSelectSection = false
+          } else {
+            this.StatePropSelectLongInput = false
+            this.StatePropSelectLongInputBasic = false
+            this.StatePropSelectLongInputAdvance = false
+            this.StatePropSelectLongInputStyle = false
+            this.StatePropSelectSection = true
+          }
+          // อย่าลืมใส่
+          this.StatePropSelectShortInput = false
+          this.StatePropSelectParagraph = false
+          this.StatePropSelectHeading = false
         }
         else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'paragraph'){
           if(!this.StatePropSelectParagraph){
@@ -1075,8 +1257,10 @@ export default {
           }
           // อย่าลืมใส่
           this.StatePropSelectShortInput = false
+          this.StatePropSelectLongInput = false
           this.StatePropSelectHeading = false
-        } else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'heading'){
+        } 
+        else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'heading'){
           if(!this.StatePropSelectHeading){
             this.StatePropSelectHeading = true
             this.StatePropSelectHeadingBasic = true
@@ -1090,6 +1274,7 @@ export default {
           }
           // อย่าลืมใส่
           this.StatePropSelectShortInput = false
+          this.StatePropSelectLongInput = false
           this.StatePropSelectParagraph = false
         }
       }
@@ -1249,6 +1434,96 @@ export default {
     doPropShortInputLabelFontSize(value) {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelFontSize = value
     },
+
+    // Long Input Detail
+    doStatePropLongInputNavigation(element){
+      if(element.name === 'Basic'){
+        this.StatePropSelectLongInputBasic = true
+        this.StatePropSelectLongInputAdvance = false
+        this.StatePropSelectLongInputStyle = false
+      } else if(element.name === 'Advance'){
+        this.StatePropSelectLongInputBasic = false
+        this.StatePropSelectLongInputAdvance = true
+        this.StatePropSelectLongInputStyle = false
+      } else if(element.name === 'Style'){
+        this.StatePropSelectLongInputBasic = false
+        this.StatePropSelectLongInputAdvance = false
+        this.StatePropSelectLongInputStyle = true
+      }
+    },
+    // Long Input Properties
+    doPropLongInputLabelText(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelText = 'Type a question'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelText = value
+      }
+    },
+    doPropLongInputSubLabelText(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubLabelText = ''
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubLabelText = value
+      }
+    },
+    doPropLongInputAlignment(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = 'left'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = value
+      }
+    },
+    doPropLongInputRequired(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Required = value
+    },
+    doPropLongInputPlaceholder(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Placeholder = ''
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Placeholder = value
+      }
+    },
+    doPropLongInputWidth(value) {
+      if(typeof value === 'boolean') {
+        if(value){
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FixWidth = true
+        } else {
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FixWidth = false
+        }
+      } else if (typeof value === 'number') {
+        if (value === '')
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Width = 200
+        else {
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Width = value
+        }
+      }
+    },
+    doPropLongInputLabelReadOnly(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.ReadOnly = value
+    },
+    doPropLongInputCharacterLimit(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.CharacterLimit = value
+      if(!this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.CharacterLimit) {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.CharacterLimitValue = 100000
+      }else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.CharacterLimitValue = 2000
+      }
+    },
+    doPropLongInputCharacterLimitValue(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.CharacterLimitValue = value
+    },
+    doPropLongInputFontColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FontColor = value
+    },
+    doPropLongInputFontInputBgColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.InputBgColor = 'bg-'+value
+    },
+    doPropLongInputBorderColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.BorderColor = value
+    },
+    doPropLongInputLabelFontSize(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelFontSize = value
+    },
     
     // Paragraph Detail
     doStatePropParagraphNavigation(element){
@@ -1397,6 +1672,31 @@ export default {
               CharacterLimit: true,
               CharacterLimitValue: 1000,
               Validation: 'Alphabetic',
+              FontColor: 'grey10',
+              InputBgColor: 'bg-grey1',
+              BorderColor: 'white',
+              LabelFontSize: 16,
+            }
+          }
+      )
+      this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
+    },
+    addLongInputComponent(){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
+          this.StateSelectComponentIndex+1,0,
+          {
+            ComponentType: 'long-input',
+            ComponentProperties: {
+              LabelText: 'Type a question',
+              SubLabelText: 'Type a description',
+              Alignment: 'left',
+              Required: false,
+              Placeholder: 'Enter',
+              FixWidth: true,
+              Width: 200,
+              ReadOnly: false,
+              CharacterLimit: true,
+              CharacterLimitValue: 2000,
               FontColor: 'grey10',
               InputBgColor: 'bg-grey1',
               BorderColor: 'white',
