@@ -173,16 +173,6 @@
             </div>
             <div class="bar"></div>
           </div>
-          <div class="button__component">
-            <div class="bar"></div>
-            <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
-              <div class="tw-w-1/5">
-                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
-              </div>
-              <div class="tw-w-4/5"><span class="medium16">Number Input</span></div>
-            </div>
-            <div class="bar"></div>
-          </div>
           <div class="button__component" @click="addParagraphComponent">
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
@@ -203,7 +193,7 @@
             </div>
             <div class="bar"></div>
           </div>
-          <div class="button__component">
+          <div class="button__component" @click="addDropdownComponent">
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
               <div class="tw-w-1/5">
@@ -822,6 +812,138 @@
               </div>
             </div>
           </div>
+          <!-- Dropdown -->
+          <div v-if="StatePropSelectDropdown" class="tw-flex tw-flex-col">
+            <base-navigation-properties-form-builder
+                :itemList="['Basic','Advance','Style']"
+                @callbackName="doStatePropDropdownNavigation"
+            ></base-navigation-properties-form-builder>
+            <div v-if="StatePropSelectDropdownBasic" class="tw-flex tw-flex-col base-padding">
+              <span class="semibold24 white tw-my-1">Dropdown</span>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Text</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your question here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownLabelText"
+              ></base-text-input-properties-form-builder>
+              <div v-if="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.PredefinedOptions === 'None'" class="tw-flex tw-flex-col">
+                <span class="medium16 white tw-mt-2 tw-mb-1">Options</span>
+                <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your options here and separate each on a new line</span>
+                <base-options-form-builder
+                    :propList="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Options"
+                ></base-options-form-builder>
+              </div>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Sub Label Text (Optional)</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Add your description here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SubLabelText"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownSubLabelText"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Label Alignment</span>
+              <base-text-input-properties-form-builder
+                  type="alignment2"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Alignment"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownAlignment"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Required</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  class="tw-mb-2"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Required"
+                  @callBackBoolean="doPropDropdownRequired"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Placeholder</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Type your placeholder here</span>
+              <base-text-input-properties-form-builder
+                  type="text"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Placeholder"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownPlaceholder"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Width</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">You can change your field’s width</span>
+              <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
+                <span class="medium16 tw-mr-3 tw-ml-1 tw-ease-in tw-transition tw-my-2" :class="{
+                  'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth,
+                  'grey3': !FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth,
+                }">Fixed</span>
+                <base-text-input-properties-form-builder
+                    type="toggle"
+                    :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth"
+                    @callBackBoolean="doPropDropdownWidth"
+                ></base-text-input-properties-form-builder>
+              </div>
+              <div
+                  v-if="!FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FixWidth"
+                  class="tw-flex tw-flex-row tw-items-center tw-mb-2"
+              >
+                <base-text-input-properties-form-builder
+                    style="width: 100px"
+                    type="number"
+                    :propValueNumber="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.Width"
+                    @callBackNumber="doPropDropdownWidth"
+                ></base-text-input-properties-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+            </div>
+            <div v-if="StatePropSelectDropdownAdvance" class="tw-flex tw-flex-col base-padding">
+              <span class="medium16 white tw-mt-2 tw-mb-1">Read Only</span>
+              <span class="light14 grey2 tw-mb-2 tw-mb-1">Prevent to input this field</span>
+              <base-text-input-properties-form-builder
+                  type="toggle"
+                  :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.ReadOnly"
+                  class="tw-my-2"
+                  @callBackBoolean="doPropDropdownLabelReadOnly"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Validation</span>
+              <base-dropdown-form-builder
+                  class="tw-mb-3"
+                  :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.PredefinedOptions"
+                  propType="basic"
+                  propDropdownWidth="252"
+                  :propList="PredefinedOptions"
+                  @callBackValue="doPropDropdownPredefinedOptions"
+              ></base-dropdown-form-builder>
+            </div>
+            <div v-if="StatePropSelectDropdownStyle" class="tw-flex tw-flex-col base-padding">
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.FontColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownFontColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Input Background Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.InputBgColor.substring(3)"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownFontInputBgColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Border Color</span>
+              <base-text-input-properties-form-builder
+                  type="color"
+                  :propValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.BorderColor"
+                  class="tw-mb-2"
+                  @callBackString="doPropDropdownBorderColor"
+              ></base-text-input-properties-form-builder>
+              <span class="medium16 white tw-mt-2 tw-mb-1">Font Size</span>
+              <div class="tw-flex tw-flex-row tw-items-center">
+                <base-dropdown-form-builder
+                    :dropdownValue="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.LabelFontSize.toString()"
+                    propType="fontsize"
+                    propDropdownWidth="70"
+                    @callBackValue="doPropDropdownLabelFontSize"
+                ></base-dropdown-form-builder>
+                <span class="medium16 white tw-ml-3">px</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Layout -->
@@ -910,6 +1032,18 @@
                         }"
                         ></header-component>
                       </div>
+                      <!-- Dropdown Component -->
+                      <div v-if="componentElement.ComponentType === 'dropdown'" class="tw-cursor-pointer tw-w-full"
+                           @click="doSelectSection(indexSection,componentIndex)"
+                      >
+                        <dropdown-component
+                            :dataDropdown="componentElement.ComponentProperties"
+                            :class="{
+                          'select__component__active': componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex && StatePropSelectDropdown,
+                          'select__component__inactive': componentIndex !== StateSelectComponentIndex && indexSection === StateSelectSectionIndex && !StatePropSelectDropdown
+                        }"
+                        ></dropdown-component>
+                      </div>
                       <base-tools-component-form-builder
                           class="tw-ml-1"
                           v-if="componentIndex === StateSelectComponentIndex && indexSection === StateSelectSectionIndex" 
@@ -957,11 +1091,13 @@ import BaseTextInputPropertiesFormBuilder from '@/components/formbuildercomponen
 import BaseDropdownFormBuilder from "@/components/formbuildercomponent/BaseDropdownFormBuilder"
 import BaseNavigationPropertiesFormBuilder from "@/components/formbuildercomponent/BaseNavigationPropertiesFormBuilder"
 import BaseToolsComponentFormBuilder from "@/components/formbuildercomponent/BaseToolsComponentFormBuilder"
+import BaseOptionsFormBuilder from "@/components/formbuildercomponent/BaseOptionsFormBuilder"
 // Import Component
 import ShortInput from '@/components/formbuildercomponent/ShortInput'
 import LongInput from "@/components/formbuildercomponent/LongInput"
 import ParagraphComponent from "@/components/formbuildercomponent/Paragraph"
 import HeaderComponent from "@/components/formbuildercomponent/Header"
+import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
 
 export default {
@@ -976,11 +1112,13 @@ export default {
     BaseTextInputPropertiesFormBuilder,
     BaseDropdownFormBuilder,
     BaseToolsComponentFormBuilder,
+    BaseOptionsFormBuilder,
     // Import Component
     ShortInput,
     LongInput,
     HeaderComponent,
     ParagraphComponent,
+    DropdownComponent,
     ButtonSection,
   },
   data() {
@@ -1001,6 +1139,10 @@ export default {
       // Value
       ShortInputValidationList:['Alphabetic','Numeric','Email','URL'],
       FontNameList: ['Prompt','Arial','Brush Script MT','Courier New','Garamond','Georgia','Tahoma','Times New Roman','Trebuchet MS','Verdana','Helvetica'],
+      PredefinedOptions:['None','Gender','Days','Months'],
+      Gender:['Male','Female'],
+      Days:['Sunday','Monday','Tuesday','Wendesday','Thursday','Friday','Saturday'],
+      Months:["January","February","March","April","May","June","July","August","September","October","November","December"],
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
@@ -1061,6 +1203,11 @@ export default {
       StatePropSelectHeading: false,
       StatePropSelectHeadingBasic: false,
       StatePropSelectHeadingStyle: false,
+      // Properties Dropdown
+      StatePropSelectDropdown: false,
+      StatePropSelectDropdownBasic: false,
+      StatePropSelectDropdownAdvance: false,
+      StatePropSelectDropdownStyle: false,
       // Properties Action Button
       StatePropSelectActionButton: false,
     }
@@ -1204,6 +1351,7 @@ export default {
         this.StatePropSelectLongInput = false
         this.StatePropSelectParagraph = false
         this.StatePropSelectHeading = false
+        this.StatePropSelectDropdown = false
       } else {
         if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'short-input'){
           if(!this.StatePropSelectShortInput){
@@ -1222,7 +1370,8 @@ export default {
           // อย่าลืมใส่
           this.StatePropSelectLongInput = false
           this.StatePropSelectParagraph = false
-          this.StatePropSelectHeading = false  
+          this.StatePropSelectHeading = false
+          this.StatePropSelectDropdown = false
         }
         else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'long-input'){
           if(!this.StatePropSelectLongInput){
@@ -1242,6 +1391,7 @@ export default {
           this.StatePropSelectShortInput = false
           this.StatePropSelectParagraph = false
           this.StatePropSelectHeading = false
+          this.StatePropSelectDropdown = false
         }
         else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'paragraph'){
           if(!this.StatePropSelectParagraph){
@@ -1259,6 +1409,7 @@ export default {
           this.StatePropSelectShortInput = false
           this.StatePropSelectLongInput = false
           this.StatePropSelectHeading = false
+          this.StatePropSelectDropdown = false
         } 
         else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'heading'){
           if(!this.StatePropSelectHeading){
@@ -1276,6 +1427,27 @@ export default {
           this.StatePropSelectShortInput = false
           this.StatePropSelectLongInput = false
           this.StatePropSelectParagraph = false
+          this.StatePropSelectDropdown = false
+        }
+        else if(this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentType === 'dropdown'){
+          if(!this.StatePropSelectDropdown){
+            this.StatePropSelectDropdown = true
+            this.StatePropSelectDropdownBasic = true
+            this.StatePropSelectDropdownAdvance = false
+            this.StatePropSelectDropdownStyle = false
+            this.StatePropSelectSection = false
+          } else {
+            this.StatePropSelectDropdown = false
+            this.StatePropSelectDropdownBasic = false
+            this.StatePropSelectDropdownAdvance = false
+            this.StatePropSelectDropdownStyle = false
+            this.StatePropSelectSection = true
+          }
+          // อย่าลืมใส่
+          this.StatePropSelectShortInput = false
+          this.StatePropSelectLongInput = false
+          this.StatePropSelectParagraph = false
+          this.StatePropSelectHeading = false
         }
       }
     },
@@ -1616,8 +1788,101 @@ export default {
     doPropHeadingSubheadingFontSize(value){
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubheadingFontSize = value
     },
-    // Action Button
+    // Dropdown Detail
+    doStatePropDropdownNavigation(element){
+      if(element.name === 'Basic'){
+        this.StatePropSelectDropdownBasic = true
+        this.StatePropSelectDropdownAdvance = false
+        this.StatePropSelectDropdownStyle = false
+      } else if(element.name === 'Advance'){
+        this.StatePropSelectDropdownBasic = false
+        this.StatePropSelectDropdownAdvance = true
+        this.StatePropSelectDropdownStyle = false
+      } else if(element.name === 'Style'){
+        this.StatePropSelectDropdownBasic = false
+        this.StatePropSelectDropdownAdvance = false
+        this.StatePropSelectDropdownStyle = true
+      }
+    },
+    // Dropdown Properties
+    doPropDropdownLabelText(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelText = 'Type a question'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelText = value
+      }
+    },
+    doPropDropdownSubLabelText(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubLabelText = ''
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.SubLabelText = value
+      }
+    },
+    doPropDropdownAlignment(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = 'left'
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Alignment = value
+      }
+    },
+    doPropDropdownRequired(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Required = value
+    },
+    doPropDropdownPlaceholder(value) {
+      if(value === ''){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Placeholder = ''
+      } else {
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Placeholder = value
+      }
+    },
+    doPropDropdownWidth(value) {
+      if(typeof value === 'boolean') {
+        if(value){
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FixWidth = true
+        } else {
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FixWidth = false
+        }
+      } else if (typeof value === 'number') {
+        if (value === '')
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Width = 200
+        else {
+          this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Width = value
+        }
+      }
+    },
+    doPropDropdownLabelReadOnly(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.ReadOnly = value
+    },
+    doPropDropdownPredefinedOptions(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.PredefinedOptions = value
+      if(value==='None'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = []
+      }else if(value==='Gender'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Gender
+      }else if(value==='Days'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Days
+      }else if(value==='Months'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Months
+      }
+    },
+    doPropDropdownOptions(value) {
+      console.log(value)
+    },
+    doPropDropdownFontColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.FontColor = value
+    },
+    doPropDropdownFontInputBgColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.InputBgColor = 'bg-'+value
+    },
+    doPropDropdownBorderColor(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.BorderColor = value
+    },
+    doPropDropdownLabelFontSize(value) {
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.LabelFontSize = value
+    },
     
+    // Action Button Detail
     doStateActionButtonProperties() {
       this.StateShowPropertiesSidebar = true
       // Close Component Properties
@@ -1740,9 +2005,32 @@ export default {
           }
       )
       this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
-    }
-    
-    
+    },
+    addDropdownComponent(){
+      this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
+          this.StateSelectComponentIndex+1,0,
+          {
+            ComponentType: 'dropdown',
+            ComponentProperties: {
+              LabelText: 'Type a question',
+              SubLabelText: 'Type a description',
+              Alignment: 'left',
+              Required: false,
+              Placeholder: 'Enter',
+              FixWidth: true,
+              Width: 200,
+              ReadOnly: false,
+              PredefinedOptions: 'None',
+              Options: [],
+              FontColor: 'grey10',
+              InputBgColor: 'bg-grey1',
+              BorderColor: 'white',
+              LabelFontSize: 16,
+            }
+          }
+      )
+      this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
+    },
   }
 }
 </script>

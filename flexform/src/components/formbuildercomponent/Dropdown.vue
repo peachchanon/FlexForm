@@ -1,155 +1,184 @@
 ﻿<template>
   <div
-      v-if="propType === 'basic'"
-      class="select" :data-value="dropdownValue" :data-list="list" :style="cssDropdown"
+      class="tw-flex tw-flex-row"
+      :class="{
+    'tw-flex-row': dataDropdown.Alignment === 'left',
+    'tw-flex-col': dataDropdown.Alignment === 'top'
+      }"
   >
-      <span class="selector" @click="toggle()">
-        <input readonly :placeholder="placeholder" :style="cssDropdown" :value="dropdownValue">
-        <span class="arrow" :class="{ expanded : visible }"></span>
-      </span>
-    <div :class="{ hidden : !visible, visible }">
-      <ul :style="cssDropdown" class="tw-overflow-x-hidden" style="height: fit-content; max-height: 250px">
-        <li :class="{ current : item === dropdownValue }" v-for="(item,i) in list" :key="i" @click="select(item)">{{item}}</li>
-      </ul>
+    <div
+        :class="{
+      'tw-w-2/5': dataDropdown.Alignment === 'left',
+      'tw-w-full': dataDropdown.Alignment === 'top'
+        }"
+    >
+      <div
+          :class="{
+        'base-padding tw-my-4': dataDropdown.Alignment === 'left',
+        'tw-mx-4 tw-mt-2': dataDropdown.Alignment === 'top'
+          }"
+      >
+        <span class="medium16 grey10">{{dataDropdown.LabelText}}</span>
+        <span
+            class="red5 tw-mx-1"
+            v-if="dataDropdown.Required"
+        >*</span>
+      </div>
+    </div>
+    <div class="base-padding tw-flex tw-flex-col"
+         :class="{
+      'tw-w-3/5': dataDropdown.Alignment === 'left',
+      'tw-w-full': dataDropdown.Alignment === 'top'
+        }"
+    >
+      <div class="dropdown__style" :style="widthStyle">
+        <div class="dropdown__input__style tw-relative tw-flex tw-flex-row" @click="toggle()">
+          <input 
+              readonly 
+              :placeholder="dataDropdown.Placeholder" 
+              class="base-padding radius10px tw-w-full tw-border-2 tw-cursor-pointer"
+              :class="[dataDropdown.FontColor,dataDropdown.InputBgColor,'tw-border-'+dataDropdown.BorderColor]"
+              :style="[fontSizeStyle,widthStyle]" 
+              :value="valueDropdown.Text"
+          >
+          <Icon class="medium14 tw-absolute tw-right-3 tw-top-5 tw-transition tw-ease-in-out" icon="fluent:triangle-16-filled" :class="{expanded : visible}"/>
+        </div>
+        <div 
+            class="bg-white radius10px tw-w-full tw-relative"
+            :class="{hidden : !visible, visible}"
+        >
+          <ul v-if="dataDropdown.Options.length != 0" class="bg-white radius10px base-shadow tw-absolute tw-w-full tw-overflow-x-hidden" style="height: fit-content; max-height: 200px">
+            <li 
+                v-for="(element, index) in dataDropdown.Options" 
+                :key="index"
+                :class="[
+                    dataDropdown.FontColor,
+                    {
+                      'bg-blue1 blue10': index===valueDropdown.Index,
+                      '': index!==valueDropdown.Index
+                    }
+                    ]"
+                class="base-padding tw-cursor-pointer radius10px dropdown__element__style tw-transition tw-ease-in-out"
+                @click="clickElement(element, index)"
+            >{{element}}</li>
+          </ul>
+          <ul v-if="dataDropdown.Options.length === 0" class="bg-white radius10px base-shadow tw-absolute tw-w-full">
+            <li class="base-padding tw-cursor-pointer radius10px tw-transition tw-ease-in-out grey6" disabled>
+              <i>None</i>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <span class="tw-ml-1 light14 grey5">{{dataDropdown.SubLabelText}}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { Icon } from '@iconify/vue2'
 export default {
   name: "dropdown",
+  components: {
+    Icon
+  },
   emits: ['callBackValue',],
   props: {
-    dropdownValue: {
-      type: String,
-      default: ''
+    dataDropdown: {
+      LabelText: String,
+      SubLabelText: String,
+      Alignment: String,
+      Required: Boolean,
+      Placeholder: String,
+      FixWidth: Boolean,
+      Width: Number,
+      ReadOnly: Boolean,
+      PredefinedOptions: String,
+      Options: Array,
+      FontColor: String,
+      InputBgColor: String,
+      BorderColor: String,
+      LabelFontSize: Number,
     },
-    propDropdownWidth: String,
-    propList: [],
-    propType: String,
-    placeholder: String,
   },
   data() {
     return {
-      list: this.propList,
-      visible: false
-    }
-  },
-  watch: {},
-  methods: {
-    toggle() {
-      this.visible = !this.visible;
-    },
-    select(option) {
-      this.$emit('callBackValue', option)
-      this.value = option;
-      this.toggle();
-    },
-    close (e) {
-      if (!this.$el.contains(e.target)) {
-        this.visible = false;
+      visible: false,
+      valueDropdown: {
+        Text: '',
+        Index: Number,
       }
     }
+  },
+  watch:{
+    
   },
   computed: {
-    cssDropdown() {
-      if(this.propDropdownWidth !== 'full'){
-        return{
-          '--dropdown-width': this.propDropdownWidth+"px",
-        }
+    fontSizeStyle() {
+      return {
+        '--font-size': this.dataDropdown.LabelFontSize+'px'
       }
-      else{
+    },
+    widthStyle() {
+      if(!this.dataDropdown.FixWidth){
         return {
-          '--dropdown-width': 100+'%'
+          '--dropdown-width': this.dataDropdown.Width+'px',
+        }
+      } else {
+        return {
+          '--dropdown-width': '100%',
         }
       }
-    }
+    },
   },
-  mounted () {
-    document.addEventListener('click', this.close)
+  mounted() {
+    document.addEventListener('click', this.closeDropdown)
   },
+  methods: {
+    toggle() {
+      if(!this.dataDropdown.ReadOnly)
+        this.visible = !this.visible;
+    },
+    clickElement(element, index) {
+      this.valueDropdown.Text = element
+      this.valueDropdown.Index = index
+      this.$emit('callBackValue', this.valueDropdown.Text)
+      this.toggle();
+    },
+    closeDropdown(e) {
+      if(!this.$el.contains(e.target)) {
+        this.visible = false;
+      }
+    },
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.select {
+.dropdown__style{
   width: var(--dropdown-width);
-  .selector {
-    position: relative;
-    z-index: 1;
-    display: block;
+  .dropdown__input__style{
     input{
-      width: var(--dropdown-width);
-      cursor: pointer;
-      background: $grey1;
-      padding: 12px;
-      z-index: 1;
-      font-size: 16px;
-      outline: 2px solid white;
-      color: $grey10;
-      border-radius: 10px;
-    }
-    &:focus{
-      background: white;
-      color: $grey10;
-      outline: 2px solid red;
-    }
-    input:focus::placeholder {
-      color: $grey10;
-    }
-    .arrow{
-      position: absolute;
-      right: 10px;
-      top: 40%;
-      width: 0;
-      height: 0;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      border-top: 10px solid $grey10;
-      transform: rotateZ(0deg) translateY(0px);
-      transition-duration: 0.3s;
-      transition-timing-function: cubic-bezier(.59,1.39,.37,1.01);
+      &:focus{
+        outline: 2px solid $blue5;
+      }
     }
     .expanded{
       transform: rotateZ(180deg) translateY(2px);
     }
   }
-  ul{
-    width: var(--dropdown-width);
-    list-style-type: none;
-    padding: 0;
-    margin-top: 1px;
-    font-size: 16px;
-    border: 1px solid white;
-    position: absolute;
-    z-index: 2;
-    background: $grey1;
-    border-radius: $radius10px;
-    box-shadow: $baseshadow;
-  }
-  li{
-    padding: 12px;
-    color: $grey10;
-    &:hover {
-      transition: all .1s ease-in;
-      cursor: pointer;
-      color: white;
-      background: $blue5;
-      border-radius: $radius10px;
-    }
-  }
-  .current{
-    color: $blue7;
-    background: $grey2;
-    border-radius: $radius10px;
-  }
   .hidden{
-    transition: all .1s ease-in;
+    transition: all .1s ease-in-out;
     visibility: hidden;
   }
   .visible {
-    transition: all .1s ease-in;
+    transition: all .1s ease-in-out;
     visibility: visible;
+  }
+  .dropdown__element__style{
+    &:hover{
+      color: white;
+      background-color: $blue5;
+    }
   }
 }
 </style>
