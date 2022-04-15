@@ -1,12 +1,12 @@
 ﻿<template>
   <layout-sidebar-navbar>
     <template #content>
-      <div class="bg-grey1 tw-h-full sm:tw-p-2">
+      <div class="bg-grey1 tw-h-full sm:tw-p-2 tw-w-full card">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:user-group"/>
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
         </div>
-        <div class="box bg-white" style="height: 80vh">
+        <div class="box bg-white tw-w-full">
           <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
             <!-- Filter Box -->
             <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
@@ -24,11 +24,12 @@
             </div>
           </div>
           <!-- Table -->
-          <div class="tw-mt-4 tw-mb-4 tw-flex tw-flex-col" style="width: 99%">
+          <div class="tw-mt-4 tw-mb-4 tw-flex tw-flex-col tw-w-full table">
             <BeeGridTable
                 border
+                stripe
                 :columns="dataTable.columnShow"
-                :data="dataTable.data"
+                :data="user"
                 :pageSize="dataTable.pageSize"
                 :pageCount="dataTable.pageCount"
                 :showPager="dataTable.showPager"
@@ -97,25 +98,25 @@
                     </div>
                   </div>
                   <div class="tw-flex tw-justify-between tw-w-full">
-                    <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-2/3 sm:tw-mr-1" style="width: 100%">
-                      <span class="grey10 medium16 tw-my-3 tw-ml-1">Employee ID</span>
-                      <div class="tw-w-full">
-                        <base-text-input
-                            type="text"
-                            placeholder="Enter employee id"
-                            @callBackString="inputEmployeeID"
-                        ></base-text-input>
-                      </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.employeeID">
-                        <span class="red5 medium14 tw-my-2" >* Enter employee id</span>
-                      </div>
-                    </div>
+<!--                    <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-2/3 sm:tw-mr-1" style="width: 100%">-->
+<!--                      <span class="grey10 medium16 tw-my-3 tw-ml-1">Employee ID</span>-->
+<!--                      <div class="tw-w-full">-->
+<!--                        <base-text-input-->
+<!--                            type="text"-->
+<!--                            placeholder="Enter employee id"-->
+<!--                            @callBackString="inputEmployeeID"-->
+<!--                        ></base-text-input>-->
+<!--                      </div>-->
+<!--                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.employeeID">-->
+<!--                        <span class="red5 medium14 tw-my-2" >* Enter employee id</span>-->
+<!--                      </div>-->
+<!--                    </div>-->
                     <div class="tw-flex tw-flex-col tw-items-start sm:tw-w-1/3 sm:tw-ml-1" style="width: 275px">
                       <span class="grey10 medium16 tw-my-3 tw-ml-1">Gender</span>
                       <div class="tw-w-full">
                         <base-dropdown
                             placeholder="Select Gender"
-                            v-bind:optionsList="[{option:'Male'},{option:'Female'}]"
+                            v-bind:optionsList="[{option:'M'},{option:'F'}]"
                             @valueSelected="inputGender"
                         ></base-dropdown>
                       </div>
@@ -148,7 +149,7 @@
                               @callBackString="inputFirstName"
                               class="tw-w-full"
                           ></base-text-input>
-                          <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.firstName">
+                          <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.first_name">
                             <span class="red5 medium14 tw-my-2" >* Enter First Name</span>
                           </div>
                         </div>
@@ -163,7 +164,7 @@
                             @callBackString="inputLastName"
                         ></base-text-input>
                       </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.lastName">
+                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.last_name">
                         <span class="red5 medium14 tw-my-2" >* Enter Last Name</span>
                       </div>
                     </div>
@@ -191,7 +192,7 @@
                             @callBackDate="inputDOB"
                         ></base-text-input>
                       </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.dob">
+                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.birth_date">
                         <span class="red5 medium14 tw-my-2" >* Enter Date of Birth</span>
                       </div>
                     </div>
@@ -206,7 +207,7 @@
                             @callBackString="inputPhoneNumber"
                         ></base-text-input>
                       </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.phoneNumber">
+                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.phone_number">
                         <span class="red5 medium14 tw-my-2" >* Enter Phone Number</span>
                       </div>
                     </div>
@@ -221,7 +222,7 @@
                             @valueSelected="inputJob"
                         ></base-dropdown>
                       </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.jobTitle">
+                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.role_id">
                         <span class="red5 medium14 tw-my-2" >* Enter Job</span>
                       </div>
                     </div>
@@ -234,7 +235,7 @@
                             @valueSelected="inputDivision"
                         ></base-dropdown>
                       </div>
-                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.division">
+                      <div class="tw-w-full tw-flex tw-flex-col tw-items-start" v-if="!stateProfile.division_id">
                         <span class="red5 medium14 tw-my-2" >* Enter Division</span>
                       </div>
                     </div>
@@ -268,7 +269,6 @@ import BaseButton from '@/components/BaseButton'
 import BaseTextInput from '@/components/BaseTextInput'
 import BaseDropdown from '@/components/BaseDropdown'
 import BaseFilterBox from '@/components/BaseFilterBox'
-
 import axios from 'axios'
 
 export default {
@@ -279,59 +279,67 @@ export default {
     BaseButton,
     BaseTextInput,
     BaseDropdown,
-    BaseFilterBox
+    BaseFilterBox,
   },
   data() {
     return {
       user: [],
       dataTable: {
-        columnName: ['Employee ID','Name','Job Title','Job Division','Email','Phone Number'
-          ,'Username','Password','Gender','Date of Birth','Properties'],
+        columnName: ['Title', 'First Name','Last Name','Gender', 
+          'Username','Email','Date of Birth','Phone Number','Division ID', 'Role ID', 'Activated', 'Profile Picture'],
         columnShow: [
-          { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
-          { title: 'Name', key: 'name',align: 'left', resizable: true},
-          { title: 'Job Title', key: 'jobTitle', align: 'left', resizable: true},
-          { title: 'Job Division', key: 'division', align: 'left', resizable: true},
-          { title: 'Email', key: 'email',align: 'left', resizable: true},
-          { title: 'Phone Number', key: 'phoneNumber',align: 'left', resizable: true},
-          { title: 'Username', key: 'username', align: 'left', resizable: true},
-          { title: 'Password', key: 'password', align: 'left', resizable: true},
-          { title: 'Gender', key: 'gender',align: 'left', resizable: true },
-          { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
-          { title: 'Properties', key: 'properties',align: 'left', resizable: true},
+          // { title: 'Employee ID', key: 'employee_id', align: 'left', resizable: true, width: 350},
+          { title: 'Title', key: 'title',align: 'left', resizable: true, width: 70},
+          { title: 'First Name', key: 'first_name', align: 'left', resizable: true, width: 150},
+          { title: 'Last Name', key: 'last_name', align: 'left', resizable: true, width: 150},
+          { title: 'Gender', key: 'gender', align: 'left', resizable: true, width: 70},
+          { title: 'Username', key: 'username', align: 'left', resizable: true, width: 150},
+          // { title: 'Password', key: 'password', align: 'left', resizable: true, width: 550},
+          { title: 'Email', key: 'email',align: 'left', resizable: true, width: 300},
+          { title: 'Date of Birth', key: 'birth_date',align: 'left', resizable: true, width: 300, type: "date",
+            dateType: "datetime", format: "yyyy-MM-dd"},
+          { title: 'Phone Number', key: 'phone_number',align: 'left', resizable: true, width: 150},
+          { title: 'Division ID', key: 'division_id',align: 'left', resizable: true, width: 150},
+          { title: 'Role ID', key: 'role_id',align: 'left', resizable: true, width: 150},
+          {title: 'Activated', key: 'activated',align: 'left', resizable: true, width: 150}, 
+          { title: 'Profile Picture', key: 'profile_pic',align: 'left', resizable: true, width: 150},
         ],
         columnInitial: [
-          { title: 'Employee ID', key: 'employeeID', align: 'left', resizable: true},
-          { title: 'Name', key: 'name',align: 'left', resizable: true},
-          { title: 'Job Title', key: 'jobTitle', align: 'left', resizable: true},
-          { title: 'Job Division', key: 'division', align: 'left', resizable: true},
-          { title: 'Email', key: 'email',align: 'left', resizable: true},
-          { title: 'Phone Number', key: 'phoneNumber',align: 'left', resizable: true},
-          { title: 'Username', key: 'username', align: 'left', resizable: true},
-          { title: 'Password', key: 'password', align: 'left', resizable: true},
-          { title: 'Gender', key: 'gender',align: 'left', resizable: true },
-          { title: 'Date of Birth', key: 'dob',align: 'left', resizable: true},
-          { title: 'Properties', key: 'properties',align: 'left', resizable: true},
+          // { title: 'Employee ID', key: 'employee_id', align: 'left', resizable: true, width: 350},
+          { title: 'Title', key: 'title',align: 'left', resizable: true, width: 70},
+          { title: 'First Name', key: 'first_name', align: 'left', resizable: true, width: 150},
+          { title: 'Last Name', key: 'last_name', align: 'left', resizable: true, width: 150},
+          { title: 'Gender', key: 'gender', align: 'left', resizable: true, width: 70},
+          { title: 'Username', key: 'username', align: 'left', resizable: true, width: 150},
+          // { title: 'Password', key: 'password', align: 'left', resizable: true, width: 550},
+          { title: 'Email', key: 'email',align: 'left', resizable: true, width: 300},
+          { title: 'Date of Birth', key: 'birth_date',align: 'left', resizable: true, width: 300},
+          { title: 'Phone Number', key: 'phone_number',align: 'left', resizable: true, width: 150},
+          { title: 'Division ID', key: 'division_id',align: 'left', resizable: true, width: 150},
+          { title: 'Role ID', key: 'role_id',align: 'left', resizable: true, width: 150},
+          {title: 'Activated', key: 'activated',align: 'left', resizable: true, width: 150},
+          { title: 'Profile Picture', key: 'profile_pic',align: 'left', resizable: true, width: 150},
         ],
-        data: [
-          { employeeID: String, name: String, jobTitle: String }
-        ],
-        pageSize: 10,
-        pageCount: 1,
+        data: [],
+        pageSize: 5,
+        pageCount: 5,
         showPager: true,
       },
       StateShowContentForWindowSize: true,
       stateShowCreateAndAccountModal: false,
-      stateCreateAndAccount: {
-        username: '', password: '', confirmPassword: '', employeeID: '', gender: '', title: '', firstName: '',
-        lastName: '', email: '', dob: '', phoneNumber: '', jobTitle: '', division: ''
+      stateCreateAnAccount: {
+        username: '', password: '', confirmPassword: '', 
+        // employeeID: '', 
+        gender: '', title: '', first_name: '', last_name: '', email: '', birth_date: '', 
+        phone_number: '', role_id: '', division_id: '', profile_pic:'string.jpg'
       },
       stateProfile: {
         username: Boolean,
         password: Boolean, confirmPassword: Boolean, confirmPasswordHaveValue: false,
-        employeeID: Boolean, gender: Boolean,
-        title: Boolean, firstName: Boolean, lastName: Boolean,
-        email: Boolean, dob: Boolean, phoneNumber: Boolean, jobTitle: Boolean, division: Boolean
+        // employeeID: Boolean, 
+        gender: Boolean,
+        title: Boolean, first_name: Boolean, last_name: Boolean,
+        email: Boolean, birth_date: Boolean, phone_number: Boolean, role_id: Boolean, division_id: Boolean
       }
     }
   },
@@ -360,109 +368,110 @@ export default {
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
-        this.stateProfile.employeeID = true
+        // this.stateProfile.employeeID = true
         this.stateProfile.gender = true
         this.stateProfile.title = true
-        this.stateProfile.firstName = true
-        this.stateProfile.lastName = true
+        this.stateProfile.first_name = true
+        this.stateProfile.last_name = true
         this.stateProfile.email = true
-        this.stateProfile.dob = true
-        this.stateProfile.phoneNumber = true
-        this.stateProfile.jobTitle = true
-        this.stateProfile.division = true
+        this.stateProfile.birth_date = true
+        this.stateProfile.phone_number = true
+        this.stateProfile.role_id = true
+        this.stateProfile.division_id = true
         this.stateShowCreateAndAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
         this.stateProfile.confirmPasswordHaveValue = false
-        this.stateProfile.employeeID = false
+        // this.stateProfile.employeeID = false
         this.stateProfile.gender = false
         this.stateProfile.title = false
-        this.stateProfile.firstName = false
-        this.stateProfile.lastName = false
+        this.stateProfile.first_name = false
+        this.stateProfile.last_name = false
         this.stateProfile.email = false
-        this.stateProfile.dob = false
-        this.stateProfile.phoneNumber = false
-        this.stateProfile.jobTitle = false
-        this.stateProfile.division = false
+        this.stateProfile.birth_date = false
+        this.stateProfile.phone_number = false
+        this.stateProfile.role_id = false
+        this.stateProfile.division_id = false
         this.stateShowCreateAndAccountModal = state
       }
     },
     inputUsername(username){
-      this.stateCreateAndAccount.username = username
-      this.stateProfile.username = this.stateCreateAndAccount.username !== '';
+      this.stateCreateAnAccount.username = username
+      this.stateProfile.username = this.stateCreateAnAccount.username !== '';
     },
     inputPassword(password){
-      this.stateCreateAndAccount.password = password
-      this.stateProfile.password = this.stateCreateAndAccount.password !== '';
-      this.stateProfile.confirmPassword = this.stateCreateAndAccount.confirmPassword === this.stateCreateAndAccount.password;
+      this.stateCreateAnAccount.password = password
+      this.stateProfile.password = this.stateCreateAnAccount.password !== '';
+      this.stateProfile.confirmPassword = this.stateCreateAnAccount.confirmPassword === this.stateCreateAnAccount.password;
     },
     inputConfirmPassword(confirmPassword){
-      this.stateCreateAndAccount.confirmPassword = confirmPassword
-      if(this.stateCreateAndAccount.password !== ''){
+      this.stateCreateAnAccount.confirmPassword = confirmPassword
+      if(this.stateCreateAnAccount.password !== ''){
         this.stateProfile.confirmPasswordHaveValue = true
-        this.stateProfile.confirmPassword = this.stateCreateAndAccount.confirmPassword === this.stateCreateAndAccount.password;
+        this.stateProfile.confirmPassword = this.stateCreateAnAccount.confirmPassword === this.stateCreateAnAccount.password;
       }else{
         this.stateProfile.confirmPasswordHaveValue = false
       }
     },
-    inputEmployeeID(employeeID){
-      this.stateCreateAndAccount.employeeID = employeeID
-      this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
-    },
+    // inputEmployeeID(employeeID){
+    //   this.stateCreateAnAccount.employeeID = employeeID
+    //   this.stateProfile.employeeID = this.stateCreateAnAccount.employeeID !== '';
+    // },
     inputGender(gender){
-      this.stateCreateAndAccount.gender = gender
-      this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
+      this.stateCreateAnAccount.gender = gender
+      this.stateProfile.gender = this.stateCreateAnAccount.gender !== '';
     },
     inputTitle(title){
-      this.stateCreateAndAccount.title = title
-      this.stateProfile.title = this.stateCreateAndAccount.title !== '';
+      this.stateCreateAnAccount.title = title
+      this.stateProfile.title = this.stateCreateAnAccount.title !== '';
     },
-    inputFirstName(firstName){
-      this.stateCreateAndAccount.firstName = firstName
-      this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
+    inputFirstName(first_name){
+      this.stateCreateAnAccount.first_name = first_name
+      this.stateProfile.first_name = this.stateCreateAnAccount.first_name !== '';
     },
-    inputLastName(lastName){
-      this.stateCreateAndAccount.lastName = lastName
-      this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
+    inputLastName(last_name){
+      this.stateCreateAnAccount.last_name = last_name
+      this.stateProfile.last_name = this.stateCreateAnAccount.last_name !== '';
     },
     inputEmail(email){
-      this.stateCreateAndAccount.email = email
-      this.stateProfile.email = this.stateCreateAndAccount.email !== '';
+      this.stateCreateAnAccount.email = email
+      this.stateProfile.email = this.stateCreateAnAccount.email !== '';
     },
-    inputDOB(dob){
-      this.stateCreateAndAccount.dob = dob
-      this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
+    inputDOB(birth_date){
+      const date = new Date(birth_date) //แปลง string เป็น Date
+      this.stateCreateAnAccount.birth_date = date.toISOString() // แปลง Dateในรูปแบบของ IsoString ทำให้ส่ง api ได้ !!!
+      this.stateProfile.birth_date = this.stateCreateAnAccount.birth_date !== '';
     },
-    inputPhoneNumber(phoneNumber){
-      this.stateCreateAndAccount.phoneNumber = phoneNumber
-      console.log(phoneNumber)
-      this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
+    inputPhoneNumber(phone_number){
+      this.stateCreateAnAccount.phone_number = phone_number
+      console.log(phone_number)
+      this.stateProfile.phone_number = this.stateCreateAnAccount.phone_number !== '';
     },
-    inputJob(job){
-      this.stateCreateAndAccount.jobTitle = job
-      this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
+    inputJob(role_id){
+      this.stateCreateAnAccount.role_id = role_id
+      this.stateProfile.role_id = this.stateCreateAnAccount.role_id !== '';
     },
-    inputDivision(division){
-      this.stateCreateAndAccount.division = division
-      this.stateProfile.division = this.stateCreateAndAccount.division !== '';
+    inputDivision(division_id){
+      this.stateCreateAnAccount.division_id = division_id
+      this.stateProfile.division_id = this.stateCreateAnAccount.division_id !== '';
     },
-    doRegister(e){
-      console.log(e)
-      this.stateProfile.username = this.stateCreateAndAccount.username !== '';
-      this.stateProfile.password = this.stateCreateAndAccount.password !== '';
-      this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
-      this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
-      this.stateProfile.title = this.stateCreateAndAccount.title !== '';
-      this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
-      this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
-      this.stateProfile.email = this.stateCreateAndAccount.email !== '';
-      this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
-      this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
-      this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
-      this.stateProfile.division = this.stateCreateAndAccount.division !== '';
-      console.log(this.stateCreateAndAccount)
-    },
+    // doRegister(e){
+    //   console.log(e)
+    //   this.stateProfile.username = this.stateCreateAndAccount.username !== '';
+    //   this.stateProfile.password = this.stateCreateAndAccount.password !== '';
+    //   this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
+    //   this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
+    //   this.stateProfile.title = this.stateCreateAndAccount.title !== '';
+    //   this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
+    //   this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
+    //   this.stateProfile.email = this.stateCreateAndAccount.email !== '';
+    //   this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
+    //   this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
+    //   this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
+    //   this.stateProfile.division = this.stateCreateAndAccount.division !== '';
+    //   console.log(this.stateCreateAndAccount)
+    // },
     doFilterColumn(value) {
       this.dataTable.columnShow = []
       if(value.length === 0 ) this.dataTable.columnShow = this.dataTable.columnInitial
@@ -480,12 +489,54 @@ export default {
           else this.dataTable.columnShow[i] = this.dataTable.columnInitial[9] // Date of Birth
         }
       }
-    }
+    },
+    async doRegister(){
+      this.stateProfile.username = this.stateCreateAnAccount.username !== '';
+      this.stateProfile.password = this.stateCreateAnAccount.password !== '';
+      this.stateProfile.gender = this.stateCreateAnAccount.gender !== '';
+      this.stateProfile.title = this.stateCreateAnAccount.title !== '';
+      this.stateProfile.first_name = this.stateCreateAnAccount.first_name !== '';
+      this.stateProfile.last_name = this.stateCreateAnAccount.last_name !== '';
+      this.stateProfile.email = this.stateCreateAnAccount.email !== '';
+      this.stateProfile.birth_date = this.stateCreateAnAccount.birth_date !== '';
+      this.stateProfile.phone_number = this.stateCreateAnAccount.phone_number !== '';
+      this.stateProfile.role_id = this.stateCreateAnAccount.role_id !== '';
+      this.stateProfile.division_id = this.stateCreateAnAccount.division_id !== '';
+      console.log(this.stateCreateAnAccount)
+      try{
+        const response = await axios.post('http://localhost:4000/api/User/Register', {
+          username :this.stateCreateAnAccount.username,
+          password:this.stateCreateAnAccount.password,
+          gender:this.stateCreateAnAccount.gender,
+          title:this.stateCreateAnAccount.title,
+          first_name:this.stateCreateAnAccount.first_name,
+          last_name:this.stateCreateAnAccount.last_name,
+          email:this.stateCreateAnAccount.email,
+          birth_date:this.stateCreateAnAccount.birth_date,
+          phone_number:this.stateCreateAnAccount.phone_number,
+          role_id: this.stateCreateAnAccount.role_id,
+          division_id: this.stateCreateAnAccount.division_id,
+          profile_pic: this.stateCreateAnAccount.profile_pic
+        })
+        if(response.status===200 && response.data) {
+          console.log(response.status)
+          this.$router.push('/')
+        }
+      }catch (error){
+        console.log(error)
+      }
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.card{
+  max-width: 1400px;
+}
+.table{
+  max-width: 98%;
+}
 .button-blue{
   color: #102A43;
   padding: 0.75rem;
