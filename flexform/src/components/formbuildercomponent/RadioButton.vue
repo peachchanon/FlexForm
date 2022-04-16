@@ -1,29 +1,42 @@
 ﻿<template>
   <div class="card" :style="cssRadioButtonFlex">
-    <div v-for="(option,index) in option" :key="index">
-      <span class="radio-button-label" :style="cssRadioButtonLabel">
-        <input type="radio"
-               class="styled-radio-button"
-               :id="index"
-               :style="cssRadioButton"
-               name="option-selected"
-               :value="option.value"
-               @change="onChangeOption(option.id, $event)">{{ option.title }}
-      </span>
+    <div v-for="(option,index) in option" :key="index" :class="{'tw-w-full': radioFlexDirection==='column','tw-w-80': radioFlexDirection==='row'}">
+      <div class="radio-button-label tw-flex tw-flex-row tw-items-center tw-py-2">
+        <div>
+          <input
+              type="radio"
+              class="styled-radio-button"
+              :id="index"
+              :style="cssRadioButton"
+              name="option-selected"
+              :value="option.value"
+              @change="onChangeOption(option.id, $event)"
+              :disabled="radioDisabled"
+          >
+        </div>
+        <span class="tw-ml-3 tw-mr-1 radio-font-size" :style="cssRadioButtonLabel" :class="[radioLabelFontColor]">{{option.title}}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "RadioButton",
   components: {},
   props: {
     option: [],
+    radioDisabled:{
+      type: Boolean,
+      default: false
+    },
     radioBdColor: {
       type: String,
-      default: "#4098D7"
+      default: "grey5"
+    },
+    radioLabelFontColor: {
+      type: String,
+      default: "grey10"
     },
     radioLabelFontSize: {
       type: Number,
@@ -52,7 +65,7 @@ export default {
   computed: {
     cssRadioButton() {
       return {
-        '--radio-borderColor': this.radioBdColor
+        '--radio-borderColor': '$'+this.radioBdColor
       }
     },
     cssRadioButtonLabel() {
@@ -61,8 +74,16 @@ export default {
       }
     },
     cssRadioButtonFlex(){
-      return {
-        '--radio-flexDirection': this.radioFlexDirection
+      if(this.radioFlexDirection === 'column'){
+        return {
+          '--radio-flexDirection': this.radioFlexDirection,
+          '--radio-flexWrap': 'nowrap'
+        }
+      }else {
+        return {
+          '--radio-flexDirection': this.radioFlexDirection,
+          '--radio-flexWrap': 'wrap'
+        }
       }
     }
   }
@@ -74,62 +95,48 @@ export default {
   display: flex;
   width: 100%;
   flex-direction: var(--radio-flexDirection);
+  flex-wrap: var(--radio-flexWrap);
 }
-
 .radio-button-label {
   cursor: pointer;
-  color: #000;
+  color: $blue5;
   user-select: none;
+}
+.radio-font-size{
   font-size: var(--radio-labelFontSize);
 }
-
-.radio-button-label:hover {
-  color: #6A6464;
-}
-
 .styled-radio-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-
-  border: 3px solid #403D3B;
-  transition: 0.2s all linear;
-  margin-right: 7px;
+  width: 24px;
+  height: 24px;
+  border: 3px solid $blue8;
+  transition: 0.2s all ease-in-out;
   cursor: pointer;
-
   position: relative;
   top: 2px;
   left: 2px;
 }
-
 .styled-radio-button:checked {
-  border-top-color: var(--radio-borderColor);
-  border-right-color: var(--radio-borderColor);
-  border-bottom-color: var(--radio-borderColor);
-  border-left-color: var(--radio-borderColor);
+  border-color: var(--radio-borderColor);
 }
-
 .styled-radio-button::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
-  transition: 0.2s all linear;
+  width: 12px;
+  height: 12px;
+  transition: 0.2s all ease-in-out;
   background-color: transparent;
   border-radius: 50%;
 }
-
 .styled-radio-button:hover::before {
   background-color: $blue8;
 }
-
 .styled-radio-button:checked::before {
   background-color: $blue5;
 }

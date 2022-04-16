@@ -1,8 +1,8 @@
 ﻿<template>
   <div>
     <div class="bg-grey7 tw-pt-2 tw-pl-2 tw-pr-2 tw-overflow-x-hidden" style="height: fit-content; max-height: 400px; border-radius: 10px 10px 0 0;">
-      <div v-for="(element, index) in propList" :key="index" class="base-padding base-shadow radius10px bg-white tw-mb-2 tw-cursor-pointer tw-flex tw-flex-row">
-        <div class="tw-w-full">
+      <div v-for="(element, index) in DataList" :key="index" class="base-padding base-shadow radius10px bg-white tw-mb-2 tw-cursor-pointer tw-flex tw-flex-row">
+        <div class="tw-truncate tw-overflow-hidden tw-whitespace-nowrap tw-w-full">
           <span class="medium16 grey10">{{element}}</span>
         </div>
         <div class="tw-px-0.5" @click="editElement(index)"><Icon class="semibold24 tw-transition tw-ease-in-out grey10 hover:tw-text-grey5" icon="heroicons-outline:pencil"/></div>
@@ -49,22 +49,34 @@ export default {
   components: {
     Icon
   },
+  emits: ['callbackAction'],
   props: {
     propList: Array,
   },
   data() {
     return {
+      renderComponent: true,
+      DataList: this.propList,
       ShowEditModal: false,
       StateEditIndex: 0,
       ValueRename: this.propList[this.StateEditIndex],
     }
   },
   methods: {
+    forceRerender() {
+      // Removing my-component from the DOM
+      this.renderComponent = false;
+
+      this.$nextTick(() => {
+        // Adding the component back in
+        this.renderComponent = true;
+      });
+    },
     addElement() {
-      this.propList.push('New Label')
+      this.$emit('callbackAction', {action: 'add', index: this.StateEditIndex, value: 'New Label'})
     },
     removeElement(index) {
-      this.propList.splice(index,1)
+      this.$emit('callbackAction', {action: 'remove', index: index, value: ''})
     },
     editElement(index) {
       this.StateEditIndex = index
@@ -76,7 +88,7 @@ export default {
     },
     doEdit() {
       this.ShowEditModal = false
-      this.propList[this.StateEditIndex] = this.ValueRename
+      this.$emit('callbackAction', {action: 'edit', index: this.StateEditIndex, value: this.ValueRename})
     }
   }
 }
