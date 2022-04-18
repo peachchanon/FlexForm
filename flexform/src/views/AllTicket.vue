@@ -193,7 +193,10 @@ export default {
     },
     ViewDataVisualization(){
       this.$router.push('/DataVisualization')
-    }
+    },
+    SearchInput(Searchquery){
+      this.Searchquery = Searchquery
+    },
   }
 }
 </script>
