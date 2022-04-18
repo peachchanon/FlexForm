@@ -12,6 +12,7 @@ import DataVisualization from "@/views/datavisualization/DataVisualization";
 import SelectGraph from "@/views/datavisualization/SelectGraph";
 import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
+import AllTicket from "@/views/AllTicket";
 
 import Home from '../views/Home.vue'
 
@@ -126,6 +127,15 @@ const routes = [
     component: ExportGraph,
     meta: {
       title: 'ExportGraph',
+      // requireAuthen: true
+    }
+  },
+  {
+    path: '/AllTicket',
+    name: 'AllTicket',
+    component: AllTicket,
+    meta: {
+      title: 'AllTicket',
       // requireAuthen: true
     }
   },
