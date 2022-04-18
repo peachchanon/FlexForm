@@ -1,7 +1,7 @@
 ﻿<template>
   <div>
     <form class="search-container tw-flex">
-      <input type="text" placeholder="Search" class="input medium14 radius10px tw-w-1/3 tw-pl-50" v-model="InputSearchbar"
+      <input type="text" placeholder="Search" class="input medium14 radius10px tw-pl-50" style="width:400px" v-model="InputSearchbar"
              @keyup="doString">
      <div class="search-icon ">
       <Icon class="icon semibold24 blue10" icon="heroicons-outline:search"/>
