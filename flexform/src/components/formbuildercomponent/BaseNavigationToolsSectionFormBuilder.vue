@@ -4,41 +4,47 @@
       {{sectionName}}
     </div>
     <div class="tw-flex tw-flex-row">
-      <div 
-          class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
-          @click="doButton('rename')"
-      >
-        <Icon class="icon__style__large tw-mr-2" icon="bi:input-cursor"/>
-        <span class="medium16" v-if="StateShowContentForWindowSize">Rename</span>
+      <div class="tw-flex tw-flex-row" v-if="StateShowTools">
+        <div
+            class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
+            @click="doButton('rename')"
+        >
+          <Icon class="icon__style__large tw-mr-2" icon="bi:input-cursor"/>
+          <span class="medium16" v-if="StateShowContentForWindowSize">Rename</span>
+        </div>
+        <div
+            class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
+            @click="doShowMoveModal"
+        >
+          <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:cursor-click"/>
+          <span class="medium16" v-if="StateShowContentForWindowSize">Move</span>
+        </div>
+        <div
+            class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
+            @click="doButton('duplicate')"
+        >
+          <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-duplicate"/>
+          <span class="medium16" v-if="StateShowContentForWindowSize">Duplicate</span>
+        </div>
+        <div
+            class="tw-mx-2 red5 hover:tw-text-red4 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
+            @click="doShowDeleteModal"
+            v-if="sectionLength>=2"
+        >
+          <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:trash"/>
+          <span class="medium16" v-if="StateShowContentForWindowSize">Delete</span>
+        </div>
+        <div
+            class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
+            @click="doButton('add')"
+        >
+          <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-add"/>
+          <span class="medium16" v-if="StateShowContentForWindowSize">Add Sections</span>
+        </div>
       </div>
-      <div 
-          class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
-          @click="doShowMoveModal"
-      >
-        <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:cursor-click"/>
-        <span class="medium16" v-if="StateShowContentForWindowSize">Move</span>
-      </div>
-      <div 
-          class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
-          @click="doButton('duplicate')"
-      >
-        <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-duplicate"/>
-        <span class="medium16" v-if="StateShowContentForWindowSize">Duplicate</span>
-      </div>
-      <div 
-          class="tw-mx-2 red5 hover:tw-text-red4 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
-          @click="doShowDeleteModal"
-          v-if="sectionLength>=2"
-      >
-        <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:trash"/>
-        <span class="medium16" v-if="StateShowContentForWindowSize">Delete</span>
-      </div>
-      <div 
-          class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
-          @click="doButton('add')"
-      >
-        <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-add"/>
-        <span class="medium16" v-if="StateShowContentForWindowSize">Add Sections</span>
+      <div @click="doShowTools">
+        <Icon v-if="!StateShowTools" class="icon__style__large blue10 hover:tw-text-blue5 tw-ease-in tw-transition tw-cursor-pointer" icon="heroicons-outline:dots-horizontal"/>
+        <Icon v-if="StateShowTools"  class="icon__style__large blue10 hover:tw-text-blue5 tw-ease-in tw-transition tw-cursor-pointer" icon="heroicons-outline:chevron-right"/>
       </div>
     </div>
     <!-- Rename Section Modal -->
@@ -148,6 +154,8 @@ export default {
   data() {
     return {
       StateShowContentForWindowSize: true,
+      // Tools
+      StateShowTools: false,
       // Rename
       StateRenameModal: false,
       ValueRenameString: this.sectionName,
@@ -182,6 +190,9 @@ export default {
   methods: {
     ...mapActions(['flapWindowResize']),
     // Rename Section
+    doShowTools() {
+      this.StateShowTools = !this.StateShowTools
+    },
     doShowRenameModal () {
       this.ValueRenameString = this.sectionName
       this.StateRenameModal = this.StateRenameModal !== true

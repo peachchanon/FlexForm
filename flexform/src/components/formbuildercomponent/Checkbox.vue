@@ -1,16 +1,16 @@
 ﻿<template>
   <div class="tw-ml-2.5" :style="cssCheckboxDisplay">
-    <div class="card">
-    <checkbox
-        v-for="(item,id) in list"
-        :key="id"
-        :value="item.check"
-        :checked="item.checked"
-        :disabled="item.disable"
-        :color="item.color"
-        :fontSize="item.fontsize">{{ item.check }}
-    </checkbox>
-  </div>
+    <div class="card" :class="['tw-text-'+fontColor]">
+      <checkbox
+          v-for="(item,id) in list"
+          :key="id"
+          :value="item.check"
+          :checked="item.checked"
+          :disabled="disabled"
+          :fontSize="item.fontsize"
+      >{{item.title}}
+      </checkbox>
+    </div>
   </div>
 </template>
 
@@ -24,15 +24,18 @@ export default {
   props: {
     item: String,
     list: [],
+    fontColor: String,
+    disabled: {
+      type: Boolean,
+      default: true
+    },
     checkboxDisplay: {
       type: String,
-      default: " "
+      default: ""
     },
   },
   data() {
-    return {
-      
-    }
+    return {}
   },
   computed: {
     cssCheckboxDisplay(){

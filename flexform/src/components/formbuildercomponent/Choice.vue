@@ -17,7 +17,12 @@
         :radioFlexDirection="doColumn"
         :radioDisabled="dataChoice.ReadOnly"
     ></radio-component>
-    <checkbox-component v-if="dataChoice.MultipleChoice"
+    <!-- Choice -->
+    <checkbox-component
+        v-if="dataChoice.MultipleChoice"
+        :list="doOptions"
+        :fontColor="dataChoice.FontColor"
+        :disabled="dataChoice.ReadOnly"
     ></checkbox-component>
     <div class="tw-mb-2 tw-w-full tw-flex tw-flex-col tw-items-end">
       <span class="light14 grey5">{{dataChoice.SubLabelText}}</span>

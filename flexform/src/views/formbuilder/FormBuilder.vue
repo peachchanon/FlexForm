@@ -1,40 +1,5 @@
 ﻿<template>
   <div class="tw-h-full">
-    <!--
-    <div v-if="!showFormBuilderLayout" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
-      <div class="bg-white radius12px base-shadow base-padding base-margin" style="width: fit-content">
-        <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
-          <div class="tw-flex tw-flex-row tw-items-center tw-relative">
-            <Icon class="semibold24 icon blue10 tw-pr-1" icon="heroicons-outline:folder"/>
-            <label class="semibold24 blue10">Create a Form</label>
-          </div>
-          <div class="button__close" @click="doButton('exitButton')">
-            <Icon class="icon semibold24" icon="heroicons-outline:x"/>
-          </div>
-        </div>
-        <div class="tw-flex md:tw-flex-row md:tw-justify-center tw-flex-col tw-items-start">
-          <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="doButton('blankPageButton')">
-            <div class="button__grey tw-my-2">
-              <Icon class="icon" icon="heroicons-outline:plus"/>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-start tw-m-4 md:tw-items-center">
-              <label class="text__blue tw-my-2">Start Form Scratch</label>
-              <label class="text__grey tw-my-2">A blank slate is all you need.</label>
-            </div>
-          </div>
-          <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="doButton('templateFormButton')">
-            <div class="button__grey tw-my-2">
-              <Icon class="icon" icon="heroicons-outline:folder"/>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-start tw-m-4 md:tw-items-center">
-              <label class="text__blue tw-my-2">Use Template</label>
-              <label class="text__grey tw-my-2">Choose form template</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
     <!-- Form Builder -->
     <!-- Not Support Builder -->
     <div class="tw-h-full" v-if="!StateShowContentForWindowSize">
@@ -158,7 +123,7 @@
             <div class="bar"></div>
             <div class="tw-w-full tw-flex tw-flex-row tw-items-center tw-px-2">
               <div class="tw-w-1/5">
-                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">N</span></div>
+                <div class="tw-relative"><Icon class="icon__style__large" icon="bi:input-cursor"/><span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">S</span></div>
               </div>
               <div class="tw-w-4/5"><span class="medium16">Short Input</span></div>
             </div>
@@ -1014,18 +979,20 @@
                     @callBackBoolean="doPropChoiceReadOnly"
                 ></base-text-input-properties-form-builder>
               </div>
-              <span class="medium16 white tw-mt-2 tw-mb-1">Spread to Columns</span>
-              <span class="light14 grey2 tw-mb-2 tw-mb-1">Spread choices into 2 columns</span>
-              <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
+              <div v-if="!FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.MultipleChoice">
+                <span class="medium16 white tw-mt-2 tw-mb-1">Spread to Columns</span>
+                <span class="light14 grey2 tw-mb-2 tw-mb-1">Spread choices into 2 columns</span>
+                <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
                 <span class="medium16 tw-mr-3 tw-ease-in tw-transition tw-my-2" :class="{
                   'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SpreadToColumns,
                   'grey3': !FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SpreadToColumns,
                 }">On</span>
-                <base-text-input-properties-form-builder
-                    type="toggle"
-                    :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SpreadToColumns"
-                    @callBackBoolean="doPropChoiceSpreadToColumns"
-                ></base-text-input-properties-form-builder>
+                  <base-text-input-properties-form-builder
+                      type="toggle"
+                      :propValueToggle="FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SpreadToColumns"
+                      @callBackBoolean="doPropChoiceSpreadToColumns"
+                  ></base-text-input-properties-form-builder>
+                </div>
               </div>
               <span class="medium16 white tw-mt-2 tw-mb-1">Predefined Options</span>
               <span class="light14 grey2 tw-mb-2 tw-mb-1">Quickly add frequently used options</span>
@@ -1060,8 +1027,8 @@
           </div>
         </div>
       </div>
-      <!-- Layout -->
-      <div class="tw-w-full" style="padding-top: 170px">
+      <!-- Builder Page -->
+      <div class="tw-w-full" style="padding-top: 170px" v-if="StatePage==='Build'">
         <!-- Sections Canvas -->
         <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
           <div 
@@ -1203,6 +1170,102 @@
           </div>
         </div>
       </div>
+      <!-- Preview -->
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 170px" v-if="StatePage==='Preview'">
+        <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
+          <div
+              class="tw-w-full tw-flex tw-flex-col tw-items-center"
+              v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
+          >
+            <div class="section__top__style tw-w-full tw-flex tw-flex-col tw-items-start">
+              <span class="medium16 blue10 tw-my-3">{{itemSection.SectionName}}</span>
+            </div>
+            <div 
+                class="section__style" 
+                :class="[
+                    FormStructure.Sections[indexSection].SectionProperties.FontColor,
+                    FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
+                    ]"
+                :style="doSectionStyleConfig(indexSection)">
+              <!-- Blank data -->
+              <div
+                  v-if="FormStructure.Sections[indexSection].Components.length===0"
+                  class="semibold24 grey5 tw-flex tw-flex-col tw-items-center"
+              >Blank Section
+              </div>
+              <!-- Data -->
+              <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
+                <div class="tw-flex tw-flex-row tw-relative">
+                  <!-- Short Input Component -->
+                  <div v-if="componentElement.ComponentType === 'short-input'" class="tw-w-full">
+                    <short-input :dataShortInput="componentElement.ComponentProperties"></short-input>
+                  </div>
+                  <!-- Long Input Component -->
+                  <div v-if="componentElement.ComponentType === 'long-input'" class="tw-w-full">
+                    <long-input :dataLongInput="componentElement.ComponentProperties"></long-input>
+                  </div>
+                  <!-- Paragraph Component -->
+                  <div v-if="componentElement.ComponentType === 'paragraph'" class="tw-w-full">
+                    <paragraph-component :dataParagraph="componentElement.ComponentProperties"></paragraph-component>
+                  </div>
+                  <!-- Heading Component -->
+                  <div v-if="componentElement.ComponentType === 'heading'" class="tw-w-full">
+                    <header-component :dataHeading="componentElement.ComponentProperties"></header-component>
+                  </div>
+                  <!-- Dropdown Component -->
+                  <div v-if="componentElement.ComponentType === 'dropdown'" class="tw-w-full">
+                    <dropdown-component :dataDropdown="componentElement.ComponentProperties"></dropdown-component>
+                  </div>
+                  <!-- Choice Component -->
+                  <div v-if="componentElement.ComponentType === 'choice'" class="tw-w-full">
+                    <choice-component :dataChoice="componentElement.ComponentProperties" ></choice-component>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+      <!-- Setting -->
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 170px" v-if="StatePage==='Setting'">
+        <div class="box" style="width: 560px">
+          <div class="base-margin tw-flex tw-flex-row tw-items-center">
+            <Icon class="semibold24 icon blue10" icon="clarity:cog-line"/>
+            <span class="semibold24 blue10 tw-ml-2">Setting</span>
+          </div>
+          <div class="base-margin tw-flex tw-flex-col tw-border-2 tw-border-gray2 radius12px base-padding">
+            <div class="tw-flex tw-flex-row tw-mb-3">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Form Name</span>
+              </div>
+              <span class="light16 grey7">{{FormStructure.FormName}}</span>
+            </div>
+            <div class="tw-flex tw-flex-row tw-mb-3">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Description</span>
+              </div>
+              <span class="light16 grey7">{{FormStructure.FormDescription}}</span>
+            </div>
+            <div class="tw-flex tw-flex-row tw-mb-3">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Create by</span>
+              </div>
+              <span class="light16 grey7">{{FormStructure.CreatedByUser}}</span>
+            </div>
+            <div class="tw-flex tw-flex-row tw-mb-3">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Create Date</span>
+              </div>
+              <span class="light16 grey7">{{FormStructure.FormCreatedTimestamp}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
     </div>
   </div>
 </template>
@@ -1275,6 +1338,11 @@ export default {
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
+        FormDescription: '',
+        FormCreatedTimestamp : Date,
+        FormModifiedTimestamp : Date,
+        CreatedByUser: '',
+        ModifiedByUser : '',
         ActionButton: {
           ActionButtonName: 'Submit',
           ActionButtonProperties: {
@@ -2308,57 +2376,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/*
-.button__close{
-  width: fit-content;
-  color: $blue10;
-  border-radius: 12px;
-  padding: 0.75rem;
-  margin: 0.25rem 0;
-  cursor: pointer;
-  transition: all .1s ease-in;
-  &:hover{
-   color: $red5;
-   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
- }
-}
-.select__create__form {
-  cursor: pointer;
-  .button__grey{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 140px;
-    height: 140px;
-    background-color: $grey1;
-    border-radius: 12px;
-    transition: all .1s ease-in;
-    .icon {
-      font-size: 72px;
-      color: $grey5;
-    }
-  }
-  .text__blue {
-    font-weight: $fw500;
-    font-size: 1rem;
-    color: $blue5;
-  }
-  .text__grey {
-    font-weight: $fw500;
-    font-size: 1rem;
-    color: $grey5;
-  }
-  &:hover {
-    .button__grey {
-      border: 2px solid $blue4;
-      .icon {color: $grey3;}
-    }
-    .text__blue {color: $blue4;}
-    .text__grey {color: $grey4;}
-  }
-}*/
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -2522,6 +2539,9 @@ export default {
 }
 
 @media only screen and (min-width: 1024px) {
+  .section__top__style{
+    width: 768px;
+  }
   .section__style{
     width: 768px;
   }
@@ -2531,20 +2551,9 @@ export default {
 }
 
 @media only screen and (max-width: 1023px) {
-  .section__style{
+  .section__top__style{
     width: 640px;
   }
-  .section__bottom__style{
-    width: 640px;
-    transition: all .1s ease-in;
-  }
-  .section__bottom__style.active__action__button__properties{
-    transition: all .1s ease-in;
-    width: 320px;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
   .section__style{
     width: 640px;
   }

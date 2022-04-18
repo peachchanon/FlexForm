@@ -63,7 +63,7 @@
             <Icon class="icon__style__large tw-mr-2 blue10" icon="heroicons-outline:cursor-click"/>
             <span class="semibold24 blue10">Move Component</span>
           </header>
-          <section class="tw-pl-2.5 tw-pr-2.5 tw-overflow-x-hidden" style="height: 100%; max-height: 250px">
+          <section class="tw-pl-2.5 tw-pr-2.5 tw-overflow-x-hidden" style="height: 100%; max-height: 350px">
             <div class="tw-p-2">
               <span class="medium16 grey10">You can move component by drag and drop.</span>
             </div>
@@ -77,14 +77,38 @@
                   tw-bg-white hover:tw-bg-grey1 tw-text-blue10 hover:tw-text-blue8 tw-border-2 hover:tw-border-blue5 tw-transition tw-ease-in"
               >
                 <div class="tw-w-1/6">
-                  <div v-if="item.ComponentType==='paragraph'" class="tw-flex tw-flex-row">
+                  <div v-if="item.ComponentType==='short-input'" class="tw-flex tw-flex-row tw-justify-start tw-pl-3">
+                    <div class="tw-relative">
+                      <Icon class="icon__style__large" icon="bi:input-cursor"/>
+                      <span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">S</span>
+                    </div>
+                  </div>
+                  <div v-if="item.ComponentType==='long-input'" class="tw-flex tw-flex-row tw-justify-start tw-pl-3">
+                    <div class="tw-relative">
+                      <Icon class="icon__style__large" icon="bi:input-cursor"/>
+                      <span class="text__style__icon tw-absolute" style="left: 27px; top: 6px">L</span>
+                    </div>
+                  </div>
+                  <div v-if="item.ComponentType==='paragraph'" class="tw-flex tw-flex-row tw-justify-start tw-pl-2">
                     <Icon class="icon__style__large tw-mr-1" icon="bi:text-paragraph"/><span class="text__style__icon">P</span>
                   </div>
                   <div v-if="item.ComponentType==='heading'" class="tw-flex tw-flex-row tw-justify-center tw-mr-2">
-                    <span class="text__style__icon">H</span></div>
+                    <span class="text__style__icon">H</span>
+                  </div>
+                  <div v-if="item.ComponentType==='dropdown'" class="tw-flex tw-flex-row tw-justify-center">
+                    <div class="tw-flex tw-flex-row tw-items-center">
+                      <Icon class="icon__style__large" icon="bi:textarea-resize"/>
+                      <Icon class="text__style__icon tw-mr-1" icon="bi:caret-down"/>
+                    </div>
+                  </div>
+                  <div v-if="item.ComponentType==='choice'" class="tw-flex tw-flex-row tw-justify-center">
+                    <div class="tw-flex tw-flex-row tw-justify-center tw-mr-1">
+                      <Icon class="icon__style__large" icon="bi:ui-checks"/>
+                    </div>
+                  </div>
                 </div>
                 <div class="tw-w-4/6">
-                  <span class="medium16 tw-w-full">{{item.ComponentType}}</span>
+                  <span class="medium16 tw-w-full">{{nameType(item.ComponentType)}}</span>
                 </div>
                 <div class="tw-w-1/6 tw-flex tw-flex-row tw-justify-end">
                   <Icon class="icon__style__large grey4" icon="heroicons-outline:dots-vertical"/>
@@ -132,7 +156,24 @@ export default {
     sectionName: String,
     componentData: Array,
   },
+  computed: {
+    
+  },
   methods: {
+    nameType(type) {
+      if(type==='short-input')
+        return 'Short Input'
+      else if(type==='long-input')
+        return 'Long Input'
+      else if(type==='paragraph')
+        return 'Paragraph'
+      else if(type==='heading')
+        return 'Heading'
+      else if(type==='dropdown')
+        return 'Dropdown'
+      else
+        return 'Choice'
+    },
     // Delete Component
     doShowDeleteComponent () {
       this.StateDeleteModal = this.StateDeleteModal !== true

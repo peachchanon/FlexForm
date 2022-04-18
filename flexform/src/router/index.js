@@ -91,8 +91,8 @@ const routes = [
     }
   },
   {
-    path: '/form-builder',
-    name: 'FormBuilder',
+    path: '/form/builder',
+    name: 'Builder',
     component: FormBuilder,
     meta: {
       title: 'Form Builder',
