@@ -185,10 +185,8 @@ export default {
     doHorizontalNavigation(page) {
       this.namePage = page
     },
-    doButton(nameButton){
-      if(nameButton==='buttonCreateForm'){
-        this.$router.push('/form-builder').catch(()=>{})
-      }
+    doButton(){
+        this.$router.push('/form-builder')
     },
     PreviousPage(){
       this.$router.push('/Dashboard')
