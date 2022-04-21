@@ -1235,6 +1235,9 @@
             <Icon class="semibold24 icon blue10" icon="clarity:cog-line"/>
             <span class="semibold24 blue10 tw-ml-2">Setting</span>
           </div>
+          <base-navigation-setting-form-builder
+              :field="[{field:'Hi'}]"
+          ></base-navigation-setting-form-builder>
           <div class="base-margin tw-flex tw-flex-col tw-border-2 tw-border-gray2 radius12px base-padding">
             <div class="tw-flex tw-flex-row tw-mb-3">
               <div style="width: 150px">
@@ -1343,6 +1346,7 @@ export default {
         FormModifiedTimestamp : Date,
         CreatedByUser: '',
         ModifiedByUser : '',
+        Template: false,
         ActionButton: {
           ActionButtonName: 'Submit',
           ActionButtonProperties: {
@@ -1352,6 +1356,8 @@ export default {
         },
         Sections: [
           {
+            // อย่าลืม Gen ID
+            SectionId: '',
             SectionName: 'Untitled Section 1',
             SectionProperties: {
               FontName : 'Prompt',
@@ -1361,6 +1367,8 @@ export default {
             },
             Components: [
               {
+                // อย่าลืม Gen ID
+                ComponentId: '',
                 ComponentType: 'heading',
                 ComponentProperties: {
                   HeadingText: 'Untitled Section',
@@ -1471,6 +1479,12 @@ export default {
     doRenameForm(nameValue) {
       this.ValueRenameForm = nameValue
     },
+    // UUID
+    uuidv4() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      )
+    },
     // Sections
     doNavigationToolsSectionFormBuilder(event){
       if(event[0] === 'delete') {
@@ -1507,6 +1521,7 @@ export default {
         // Create Name: 'Untitled Section' For Max Value
         this.FormStructure.Sections.splice(event[2]+1,0,
             {
+              SectionId: this.uuidv4(),
               SectionName: 'Untitled Section '+ (maxValue+1),
               SectionProperties: {
                 FontName : 'Prompt',
@@ -1516,7 +1531,9 @@ export default {
               },
               Components: [
                 {
+                  ComponentId: this.uuidv4(),
                   ComponentType: 'heading',
+                  ComponentTemplate: false,
                   ComponentProperties: {
                     HeadingText: 'Untitled Section',
                     SubheadingText: 'Descriptive Section',
@@ -2243,6 +2260,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'short-input',
             ComponentProperties: {
               LabelText: 'Type a question',
@@ -2269,6 +2287,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'long-input',
             ComponentProperties: {
               LabelText: 'Type a question',
@@ -2294,6 +2313,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'paragraph',
             ComponentProperties: {
               LabelText: 'Paragraph...',
@@ -2311,6 +2331,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'heading',
             ComponentProperties: {
               HeadingText: 'Untitled Section',
@@ -2329,6 +2350,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'dropdown',
             ComponentProperties: {
               LabelText: 'Type a question',
@@ -2354,6 +2376,7 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
           {
+            ComponentId: this.uuidv4(),
             ComponentType: 'choice',
             ComponentProperties: {
               MultipleChoice: false,
