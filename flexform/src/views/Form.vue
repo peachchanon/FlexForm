@@ -44,50 +44,95 @@
               </div>
             </div>
             <!-- Form list-->
+            <!--  <div v-for="(FormStructure, FormID) in FormStructure" :key="FormID"> เปิดเมื่อต่อดาต้าเบส !-->
+            <div v-if="TicketTemplate === true">
             <div class="tw-my-2">
               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
-                <div class="tw-flex tw-flex-row">
-                  <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
-                    <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+                  <div class="tw-flex tw-flex-row">
+                    <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
+                      <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
+                    </div>
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                      <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
+                      <label class="medium16 blue10">National Telecom Public Company Limited Ticket (NOC)</label>
+                    </div>
+                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                      <label class="medium16 grey5">Description</label>
+                      <label class="light16 grey7">Ticket สำหรับใช้ภายในองค์กรบริษัท เพื่อรับเรื่องปัญหาของ NOC</label>
+                    </div>
                   </div>
-                  <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
-                    <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                    <label class="medium16 blue10">National Telecom Public Company Limited Ticket (NOC)</label>
-                  </div>
-                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
-                    <label class="medium16 grey5">Description</label>
-                    <label class="light16 grey7">Ticket สำหรับใช้ภายในองค์กรบริษัท เพื่อรับเรื่องปัญหาของ NOC</label>
+                  <div class="tw-flex tw-flex-row tw-mx-2">
+                    <div class="">
+                      <BaseButtonDelete
+                          buttonID="buttonDelete"
+                          buttonText="Delete"
+                          buttonIcon="heroicons-outline:trash"
+                      ></BaseButtonDelete>
+                    </div>
+                    <div class="tw-mx-2">
+                      <base-button-blue
+                          buttonID="buttonViewMore"
+                          buttonText="View More"
+                          buttonIcon="heroicons-outline:eye"
+                      ></base-button-blue>
+                    </div>
                   </div>
                 </div>
-                <div class="tw-flex tw-flex-row">
-                  <div class="">
-                    <BaseButtonDelete
-                        buttonID="buttonDelete"
-                        buttonText="Delete"
-                        buttonIcon="heroicons-outline:trash"
-                    ></BaseButtonDelete>
+              
+              </div>
+              </div>
+            <div v-if="TicketTemplate === false">
+              <div class="tw-my-2">
+                <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                  <div class="tw-flex tw-flex-row">
+                    <div v-if= "TicketTemplate === false" class="bg-green1 base-padding radius12px" style="height: fit-content">
+                      <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
+                    </div>
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                      <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
+                      <label class="medium16 blue10">Form</label>
+                    </div>
+                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                      <label class="medium16 grey5">Description</label>
+                      <label class="light16 grey7">Form สำหรับเก็บรวบรวมความคิดเห็น</label>
+                    </div>
                   </div>
-                  <div class="">
-                    <base-button-blue
-                        buttonID="buttonViewMore"
-                        buttonText="View More"
-                        buttonIcon="heroicons-outline:eye"
-                    ></base-button-blue>
+                  <div class="tw-flex tw-flex-row tw-mx-2">
+                    <div class="">
+                      <BaseButtonDelete
+                          buttonID="buttonDelete"
+                          buttonText="Delete"
+                          buttonIcon="heroicons-outline:trash"
+                      ></BaseButtonDelete>
+                    </div>
+                    <div class="tw-mx-2">
+                      <base-button-blue
+                          buttonID="buttonViewMore"
+                          buttonText="View More"
+                          buttonIcon="heroicons-outline:eye"
+                      ></base-button-blue>
+                    </div>
+                    <div class="tw-mx-2">
+                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="buttonClicked">
+                        <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
+                      </div>
                   </div>
                 </div>
               </div>
+              </div>
             </div>
-          </div>
-          <!-- My Ticket-->
-          <div v-if="namePage==='My Ticket'" class="base-padding">
-            My Ticket Page
-          </div>
-          <!-- Shared with me -->
-          <div v-if="namePage==='Shared with me'" class="base-padding">
-            Shared with me Page
-          </div>
-          
+          <!--          </div>-->
         </div>
+
+        <!-- My Ticket-->
+        <div v-if="namePage==='My Ticket'" class="base-padding">
+          My Ticket Page
+        </div>
+        <!-- Shared with me -->
+        <div v-if="namePage==='Shared with me'" class="base-padding">
+          Shared with me Page
+        </div>
+      </div>
       </div>
     </template>
   </layout-sidebar-navbar>
@@ -119,6 +164,7 @@ export default {
       horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
       namePage: 'All Ticket',
       StateShowContentForWindowSize: true,
+      TicketTemplate: false,
     }
   },
   watch:{
@@ -150,5 +196,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.verticalbutton {
+  color: $blue5;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: $blue5;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+  &:hover{
+    color: $blue3;
+    border-color: $blue3;
+  }
+}
 
 </style>
