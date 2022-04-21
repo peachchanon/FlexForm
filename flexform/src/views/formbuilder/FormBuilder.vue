@@ -1223,51 +1223,68 @@
                 </div>
               </div>
             </div>
-            
-            
           </div>
         </div>
       </div>
       <!-- Setting -->
-      <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 170px" v-if="StatePage==='Setting'">
+      <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 150px" v-if="StatePage==='Setting'">
         <div class="box" style="width: 560px">
           <div class="base-margin tw-flex tw-flex-row tw-items-center">
             <Icon class="semibold24 icon blue10" icon="clarity:cog-line"/>
             <span class="semibold24 blue10 tw-ml-2">Setting</span>
           </div>
-          <base-navigation-setting-form-builder
-              :field="[{field:'Hi'}]"
-          ></base-navigation-setting-form-builder>
           <div class="base-margin tw-flex tw-flex-col tw-border-2 tw-border-gray2 radius12px base-padding">
             <div class="tw-flex tw-flex-row tw-mb-3">
-              <div style="width: 150px">
+              <div style="width: 170px">
                 <span class="medium16 grey10">Form Name</span>
               </div>
-              <span class="light16 grey7">{{FormStructure.FormName}}</span>
+              <div class="tw-w-full">
+                <span class="light16 grey7">{{FormStructure.FormName}}</span>
+              </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-3">
-              <div style="width: 150px">
+              <div style="width: 170px">
                 <span class="medium16 grey10">Description</span>
               </div>
-              <span class="light16 grey7">{{FormStructure.FormDescription}}</span>
+              <div class="tw-w-full">
+                <span class="light16 grey7">{{FormStructure.FormDescription}}</span>
+              </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-3">
               <div style="width: 150px">
                 <span class="medium16 grey10">Create by</span>
               </div>
-              <span class="light16 grey7">{{FormStructure.CreatedByUser}}</span>
+              <div class="tw-w-full">
+                <span class="light16 grey7">{{FormStructure.CreatedByUser}}</span>
+              </div>
+            </div>
+            <div class="tw-flex tw-flex-row tw-mb-3">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Modified by</span>
+              </div>
+              <div class="tw-w-full">
+                <span class="light16 grey7">{{FormStructure.ModifiedByUser}}</span>
+              </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-3">
               <div style="width: 150px">
                 <span class="medium16 grey10">Create Date</span>
               </div>
-              <span class="light16 grey7">{{FormStructure.FormCreatedTimestamp}}</span>
+              <div>
+                <span class="light16 grey7">{{FormStructure.FormCreatedTimestamp}}</span> 
+              </div>
+            </div>
+            <div class="tw-flex tw-flex-row">
+              <div style="width: 150px">
+                <span class="medium16 grey10">Modified Date</span>
+              </div>
+              <div>
+                <span class="light16 grey7">{{FormStructure.FormModifiedTimestamp}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      
       
     </div>
   </div>
@@ -1341,9 +1358,9 @@ export default {
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
-        FormDescription: '',
-        FormCreatedTimestamp : Date,
-        FormModifiedTimestamp : Date,
+        FormDescription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+        FormCreatedTimestamp : '',
+        FormModifiedTimestamp : '',
         CreatedByUser: '',
         ModifiedByUser : '',
         Template: false,
