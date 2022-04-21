@@ -1,12 +1,12 @@
 ﻿<template>
   <layout-sidebar-navbar-vue>
     <template #content>
-      <div class="bg-grey1 tw-h-full">
-        <div class="base-margin tw-flex tw-flex-row tw-items-center">
+      <div class="box__style bg-grey1 tw-h-full md:tw-flex-col">
+        <div class="base-margin tw-flex tw-flex-row tw-items-center ">
           <base-button-back
               :callback="PreviousPage"></base-button-back>
-          <Icon class="semibold32 icon blue10 tw-mx-1" icon="heroicons-outline:folder"/>
-          <span class="semibold24 blue10 tw-pl-1">National Telecom Public Company Limited Ticket (NOC) </span>
+          <Icon class="semibold32 icon blue10 tw-mx-1 md:tw-flex-col" icon="heroicons-outline:folder"/>
+          <span class="semibold24 blue10 tw-pl-1 md:tw-flex-col">National Telecom Public Company Limited Ticket (NOC) </span>
         </div>
       </div>
       <div class="box bg-white tw-h-full">
@@ -44,8 +44,8 @@
           </div>
 
           <!-- Ticket List !-->
+          <!--  <div v-for="(TicketID, FormID) in TicketID" :key="FormID"> เปิดเมื่อต่อดาต้าเบส !-->
           <div class="tw-my-2">
-            <!--  <div v-for="(TicketID, FormID) in TicketID" :key="FormID"> เปิดเมื่อต่อดาต้าเบส !-->
             <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
               <div class="tw-flex tw-flex-row">
                 <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
@@ -59,9 +59,9 @@
                 </div>
                 <div class="tw-flex tw-flex-col tw-items-start tw-mx-3">
                   <label v-if="StateShowContentForWindowSize" class="medium16 grey5 tw-mt-0.5 ">Name</label>
-                  <label v-if="Urgent === 'High'" class="tw-mt-0.5 medium16 red7">{{ ComponentName }}</label>
-                  <label v-if="Urgent === 'Medium'" class="tw-mt-0.5 medium16 yellow9">{{ ComponentName }}</label>
-                  <label v-if="Urgent === 'Low'" class="tw-mt-0.5 medium16 green10">{{ ComponentName }}</label>
+                  <label v-if="Urgent === 'High'" class="tw-mt-0.5 medium16 red7">{{ ComponentTemplate }}</label>
+                  <label v-if="Urgent === 'Medium'" class="tw-mt-0.5 medium16 yellow9">{{ ComponentTemplate }}</label>
+                  <label v-if="Urgent === 'Low'" class="tw-mt-0.5 medium16 green10">{{ ComponentTemplate }}</label>
                 </div>
                 <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5 ">
                   <label class="medium16 grey5 tw-mt-0.5">Status</label>
@@ -97,12 +97,13 @@
                 </div>
                 <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                   <label class="medium16 grey5 tw-mt-0.5">Created By</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{InputByUser}}</label>
+                  <label class="medium16 grey7 tw-mt-0.5">{{CreatedByUser}}</label>
                 </div>
               </div>
             </div>
           </div>
         </div>
+<!--      </div>-->
       <!-- My Ticket-->
       <div v-if="namePage==='My Ticket'" class="base-padding">
         My Ticket Page
@@ -145,10 +146,10 @@ export default {
       namePage: 'All Ticket',
       StateShowContentForWindowSize: true,
       Urgent:'Low', // ตัวแปรรับค่ามาจากดาต้าเบส impact ของ ticket // check
-      ComponentName:'สายเคเบิลขาด', //check
+      ComponentTemplate:'สายเคเบิลขาด', //check
       Timestamp:'18/11/64',
       Description:'สายเคเบิลแถวเอกมัยขาด', //check
-      InputByUser:'Chanon Panarong',
+      CreatedByUser:'Chanon Panarong',
       Status:'Finish', //check
       Ticket:[]
     }
@@ -202,5 +203,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@media only screen and (max-width: 767px){
+  .box__style {
+    height: 100%;
+    max-height: 736px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .box__style {
+    width: 100%;
+    max-width: 1024px;
+    height: 100%;
+    max-height: 560px;
+    .left__layout {
+      width: 100%;
+      max-width: 150px;
+    }
+    .right__layout {
+      width: 100%;
+    }
+  }
+}
 </style>
