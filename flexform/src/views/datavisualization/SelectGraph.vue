@@ -2,37 +2,56 @@
   <div class="tw-w-full tw-h-full tw-flex tw-flex-row tw-justify-center md:tw-items-center tw-items-start bg-grey1">
     <div class="box__style radius12px bg-white base-shadow base-padding tw-w-full">
       <div class="tw-flex tw-flex-row">
-        <base-button-back></base-button-back>
+        <base-button-back :callback="PreviousPage"></base-button-back>
         <div class="tw-ml-2 tw-flex tw-flex-row tw-items-center tw-flex-wrap">
-          <Icon class="semibold24 icon blue10 tw-mr-1.5" icon="heroicons-outline:chart-pie"/>
+          <Icon class="icon blue10 tw-mr-1.5" icon="heroicons-outline:chart-pie"/>
           <span class="semibold24 blue10">Data Visualization</span>
         </div>
       </div>
-      <div class="tw-w-full">
-        <div class="tw-flex tw-flex-col tw-items-center">
-          Progress bar
-        </div>
-        <div class="tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
+      <div class="tw-w-full tw-mt-6">
+        <div v-if="ShowContent === true && currentGraphNo === 'Graph1'" class="tableTrue tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
           <div class="left__layout tw-border-0 md:tw-border-r-2 tw-p-2">
             <div class="tw-flex tw-flex-row md:tw-flex-col">
-              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
-                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('All Chart')">
+                <div v-if="GraphName === 'All Chart'" class="tw-flex tw-flex-row tw-justify-between">
+                  <span class="medium16 blue5 tw-cursor-pointer">All Chart</span>
+                  <span class=" tw-w-1 tw-h-6 tw-bg-blue5"></span>
+                </div>
+                <div v-if="GraphName !== 'All Chart'">
+                  <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
+                </div>
               </div>
-              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
-                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Line</span>
+              
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Bar')">
+                <div v-if="GraphName === 'Bar'" class="tw-flex tw-flex-row tw-justify-between">
+                  <span class="medium16 blue5 tw-cursor-pointer">Bar</span>
+                  <span class=" tw-w-1 tw-h-6 tw-bg-blue5"></span>
+                </div>
+                <div v-if="GraphName !== 'Bar'">
+                  <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Bar</span>
+                </div>
               </div>
-              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2">
-                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Bar</span>
+              
+              <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Line')">
+                <div v-if="GraphName === 'Line'" class="tw-flex tw-flex-row tw-justify-between">
+                <span class="medium16 blue5 tw-cursor-pointer">Line</span>
+                  <span class=" tw-w-1 tw-h-6 tw-bg-blue5"></span>
+                </div>
+                <div v-if="GraphName !== 'Line'">
+                  <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Line</span>
+                  </div>
               </div>
+              
             </div>
           </div>
-          <div class="right__layout tw-p-2">
-            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
-              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
-                <Icon class="semibold24 icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
-                <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
-              </div>
-              <div class="tw-flex tw-flex-row">
+          <div v-if="GraphName === 'All Chart'" class="right__layout tw-p-2 tw-overflow-auto">
+            <div class="tw-flex tw-flex-col">
+              <!-- graph list on the right #1-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Basic Bar Chart</span>
+                </div>
                 <base-button
                     buttonID="buttonPreview"
                     buttonText="Preview"
@@ -45,35 +64,564 @@
                     buttonID="buttonExport"
                     buttonText="Export"
                     buttonTextColor="white"
-                    buttonBorderColor="border-green5"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #2-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #3-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #4-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #5-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #6-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #7-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #8-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #9-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #10-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #11-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #12-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #13-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #14-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #15-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #16-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #17-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #18-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              <!--graph list on the right #19-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+                </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
                     buttonBgColor="bg-green5"
                 ></base-button>
               </div>
             </div>
           </div>
+          
+          <div v-if="GraphName === 'Line'" class="right__layout tw-p-2">
+            <div class="tw-flex tw-flex-row">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Line Chart</span>
+              </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              </div>
+          </div>
+          
+          <div v-if="GraphName === 'Bar'" class="right__layout tw-p-2">
+            <div class="tw-flex tw-flex-row">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Bar Chart</span>
+              </div>
+                <base-button
+                    buttonID="buttonPreview"
+                    buttonText="Preview"
+                    buttonTextColor="blue10"
+                    buttonIconLeft="heroicons-outline:eye"
+                    buttonBorderColor="border-white"
+                    buttonBgColor="bg-white"
+                ></base-button>
+                <base-button
+                    buttonID="buttonExport"
+                    buttonText="Export"
+                    buttonTextColor="white"
+                    buttonBgColor="bg-green5"
+                ></base-button>
+              </div>
+              </div>
+          </div>
         </div>
       </div>
       
+      <div v-if="ShowContent === false" class="tableFalse tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
+        <div class="left__layout tw-border-0 md:tw-border-r-2 tw-p-2">
+          <div class="tw-flex tw-flex-row md:tw-flex-col">
+            <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('All Chart')">
+              <div v-if="GraphName === 'All Chart'" class="tw-flex tw-flex-col tw-justify-between">
+                <span class="medium16 blue5 tw-cursor-pointer">All Chart</span>
+                <span class=" tw-w-15 tw-h-1 tw-bg-blue5"></span>
+              </div>
+              <div v-if="GraphName !== 'All Chart'">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
+              </div>
+            </div>
+            
+            <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Line')">
+              <div v-if="GraphName === 'Line'" class="tw-flex tw-flex-col tw-justify-between">
+                <span class="medium16 blue5 tw-cursor-pointer">Line</span>
+                <span class=" tw-w-15 tw-h-1 tw-bg-blue5"></span>
+              </div>
+              <div v-if="GraphName !== 'Line'">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Line</span>
+              </div>
+            </div>
+            
+            <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Bar')">
+              <div v-if="GraphName === 'Bar'" class="tw-flex tw-flex-col tw-justify-between">
+                <span class="medium16 blue5 tw-cursor-pointer">Bar</span>
+                <span class=" tw-w-15 tw-h-1 tw-bg-blue5"></span>
+              </div>
+              <div v-if="GraphName !== 'Bar'">
+                <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Bar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div v-if="GraphName === 'All Chart'" class="right__layout tw-p-2">
+          <div class="tw-flex tw-flex-row">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="semibold24 blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Stacked Area Chart</span>
+              </div>
+<!--              <div class="tw-border-solid tw-border-2 tw-border-blue10 radius10px">-->
+<!--                <Icon class="semibold24 blue10 tw-mx-3 tw-my-2" icon="heroicons-outline:eye"/>-->
+<!--              </div>-->
+              <base-button
+                  buttonID="buttonExport"
+                  buttonText="Preview"
+                  buttonTextColor="blue5"
+                  buttonBgColor="bg-white"
+                  buttonBorderColor="border-blue10"
+              ></base-button>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="GraphName === 'Line'" class="right__layout tw-p-2">
+          <div class="tw-flex tw-flex-row">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="semibold24 blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Line Chart</span>
+              </div>
+<!--              <div>-->
+<!--                <Icon class="semibold24 tw-mr-2" icon="heroicons-outline:eye"/>-->
+<!--              </div>-->
+              <base-button
+                  buttonID="buttonExport"
+                  buttonText="Export"
+                  buttonTextColor="white"
+                  buttonBgColor="bg-green5"
+              ></base-button>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="GraphName === 'Bar'" class="right__layout tw-p-2">
+          <div class="tw-flex tw-flex-row">
+            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center">
+              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                <Icon class="semibold24 blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                <span class="medium16 blue10 tw-m-1">Bar Chart</span>
+              </div>
+<!--              <div>-->
+<!--                <Icon class="semibold24 tw-mr-2" icon="heroicons-outline:eye"/>-->
+<!--              </div>-->
+              <base-button
+                  buttonID="buttonExport"
+                  buttonText="Export"
+                  buttonTextColor="white"
+                  buttonBgColor="bg-green5"
+              ></base-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { Icon } from "@iconify/vue2/dist/iconify"
-import { mapActions, mapGetters} from "vuex"
+import {mapActions, mapGetters} from "vuex"
 import BaseButtonBack from "@/components/BaseButtonBack"
 import BaseButton from "@/components/BaseButton"
+// import ProgressBar from "@/components/ProgressBar"
 
 export default {
   name: "SelectGraph.vue",
   components: {
     Icon,
     BaseButtonBack,
-    BaseButton
+    BaseButton,
+    // ProgressBar
+  },
+  props: {
+    currentGraphNo: String,
   },
   data() {
     return {
       ShowContent: true,
+      GraphName: 'All Chart'
     }
   },
   watch: {
@@ -82,7 +630,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
+    
   },
   async mounted () {
     window.onresize = () => {
@@ -95,11 +644,22 @@ export default {
     PreviousPage() {
       this.$router.push('/DataVisualization')
     },
+    chooseGraph(choice){
+      this.GraphName = choice
+      console.log(this.GraphName)
+      console.log('current graph no' + this.currentGraphNo)
+    },
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.tableTrue{
+  height: 450px;
+}
+.tableFalse{
+  height: 90%;
+}
 .icon{
   font-size: 2rem;
 }

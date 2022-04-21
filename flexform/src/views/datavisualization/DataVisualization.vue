@@ -143,7 +143,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
   },
   async mounted () {
     window.onresize = () => {
@@ -153,20 +153,25 @@ export default {
   },
   data(){
     return{
-      Searchquery:''
+      Searchquery:'',
+      GraphNo:''
     }
   },
   methods: {
     ...mapActions(['flapWindowResize']),
     PreviousPage(){
-      this.$router.push('/')
+      this.$router.push('/Dashboard')
     },
     SearchInput(Searchquery){
       this.Searchquery = Searchquery
     },
     Graph1(){
       console.log('Graph1')
-      this.$router.push('/DataVisualization/SelectGraph')
+      this.GraphNo = 'Graph1'
+      this.$router.push({
+        name:'SelectGraph', 
+        params: {currentGraphNo: this.GraphNo}})
+      
     },
     Graph2(){
       console.log('Graph2')

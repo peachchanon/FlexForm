@@ -10,7 +10,9 @@ import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
 import DataVisualization from "@/views/datavisualization/DataVisualization";
 import SelectGraph from "@/views/datavisualization/SelectGraph";
+import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
+import AllTicket from "@/views/AllTicket";
 
 import Home from '../views/Home.vue'
 
@@ -50,7 +52,7 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard',
-      //requireAuthen: true
+      // requireAuthen: true
     }
   },
   {
@@ -86,7 +88,7 @@ const routes = [
     component: ManageUsers,
     meta: {
       title: 'Manage Users',
-      requireAuthen: true,
+      // requireAuthen: true,
       requireRole: ["003"]
     }
   },
@@ -96,7 +98,7 @@ const routes = [
     component: FormBuilder,
     meta: {
       title: 'Form Builder',
-      //requireAuthen: true,
+      // requireAuthen: true,
     }
   },
   {
@@ -106,7 +108,8 @@ const routes = [
     meta: {
       title: 'Data Visualization',
      // requireAuthen: true
-    }
+    },
+    props: true
   },
   {
     path: '/DataVisualization/SelectGraph',
@@ -114,6 +117,25 @@ const routes = [
     component: SelectGraph,
     meta: {
       title: 'SelectGraph',
+      // requireAuthen: true
+    },
+    props: true
+  },
+  {
+    path: '/DataVisualization/SelectGraph/ExportGraph',
+    name: 'ExportGraph',
+    component: ExportGraph,
+    meta: {
+      title: 'ExportGraph',
+      // requireAuthen: true
+    }
+  },
+  {
+    path: '/AllTicket',
+    name: 'AllTicket',
+    component: AllTicket,
+    meta: {
+      title: 'AllTicket',
       // requireAuthen: true
     }
   },

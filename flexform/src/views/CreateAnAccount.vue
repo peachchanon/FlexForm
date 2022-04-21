@@ -352,7 +352,7 @@ export default {
       this.stateProfile.phone_number = this.stateRegister.phone_number !== '';
       this.stateProfile.role_id = this.stateRegister.role_id !== '';
       this.stateProfile.division_id = this.stateRegister.division_id !== '';
-      console.log(this.stateRegister)
+      console.log('state register' + this.stateRegister)
       try{
         const response = await axios.post('http://localhost:4000/api/User/Register', {
           username :this.stateRegister.username,
@@ -369,6 +369,7 @@ export default {
           profile_pic: this.stateRegister.profile_pic
         })
         if(response.status===200 && response.data) {
+          console.log(response.status)
           this.$router.push('/')
         }
       }catch (error){
