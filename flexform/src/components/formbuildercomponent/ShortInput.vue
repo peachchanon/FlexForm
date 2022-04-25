@@ -58,11 +58,12 @@
       <!-- Numeric Type -->
       <div
           v-if="dataShortInput.Validation==='Numeric'"
-          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
           :class="{
         'tw-visible': dataShortInput.Required || valueShortInput.Number.length<=0,
         'tw-invisible': !dataShortInput.Required || valueShortInput.Number.length>0
           }"
+          :style="widthStyle"
       >
         <span class="light14 red5">Please fill out this field.</span>
       </div>
@@ -81,11 +82,12 @@
       <!-- Email Type -->
       <div
           v-if="dataShortInput.Validation==='Email'"
-          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
           :class="{
         'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
         'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
           }"
+          :style="widthStyle"
       >
         <span class="light14 red5">Please fill out this field.</span>
       </div>
@@ -104,11 +106,12 @@
       <!-- URL Type -->
       <div
           v-if="dataShortInput.Validation==='URL'"
-          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
           :class="{
         'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
         'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
           }"
+          :style="widthStyle"
       >
         <span class="light14 red5">Please fill out this field.</span>
       </div>
