@@ -32,12 +32,23 @@
         }"
     >
       <!-- Alphabetic Type -->
+      <div
+          v-if="dataShortInput.Validation==='Alphabetic'"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
+          :class="{
+            'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
+            'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
+          }"
+          :style="widthStyle"
+      >
+        <span class="light14 red5">Please fill out this field.</span>
+      </div>
       <input 
           v-if="dataShortInput.Validation==='Alphabetic'" 
           type="text"
           :placeholder="dataShortInput.Placeholder"
-          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
-          class="input__style base-padding radius10px tw-w-full tw-border-2"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,borderStyle]"
+          class="input__style error base-padding radius10px tw-w-full tw-border-2"
           :style="[fontSizeStyle,widthStyle]"
           :disabled="dataShortInput.ReadOnly"
           v-model="valueShortInput.Text"
@@ -45,11 +56,21 @@
           :maxlength="dataShortInput.CharacterLimitValue"
       >
       <!-- Numeric Type -->
+      <div
+          v-if="dataShortInput.Validation==='Numeric'"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          :class="{
+        'tw-visible': dataShortInput.Required || valueShortInput.Number.length<=0,
+        'tw-invisible': !dataShortInput.Required || valueShortInput.Number.length>0
+          }"
+      >
+        <span class="light14 red5">Please fill out this field.</span>
+      </div>
       <input
           v-if="dataShortInput.Validation==='Numeric'"
           type="number"
           :placeholder="dataShortInput.Placeholder"
-          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,borderStyle]"
           class="input__style base-padding radius10px tw-w-full tw-border-2"
           :style="[fontSizeStyle,widthStyle]"
           :disabled="dataShortInput.ReadOnly"
@@ -58,11 +79,21 @@
           :maxlength="dataShortInput.CharacterLimitValue"
       >
       <!-- Email Type -->
+      <div
+          v-if="dataShortInput.Validation==='Email'"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          :class="{
+        'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
+        'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
+          }"
+      >
+        <span class="light14 red5">Please fill out this field.</span>
+      </div>
       <input
           v-if="dataShortInput.Validation==='Email'"
           type="email"
           :placeholder="dataShortInput.Placeholder"
-          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,borderStyle]"
           class="input__style base-padding radius10px tw-w-full tw-border-2"
           :style="[fontSizeStyle,widthStyle]"
           :disabled="dataShortInput.ReadOnly"
@@ -71,11 +102,21 @@
           :maxlength="dataShortInput.CharacterLimitValue"
       >
       <!-- URL Type -->
+      <div
+          v-if="dataShortInput.Validation==='URL'"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          :class="{
+        'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
+        'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
+          }"
+      >
+        <span class="light14 red5">Please fill out this field.</span>
+      </div>
       <input
           v-if="dataShortInput.Validation==='URL'"
           type="url"
           :placeholder="dataShortInput.Placeholder"
-          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,'tw-border-'+dataShortInput.BorderColor]"
+          :class="[dataShortInput.FontColor,dataShortInput.InputBgColor,borderStyle]"
           class="input__style base-padding radius10px tw-w-full tw-border-2"
           :style="[fontSizeStyle,widthStyle]"
           :disabled="dataShortInput.ReadOnly"
@@ -120,6 +161,11 @@ export default {
       BorderColor: String,
       LabelFontSize: Number,
     },
+    dataInput:{
+      FormId: String,
+      SectionId: String,
+      ComponentId: String,
+    }
   },
   emits: ['valueShortInput'],
   data() {
@@ -146,18 +192,34 @@ export default {
           '--input-width': '100%',
         }
       }
+    },
+    borderStyle() {
+      if(this.dataShortInput.Required) {
+        // String
+        if(this.valueShortInput.Text.length<=0)
+          return 'tw-border-red5'
+        else if(this.valueShortInput.Text.length>0)
+          return 'tw-border-'+this.dataShortInput.BorderColor
+        // Number
+        else if(this.valueShortInput.Number.length<=0)
+          return 'tw-border-red5'
+        else
+          return 'tw-border-'+this.dataShortInput.BorderColor
+      }
+      else
+        return 'tw-border-'+this.dataShortInput.BorderColor
     }
   },
   methods: {
     doInput() {
       if(this.dataShortInput.Validation === 'Alphabetic') {
-        this.$emit('valueShortInput',this.valueShortInput.Text)
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
       } else if(this.dataShortInput.Validation === 'Numeric') {
-        this.$emit('valueShortInput',~~this.valueShortInput.Number)
+        this.$emit('valueShortInput',{value:~~this.valueShortInput.Number,dataInput:this.dataInput})
       } else if(this.dataShortInput.Validation === 'Email') {
-        this.$emit('valueShortInput',this.valueShortInput.Text)
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
       } else if(this.dataShortInput.Validation === 'URL') {
-        this.$emit('valueShortInput',this.valueShortInput.Text)
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
       }
     }
   }
@@ -165,9 +227,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.widthBox {
+  width: var(--input-width);
+}
 .input__style {
   font-size: var(--font-size);
-  width: var(--input-width)
+  width: var(--input-width);
 }
 .input__style:focus {
   border: 2px solid $blue5;

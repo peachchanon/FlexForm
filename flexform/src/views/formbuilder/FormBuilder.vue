@@ -1172,6 +1172,9 @@
       </div>
       <!-- Preview -->
       <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 170px" v-if="StatePage==='Preview'">
+        <div class="base-padding">
+          {{FormStructure}}
+        </div>
         <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
           <div
               class="tw-w-full tw-flex tw-flex-col tw-items-center"
@@ -1226,6 +1229,13 @@
             <div class="tw-mt-5 with-line">
               <span class="light14 grey5">{{itemSection.SectionName}}</span>
             </div>
+          </div>
+          <div class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end">
+            <button-section
+                :propDataName="FormStructure.ActionButton.ActionButtonName"
+                :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+            ></button-section>
           </div>
         </div>
       </div>
@@ -1361,13 +1371,14 @@ export default {
       Priority:["High","Medium","Low"],
       // Form Structure
       FormStructure : {
+        FormId: '',
         FormName: 'Untitled Form',
         FormDescription: '',
         FormCreatedTimestamp : '',
         FormModifiedTimestamp : '',
         CreatedByUser: '',
         ModifiedByUser : '',
-        Template: false,
+        UseTemplate: false,
         ActionButton: {
           ActionButtonName: 'Submit',
           ActionButtonProperties: {
@@ -1391,6 +1402,7 @@ export default {
                 // อย่าลืม Gen ID
                 ComponentId: '',
                 ComponentType: 'heading',
+                ComponentTemplate: false,
                 ComponentProperties: {
                   HeadingText: 'Untitled Section',
                   SubheadingText: 'Descriptive Section',
@@ -2327,6 +2339,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'short-input',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2354,6 +2367,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'long-input',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2380,6 +2394,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'paragraph',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Paragraph...',
               Alignment: 'left',
@@ -2398,6 +2413,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'heading',
+            ComponentTemplate: false,
             ComponentProperties: {
               HeadingText: 'Untitled Section',
               SubheadingText: 'Descriptive Section',
@@ -2417,6 +2433,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'dropdown',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2443,6 +2460,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'choice',
+            ComponentTemplate: false,
             ComponentProperties: {
               MultipleChoice: false,
               LabelText: 'Type a question',
