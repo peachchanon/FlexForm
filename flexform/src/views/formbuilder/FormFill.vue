@@ -135,176 +135,88 @@ export default {
       // State Sections and Components
       StateSelectSectionIndex: 0,
       // Form Structure
-      FormStructure:
+      FormStructure: {
+        "FormId":"",
+        "FormName":"Test Form",
+        "FormDescription":"",
+        "FormCreatedTimestamp":"",
+        "FormModifiedTimestamp":"",
+        "CreatedByUser":"",
+        "ModifiedByUser":"",
+        "UseTemplate":false,
+        "ActionButton":{
+          "ActionButtonName":"Submit",
+          "ActionButtonProperties":{
+            "FontColor":"white",
+            "BackgroundColor":"bg-blue5"
+          }
+        },
+        "Sections":[
           {
-            "FormId": "form-00212",
-            "FormName":"Untitled Form",
-            "FormDescription":"",
-            "FormCreatedTimestamp":"",
-            "FormModifiedTimestamp":"",
-            "CreatedByUser":"",
-            "ModifiedByUser":"",
-            "Template":false,
-            "ActionButton":{
-              "ActionButtonName":"Submit",
-              "ActionButtonProperties":{
-                "FontColor":"white",
-                "BackgroundColor":"bg-blue5"
-              }
+            "SectionId":"",
+            "SectionName":"Page 1",
+            "SectionProperties":{
+              "FontName":"Prompt",
+              "FontSize":16,
+              "FontColor":"grey10",
+              "BackgroundColor":"bg-white"
             },
-            "Sections":[
+            "Components":[
               {
-                "SectionId":"001c",
-                "SectionName":"Section 1",
-                "SectionProperties":{
-                  "FontName":"Prompt",
-                  "FontSize":16,
+                "ComponentId":"f5046a05-252e-49cc-ac25-23a03b698312",
+                "ComponentType":"short-input",
+                "ComponentTemplate":false,
+                "ComponentProperties":{
+                  "LabelText":"1.) Question 1",
+                  "SubLabelText":"Type a description",
+                  "Alignment":"top",
+                  "Required":true,
+                  "Placeholder":"Enter",
+                  "FixWidth":false,
+                  "Width":200,
+                  "ReadOnly":false,
+                  "CharacterLimit":false,
+                  "CharacterLimitValue":100000,
+                  "Validation":"Alphabetic",
                   "FontColor":"grey10",
-                  "BackgroundColor":"bg-white"
-                },
-                "Components":[
-                  {
-                    "ComponentId":"08c88255-160f-4a36-9a10-c2faf51ac85f",
-                    "ComponentType":"heading",
-                    "ComponentProperties":{
-                      "HeadingText":"Untitled Section",
-                      "SubheadingText":"Descriptive Section",
-                      "Alignment":"left",
-                      "HeadingFontColor":"grey10",
-                      "HeadingFontSize":48,
-                      "SubheadingFontColor":"grey5",
-                      "SubheadingFontSize":16
-                    }
-                  },
-                  {
-                    "ComponentId":"1319b4e6-035c-4998-8a64-9068ee91e3d0",
-                    "ComponentType":"short-input",
-                    "ComponentProperties":{
-                      "LabelText":"Type a question",
-                      "SubLabelText":"Type a description",
-                      "Alignment":"left",
-                      "Required":true,
-                      "Placeholder":"Enter",
-                      "FixWidth":true,
-                      "Width":200,
-                      "ReadOnly":false,
-                      "CharacterLimit":true,
-                      "CharacterLimitValue":5,
-                      "Validation":"Alphabetic",
-                      "FontColor":"grey10",
-                      "InputBgColor":"bg-grey1",
-                      "BorderColor":"white",
-                      "LabelFontSize":16
-                    }
-                  },
-                  {
-                    "ComponentId":"e441f8e9-eb41-4d54-a348-7ca85cd75f36",
-                    "ComponentType":"long-input",
-                    "ComponentProperties":{
-                      "LabelText":"Type a question",
-                      "SubLabelText":"Type a description",
-                      "Alignment":"left",
-                      "Required":true,
-                      "Placeholder":"Enter",
-                      "FixWidth":true,
-                      "Width":200,
-                      "ReadOnly":false,
-                      "CharacterLimit":true,
-                      "CharacterLimitValue":2000,
-                      "FontColor":"grey10",
-                      "InputBgColor":"bg-grey1",
-                      "BorderColor":"white",
-                      "LabelFontSize":16
-                    }
-                  },
-                  {
-                    "ComponentId":"a0d1c6a3-3b55-44cb-bc39-f0cacd7bd9fa",
-                    "ComponentType":"dropdown",
-                    "ComponentProperties":{
-                      "LabelText":"Type a question",
-                      "SubLabelText":"Type a description",
-                      "Alignment":"left",
-                      "Required":true,
-                      "Placeholder":"Enter",
-                      "FixWidth":true,
-                      "Width":200,
-                      "ReadOnly":false,
-                      "PredefinedOptions":"None",
-                      "Options":[
-
-                      ],
-                      "FontColor":"grey10",
-                      "InputBgColor":"bg-grey1",
-                      "BorderColor":"white",
-                      "LabelFontSize":16
-                    }
-                  },
-                  {
-                    "ComponentId":"f0fc0e2f-d42d-4cd1-8411-3d908b5bde48",
-                    "ComponentType":"choice",
-                    "ComponentProperties":{
-                      "MultipleChoice":false,
-                      "LabelText":"Type a question",
-                      "SubLabelText":"Type a description",
-                      "Required":false,
-                      "ReadOnly":false,
-                      "SpreadToColumns":false,
-                      "PredefinedOptions":"None",
-                      "Options":[
-                        "Choice 1",
-                        "Choice 2",
-                        "Choice 3",
-                        "Choice 4"
-                      ],
-                      "FontColor":"grey10",
-                      "BorderColor":"blue5",
-                      "LabelFontSize":16
-                    }
-                  }
-                ]
+                  "InputBgColor":"bg-grey1",
+                  "BorderColor":"white",
+                  "LabelFontSize":16
+                }
               },
               {
-                "SectionId":"58857e7c-9d51-44fa-8444-6805a28fb952",
-                "SectionName":"Section 2",
-                "SectionProperties":{
-                  "FontName":"Prompt",
-                  "FontSize":16,
+                "ComponentId":"9b3fa44f-a374-42d4-84e0-36d8bb3cf238",
+                "ComponentType":"short-input",
+                "ComponentTemplate":false,
+                "ComponentProperties":{
+                  "LabelText":"2.) Question 2",
+                  "SubLabelText":"Type a description",
+                  "Alignment":"top",
+                  "Required":true,
+                  "Placeholder":"Enter",
+                  "FixWidth":false,
+                  "Width":300,
+                  "ReadOnly":false,
+                  "CharacterLimit":false,
+                  "CharacterLimitValue":100000,
+                  "Validation":"Alphabetic",
                   "FontColor":"grey10",
-                  "BackgroundColor":"bg-white"
-                },
-                "Components":[
-                  {
-                    "ComponentId":"cdd2d566-4c74-4b3d-8604-1aed576980d7",
-                    "ComponentType":"long-input",
-                    "ComponentProperties":{
-                      "LabelText":"Type a question",
-                      "SubLabelText":"Type a description",
-                      "Alignment":"top",
-                      "Required":true,
-                      "Placeholder":"Enter",
-                      "FixWidth":true,
-                      "Width":200,
-                      "ReadOnly":false,
-                      "CharacterLimit":true,
-                      "CharacterLimitValue":2000,
-                      "FontColor":"grey10",
-                      "InputBgColor":"bg-grey1",
-                      "BorderColor":"white",
-                      "LabelFontSize":16
-                    }
-                  }
-                ]
+                  "InputBgColor":"bg-grey1",
+                  "BorderColor":"white",
+                  "LabelFontSize":16
+                }
               }
             ]
-          },
+          }
+        ]
+      },
       FormInput: []
       /*
       FormInputStructure: {
         FormId: String,
         SectionId: String,
-        Components: {
-          ComponentId : String,
-          ComponentValue: String
+        ComponentId : String,
+        ComponentValue: String,
         },
         InputByUser: String,
         Timestamp : Date
@@ -319,23 +231,29 @@ export default {
       }
     },
     doShortInput(value) {
-      console.log(value.value)
-      console.log(value.dataInput)
-      console.log(this.FormInput.find(key => key.FormId===value.dataInput.FormId && key.SectionId===value.dataInput.SectionId).Components.ComponentId)
-      //console.log(this.FormStructure.Sections.find(key=>key.SectionId===value.dataInput.SectionId).Components.find(key=>key.ComponentId===value.dataInput.ComponentId))
-      //console.log(this.FormInput.indexOf(value.dataInput.FormId))
-      /*this.FormInput.push(
-          {
-            FormId: value.dataInput.FormId,
-            SectionId: value.dataInput.SectionId,
-            Components: {
-              ComponentId : value.dataInput.ComponentId,
-              ComponentValue: value.value
-            },
-            InputByUser: '',
-            Timestamp : ''
-          }
-      )*/
+      let d = new Date()
+      console.log(typeof d)
+      let indexOfComponentId = this.FormInput.indexOf(
+          this.FormInput.find(
+              key => key.FormId===value.dataInput.FormId 
+              && key.SectionId===value.dataInput.SectionId
+              && key.ComponentId===value.dataInput.ComponentId
+          )
+      )
+      if(indexOfComponentId === -1){
+        this.FormInput.push(
+            {
+              FormId: value.dataInput.FormId,
+              SectionId: value.dataInput.SectionId,
+              ComponentId: value.dataInput.ComponentId,
+              ComponentValue: value.value,
+              InputByUser: '',
+              Timestamp : ''
+            }
+        )
+      }else {
+        this.FormInput[indexOfComponentId].ComponentValue = value.value
+      }
     }
   }
 }

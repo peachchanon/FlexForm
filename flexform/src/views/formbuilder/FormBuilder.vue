@@ -1402,6 +1402,7 @@ export default {
                 // อย่าลืม Gen ID
                 ComponentId: '',
                 ComponentType: 'heading',
+                ComponentTemplate: false,
                 ComponentProperties: {
                   HeadingText: 'Untitled Section',
                   SubheadingText: 'Descriptive Section',
@@ -2338,6 +2339,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'short-input',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2365,6 +2367,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'long-input',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2391,6 +2394,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'paragraph',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Paragraph...',
               Alignment: 'left',
@@ -2409,6 +2413,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'heading',
+            ComponentTemplate: false,
             ComponentProperties: {
               HeadingText: 'Untitled Section',
               SubheadingText: 'Descriptive Section',
@@ -2428,6 +2433,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'dropdown',
+            ComponentTemplate: false,
             ComponentProperties: {
               LabelText: 'Type a question',
               SubLabelText: 'Type a description',
@@ -2454,6 +2460,7 @@ export default {
           {
             ComponentId: this.uuidv4(),
             ComponentType: 'choice',
+            ComponentTemplate: false,
             ComponentProperties: {
               MultipleChoice: false,
               LabelText: 'Type a question',
