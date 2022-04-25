@@ -38,7 +38,7 @@
                       buttonID="buttonCreateForm"
                       buttonText="Create Form"
                       buttonIcon="heroicons-outline:plus"
-                      :callback="CreateForm"
+                      :callback="CreateFormModal"
                   ></base-button-white>
                 </div>
               </div>
@@ -112,7 +112,7 @@
                       ></base-button-blue>
                     </div>
                     <div class="tw-mx-2">
-                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16">
+                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail">
                         <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
                       </div>
                     </div>
@@ -132,12 +132,12 @@
                       <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
                       <label class="semibold24 blue10">Create a Form</label>
                     </div>
-                    <div class="button__close" @click="CreateForm">
+                    <div class="button__close" @click="CreateFormModal">
                       <Icon class="semibold24" icon="heroicons-outline:x"/>
                     </div>
                   </div>
                   <div class="tw-flex md:tw-flex-row md:tw-justify-center tw-flex-col tw-items-start">
-                    <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="doButton('blankPageButton')">
+                    <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="CreateBlankForm">
                       <div class="button__grey tw-my-2">
                         <Icon class="icon" icon="heroicons-outline:plus"/>
                       </div>
@@ -161,6 +161,83 @@
             </div>
           </transition>
 
+          <!-- Vertical dot button !-->
+          <transition name="theme-modal-fade" v-if="showFormDetailLayout">
+            <div class="theme-modal-backdrop">
+              <div v-if="showFormDetailLayout === true" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
+                <div class="detailcard bg-white radius12px base-shadow base-padding base-margin">
+                  <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
+                    <div class="tw-flex tw-flex-row tw-items-center tw-relative">
+                      <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+                      <label class="semibold24 blue10">Form</label>
+                    </div>
+                    <div class="button__close" @click="showFormDetail">
+                      <Icon class="semibold24" icon="heroicons-outline:x"/>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="">
+                      <div>
+                        <base-horizontal-navigation
+                            v-bind:field="horizontalNavigationModal"
+                            @callbackField="HorizontalModalNavigation"
+                        >
+                        </base-horizontal-navigation>
+                      </div>
+                      <div v-if="ModalPage==='Setting'">
+                        <div class="tw-flex tw-flex-row">
+                          <div class="tw-flex tw-flex-col">
+                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                              <Icon class="semibold24 icon" icon="heroicons-outline:folder"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16">Fill Form</label>
+                            </div>
+                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                              <Icon class="semibold24 icon " icon="heroicons-outline:inbox-in"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16 ">Import Data</label>
+                            </div>
+                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                              <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16 ">Export Response</label>
+                            </div>
+                          </div>
+                          <div class="tw-flex tw-flex-col">
+                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                              <Icon class="semibold24 icon " icon="heroicons-outline:eye"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16 ">View Response</label>
+                            </div>
+                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                              <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16 ">Edit Form</label>
+                            </div>
+                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                              <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
+                              <label class="tw-mx-3 tw-my-1 semibold16 ">Save As Template</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-if="ModalPage==='Detail'">
+                        <div class="tw-flex tw-flex-row">
+                          <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                            <label class="semibold16 blue10">Created By</label>
+                            <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
+                          </div>
+                          <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                            <label class="semibold16 blue10">Date Created</label>
+                            <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
+                          </div>
+                        </div>
+                        <div class="tw-flex tw-flex-col tw-mx-2.5 tw-my-3">
+                          <label class="semibold16 blue10">Description</label>
+                          <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
           <!-- My Ticket-->
           <div v-if="namePage==='My Ticket'" class="base-padding">
             My Ticket Page
@@ -200,12 +277,24 @@ export default {
   data() {
     return {
       horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
+      horizontalNavigationModal: [{field:'Setting'},{field:'Detail'}],
       namePage: 'All Ticket',
+      ModalPage:'Setting',
       StateShowContentForWindowSize: true,
       TicketTemplate: false,
       CreatedByUser:'Chanon Panarong',
-      FormStructure:[],
-      showFormBuilderLayout: false
+      FormDescription: 'Form สำหรับเก็บข้อมูล',
+      DateCreated: '24/4/2022',
+      showFormBuilderLayout: false,
+      showFormDetailLayout: false,
+      FormStructure:[
+        { FormId: '',
+          CreatedByUser: '',
+          ModifiedByUser: '',
+          CreatedDate: '',
+          UseTemplate: ''
+        }
+      ]
     }
   },
   watch:{
@@ -233,13 +322,50 @@ export default {
     doHorizontalNavigation(page) {
       this.namePage = page
     },
-    CreateForm(){
+    HorizontalModalNavigation(page){
+      this.ModalPage = page
+    },
+    CreateFormModal(){
       this.showFormBuilderLayout = !this.showFormBuilderLayout
+    },
+    GenerateFormId() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      )
+    },
+    async CreateBlankForm(){
+      this.FormStructure.FormId = this.GenerateFormId() // set formid = ค่าที่ generate ออกมา
+      const current = new Date() //แปลง string เป็น Date
+      this.FormStructure.CreatedDate = current.toISOString() // แปลงเป็นระบบ IsoString
+      this.FormStructure.UseTemplate = false
+      this.FormStructure.CreatedByUser = localStorage.getItem('username')
+      this.FormStructure.ModifiedByUser = localStorage.getItem('username')
+      console.log(this.FormStructure.FormId)
+      this.$router.push('/form/builder')
+      try{
+        const response = await axios.post('http://localhost:4000/api/User/Register', {
+          FormId:this.FormStructure.FormId,
+          CreatedDate :this.FormStructure.CreatedDate,
+          UseTemplate:this.FormStructure.UseTemplate,
+          CreatedByUser:this.FormStructure.CreatedByUser,
+          ModifiedByUser:this.FormStructure.ModifiedByUser,
+        })
+        if(response.status===200 && response.data) {
+          console.log(response.status)
+          console.log(response.data)
+          this.$router.push('/form/builder')
+        }
+      }catch (error){
+        console.log(error)
+      }
+    },
+    showFormDetail(){
+      this.showFormDetailLayout = !this.showFormDetailLayout
+      this.ModalPage = 'Setting'
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .verticalbutton {
   color: $blue5;
@@ -312,6 +438,17 @@ export default {
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
   }
 }
+.choose{
+  color: $blue10;
+  border-radius: 10px;
+  padding: 0.125rem 0.125rem 0.125rem 0.5rem;
+  cursor: pointer;
+  transition: all .1s ease-in;
+  &:hover{
+    color: $blue5;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  }
+}
 .select__create__form {
   cursor: pointer;
 
@@ -362,5 +499,17 @@ export default {
       color: $grey4;
     }
   }
+}
+
+.detailcard{
+  width:450px;
+  height:270px;
+}
+.modaldescriptiondetail{
+  border-radius: 7px;
+  border-width: 1px;
+  border-color: $grey3;
+  padding: 0.5rem;
+  //background-color: $grey6;
 }
 </style>
