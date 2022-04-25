@@ -13,6 +13,7 @@ import SelectGraph from "@/views/datavisualization/SelectGraph";
 import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 import AllTicket from "@/views/AllTicket";
+import FormFill from "@/views/formbuilder/FormFill";
 
 import Home from '../views/Home.vue'
 
@@ -70,6 +71,15 @@ const routes = [
     component: Form,
     meta: {
       title: 'Form',
+      //requireAuthen: true
+    }
+  },
+  {
+    path: '/form/fill',
+    name: 'Fill',
+    component: FormFill,
+    meta: {
+      title: 'Form Fill',
       //requireAuthen: true
     }
   },
