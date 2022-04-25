@@ -15,13 +15,11 @@
             </base-horizontal-navigation>
           </div>
           <!-- All Ticket-->
-          <div v-if="namePage==='All Ticket'" class="tw-px-3">
+          <div v-if="namePage==='All Form'" class="tw-px-3">
             <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
-              <!-- Filter Box -->
+              <!-- Search Box -->
               <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
-                <base-filter-box
-                    propBlankDataText= "Form: Show All"
-                ></base-filter-box>
+                <SearchBar></SearchBar>
               </div>
               <div class="tw-flex tw-flex-row tw-items-center">
                 <!-- My Template Button -->
@@ -239,8 +237,8 @@
             </div>
           </transition>
           <!-- My Ticket-->
-          <div v-if="namePage==='My Ticket'" class="base-padding">
-            My Ticket Page
+          <div v-if="namePage==='My Form'" class="base-padding">
+            My Form Page
           </div>
           <!-- Shared with me -->
           <div v-if="namePage==='Shared with me'" class="base-padding">
@@ -257,10 +255,10 @@ import { Icon } from '@iconify/vue2'
 import { mapGetters, mapActions } from 'vuex'
 import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
 import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
-import BaseFilterBox from '@/components/BaseFilterBox'
 import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
 import BaseButtonDelete from '@/components/BaseButtonDelete'
+import SearchBar from "@/components/SearchBar";
 import axios from "axios";
 
 export default {
@@ -269,16 +267,16 @@ export default {
     LayoutSidebarNavbar,
     BaseHorizontalNavigation,
     Icon,
-    BaseFilterBox,
     BaseButtonWhite,
     BaseButtonBlue,
-    BaseButtonDelete
+    BaseButtonDelete,
+    SearchBar
   },
   data() {
     return {
-      horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
+      horizontalNavigationID: [{field:'All Form'},{field:'My Form'},{field:'Shared with me'}],
       horizontalNavigationModal: [{field:'Setting'},{field:'Detail'}],
-      namePage: 'All Ticket',
+      namePage: 'All Form',
       ModalPage:'Setting',
       StateShowContentForWindowSize: true,
       TicketTemplate: false,
