@@ -981,7 +981,7 @@
               </div>
               <div v-if="!FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.MultipleChoice">
                 <span class="medium16 white tw-mt-2 tw-mb-1">Spread to Columns</span>
-                <span class="light14 grey2 tw-mb-2 tw-mb-1">Spread choices into 2 columns</span>
+                <div class="light14 grey2 tw-mb-2 tw-mb-1">Spread choices into 2 columns</div>
                 <div class="tw-flex tw-flex-row tw-items-center tw-mb-2">
                 <span class="medium16 tw-mr-3 tw-ease-in tw-transition tw-my-2" :class="{
                   'green3': FormStructure.Sections[StateSelectSectionIndex].Components[StateSelectComponentIndex].ComponentProperties.SpreadToColumns,
@@ -1223,6 +1223,9 @@
                 </div>
               </div>
             </div>
+            <div class="tw-mt-5 with-line">
+              <span class="light14 grey5">{{itemSection.SectionName}}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1234,7 +1237,7 @@
             <span class="semibold24 blue10 tw-ml-2">Setting</span>
           </div>
           <div class="base-margin tw-flex tw-flex-col tw-border-2 tw-border-gray2 radius12px base-padding">
-            <div class="tw-flex tw-flex-row tw-mb-3">
+            <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 170px">
                 <span class="medium16 grey10">Form Name</span>
               </div>
@@ -1242,7 +1245,7 @@
                 <span class="light16 grey7">{{FormStructure.FormName}}</span>
               </div>
             </div>
-            <div class="tw-flex tw-flex-row tw-mb-3">
+            <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 170px">
                 <span class="medium16 grey10">Description</span>
               </div>
@@ -1250,7 +1253,7 @@
                 <span class="light16 grey7">{{FormStructure.FormDescription}}</span>
               </div>
             </div>
-            <div class="tw-flex tw-flex-row tw-mb-3">
+            <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 150px">
                 <span class="medium16 grey10">Create by</span>
               </div>
@@ -1258,7 +1261,7 @@
                 <span class="light16 grey7">{{FormStructure.CreatedByUser}}</span>
               </div>
             </div>
-            <div class="tw-flex tw-flex-row tw-mb-3">
+            <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 150px">
                 <span class="medium16 grey10">Modified by</span>
               </div>
@@ -1266,7 +1269,7 @@
                 <span class="light16 grey7">{{FormStructure.ModifiedByUser}}</span>
               </div>
             </div>
-            <div class="tw-flex tw-flex-row tw-mb-3">
+            <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 150px">
                 <span class="medium16 grey10">Create Date</span>
               </div>
@@ -1351,14 +1354,15 @@ export default {
       // Value
       ShortInputValidationList:['Alphabetic','Numeric','Email','URL'],
       FontNameList: ['Prompt','Arial','Brush Script MT','Courier New','Garamond','Georgia','Tahoma','Times New Roman','Trebuchet MS','Verdana','Helvetica'],
-      PredefinedOptions:['None','Gender','Days','Months'],
+      PredefinedOptions:['None','Gender','Days','Months','Priority'],
       Gender:['Male','Female'],
       Days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
       Months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+      Priority:["High","Medium","Low"],
       // Form Structure
       FormStructure : {
         FormName: 'Untitled Form',
-        FormDescription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
+        FormDescription: '',
         FormCreatedTimestamp : '',
         FormModifiedTimestamp : '',
         CreatedByUser: '',
@@ -1741,9 +1745,29 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontSize = value
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.forEach(
           (element) => {
+            // Short Input
+            if(element.ComponentType === 'short-input'){
+              element.ComponentProperties.LabelFontSize = value
+            }
+            // Short Input
+            else if(element.ComponentType === 'long-input'){
+              element.ComponentProperties.LabelFontSize = value
+            }
             // Heading
-            if(element.ComponentType === 'heading'){
+            else if(element.ComponentType === 'heading'){
               element.ComponentProperties.HeadingFontSize = value
+            }
+            // Paragraph
+            else if(element.ComponentType === 'paragraph'){
+              element.ComponentProperties.FontSize = value
+            }
+            // Dropdown
+            else if(element.ComponentType === 'dropdown'){
+              element.ComponentProperties.LabelFontSize = value
+            }
+            // Choice
+            else if(element.ComponentType === 'choice'){
+              element.ComponentProperties.LabelFontSize = value
             }
           }
       )
@@ -1752,9 +1776,29 @@ export default {
       this.FormStructure.Sections[this.StateSelectSectionIndex].SectionProperties.FontColor = value
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.forEach(
           (element) => {
+            // Short Input
+            if(element.ComponentType === 'short-input'){
+              element.ComponentProperties.FontColor = value
+            }
+            // Short Input
+            else if(element.ComponentType === 'long-input'){
+              element.ComponentProperties.FontColor = value
+            }
             // Heading
             if(element.ComponentType === 'heading'){
               element.ComponentProperties.HeadingFontColor = value
+            }
+            // Paragraph
+            else if(element.ComponentType === 'paragraph'){
+              element.ComponentProperties.FontColor = value
+            }
+            // Dropdown
+            else if(element.ComponentType === 'dropdown'){
+              element.ComponentProperties.FontColor = value
+            }
+            // Choice
+            else if(element.ComponentType === 'choice'){
+              element.ComponentProperties.FontColor = value
             }
           }
       )
@@ -2149,6 +2193,8 @@ export default {
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Days
       }else if(value==='Months'){
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Months
+      }else if(value==='Priority'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Priority
       }
     },
     doPropDropdownFontColor(value) {
@@ -2226,6 +2272,8 @@ export default {
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Days
       }else if(value==='Months'){
         this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Months
+      }else if(value==='Priority'){
+        this.FormStructure.Sections[this.StateSelectSectionIndex].Components[this.StateSelectComponentIndex].ComponentProperties.Options = this.Priority
       }
     },
     doPropChoiceFontColor(value){
@@ -2577,7 +2625,17 @@ export default {
   font-family: var(--section--style--font--name);
   font-size: var(--section--style--font--size);
 }
-
+.with-line {
+  display: block;
+}
+.with-line:before, .with-line:after {
+  content: "";
+  display: inline-block;
+  border-top: 1px solid $grey3;
+  width: 10rem;
+  vertical-align: middle;
+  margin: 0 1em;
+}
 @media only screen and (min-width: 1024px) {
   .section__top__style{
     width: 768px;
@@ -2589,7 +2647,6 @@ export default {
     width: 768px;
   }
 }
-
 @media only screen and (max-width: 1023px) {
   .section__top__style{
     width: 640px;

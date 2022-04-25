@@ -33,7 +33,7 @@
     >
       <div class="dropdown__style" :style="widthStyle">
         <div class="dropdown__input__style tw-relative tw-flex tw-flex-row" @click="toggle()">
-          <input 
+          <input
               readonly 
               :placeholder="dataDropdown.Placeholder" 
               class="base-padding radius10px tw-w-full tw-border-2 tw-cursor-pointer"
@@ -41,7 +41,7 @@
               :style="[fontSizeStyle,widthStyle]" 
               :value="valueDropdown.Text"
           >
-          <Icon class="medium14 tw-absolute tw-right-3 tw-top-5 tw-transition tw-ease-in-out" icon="fluent:triangle-16-filled" :class="{expanded : visible}"/>
+          <Icon class="medium14 tw-absolute tw-right-3 tw-top-1/3 tw-transition tw-ease-in-out" icon="fluent:triangle-16-filled" :class="{expanded : visible}"/>
         </div>
         <div 
             class="bg-white radius10px tw-w-full tw-relative"
@@ -158,6 +158,7 @@ export default {
   width: var(--dropdown-width);
   .dropdown__input__style{
     input{
+      font-size: var(--font-size);
       &:focus{
         outline: 2px solid $blue5;
       }
