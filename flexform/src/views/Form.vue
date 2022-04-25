@@ -274,29 +274,69 @@ export default {
   },
   data() {
     return {
-      horizontalNavigationID: [{field:'All Form'},{field:'My Form'},{field:'Shared with me'}],
-      horizontalNavigationModal: [{field:'Setting'},{field:'Detail'}],
+      horizontalNavigationID: [{field: 'All Form'}, {field: 'My Form'}, {field: 'Shared with me'}],
+      horizontalNavigationModal: [{field: 'Setting'}, {field: 'Detail'}],
       namePage: 'All Form',
-      ModalPage:'Setting',
+      ModalPage: 'Setting',
       StateShowContentForWindowSize: true,
       TicketTemplate: false,
-      CreatedByUser:'Chanon Panarong',
+      CreatedByUser: 'Chanon Panarong',
       FormDescription: 'Form สำหรับเก็บข้อมูล',
       DateCreated: '24/4/2022',
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
-      FormStructure:[
-        { FormId: '',
-          CreatedByUser: '',
-          ModifiedByUser: '',
-          CreatedDate: '',
-          UseTemplate: ''
-        }
-      ]
+      FormStructure:
+          {
+            FormId: '',
+            FormName: 'Untitled Form',
+            FormDescription: '',
+            FormCreatedTimestamp: '',
+            FormModifiedTimestamp: '',
+            CreatedByUser: '',
+            ModifiedByUser: '',
+            UseTemplate: '',
+            ActionButton: {
+              ActionButtonName: 'Submit',
+              ActionButtonProperties: {
+                FontColor: 'white',
+                BackgroundColor: 'bg-blue5'
+              }
+            },
+            Sections: [
+              {
+                // อย่าลืม Gen ID
+                SectionId: '',
+                SectionName: 'Untitled Section 1',
+                SectionProperties: {
+                  FontName: 'Prompt',
+                  FontSize: 16,
+                  FontColor: 'grey10',
+                  BackgroundColor: 'bg-white'
+                },
+                Components: [
+                  {
+                    // อย่าลืม Gen ID
+                    ComponentId: '',
+                    ComponentType: 'heading',
+                    ComponentTemplate: false,
+                    ComponentProperties: {
+                      HeadingText: 'Untitled Section',
+                      SubheadingText: 'Descriptive Section',
+                      Alignment: 'left',
+                      HeadingFontColor: 'grey10',
+                      HeadingFontSize: 48,
+                      SubheadingFontColor: 'grey5',
+                      SubheadingFontSize: 16,
+                    }
+                  }
+                ]
+              }
+            ]
+          }
     }
   },
   watch:{
-    windowResize () {
+    windowResize (){
       this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
@@ -334,28 +374,61 @@ export default {
     async CreateBlankForm(){
       this.FormStructure.FormId = this.GenerateFormId() // set formid = ค่าที่ generate ออกมา
       const current = new Date() //แปลง string เป็น Date
-      this.FormStructure.CreatedDate = current.toISOString() // แปลงเป็นระบบ IsoString
+      this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
+      this.FormStructure.FormModifiedTimestamp = current.toISOString()
       this.FormStructure.UseTemplate = false
       this.FormStructure.CreatedByUser = localStorage.getItem('username')
       this.FormStructure.ModifiedByUser = localStorage.getItem('username')
-      console.log(this.FormStructure.FormId)
-      this.$router.push('/form/builder')
-      try{
-        const response = await axios.post('http://localhost:4000/api/User/Register', {
-          FormId:this.FormStructure.FormId,
-          CreatedDate :this.FormStructure.CreatedDate,
-          UseTemplate:this.FormStructure.UseTemplate,
-          CreatedByUser:this.FormStructure.CreatedByUser,
-          ModifiedByUser:this.FormStructure.ModifiedByUser,
-        })
-        if(response.status===200 && response.data) {
-          console.log(response.status)
-          console.log(response.data)
-          this.$router.push('/form/builder')
-        }
-      }catch (error){
-        console.log(error)
-      }
+      this.FormStructure.Sections[0].SectionId = this.GenerateFormId()
+      this.FormStructure.Sections[0].Components[0].ComponentId = this.GenerateFormId()
+      console.log(this.FormStructure.ActionButton.ActionButtonProperties.FontColor)
+      axios.post('http://localhost:4000/api/',this.FormStructure)
+          .then(response => {
+            console.log(response)
+            if(response.status===200 && response.data) {
+              console.log(response.status)
+              console.log(response.data)
+              this.$router.push('/form/builder')
+            }
+          })
+      // try{
+      //   const response = await axios.post('http://localhost:4000/api/User/Register', {
+      //     FormId:this.FormStructure.FormId,
+      //     FormCreatedTimestamp :this.FormStructure.FormCreatedTimestamp,
+      //     UseTemplate:this.FormStructure.UseTemplate,
+      //     CreatedByUser:this.FormStructure.CreatedByUser,
+      //     ModifiedByUser:this.FormStructure.ModifiedByUser,
+      //     FormName: this.FormStructure.FormName,
+      //     FormDescription: this.FormStructure.FormDescription,
+      //     FormModifiedTimestamp: this.FormStructure.FormModifiedTimestamp,
+      //     ActionButtonName: this.FormStructure.ActionButton.ActionButtonName,
+      //     FontColor: this.FormStructure.ActionButton.ActionButtonProperties.FontColor,
+      //     BackgroundColor: this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor,
+      //     SectionId:  this.FormStructure.Sections[0].SectionId,
+      //     SectionName:  this.FormStructure.Sections[0].SectionName,
+      //     FontName: this.FormStructure.Sections[0].SectionProperties.FontName,
+      //     FontSize:  this.FormStructure.Sections[0].SectionProperties.FontSize,
+      //     // FontColor: this.FormStructure.Sections[0].SectionProperties.FontColor,
+      //     // BackgroundColor: this.FormStructure.Sections[0].SectionProperties.BackgroundColor,
+      //     ComponentId: this.FormStructure.Sections[0].Components[0].ComponentId,
+      //     ComponentType: this.FormStructure.Sections[0].Components[0].ComponentType,
+      //     ComponentTemplate: this.FormStructure.Sections[0].Components[0].ComponentTemplate,
+      //     HeadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingText,
+      //     SubheadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingText,
+      //     Alignment: this.FormStructure.Sections[0].Components[0].ComponentProperties.Alignment,
+      //     HeadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontColor,
+      //     HeadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontSize,
+      //     SubheadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontColor,
+      //     SubheadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontSize,
+      //   })
+      //       if(response.status===200 && response.data) {
+      //         console.log(response.status)
+      //         console.log(response.data)
+      //         this.$router.push('/form/builder')
+      //       }
+      //     }catch (error){
+      //       console.log(error)
+      //     }
     },
     showFormDetail(){
       this.showFormDetailLayout = !this.showFormDetailLayout
