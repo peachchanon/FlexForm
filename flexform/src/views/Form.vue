@@ -388,7 +388,7 @@ export default {
             if(response.status===200 && response.data) {
               console.log(response.status)
               console.log(response.data)
-              this.$router.push('/form/builder')
+              this.$router.push('/form/builder') 
             }
           })
       // try{
