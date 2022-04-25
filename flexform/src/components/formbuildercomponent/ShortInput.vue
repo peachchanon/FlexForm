@@ -34,11 +34,12 @@
       <!-- Alphabetic Type -->
       <div
           v-if="dataShortInput.Validation==='Alphabetic'"
-          class="tw-w-full tw-flex tw-flex-col tw-items-end"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
           :class="{
-        'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
-        'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
+            'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
+            'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
           }"
+          :style="widthStyle"
       >
         <span class="light14 red5">Please fill out this field.</span>
       </div>
@@ -226,6 +227,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.widthBox {
+  width: var(--input-width);
+}
 .input__style {
   font-size: var(--font-size);
   width: var(--input-width);

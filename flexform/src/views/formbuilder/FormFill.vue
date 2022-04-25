@@ -217,7 +217,6 @@ export default {
         SectionId: String,
         ComponentId : String,
         ComponentValue: String,
-        },
         InputByUser: String,
         Timestamp : Date
       }*/
@@ -230,9 +229,12 @@ export default {
         '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.FontSize+'px',
       }
     },
+    timestamp() {
+      const date = new Date()
+      return date.toISOString()
+    },
     doShortInput(value) {
-      let d = new Date()
-      console.log(typeof d)
+      let timestamp = this.timestamp()
       let indexOfComponentId = this.FormInput.indexOf(
           this.FormInput.find(
               key => key.FormId===value.dataInput.FormId 
@@ -248,7 +250,7 @@ export default {
               ComponentId: value.dataInput.ComponentId,
               ComponentValue: value.value,
               InputByUser: '',
-              Timestamp : ''
+              Timestamp : timestamp
             }
         )
       }else {
