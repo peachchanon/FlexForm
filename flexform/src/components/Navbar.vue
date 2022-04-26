@@ -54,7 +54,10 @@
           -->
           <div class="button-red tw-flex tw-flex-row tw-items-center medium16" @click="doProfile('buttonLogout')">
             <Icon class="icon semibold24" icon="heroicons-outline:logout"/>
-            <span class="tw-mt-0.5 tw-ml-3">Logout</span>
+            <span class="tw-mt-0.5 tw-ml-3" @click="logout">Logout</span>
+          </div>
+          <div>
+            
           </div>
         </div>
       </div>
@@ -117,6 +120,11 @@ export default {
     },
     doSidebarExpand(){
       this.$emit('emitStateSidebarExpand',true)
+    },
+    logout(){
+      localStorage.removeItem('token')
+      localStorage.removeItem('role_id')
+      this.$router.replace('/')
     }
   }
 }
