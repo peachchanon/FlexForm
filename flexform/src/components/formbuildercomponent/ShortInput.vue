@@ -106,7 +106,7 @@
       <!-- URL Type -->
       <div
           v-if="dataShortInput.Validation==='URL'"
-          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox "
           :class="{
         'tw-visible': dataShortInput.Required || valueShortInput.Text.length<=0,
         'tw-invisible': !dataShortInput.Required || valueShortInput.Text.length>0
