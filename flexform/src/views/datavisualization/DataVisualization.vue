@@ -1,11 +1,11 @@
 ﻿<template>
 <layout-sidebar-navbar-vue>
   <template #content>
-    <div class="bg-grey1 tw-h-full">
+    <div class="bg-grey1 tw-h-full tw-my-5">
       <div class="base-margin tw-flex tw-flex-row tw-items-center">
         <base-button-back
             :callback="PreviousPage"></base-button-back>
-        <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
+        <Icon class="semibold24 icon blue10 tw-ml-1.5" icon="heroicons-outline:chart-pie"/>
         <span class="semibold24 blue10 tw-pl-1">Data Visualization</span>
       </div>
     </div>
@@ -13,110 +13,128 @@
       <div class="tw-ml-2 tw-mt-3">
       <SearchBar @callBackString="SearchInput"></SearchBar>
       </div>
+      
       <div class="tw-my-2">
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-7 tw-flex tw-flex-row tw-items-start tw-justify-between"
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-7 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
         @click="Graph1">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์</label>
+              <label class="tw-cursor-pointer medium16 blue10">จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between"
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
              @click="Graph2">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน ticket แต่ละประเภทที่ถูกสร้างขึ้นรายสัปดาห์</label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวน ticket แต่ละประเภทที่ถูกสร้างขึ้นรายสัปดาห์</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
-          <div class="tw-flex tw-flex-row">
-            <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
-              <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
-            </div>
-            <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน ticket แต่ละประเภทที่ถูกสร้างขึ้นรายเดือน</label>
-            </div>
-          </div>
-        </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between"
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
              @click="Graph3">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวนครั้งที่เกิด ticket ของแต่ละสถานที่</label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวน ticket แต่ละประเภทที่ถูกสร้างขึ้นรายเดือน</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph4">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน ticket ที่เกิดขึ้นของแต่ละบริษัท</label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวนครั้งที่เกิด ticket ของแต่ละสถานที่</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph5">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">ระยะเวลาเฉลี่ยในการจัดการกับ ticket แต่ละประเภท</label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวน ticket ที่เกิดขึ้นของแต่ละบริษัท</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph6">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน ticket ที่แต่ละแผนกได้รับ </label>
+              <label class="medium16 blue10 tw-cursor-pointer">ระยะเวลาเฉลี่ยในการจัดการกับ ticket แต่ละประเภท</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph7">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">จำนวน urgent ticket ที่แต่ละแผนกได้รับ </label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวน ticket ที่แต่ละแผนกได้รับ</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph8">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">ช่วงเวลาที่เกิด ticket </label>
+              <label class="medium16 blue10 tw-cursor-pointer">จำนวน urgent ticket ที่แต่ละแผนกได้รับ</label>
             </div>
           </div>
         </div>
-        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between">
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph9">
           <div class="tw-flex tw-flex-row">
             <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
               <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
-              <label class="medium16 blue10">สถานะของ Ticket รายเดือน</label>
+              <label class="medium16 blue10 tw-cursor-pointer">ช่วงเวลาที่มีการเปิด ticket</label>
             </div>
           </div>
         </div>
+        
+        <div class="cardlist bg-white base-padding base-shadow radius12px tw-mt-5 tw-flex tw-flex-row tw-items-start tw-justify-between tw-cursor-pointer"
+             @click="Graph10">
+          <div class="tw-flex tw-flex-row">
+            <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:chart-pie"/>
+            </div>
+            <div class="tw-flex tw-flex-col tw-items-center tw-mx-4 tw-my-3">
+              <label class="medium16 blue10 tw-cursor-pointer">สถานะของ Ticket รายเดือน</label>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </template>
@@ -170,15 +188,81 @@ export default {
       this.GraphNo = 'Graph1'
       this.$router.push({
         name:'SelectGraph', 
-        params: {currentGraphNo: this.GraphNo}})
-      
+        params: {currentGraphNo: this.GraphNo}
+      })
     },
     Graph2(){
       console.log('Graph2')
+      this.GraphNo = 'Graph2'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
     },
     Graph3(){
       console.log('Graph3')
-    }
+      this.GraphNo = 'Graph3'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph4(){
+      console.log('Graph4')
+      this.GraphNo = 'Graph4'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph5(){
+      console.log('Graph5')
+      this.GraphNo = 'Graph5'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph6(){
+      console.log('Graph6')
+      this.GraphNo = 'Graph6'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph7(){
+      console.log('Graph7')
+      this.GraphNo = 'Graph7'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph8(){
+      console.log('Graph8')
+      this.GraphNo = 'Graph8'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph9(){
+      console.log('Graph9')
+      this.GraphNo = 'Graph9'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
+    Graph10(){
+      console.log('Graph10')
+      this.GraphNo = 'Graph10'
+      this.$router.push({
+        name:'SelectGraph',
+        params: {currentGraphNo: this.GraphNo}
+      })
+    },
   }
 }
 </script>
