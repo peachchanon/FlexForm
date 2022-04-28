@@ -58,7 +58,15 @@
                 </div>
                 <!-- Long Input Component -->
                 <div v-if="componentElement.ComponentType === 'long-input'" class="tw-w-full">
-                  <long-input :dataLongInput="componentElement.ComponentProperties"></long-input>
+                  <long-input 
+                      :dataLongInput="componentElement.ComponentProperties"
+                      :dataInput="{
+                        FormId: FormStructure.FormId,
+                        SectionId: FormStructure.Sections[indexSection].SectionId,
+                        ComponentId: FormStructure.Sections[indexSection].Components[componentIndex].ComponentId,
+                      }"
+                      @valueLongInput="doLongInput"
+                  ></long-input>
                 </div>
                 <!-- Paragraph Component -->
                 <div v-if="componentElement.ComponentType === 'paragraph'" class="tw-w-full">
@@ -293,12 +301,17 @@ export default {
           )
           this.FormStructure.Sections[indexSection].Components.forEach(
               (elementComponent, indexComponent)=>{
-                this.FormInput.Sections[indexSection].Components.push(
-                    {
-                      ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
-                      ComponentValue: ''
-                    }
-                )
+                if(
+                    elementComponent.ComponentType !== 'heading' 
+                    || elementComponent.ComponentType !== 'paragraph'
+                ){
+                  this.FormInput.Sections[indexSection].Components.push(
+                      {
+                        ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
+                        ComponentValue: ''
+                      }
+                  )
+                }
               }
           )
         }
@@ -312,6 +325,11 @@ export default {
       }
     },
     doShortInput(item) {
+      let date = new Date()
+      this.FormInput.Timestamp = date.toISOString()
+      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
+    },
+    doLongInput(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
