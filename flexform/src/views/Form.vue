@@ -82,12 +82,12 @@
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                   <div class="tw-flex tw-flex-row">
-                    <div v-if= "TicketTemplate === false" class="bg-green1 base-padding radius12px" style="height: fit-content">
+                    <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out tw-cursor-pointer hover:tw-bg-green3" style="height: fit-content" @click="SelectForm">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                     </div>
                     <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <label class="medium16 blue10">{{ FormData.formName }}</label>
+                      <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm">{{ FormData.formName }}</label>
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                       <label class="medium16 grey5">Created By</label>
@@ -286,64 +286,7 @@ export default {
       DateCreated: '24/4/2022',
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
-      FormStructure:{
-        FormId: '',
-        TicketId: '',
-        FormName: 'Untitled Form',
-        FormDescriptions: '',
-        FormCreatedTimestamp: '2022-04-24T08:27:21.548Z',
-        FormModifiedTimestamp: '2022-04-24T08:27:21.548Z',
-        CreatedByUser: '',
-        ModifiedByUser: '',
-        UseTemplate: false,
-        ActionButton: {
-          ActionButtonName: 'Submit',
-          ActionButtonProperties: {
-            FontColor: 'white',
-            BackgroundColor: 'bg-blue5'
-          }
-        },
-        Sections: [
-          {
-            // อย่าลืม Gen ID
-            SectionId: '',
-            SectionName: 'Untitled Section 1',
-            SectionIndex: 1,
-            SectionProperties: {
-              SectionFontName: 'Prompt',
-              SectionFontSize: '16',
-              SectionFontColor: 'grey10',
-              SectionBackgroundColor: 'bg-white'
-            },
-            Components: [
-              {
-                // อย่าลืม Gen ID
-                ComponentId: '',
-                ComponentIndex: 2,
-                ComponentLabel: '',
-                ComponentType: 'heading',
-                ComponentTemplate: false,
-                ComponentProperties: {
-                  HeadingText: 'Untitled Section',
-                  SubheadingText: 'Descriptive Section',
-                  Alignment: 'left',
-                  HeadingFontColor: 'grey10',
-                  HeadingFontSize: '48',
-                  SubheadingFontColor: 'grey5',
-                  SubheadingFontSize: '16',
-                  Validation: {
-                    Day: '',
-                    Month: '',
-                    Gender: '',
-                    Priority: '',
-                    Status: ''
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
+      CreateFormBtnClick: true,
     }
   },
   watch:{
@@ -396,71 +339,16 @@ export default {
       )
     },
     async CreateBlankForm(){
-      this.FormStructure.FormId = this.GenerateFormId() // set formid = ค่าที่ generate ออกมา
-      const current = new Date() //แปลง string เป็น Date
-      this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
-      this.FormStructure.FormModifiedTimestamp = current.toISOString()
-      // this.FormStructure.UseTemplate = false
-      this.FormStructure.CreatedByUser = localStorage.getItem('username')
-      this.FormStructure.ModifiedByUser = localStorage.getItem('username')
-      this.FormStructure.Sections[0].SectionId = this.GenerateFormId()
-      this.FormStructure.Sections[0].Components[0].ComponentId = this.GenerateFormId()
-      axios.post('http://localhost:4000/api/Flexform/CreateForm',this.FormStructure)
-          .then(response => {
-            console.log(response.status)
-            if(response.status===200 && response.data) {
-              console.log(response.status)
-              console.log(response.data)
-              this.$router.push('/form/builder')
-            }
-          })
-
-      // try{
-      //   const response = await axios.post('http://localhost:4000/api/Flexform/CreateForm', {
-      // FormId:this.FormStructure.FormId,
-      // TicketId:this.FormStructure.TicketId,
-      // FormName: this.FormStructure.FormName,
-      // FormCreatedTimestamp :this.FormStructure.FormCreatedTimestamp,
-      // FormModifiedTimestamp: this.FormStructure.FormModifiedTimestamp,
-      // UseTemplate:this.FormStructure.UseTemplate,
-      // CreatedByUser:this.FormStructure.CreatedByUser,
-      // ModifiedByUser:this.FormStructure.ModifiedByUser,
-      // FormDescriptions: this.FormStructure.FormDescriptions,
-      // ActionButtonName: this.FormStructure.ActionButton.ActionButtonName,
-      // FontColor: this.FormStructure.ActionButton.ActionButtonProperties.FontColor,
-      // BackgroundColor: this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor,
-      // SectionId:  this.FormStructure.Sections[0].SectionId,
-      // SectionName:  this.FormStructure.Sections[0].SectionName,
-      // SectionIndex:  this.FormStructure.Sections[0].SectionIndex,
-      // SectionFontName: this.FormStructure.Sections[0].SectionProperties.SectionFontName,
-      // SectionFontSize:  this.FormStructure.Sections[0].SectionProperties.SectionFontSize,
-      // SectionFontColor: this.FormStructure.Sections[0].SectionProperties.SectionFontColor,
-      // SectionBackgroundColor: this.FormStructure.Sections[0].SectionProperties.SectionBackgroundColor,
-      // ComponentId: this.FormStructure.Sections[0].Components[0].ComponentId,
-      // ComponentIndex: this.FormStructure.Sections[0].Components[0].ComponentIndex,
-      // ComponentType: this.FormStructure.Sections[0].Components[0].ComponentType,
-      // ComponentTemplate: this.FormStructure.Sections[0].Components[0].ComponentTemplate,
-      // HeadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingText,
-      // SubheadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingText,
-      // Alignment: this.FormStructure.Sections[0].Components[0].ComponentProperties.Alignment,
-      // HeadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontColor,
-      // HeadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontSize,
-      // SubheadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontColor,
-      // SubheadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontSize,
-      // Day: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Day,
-      // Month: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Month,
-      // Gender: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Gender,
-      // Priority: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Priority,
-      // Status: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Status
-      //   })
-      //   if(response.status===200 && response.data) {
-      //     console.log(response.status)
-      //     console.log(response.data)
-      //     this.$router.push('/form/builder')
-      //   }
-      // }catch (error){
-      //   console.log(error)
-      // }
+      this.$router.push({
+        name: 'Builder',
+        params: { CreateForm: this.CreateFormBtnClick}})
+    },
+    async SelectForm(){
+      // this.CreateFormBtnClick = false
+      // console.log("click")
+      // this.$router.push({
+      //   name: 'Builder',
+      //   params: { CreateForm: this.CreateFormBtnClick}})
     },
     showFormDetail(){
       this.showFormDetailLayout = !this.showFormDetailLayout
