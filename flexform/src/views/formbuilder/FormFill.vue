@@ -31,8 +31,8 @@
           <div
               class="section__style"
               :class="[
-                    FormStructure.Sections[indexSection].SectionProperties.FontColor,
-                    FormStructure.Sections[indexSection].SectionProperties.BackgroundColor
+                    FormStructure.Sections[indexSection].SectionProperties.SectionFontColor,
+                    FormStructure.Sections[indexSection].SectionProperties.SectionBackgroundColor
                     ]"
               :style="doSectionStyleConfig(indexSection)">
             <!-- Blank data -->
@@ -86,11 +86,13 @@
           </div>
         </div>
         <div class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end tw-mb-10">
-          <button-section
-              :propDataName="FormStructure.ActionButton.ActionButtonName"
-              :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
-              :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
-          ></button-section>
+          <div @click="doActionButton">
+            <button-section
+                :propDataName="FormStructure.ActionButton.ActionButtonName"
+                :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+            ></button-section>
+          </div>
         </div>
       </div>
     </div>
@@ -155,10 +157,10 @@ export default {
             "SectionId":"Sqsqs",
             "SectionName":"Untitled Section 1",
             "SectionProperties":{
-              "FontName":"Prompt",
-              "FontSize":16,
-              "FontColor":"grey10",
-              "BackgroundColor":"bg-white"
+              "SectionFontName":"Prompt",
+              "SectionFontSize":16,
+              "SectionFontColor":"grey10",
+              "SectionBackgroundColor":"bg-white"
             },
             "Components":[
               {
@@ -301,41 +303,21 @@ export default {
           )
         }
     )
-    console.log(this.FormInput)
   },
   methods: {
     doSectionStyleConfig(indexSection) {
       return {
-        '--section--style--font--name': this.FormStructure.Sections[indexSection].SectionProperties.FontName,
-        '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.FontSize+'px',
+        '--section--style--font--name': this.FormStructure.Sections[indexSection].SectionProperties.SectionFontName,
+        '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.SectionFontSize+'px',
       }
     },
-    doShortInput(value) {
-      let timestamp = this.timestamp()
-      console.log(value,timestamp)
-      /*
-      let indexOfComponentId = this.FormInput.indexOf(
-          this.FormInput.find(
-              key => key.FormId===value.dataInput.FormId 
-              && key.SectionId===value.dataInput.SectionId
-              && key.ComponentId===value.dataInput.ComponentId
-          )
-      )
-      if(indexOfComponentId === -1){
-        this.FormInput.push(
-            {
-              FormId: value.dataInput.FormId,
-              SectionId: value.dataInput.SectionId,
-              ComponentId: value.dataInput.ComponentId,
-              ComponentValue: value.value,
-              InputByUser: '',
-              Timestamp : timestamp
-            }
-        )
-      }else {
-        this.FormInput[indexOfComponentId].ComponentValue = value.value
-      }*/
-      
+    doShortInput(item) {
+      let date = new Date()
+      this.FormInput.Timestamp = date.toISOString()
+      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
+    },
+    doActionButton() {
+      console.log(this.FormInput)
     }
   }
 }

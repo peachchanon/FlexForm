@@ -49,7 +49,7 @@ export default {
       ReadOnly: Boolean,
       SpreadToColumns: Boolean,
       PredefinedOptions: String,
-      Options: String,
+      Options: Array,
       FontColor: String,
       BorderColor: String,
       LabelFontSize: Number,
