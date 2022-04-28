@@ -1345,6 +1345,9 @@ export default {
     ChoiceComponent,
     ButtonSection,
   },
+  props: {
+    CreateForm: Boolean,
+  },
   data() {
     return {
       // Window Size
@@ -1368,6 +1371,7 @@ export default {
       Days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
       Months:["January","February","March","April","May","June","July","August","September","October","November","December"],
       Priority:["High","Medium","Low"],
+      FormData: [],
       // Form Structure
       FormStructure:{
         FormId: '',
@@ -1391,10 +1395,9 @@ export default {
             // อย่าลืม Gen ID
             SectionId: '',
             SectionName: 'Untitled Section 1',
-            SectionIndex: 1,
             SectionProperties: {
               SectionFontName: 'Prompt',
-              SectionFontSize: '16',
+              SectionFontSize: 16,
               SectionFontColor: 'grey10',
               SectionBackgroundColor: 'bg-white'
             },
@@ -1402,8 +1405,6 @@ export default {
               {
                 // อย่าลืม Gen ID
                 ComponentId: '',
-                ComponentIndex: 2,
-                ComponentLabel: '',
                 ComponentType: 'heading',
                 ComponentTemplate: false,
                 ComponentProperties: {
@@ -1411,16 +1412,27 @@ export default {
                   SubheadingText: 'Descriptive Section',
                   Alignment: 'left',
                   HeadingFontColor: 'grey10',
-                  HeadingFontSize: '48',
+                  HeadingFontSize: 48,
                   SubheadingFontColor: 'grey5',
-                  SubheadingFontSize: '16',
-                  Validation: {
-                    Day: '',
-                    Month: '',
-                    Gender: '',
-                    Priority: '',
-                    Status: ''
-                  }
+                  SubheadingFontSize: 16,
+                  LabelText: 'Type a question',
+                  SubLabelText: 'Type a description',
+                  Required: false,
+                  Placeholder: 'Enter',
+                  FixWidth: true,
+                  Width: 200,
+                  ReadOnly: false,
+                  CharacterLimit: true,
+                  CharacterLimitValue: 1000,
+                  FontColor: 'grey10',
+                  InputBgColor: 'bg-grey1',
+                  BorderColor: 'white',
+                  LabelFontSize: 16,
+                  Validation: '',
+                  PredefinedOptions: '',
+                  Options: [],
+                  MultipleChoice: false,
+                  SpreadToColumns: false
                 }
               }
             ]
@@ -1497,21 +1509,28 @@ export default {
     },
     // Save formstructure to database
     async SaveFormStructure(){
-      const current = new Date() //แปลง string เป็น Date
-      this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
-      this.FormStructure.FormModifiedTimestamp = current.toISOString()
-      // this.FormStructure.UseTemplate = false
-      this.FormStructure.CreatedByUser = localStorage.getItem('username')
-      this.FormStructure.ModifiedByUser = localStorage.getItem('username')
-      axios.post('http://localhost:4000/api/Flexform/CreateForm',this.FormStructure)
-          .then(response => {
-            console.log(response.status)
-            if(response.status===200 && response.data) {
+      console.log(this.CreateForm)
+      if(this.CreateForm === true) {
+        this.FormStructure.FormId = this.uuidv4()
+        this.FormStructure.Sections[0].SectionId = this.uuidv4()
+        this.FormStructure.Sections[0].Components[0].ComponentId = this.uuidv4()
+        const current = new Date() //แปลง string เป็น Date
+        this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
+        this.FormStructure.FormModifiedTimestamp = current.toISOString()
+        // this.FormStructure.UseTemplate = false
+        this.FormStructure.CreatedByUser = localStorage.getItem('username')
+        this.FormStructure.ModifiedByUser = localStorage.getItem('username')
+        console.log(this.FormStructure)
+        axios.post('http://localhost:4000/api/Flexform/CreateForm', this.FormStructure)
+            .then(response => {
               console.log(response.status)
-              console.log(response.data)
-              this.$router.push('/form')
-            }
-          })
+              if (response.status === 200 && response.data) {
+                console.log(response.status)
+                console.log(response.data)
+                this.$router.push('/form')
+              }
+            })
+      }
     },
     // Click Button
     doButtonOnBlueNavigation(nameButton) {
@@ -1603,13 +1622,33 @@ export default {
                     HeadingFontSize: 48,
                     SubheadingFontColor: 'grey5',
                     SubheadingFontSize: 16,
+                    LabelText: '',
+                    SubLabelText: '',
+                    Required: false,
+                    Placeholder: '',
+                    FixWidth: false,
+                    Width: 0,
+                    ReadOnly: false,
+                    CharacterLimit: false,
+                    CharacterLimitValue: 0,
+                    FontColor: '',
+                    InputBgColor: '',
+                    BorderColor: '',
+                    LabelFontSize: 0,
+                    Validation: '',
+                    PredefinedOptions: '',
+                    Options: [],
+                    MultipleChoice: false,
+                    SpreadToColumns: false
                   }
                 },
               ]
-            }
+      }
         )
+        console.log(this.FormStructure)
       }
     },
+    
     // Sections Detail
     doRenameSection(index,valueRename){
       this.FormStructure.Sections[index].SectionName = valueRename
@@ -2384,11 +2423,22 @@ export default {
               InputBgColor: 'bg-grey1',
               BorderColor: 'white',
               LabelFontSize: 16,
+              HeadingText: '',
+              SubheadingText: '',
+              HeadingFontColor: '',
+              HeadingFontSize: 0,
+              SubheadingFontColor: '',
+              SubheadingFontSize: 0,
+              PredefinedOptions: '',
+              Options: [],
+              MultipleChoice: false,
+              SpreadToColumns: false
             }
           }
       )
       this.StateSelectComponentIndex = this.StateSelectComponentIndex+1
     },
+    
     addLongInputComponent(){
       this.FormStructure.Sections[this.StateSelectSectionIndex].Components.splice(
           this.StateSelectComponentIndex+1,0,
@@ -2411,6 +2461,17 @@ export default {
               InputBgColor: 'bg-grey1',
               BorderColor: 'white',
               LabelFontSize: 16,
+              Validation: '',
+              HeadingText: '',
+              SubheadingText: '',
+              HeadingFontColor: '',
+              HeadingFontSize: 0,
+              SubheadingFontColor: '',
+              SubheadingFontSize: 0,
+              PredefinedOptions: '',
+              Options: [],
+              MultipleChoice: false,
+              SpreadToColumns: false
             }
           }
       )
@@ -2430,6 +2491,26 @@ export default {
               Width: 500,
               FontColor: 'grey10',
               FontSize: 16,
+              SubLabelText: '',
+              Required: false,
+              Placeholder: '',
+              ReadOnly: false,
+              CharacterLimit: true,
+              CharacterLimitValue: 0,
+              InputBgColor: '',
+              BorderColor: '',
+              LabelFontSize: 0,
+              Validation: '',
+              HeadingText: '',
+              SubheadingText: '',
+              HeadingFontColor: '',
+              HeadingFontSize: 0,
+              SubheadingFontColor: '',
+              SubheadingFontSize: 0,
+              PredefinedOptions: '',
+              Options: [],
+              MultipleChoice: false,
+              SpreadToColumns: false
             }
           }
       )
@@ -2450,6 +2531,22 @@ export default {
               HeadingFontSize: 48,
               SubheadingFontColor: 'grey5',
               SubheadingFontSize: 16,
+              SubLabelText: '',
+              Required: false,
+              Placeholder: '',
+              ReadOnly: false,
+              FontColor: '',
+              CharacterLimit: true,
+              LabelText: '',
+              CharacterLimitValue: 0,
+              InputBgColor: '',
+              BorderColor: '',
+              LabelFontSize: 0,
+              Validation: '',
+              PredefinedOptions: '',
+              Options: [],
+              MultipleChoice: false,
+              SpreadToColumns: false
             }
           }
       )
@@ -2477,6 +2574,17 @@ export default {
               InputBgColor: 'bg-grey1',
               BorderColor: 'white',
               LabelFontSize: 16,
+              HeadingText: '',
+              SubheadingText: '',
+              HeadingFontColor: '',
+              HeadingFontSize: 0,
+              SubheadingFontColor: '',
+              SubheadingFontSize: 0,
+              CharacterLimit: true,
+              CharacterLimitValue: 0,
+              Validation: '',
+              MultipleChoice: false,
+              SpreadToColumns: false
             }
           }
       )
@@ -2501,6 +2609,20 @@ export default {
               FontColor: 'grey10',
               BorderColor: 'blue5',
               LabelFontSize: 16,
+              Alignment: '',
+              Placeholder: '',
+              FixWidth: true,
+              Width: 200,
+              InputBgColor: '',
+              HeadingText: '',
+              SubheadingText: '',
+              HeadingFontColor: '',
+              HeadingFontSize: 0,
+              SubheadingFontColor: '',
+              SubheadingFontSize: 0,
+              CharacterLimit: true,
+              CharacterLimitValue: 0,
+              Validation: ''
             }
           }
       )
