@@ -53,7 +53,7 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard',
-      // requireAuthen: true
+      requireAuthen: true
     }
   },
   {
@@ -103,13 +103,14 @@ const routes = [
     }
   },
   {
-    path: '/form/builder',
+    path: '/form/builder/',
     name: 'Builder',
     component: FormBuilder,
     meta: {
       title: 'Form Builder',
       // requireAuthen: true,
-    }
+    },
+    props: true
   },
   {
     path: '/DataVisualization',
