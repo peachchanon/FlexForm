@@ -19,6 +19,7 @@
           <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:cursor-click"/>
           <span class="medium16" v-if="StateShowContentForWindowSize">Move</span>
         </div>
+        <!--
         <div
             class="tw-mx-2 blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
             @click="doButton('duplicate')"
@@ -26,6 +27,7 @@
           <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:document-duplicate"/>
           <span class="medium16" v-if="StateShowContentForWindowSize">Duplicate</span>
         </div>
+        -->
         <div
             class="tw-mx-2 red5 hover:tw-text-red4 tw-cursor-pointer tw-transition tw-ease-in tw-flex tw-flex-row"
             @click="doShowDeleteModal"
