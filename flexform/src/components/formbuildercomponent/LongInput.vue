@@ -32,7 +32,6 @@
         }"
     >
       <div
-          v-if="dataLongInput.Validation==='URL'"
           class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox "
           :class="{
         'tw-visible': dataLongInput.Required || valueLongInput.Text.length<=0,
@@ -44,7 +43,7 @@
       </div>
       <textarea
           :placeholder="dataLongInput.Placeholder"
-          :class="[dataLongInput.FontColor,dataLongInput.InputBgColor,'tw-border-'+dataLongInput.BorderColor]"
+          :class="[dataLongInput.FontColor,dataLongInput.InputBgColor,borderStyle]"
           class="input__style base-padding radius10px tw-w-full tw-border-2"
           :style="[fontSizeStyle,widthStyle]"
           style="height: 100px"
@@ -89,6 +88,11 @@ export default {
       BorderColor: String,
       LabelFontSize: Number,
     },
+    dataInput:{
+      FormId: String,
+      SectionId: String,
+      ComponentId: String,
+    }
   },
   emits: ['valueLongInput'],
   data() {
@@ -114,11 +118,27 @@ export default {
           '--input-width': '100%',
         }
       }
+    },
+    borderStyle() {
+      if(this.dataLongInput.Required) {
+        // String
+        if(this.valueLongInput.Text.length<=0)
+          return 'tw-border-red5'
+        else if(this.valueLongInput.Text.length>0)
+          return 'tw-border-'+this.dataLongInput.BorderColor
+        // Number
+        else if(this.valueLongInput.Number.length<=0)
+          return 'tw-border-red5'
+        else
+          return 'tw-border-'+this.dataLongInput.BorderColor
+      }
+      else
+        return 'tw-border-'+this.dataLongInput.BorderColor
     }
   },
   methods: {
     doInput() {
-      this.$emit('valueLongInput',this.valueLongInput.Text)
+      this.$emit('valueLongInput',{value:this.valueLongInput.Text,dataInput:this.dataInput})
     }
   }
 }

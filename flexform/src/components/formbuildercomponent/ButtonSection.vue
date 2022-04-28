@@ -2,7 +2,8 @@
   <button 
       class="medium16 tw-pt-2 tw-pb-2 tw-pl-4 tw-pr-4 radius12px tw-cursor-pointer tw-text-center base-shadow"
       :class="[propDataFontColor,propDataBgColor]"
-      style="width: fit-content">
+      style="width: fit-content"
+  >
     <span>{{propDataName}}</span>
   </button>
 </template>
@@ -13,7 +14,7 @@ export default {
   props: {
     propDataName: String,
     propDataFontColor: String,
-    propDataBgColor: String
+    propDataBgColor: String,
   },
 }
 </script>
