@@ -16,6 +16,7 @@
         :radioBdColor="dataChoice.BorderColor"
         :radioFlexDirection="doColumn"
         :radioDisabled="dataChoice.ReadOnly"
+        @callbackOption="doClickOption"
     ></radio-component>
     <!-- Choice -->
     <checkbox-component
@@ -23,6 +24,7 @@
         :list="doOptions"
         :fontColor="dataChoice.FontColor"
         :disabled="dataChoice.ReadOnly"
+        @callbackOption="doClickOption"
     ></checkbox-component>
     <div class="tw-mb-2 tw-w-full tw-flex tw-flex-col tw-items-end">
       <span class="light14 grey5">{{dataChoice.SubLabelText}}</span>
@@ -54,12 +56,22 @@ export default {
       BorderColor: String,
       LabelFontSize: Number,
     },
+    dataInput:{
+      FormId: String,
+      SectionId: String,
+      ComponentId: String,
+    }
   },
+  emits: ['valueChoice',],
   data() {
     return {
       Gender:['Male','Female'],
       Days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
       Months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+      valueChoice: {
+        Text: '',
+        Index: Number,
+      }
     }
   },
   computed: {
@@ -76,6 +88,15 @@ export default {
         return 'column'
       }
     },
+  },
+  methods: {
+    doClickOption(element){
+      if(!this.dataChoice.MultipleChoice){
+        this.$emit('valueChoice',{value:[element.value],index:element.index,dataInput:this.dataInput})
+      }else {
+        this.$emit('valueChoice',{value:element,dataInput:this.dataInput})
+      }
+    }
   }
 }
 </script>
