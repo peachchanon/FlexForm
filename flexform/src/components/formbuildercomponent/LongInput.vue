@@ -31,6 +31,17 @@
       'tw-w-full': dataLongInput.Alignment === 'top'
         }"
     >
+      <div
+          v-if="dataLongInput.Validation==='URL'"
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox "
+          :class="{
+        'tw-visible': dataLongInput.Required || valueLongInput.Text.length<=0,
+        'tw-invisible': !dataLongInput.Required || valueLongInput.Text.length>0
+          }"
+          :style="widthStyle"
+      >
+        <span class="light14 red5">Please fill out this field.</span>
+      </div>
       <textarea
           :placeholder="dataLongInput.Placeholder"
           :class="[dataLongInput.FontColor,dataLongInput.InputBgColor,'tw-border-'+dataLongInput.BorderColor]"
@@ -114,6 +125,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.widthBox {
+  width: var(--input-width);
+}
 .input__style {
   font-size: var(--font-size);
   width: var(--input-width)
