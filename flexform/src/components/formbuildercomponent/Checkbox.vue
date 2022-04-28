@@ -8,6 +8,7 @@
           :checked="item.checked"
           :disabled="disabled"
           :fontSize="item.fontsize"
+          @change="onChangeOption(id)"
       >{{item.title}}
       </checkbox>
     </div>
@@ -34,8 +35,11 @@ export default {
       default: ""
     },
   },
+  emits: ['callbackOption'],
   data() {
-    return {}
+    return {
+      optionList: []
+    }
   },
   computed: {
     cssCheckboxDisplay(){
@@ -45,9 +49,32 @@ export default {
         }
     }
       else
-        return{
-        
+        return{}
+    }
+  },
+  mounted() {
+    this.list.forEach(
+        (option,index) => {
+          this.optionList.push(
+              {
+                index: index,
+                value: option.title,
+                checked: false
+              }
+          )
         }
+    )
+  },
+  methods: {
+    onChangeOption(index) {
+      this.optionList[index].checked = true
+      let newOptions = new Array()
+      this.optionList.filter(item => item.checked).forEach(
+          (obj) => {
+            newOptions.push(obj.value)
+          }
+      )
+      this.$emit('callbackOption',newOptions)
     }
   }
 }

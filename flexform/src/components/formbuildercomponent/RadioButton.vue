@@ -10,7 +10,7 @@
               :style="cssRadioButton"
               name="option-selected"
               :value="option.value"
-              @change="onChangeOption(option.id, $event)"
+              @change="onChangeOption(option.id, $event, index)"
               :disabled="radioDisabled"
           >
         </div>
@@ -47,12 +47,13 @@ export default {
       default: "column"
     },
   },
+  emits: ['callbackOption'],
   data() {
     return {
     }
   },
   methods: {
-    onChangeOption(id, $event) {
+    onChangeOption(id, $event, index) {
       this.option.forEach(option => {
         if (option.id === id) {
           this.$set(option, 'value', $event.target.checked);
@@ -60,6 +61,7 @@ export default {
           this.$set(option, 'value', false)
         }
       })
+      this.$emit('callbackOption',{value:this.option[index].title,index:index})
     }
   },
   computed: {

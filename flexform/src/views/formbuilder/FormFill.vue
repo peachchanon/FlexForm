@@ -78,11 +78,27 @@
                 </div>
                 <!-- Dropdown Component -->
                 <div v-if="componentElement.ComponentType === 'dropdown'" class="tw-w-full">
-                  <dropdown-component :dataDropdown="componentElement.ComponentProperties"></dropdown-component>
+                  <dropdown-component 
+                      :dataDropdown="componentElement.ComponentProperties"
+                      :dataInput="{
+                        FormId: FormStructure.FormId,
+                        SectionId: FormStructure.Sections[indexSection].SectionId,
+                        ComponentId: FormStructure.Sections[indexSection].Components[componentIndex].ComponentId,
+                      }"
+                      @valueDropdown="doDropdown"
+                  ></dropdown-component>
                 </div>
                 <!-- Choice Component -->
                 <div v-if="componentElement.ComponentType === 'choice'" class="tw-w-full">
-                  <choice-component :dataChoice="componentElement.ComponentProperties" ></choice-component>
+                  <choice-component 
+                      :dataChoice="componentElement.ComponentProperties"
+                      :dataInput="{
+                        FormId: FormStructure.FormId,
+                        SectionId: FormStructure.Sections[indexSection].SectionId,
+                        ComponentId: FormStructure.Sections[indexSection].Components[componentIndex].ComponentId,
+                      }"
+                      @valueChoice="doChoice"
+                  ></choice-component>
                 </div>
               </div>
             </div>
@@ -229,7 +245,7 @@ export default {
                 }
               },
               {
-                "ComponentId":"3e4b7e02-b122-4337-b49a-29b72cb914d0",
+                "ComponentId":"9f6034cf-27dc-4f94-8a9a-9080f61c4267",
                 "ComponentType":"dropdown",
                 "ComponentTemplate":false,
                 "ComponentProperties":{
@@ -243,7 +259,9 @@ export default {
                   "ReadOnly":false,
                   "PredefinedOptions":"None",
                   "Options":[
-
+                    "Text 1",
+                    "Text 2",
+                    "Text 3"
                   ],
                   "FontColor":"grey10",
                   "InputBgColor":"bg-grey1",
@@ -260,6 +278,28 @@ export default {
                   "LabelText":"Type a question",
                   "SubLabelText":"Type a description",
                   "Required":true,
+                  "ReadOnly":false,
+                  "SpreadToColumns":false,
+                  "PredefinedOptions":"None",
+                  "Options":[
+                    "Choice 1",
+                    "Choice 2",
+                    "Choice 3"
+                  ],
+                  "FontColor":"grey10",
+                  "BorderColor":"blue5",
+                  "LabelFontSize":16
+                }
+              },
+              {
+                "ComponentId":"23baff26-fa1b-4964-bf60-f53d294b5284",
+                "ComponentType":"choice",
+                "ComponentTemplate":false,
+                "ComponentProperties":{
+                  "MultipleChoice":true,
+                  "LabelText":"Type a question",
+                  "SubLabelText":"Type a description",
+                  "Required":false,
                   "ReadOnly":false,
                   "SpreadToColumns":false,
                   "PredefinedOptions":"None",
@@ -303,12 +343,12 @@ export default {
               (elementComponent, indexComponent)=>{
                 if(
                     elementComponent.ComponentType !== 'heading' 
-                    || elementComponent.ComponentType !== 'paragraph'
+                    && elementComponent.ComponentType !== 'paragraph'
                 ){
                   this.FormInput.Sections[indexSection].Components.push(
                       {
                         ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
-                        ComponentValue: ''
+                        ComponentValue: []
                       }
                   )
                 }
@@ -327,9 +367,25 @@ export default {
     doShortInput(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
+      else
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
     },
     doLongInput(item) {
+      let date = new Date()
+      this.FormInput.Timestamp = date.toISOString()
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
+      else
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
+    },
+    doDropdown(item) {
+      let date = new Date()
+      this.FormInput.Timestamp = date.toISOString()
+      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
+    },
+    doChoice(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value

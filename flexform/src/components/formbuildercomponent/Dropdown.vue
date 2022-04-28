@@ -32,12 +32,22 @@
         }"
     >
       <div class="dropdown__style" :style="widthStyle">
+        <div
+            class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox "
+            :class="{
+        'tw-visible': dataDropdown.Required || valueDropdown.Text==='',
+        'tw-invisible': !dataDropdown.Required || valueDropdown.Text!==''
+          }"
+            :style="widthStyle"
+        >
+          <span class="light14 red5">Please fill out this field.</span>
+        </div>
         <div class="dropdown__input__style tw-relative tw-flex tw-flex-row" @click="toggle()">
           <input
               readonly 
               :placeholder="dataDropdown.Placeholder" 
               class="base-padding radius10px tw-w-full tw-border-2 tw-cursor-pointer"
-              :class="[dataDropdown.FontColor,dataDropdown.InputBgColor,'tw-border-'+dataDropdown.BorderColor]"
+              :class="[dataDropdown.FontColor,dataDropdown.InputBgColor,borderStyle]"
               :style="[fontSizeStyle,widthStyle]" 
               :value="valueDropdown.Text"
           >
@@ -45,6 +55,7 @@
         </div>
         <div 
             class="bg-white radius10px tw-w-full tw-relative"
+            style="z-index: 1"
             :class="{hidden : !visible, visible}"
         >
           <ul v-if="dataDropdown.Options.length != 0" class="bg-white radius10px base-shadow tw-absolute tw-w-full tw-overflow-x-hidden" style="height: fit-content; max-height: 200px">
@@ -60,7 +71,9 @@
                     ]"
                 class="base-padding tw-cursor-pointer radius10px dropdown__element__style tw-transition tw-ease-in-out"
                 @click="clickElement(element, index)"
-            >{{element}}</li>
+            >
+              {{element}}
+            </li>
           </ul>
           <ul v-if="dataDropdown.Options.length === 0" class="bg-white radius10px base-shadow tw-absolute tw-w-full">
             <li class="base-padding tw-cursor-pointer radius10px tw-transition tw-ease-in-out grey6" disabled>
@@ -81,7 +94,7 @@ export default {
   components: {
     Icon
   },
-  emits: ['callBackValue',],
+  emits: ['valueDropdown',],
   props: {
     dataDropdown: {
       LabelText: String,
@@ -99,6 +112,11 @@ export default {
       BorderColor: String,
       LabelFontSize: Number,
     },
+    dataInput:{
+      FormId: String,
+      SectionId: String,
+      ComponentId: String,
+    }
   },
   data() {
     return {
@@ -129,6 +147,20 @@ export default {
         }
       }
     },
+    borderStyle() {
+      if(this.dataDropdown.Required) {
+        // String
+        if(this.valueDropdown.Text==='')
+            return 'tw-border-red5'
+        // Number
+        else if(this.valueDropdown.Number==='')
+          return 'tw-border-red5'
+        else
+          return 'tw-border-'+this.dataDropdown.BorderColor
+      }
+      else
+        return 'tw-border-'+this.dataDropdown.BorderColor
+    }
   },
   mounted() {
     document.addEventListener('click', this.closeDropdown)
@@ -141,7 +173,7 @@ export default {
     clickElement(element, index) {
       this.valueDropdown.Text = element
       this.valueDropdown.Index = index
-      this.$emit('callBackValue', this.valueDropdown.Text)
+      this.$emit('valueDropdown', {value:this.valueDropdown.Text,index:this.valueDropdown.Index,dataInput:this.dataInput})
       this.toggle();
     },
     closeDropdown(e) {
