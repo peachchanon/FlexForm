@@ -122,8 +122,7 @@ export default {
       this.$emit('emitStateSidebarExpand',true)
     },
     logout(){
-      localStorage.removeItem('token')
-      localStorage.removeItem('role_id')
+      localStorage.clear();
       this.$router.replace('/')
     }
   }

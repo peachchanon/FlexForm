@@ -383,12 +383,12 @@ export default {
     },
     async CreateBlankForm(){
       this.FormStructure.FormId = this.GenerateFormId() // set formid = ค่าที่ generate ออกมา
-      // const current = new Date() //แปลง string เป็น Date
-      // this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
-      // this.FormStructure.FormModifiedTimestamp = current.toISOString()
+      const current = new Date() //แปลง string เป็น Date
+      this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
+      this.FormStructure.FormModifiedTimestamp = current.toISOString()
       // this.FormStructure.UseTemplate = false
-      // this.FormStructure.CreatedByUser = localStorage.getItem('username')
-      // this.FormStructure.ModifiedByUser = localStorage.getItem('username')
+      this.FormStructure.CreatedByUser = localStorage.getItem('username')
+      this.FormStructure.ModifiedByUser = localStorage.getItem('username')
       this.FormStructure.Sections[0].SectionId = this.GenerateFormId()
       this.FormStructure.Sections[0].Components[0].ComponentId = this.GenerateFormId()
       axios.post('http://localhost:4000/api/Flexform/CreateForm',this.FormStructure)
