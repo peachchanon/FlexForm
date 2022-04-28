@@ -112,6 +112,7 @@ export default {
         if(response.status===200 && response.data) {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('role_id', response.data.role_id)
+          localStorage.setItem('username', response.data.username)
           this.$router.push('/dashboard')
         }
       } catch(error){

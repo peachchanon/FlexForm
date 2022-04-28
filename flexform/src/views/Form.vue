@@ -285,54 +285,64 @@ export default {
       DateCreated: '24/4/2022',
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
-      FormStructure:
+      FormStructure:{
+        FormId: '',
+        TicketId: '',
+        FormName: 'Untitled Form',
+        FormDescriptions: '',
+        FormCreatedTimestamp: '2022-04-24T08:27:21.548Z',
+        FormModifiedTimestamp: '2022-04-24T08:27:21.548Z',
+        CreatedByUser: '',
+        ModifiedByUser: '',
+        UseTemplate: false,
+        ActionButton: {
+          ActionButtonName: 'Submit',
+          ActionButtonProperties: {
+            FontColor: 'white',
+            BackgroundColor: 'bg-blue5'
+          }
+        },
+        Sections: [
           {
-            FormId: '',
-            FormName: 'Untitled Form',
-            FormDescription: '',
-            FormCreatedTimestamp: '',
-            FormModifiedTimestamp: '',
-            CreatedByUser: '',
-            ModifiedByUser: '',
-            UseTemplate: '',
-            ActionButton: {
-              ActionButtonName: 'Submit',
-              ActionButtonProperties: {
-                FontColor: 'white',
-                BackgroundColor: 'bg-blue5'
-              }
+            // อย่าลืม Gen ID
+            SectionId: '',
+            SectionName: 'Untitled Section 1',
+            SectionIndex: 1,
+            SectionProperties: {
+              SectionFontName: 'Prompt',
+              SectionFontSize: '16',
+              SectionFontColor: 'grey10',
+              SectionBackgroundColor: 'bg-white'
             },
-            Sections: [
+            Components: [
               {
                 // อย่าลืม Gen ID
-                SectionId: '',
-                SectionName: 'Untitled Section 1',
-                SectionProperties: {
-                  FontName: 'Prompt',
-                  FontSize: 16,
-                  FontColor: 'grey10',
-                  BackgroundColor: 'bg-white'
-                },
-                Components: [
-                  {
-                    // อย่าลืม Gen ID
-                    ComponentId: '',
-                    ComponentType: 'heading',
-                    ComponentTemplate: false,
-                    ComponentProperties: {
-                      HeadingText: 'Untitled Section',
-                      SubheadingText: 'Descriptive Section',
-                      Alignment: 'left',
-                      HeadingFontColor: 'grey10',
-                      HeadingFontSize: 48,
-                      SubheadingFontColor: 'grey5',
-                      SubheadingFontSize: 16,
-                    }
+                ComponentId: '',
+                ComponentIndex: 2,
+                ComponentLabel: '',
+                ComponentType: 'heading',
+                ComponentTemplate: false,
+                ComponentProperties: {
+                  HeadingText: 'Untitled Section',
+                  SubheadingText: 'Descriptive Section',
+                  Alignment: 'left',
+                  HeadingFontColor: 'grey10',
+                  HeadingFontSize: '48',
+                  SubheadingFontColor: 'grey5',
+                  SubheadingFontSize: '16',
+                  Validation: {
+                    Day: '',
+                    Month: '',
+                    Gender: '',
+                    Priority: '',
+                    Status: ''
                   }
-                ]
+                }
               }
             ]
           }
+        ]
+      }
     }
   },
   watch:{
@@ -341,19 +351,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
   },
   async mounted () {
     window.onresize = () => {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    try {
-      const response = await axios.get("http://localhost:4000/{ticketid}")
-      this.FormStructure = response
-    }catch(error){
-      console.log(error)
-    }
+    // try {
+    //   const response = await axios.get("http://localhost:4000/{ticketid}")
+    //   this.FormStructure = response
+    // }catch(error){
+    //   console.log(error)
+    // }
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -376,59 +386,67 @@ export default {
       const current = new Date() //แปลง string เป็น Date
       this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
       this.FormStructure.FormModifiedTimestamp = current.toISOString()
-      this.FormStructure.UseTemplate = false
+      // this.FormStructure.UseTemplate = false
       this.FormStructure.CreatedByUser = localStorage.getItem('username')
       this.FormStructure.ModifiedByUser = localStorage.getItem('username')
       this.FormStructure.Sections[0].SectionId = this.GenerateFormId()
       this.FormStructure.Sections[0].Components[0].ComponentId = this.GenerateFormId()
-      console.log(this.FormStructure.ActionButton.ActionButtonProperties.FontColor)
-      axios.post('http://localhost:4000/api/',this.FormStructure)
+      axios.post('http://localhost:4000/api/Flexform/CreateForm',this.FormStructure)
           .then(response => {
-            console.log(response)
+            console.log(response.status)
             if(response.status===200 && response.data) {
               console.log(response.status)
               console.log(response.data)
-              this.$router.push('/form/builder') 
+              this.$router.push('/form/builder')
             }
           })
+
       // try{
-      //   const response = await axios.post('http://localhost:4000/api/User/Register', {
-      //     FormId:this.FormStructure.FormId,
-      //     FormCreatedTimestamp :this.FormStructure.FormCreatedTimestamp,
-      //     UseTemplate:this.FormStructure.UseTemplate,
-      //     CreatedByUser:this.FormStructure.CreatedByUser,
-      //     ModifiedByUser:this.FormStructure.ModifiedByUser,
-      //     FormName: this.FormStructure.FormName,
-      //     FormDescription: this.FormStructure.FormDescription,
-      //     FormModifiedTimestamp: this.FormStructure.FormModifiedTimestamp,
-      //     ActionButtonName: this.FormStructure.ActionButton.ActionButtonName,
-      //     FontColor: this.FormStructure.ActionButton.ActionButtonProperties.FontColor,
-      //     BackgroundColor: this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor,
-      //     SectionId:  this.FormStructure.Sections[0].SectionId,
-      //     SectionName:  this.FormStructure.Sections[0].SectionName,
-      //     FontName: this.FormStructure.Sections[0].SectionProperties.FontName,
-      //     FontSize:  this.FormStructure.Sections[0].SectionProperties.FontSize,
-      //     // FontColor: this.FormStructure.Sections[0].SectionProperties.FontColor,
-      //     // BackgroundColor: this.FormStructure.Sections[0].SectionProperties.BackgroundColor,
-      //     ComponentId: this.FormStructure.Sections[0].Components[0].ComponentId,
-      //     ComponentType: this.FormStructure.Sections[0].Components[0].ComponentType,
-      //     ComponentTemplate: this.FormStructure.Sections[0].Components[0].ComponentTemplate,
-      //     HeadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingText,
-      //     SubheadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingText,
-      //     Alignment: this.FormStructure.Sections[0].Components[0].ComponentProperties.Alignment,
-      //     HeadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontColor,
-      //     HeadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontSize,
-      //     SubheadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontColor,
-      //     SubheadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontSize,
+      //   const response = await axios.post('http://localhost:4000/api/Flexform/CreateForm', {
+      // FormId:this.FormStructure.FormId,
+      // TicketId:this.FormStructure.TicketId,
+      // FormName: this.FormStructure.FormName,
+      // FormCreatedTimestamp :this.FormStructure.FormCreatedTimestamp,
+      // FormModifiedTimestamp: this.FormStructure.FormModifiedTimestamp,
+      // UseTemplate:this.FormStructure.UseTemplate,
+      // CreatedByUser:this.FormStructure.CreatedByUser,
+      // ModifiedByUser:this.FormStructure.ModifiedByUser,
+      // FormDescriptions: this.FormStructure.FormDescriptions,
+      // ActionButtonName: this.FormStructure.ActionButton.ActionButtonName,
+      // FontColor: this.FormStructure.ActionButton.ActionButtonProperties.FontColor,
+      // BackgroundColor: this.FormStructure.ActionButton.ActionButtonProperties.BackgroundColor,
+      // SectionId:  this.FormStructure.Sections[0].SectionId,
+      // SectionName:  this.FormStructure.Sections[0].SectionName,
+      // SectionIndex:  this.FormStructure.Sections[0].SectionIndex,
+      // SectionFontName: this.FormStructure.Sections[0].SectionProperties.SectionFontName,
+      // SectionFontSize:  this.FormStructure.Sections[0].SectionProperties.SectionFontSize,
+      // SectionFontColor: this.FormStructure.Sections[0].SectionProperties.SectionFontColor,
+      // SectionBackgroundColor: this.FormStructure.Sections[0].SectionProperties.SectionBackgroundColor,
+      // ComponentId: this.FormStructure.Sections[0].Components[0].ComponentId,
+      // ComponentIndex: this.FormStructure.Sections[0].Components[0].ComponentIndex,
+      // ComponentType: this.FormStructure.Sections[0].Components[0].ComponentType,
+      // ComponentTemplate: this.FormStructure.Sections[0].Components[0].ComponentTemplate,
+      // HeadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingText,
+      // SubheadingText: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingText,
+      // Alignment: this.FormStructure.Sections[0].Components[0].ComponentProperties.Alignment,
+      // HeadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontColor,
+      // HeadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.HeadingFontSize,
+      // SubheadingFontColor: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontColor,
+      // SubheadingFontSize: this.FormStructure.Sections[0].Components[0].ComponentProperties.SubheadingFontSize,
+      // Day: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Day,
+      // Month: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Month,
+      // Gender: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Gender,
+      // Priority: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Priority,
+      // Status: this.FormStructure.Sections[0].Components[0].ComponentProperties.Validation.Status
       //   })
-      //       if(response.status===200 && response.data) {
-      //         console.log(response.status)
-      //         console.log(response.data)
-      //         this.$router.push('/form/builder')
-      //       }
-      //     }catch (error){
-      //       console.log(error)
-      //     }
+      //   if(response.status===200 && response.data) {
+      //     console.log(response.status)
+      //     console.log(response.data)
+      //     this.$router.push('/form/builder')
+      //   }
+      // }catch (error){
+      //   console.log(error)
+      // }
     },
     showFormDetail(){
       this.showFormDetailLayout = !this.showFormDetailLayout
