@@ -42,8 +42,8 @@
               </div>
             </div>
             <!-- Form list-->
-            <!--  <div v-for="(FormStructure, FormID) in FormStructure" :key="FormID"> เปิดเมื่อต่อดาต้าเบส !-->
-            <div v-if="TicketTemplate === true">
+          <div v-for="FormData in FormData" :key="FormData.formId">
+            <div v-if="FormData.useTemplate === true">
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                   <div class="tw-flex tw-flex-row">
@@ -52,11 +52,11 @@
                     </div>
                     <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <label class="medium16 blue10">National Telecom Public Company Limited Ticket (NOC)</label>
+                      <label class="medium16 blue10">{{ FormData.formName }}</label>
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                       <label class="medium16 grey5">Created By</label>
-                      <label class="light16 grey7">{{ CreatedByUser }}</label>
+                      <label class="light16 grey7">{{ FormData.createdByUser }}</label>
                     </div>
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
@@ -78,7 +78,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="TicketTemplate === false">
+            <div v-if="FormData.useTemplate === false">
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                   <div class="tw-flex tw-flex-row">
@@ -87,11 +87,11 @@
                     </div>
                     <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <label class="medium16 blue10">Form</label>
+                      <label class="medium16 blue10">{{ FormData.formName }}</label>
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                       <label class="medium16 grey5">Created By</label>
-                      <label class="light16 grey7">{{ CreatedByUser }}</label>
+                      <label class="light16 grey7">{{ FormData.createdByUser }}</label>
                     </div>
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
@@ -118,7 +118,7 @@
                 </div>
               </div>
             </div>
-            <!--          </div>-->
+          </div>
           </div>
           <!-- Create an Account Modal -->
           <transition name="theme-modal-fade" v-if="showFormBuilderLayout">
@@ -279,6 +279,7 @@ export default {
       namePage: 'All Form',
       ModalPage: 'Setting',
       StateShowContentForWindowSize: true,
+      FormData: [],
       TicketTemplate: false,
       CreatedByUser: 'Chanon Panarong',
       FormDescription: 'Form สำหรับเก็บข้อมูล',
@@ -358,6 +359,19 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
+    axios.get('http://localhost:4000/api/Flexform/AllForm')
+        .then(response => {
+          if(response.status===200 && response.data) {
+           // this.FormData = response.data[1]["createdByUser"]
+            this.FormData = response.data
+            console.log(response.status)
+            console.log(this.FormData)
+          }
+        })
+        .catch(error => {
+          this.errors.push(error)
+          console.log(error)
+        }) 
     // try {
     //   const response = await axios.get("http://localhost:4000/{ticketid}")
     //   this.FormStructure = response
