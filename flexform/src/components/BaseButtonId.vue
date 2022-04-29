@@ -1,7 +1,7 @@
 ﻿<template>
   <div>
     <button
-        @click="buttonClicked('string')"
+        @click="buttonClicked(id)"
         :class="[buttonTextColor, buttonBgColor, buttonBorderColor]"
         class="medium16 base-padding radius10px tw-w-full button-border tw-flex tw-justify-center tw-items-center"
         :disabled="disable"
@@ -23,7 +23,7 @@ export default {
   components: {
     Icon
   },
-  emit: ['call'],
+  emit: ['callbackObject'],
   props: {
     buttonID: String,
     buttonText: String,
@@ -32,11 +32,11 @@ export default {
     buttonBorderColor: String,
     buttonIconLeft: String,
     buttonIconRight: String,
-    callback: Function,
     disable: {
       type: Boolean,
       default: false
-    }
+    },
+    id: String
   },
   data () {
     return {
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     buttonClicked (id) {
-      this.$emit('call', id)
+      this.$emit('callbackObject', id)
     }
   }
 }
