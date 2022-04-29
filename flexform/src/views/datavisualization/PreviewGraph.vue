@@ -1,12 +1,12 @@
 ﻿<template>
-<div>{{GraphType}}</div>
+<div>{{GraphTypes}}</div>
 </template>
 
 <script>
 export default {
   name: "PreviewGraph.vue",
   props: {
-    GraphType : String
+    GraphTypes : String
   },
 }
 </script>

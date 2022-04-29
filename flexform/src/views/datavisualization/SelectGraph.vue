@@ -8,11 +8,13 @@
           <span class="semibold24 blue10">Data Visualization</span>
         </div>
       </div>
+      <!-- pc display information part-->
       <div class="tw-w-full tw-mt-6">
-        <div v-if="ShowContent === true" 
+        <div v-if="ShowContent === true"
              class="tableTrue tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
           <div class="left__layout tw-border-0 md:tw-border-r-2 tw-p-2">
             <div class="tw-flex tw-flex-row md:tw-flex-col">
+              <!-- Left menu click condition 'All Chart' -->
               <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('All Chart')">
                 <div v-if="GraphName === 'All Chart'" class="tw-flex tw-flex-row tw-justify-between">
                   <span class="medium16 blue5 tw-cursor-pointer">All Chart</span>
@@ -22,7 +24,7 @@
                   <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
                 </div>
               </div>
-              
+              <!-- Left menu click condition 'Bar' -->
               <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Bar')">
                 <div v-if="GraphName === 'Bar'" class="tw-flex tw-flex-row tw-justify-between">
                   <span class="medium16 blue5 tw-cursor-pointer">Bar</span>
@@ -32,17 +34,17 @@
                   <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Bar</span>
                 </div>
               </div>
-              
+              <!-- Left menu click condition 'Line' -->
               <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Line')">
                 <div v-if="GraphName === 'Line'" class="tw-flex tw-flex-row tw-justify-between">
-                <span class="medium16 blue5 tw-cursor-pointer">Line</span>
+                  <span class="medium16 blue5 tw-cursor-pointer">Line</span>
                   <span class=" tw-w-1 tw-h-6 tw-bg-blue5"></span>
                 </div>
                 <div v-if="GraphName !== 'Line'">
                   <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Line</span>
-                  </div>
+                </div>
               </div>
-              
+              <!-- Left menu click condition 'Pie' -->
               <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
                || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
                    class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Pie')">
@@ -54,9 +56,9 @@
                   <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Pie</span>
                 </div>
               </div>
-              
             </div>
           </div>
+          <!-- Show list on right side 'All Chart' All 16-->
           <div v-if="GraphName === 'All Chart'" class="right__layout tw-p-2 tw-overflow-auto">
             <div class="tw-flex tw-flex-col">
               <!-- graph list on the right #1-->
@@ -72,7 +74,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar brush')"
+                    :callback="BarBrushClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -94,7 +96,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar label rotation')"
+                    :callback="BarLabelRotationClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -116,7 +118,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar race')"
+                    :callback="BarRaceClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -138,7 +140,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar with background')"
+                    :callback="BarWithBackgroundClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -160,7 +162,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar y-category')"
+                    :callback="BarYCategoryClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -182,7 +184,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar bar chart')"
+                    :callback="BasicBarChartClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -204,7 +206,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar line chart')"
+                    :callback="BasicLineChartClick"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -228,7 +230,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Basic pie chart')"
+                    :callback="PreviewClick('Basic pie chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -239,7 +241,7 @@
               </div>
               <!--graph list on the right #9-->
               <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'" 
+               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
                    class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
                 <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                   <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -252,7 +254,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Customized pie')"
+                    :callback="PreviewClick('Customized pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -276,7 +278,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Doughnut pie')"
+                    :callback="PreviewClick('Doughnut pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -298,7 +300,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Line AQI')"
+                    :callback="PreviewClick('Line AQI')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -320,7 +322,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Line race')"
+                    :callback="PreviewClick('Line race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -344,7 +346,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Nightingale chart')"
+                    :callback="PreviewClick('Nightingale chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -366,7 +368,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Series layout bar chart')"
+                    :callback="PreviewClick('Series layout bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -388,7 +390,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Share dataset')"
+                    :callback="PreviewClick('Share dataset')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -410,7 +412,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Stacked area chart')"
+                    :callback="PreviewClick('Stacked area chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -419,7 +421,7 @@
                     buttonBgColor="bg-green5"
                 ></base-button>
               </div>
-              
+
             </div>
           </div>
 
@@ -438,7 +440,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar brush')"
+                    :callback="PreviewClick('Bar brush')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -461,7 +463,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar label rotation')"
+                    :callback="PreviewClick('Bar label rotation')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -484,7 +486,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar race')"
+                    :callback="PreviewClick('Bar race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -507,7 +509,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar with background')"
+                    :callback="PreviewClick('Bar with background')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -530,7 +532,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Bar y-category')"
+                    :callback="PreviewClick('Bar y-category')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -553,7 +555,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Basic bar chart')"
+                    :callback="PreviewClick('Basic bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -576,7 +578,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Series layout bar chart')"
+                    :callback="PreviewClick('Series layout bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -588,15 +590,15 @@
 
             </div>
           </div>
-          
+
           <div v-if="GraphName === 'Line'"  class="right__layout tw-p-2 tw-overflow-auto">
             <div class="tw-flex tw-flex-col">
-            <!--graph list on the right #1-->
-            <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
-              <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
-                <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
-                <span class="medium16 blue10 tw-m-1">Basic line chart</span>
-              </div>
+              <!--graph list on the right #1-->
+              <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
+                <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
+                  <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
+                  <span class="medium16 blue10 tw-m-1">Basic line chart</span>
+                </div>
                 <base-button
                     buttonID="buttonPreview"
                     buttonText="Preview"
@@ -604,7 +606,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Basic line chart')"
+                    :callback="PreviewClick('Basic line chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -627,7 +629,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Line AQI')"
+                    :callback="PreviewClick('Line AQI')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -650,7 +652,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Line race')"
+                    :callback="PreviewClick('Line race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -673,7 +675,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Share dataset')"
+                    :callback="PreviewClick('Share dataset')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -696,7 +698,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Stacked area chart')"
+                    :callback="PreviewClick('Stacked area chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -705,8 +707,8 @@
                     buttonBgColor="bg-green5"
                 ></base-button>
               </div>
-              
-              </div>
+
+            </div>
           </div>
 
           <div v-if="GraphName === 'Pie'"  class="right__layout tw-p-2 tw-overflow-auto">
@@ -724,7 +726,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Basic pie chart')"
+                    :callback="PreviewClick('Basic pie chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -747,7 +749,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Customized pie')"
+                    :callback="PreviewClick('Customized pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -770,7 +772,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Doughnut chart')"
+                    :callback="PreviewClick('Doughnut chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -793,7 +795,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
-                    :callback="preview('Nightingale chart')"
+                    :callback="PreviewClick('Nightingale chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -805,11 +807,11 @@
 
             </div>
           </div>
-          
+
         </div>
       </div>
-      
-      <div v-if="ShowContent === false" 
+
+      <div v-if="ShowContent === false"
            class="tableFalse tw-flex tw-flex-col md:tw-flex-row tw-border-2 radius10px">
         <div class="left__layout tw-border-0 md:tw-border-r-2 tw-p-2">
           <div class="tw-flex tw-flex-row md:tw-flex-col">
@@ -822,7 +824,7 @@
                 <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">All Chart</span>
               </div>
             </div>
-            
+
             <div class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Bar')">
               <div v-if="GraphName === 'Bar'" class="tw-flex tw-flex-col tw-justify-between">
                 <span class="medium16 blue5 tw-cursor-pointer">Bar</span>
@@ -854,10 +856,10 @@
                 <span class="medium16 blue10 hover:tw-text-blue5 tw-cursor-pointer">Pie</span>
               </div>
             </div>
-            
+
           </div>
         </div>
-        
+
         <div v-if="GraphName === 'All Chart'" class="right__layout tw-p-2 tw-overflow-auto">
           <div class="tw-flex tw-flex-col">
             <!--graph list on the right #1-->
@@ -866,16 +868,16 @@
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
                 <span class="medium16 blue10 tw-m-1">Bar brush</span>
               </div>
-<!--              <div class="tw-border-solid tw-border-2 tw-border-blue10 radius10px">-->
-<!--                <Icon class="semibold24 blue10 tw-mx-3 tw-my-2" icon="heroicons-outline:eye"/>-->
-<!--              </div>-->
+              <!--              <div class="tw-border-solid tw-border-2 tw-border-blue10 radius10px">-->
+              <!--                <Icon class="semibold24 blue10 tw-mx-3 tw-my-2" icon="heroicons-outline:eye"/>-->
+              <!--              </div>-->
               <base-button
                   buttonID="buttonExport"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar brush')"
+                  :callback="PreviewClick('Bar brush')"
               ></base-button>
             </div>
 
@@ -891,7 +893,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar label rotation')"
+                  :callback="PreviewClick('Bar label rotation')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -906,7 +908,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar race')"
+                  :callback="PreviewClick('Bar race')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -921,7 +923,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar with background')"
+                  :callback="PreviewClick('Bar with background')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -936,7 +938,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar y-category')"
+                  :callback="PreviewClick('Bar y-category')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -951,7 +953,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic bar chart')"
+                  :callback="PreviewClick('Basic bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #7-->
@@ -966,7 +968,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic line chart')"
+                  :callback="PreviewClick('Basic line chart')"
               ></base-button>
             </div>
             <!--graph list on the right #8-->
@@ -983,7 +985,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic pie chart')"
+                  :callback="PreviewClick('Basic pie chart')"
               ></base-button>
             </div>
             <!--graph list on the right #9-->
@@ -1000,7 +1002,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Customized pie')"
+                  :callback="PreviewClick('Customized pie')"
               ></base-button>
             </div>
             <!--graph list on the right #10-->
@@ -1017,7 +1019,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Doughnut chart')"
+                  :callback="PreviewClick('Doughnut chart')"
               ></base-button>
             </div>
             <!--graph list on the right #11-->
@@ -1032,7 +1034,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Line AQI')"
+                  :callback="PreviewClick('Line AQI')"
               ></base-button>
             </div>
             <!--graph list on the right #12-->
@@ -1047,7 +1049,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Line race')"
+                  :callback="PreviewClick('Line race')"
               ></base-button>
             </div>
             <!--graph list on the right #13-->
@@ -1064,7 +1066,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Nightingale chart')"
+                  :callback="PreviewClick('Nightingale chart')"
               ></base-button>
             </div>
             <!--graph list on the right #14-->
@@ -1079,7 +1081,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Series layout bar chart')"
+                  :callback="PreviewClick('Series layout bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #15-->
@@ -1094,7 +1096,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Share dataset')"
+                  :callback="PreviewClick('Share dataset')"
               ></base-button>
             </div>
             <!--graph list on the right #16-->
@@ -1109,10 +1111,10 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Stacked area chart')"
+                  :callback="PreviewClick('Stacked area chart')"
               ></base-button>
             </div>
-            
+
           </div>
         </div>
 
@@ -1130,7 +1132,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar brush')"
+                  :callback="PreviewClick('Bar brush')"
               ></base-button>
             </div>
 
@@ -1146,7 +1148,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar label rotation')"
+                  :callback="PreviewClick('Bar label rotation')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1161,7 +1163,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar race')"
+                  :callback="PreviewClick('Bar race')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -1176,7 +1178,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar with background')"
+                  :callback="PreviewClick('Bar with background')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -1191,7 +1193,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Bar y-category')"
+                  :callback="PreviewClick('Bar y-category')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -1206,10 +1208,10 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic bar chart')"
+                  :callback="PreviewClick('Basic bar chart')"
               ></base-button>
             </div>
-            
+
             <!--graph list on the right #7-->
             <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
@@ -1222,10 +1224,10 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Series layout bar chart')"
+                  :callback="PreviewClick('Series layout bar chart')"
               ></base-button>
             </div>
-        </div>
+          </div>
         </div>
 
         <div v-if="GraphName === 'Line'" class="right__layout tw-p-2 tw-overflow-auto">
@@ -1242,10 +1244,10 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic line chart')"
+                  :callback="PreviewClick('Basic line chart')"
               ></base-button>
             </div>
-            
+
             <!--graph list on the right #2-->
             <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
@@ -1258,7 +1260,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Line AQI')"
+                  :callback="PreviewClick('Line AQI')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1273,10 +1275,10 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Line race')"
+                  :callback="PreviewClick('Line race')"
               ></base-button>
             </div>
-            
+
             <!--graph list on the right #4-->
             <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
@@ -1289,7 +1291,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Series layout bar chart')"
+                  :callback="PreviewClick('Series layout bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -1304,7 +1306,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Share dataset')"
+                  :callback="PreviewClick('Share dataset')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -1319,7 +1321,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Stacked area chart')"
+                  :callback="PreviewClick('Stacked area chart')"
               ></base-button>
             </div>
           </div>
@@ -1343,7 +1345,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Basic pie chart')"
+                  :callback="PreviewClick('Basic pie chart')"
               ></base-button>
             </div>
             <!--graph list on the right #2-->
@@ -1360,7 +1362,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Customized pie')"
+                  :callback="PreviewClick('Customized pie')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1377,7 +1379,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Doughnut chart')"
+                  :callback="PreviewClick('Doughnut chart')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -1394,12 +1396,12 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
-                  :callback="preview('Nightingale chart')"
+                  :callback="PreviewClick('Nightingale chart')"
               ></base-button>
             </div>
-          </div>  
+          </div>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -1437,7 +1439,7 @@ export default {
   },
   computed: {
     ...mapGetters(['windowResize']),
-    
+
   },
   async mounted () {
     window.onresize = () => {
@@ -1455,13 +1457,58 @@ export default {
       console.log(this.GraphName)
       console.log('current graph no' + this.currentGraphNo) // เลือกจากหน้าแรกว่าหัวข้ออะไร
     },
-    preview(graph){
-      this.GraphType = graph
+    BarBrushClick(){
+      this.GraphType = 'Bar brush'
       this.$router.push({
-        name: 'PreviewGraph',
-        params: { GraphType : this.GraphType}
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
       })
-    }
+    },
+    BarLabelRotationClick(){
+      this.GraphType = 'Bar label rotation'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    BarRaceClick(){
+      this.GraphType = 'Bar race'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    BarYCategoryClick(){
+      this.GraphType = 'Bar y-category'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    BarWithBackgroundClick(){
+      this.GraphType = 'Bar with background'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    BasicBarChartClick(){
+      this.GraphType = 'Basic bar chart'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    BasicLineChartClick(){
+      this.GraphType = 'Basic line chart'
+      this.$router.push({
+        name:'PreviewGraph',
+        params: {GraphTypes: this.GraphType}
+      })
+    },
+    PreviewClick(graph){
+      this.GraphType = graph
+    },
   }
 }
 </script>
