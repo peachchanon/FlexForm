@@ -1347,6 +1347,7 @@ export default {
   },
   props: {
     CreateForm: Boolean,
+    ClickedForm: String
   },
   data() {
     return {
@@ -1490,9 +1491,49 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
+    if(this.CreateForm === false){
+    axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+        .then(response => {
+          if(response.status===200 && response.data) {
+            this.FormData = response.data
+            // this.FormStructure = response.data
+            console.log(this.ClickedForm)
+            console.log(response.status)
+            console.log(this.FormData)
+            
+            this.FormStructure = this.CapitalObj(this.FormData)
+            console.log(this.FormStructure)
+          }
+        })
+        .catch(error => {
+          // this.errors.push(error)
+          console.log(error)
+        })
+    }
   },
   methods: {
     ...mapActions(['flapWindowResize']),
+    capital(string){
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+    CapitalObj(obj){
+      const newObj = {}
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value !== 'object')
+          newObj[this.capital(key)] = value
+        else {
+          if (Array.isArray(value)) {
+            if (typeof value?.[0] === 'object')
+              newObj[this.capital(key)] = value.map(this.CapitalObj)
+            else
+              newObj[this.capital(key)] = value
+          }
+          else
+            newObj[this.capital(key)] = this.CapitalObj(value)
+        }
+      }
+      return newObj
+    },
     // Page
     doNavigationFormBuilder(namePage) {
       if(namePage === 'Build') {
@@ -1525,6 +1566,17 @@ export default {
             .then(response => {
               console.log(response.status)
               if (response.status === 200 && response.data) {
+                console.log(response.status)
+                console.log(response.data)
+                this.$router.push('/form')
+              }
+            })
+      }
+      else{
+        axios.put('http://localhost:4000/api/Flexform/' + this.ClickedForm, this.FormStructure)
+            .then(response => {
+              console.log(response.status)
+              if ([200,204].includes(response.status)) {
                 console.log(response.status)
                 console.log(response.data)
                 this.$router.push('/form')

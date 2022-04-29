@@ -87,7 +87,7 @@
                     </div>
                     <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm">{{ FormData.formName }}</label>
+                      <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm(FormData.formId)">{{ FormData.formName }}</label>
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                       <label class="medium16 grey5">Created By</label>
@@ -287,6 +287,7 @@ export default {
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
       CreateFormBtnClick: true,
+      ClickedFormId: ''
     }
   },
   watch:{
@@ -343,12 +344,16 @@ export default {
         name: 'Builder',
         params: { CreateForm: this.CreateFormBtnClick}})
     },
-    async SelectForm(){
-      // this.CreateFormBtnClick = false
-      // console.log("click")
-      // this.$router.push({
-      //   name: 'Builder',
-      //   params: { CreateForm: this.CreateFormBtnClick}})
+    async SelectForm(formId){
+      this.CreateFormBtnClick = false
+      this.ClickedFormId = formId
+      this.$router.push({
+        name: 'Builder',
+        params: { 
+          CreateForm: this.CreateFormBtnClick,
+          ClickedForm: this.ClickedFormId
+        }
+      })
     },
     showFormDetail(){
       this.showFormDetailLayout = !this.showFormDetailLayout
