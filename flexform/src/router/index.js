@@ -14,7 +14,7 @@ import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 import AllTicket from "@/views/AllTicket";
 import FormFill from "@/views/formbuilder/FormFill";
-
+import PreviewGraph from "@/views/datavisualization/PreviewGraph";
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -140,6 +140,16 @@ const routes = [
       title: 'ExportGraph',
       // requireAuthen: true
     }
+  },
+  {
+    path: '/DataVisualization/SelectGraph/PreviewGraph',
+    name: 'PreviewGraph',
+    component: PreviewGraph,
+    meta: {
+      title: 'PreviewGraph',
+      // requireAuthen: true
+    },
+    props: true
   },
   {
     path: '/AllTicket',

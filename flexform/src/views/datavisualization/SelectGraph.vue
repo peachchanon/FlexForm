@@ -72,6 +72,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar brush')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -93,6 +94,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar label rotation')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -114,6 +116,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -135,6 +138,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar with background')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -156,6 +160,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar y-category')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -177,6 +182,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -198,6 +204,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar line chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -221,6 +228,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Basic pie chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -244,6 +252,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Customized pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -267,6 +276,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Doughnut pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -288,6 +298,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Line AQI')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -309,6 +320,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Line race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -332,6 +344,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Nightingale chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -353,6 +366,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Series layout bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -374,6 +388,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Share dataset')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -395,6 +410,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Stacked area chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -422,6 +438,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar brush')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -444,6 +461,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar label rotation')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -466,6 +484,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -488,6 +507,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar with background')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -510,6 +530,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Bar y-category')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -532,6 +553,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Basic bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -554,6 +576,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Series layout bar chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -581,6 +604,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Basic line chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -603,6 +627,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Line AQI')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -625,6 +650,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Line race')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -647,6 +673,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Share dataset')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -669,6 +696,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Stacked area chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -696,6 +724,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Basic pie chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -718,6 +747,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Customized pie')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -740,6 +770,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Doughnut chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -762,6 +793,7 @@
                     buttonIconLeft="heroicons-outline:eye"
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
+                    :callback="preview('Nightingale chart')"
                 ></base-button>
                 <base-button
                     buttonID="buttonExport"
@@ -843,6 +875,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar brush')"
               ></base-button>
             </div>
 
@@ -858,6 +891,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar label rotation')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -872,6 +906,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar race')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -886,6 +921,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar with background')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -900,6 +936,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar y-category')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -914,6 +951,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #7-->
@@ -928,6 +966,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic line chart')"
               ></base-button>
             </div>
             <!--graph list on the right #8-->
@@ -944,6 +983,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic pie chart')"
               ></base-button>
             </div>
             <!--graph list on the right #9-->
@@ -960,6 +1000,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Customized pie')"
               ></base-button>
             </div>
             <!--graph list on the right #10-->
@@ -976,6 +1017,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Doughnut chart')"
               ></base-button>
             </div>
             <!--graph list on the right #11-->
@@ -990,6 +1032,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Line AQI')"
               ></base-button>
             </div>
             <!--graph list on the right #12-->
@@ -1004,6 +1047,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Line race')"
               ></base-button>
             </div>
             <!--graph list on the right #13-->
@@ -1020,6 +1064,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Nightingale chart')"
               ></base-button>
             </div>
             <!--graph list on the right #14-->
@@ -1034,6 +1079,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Series layout bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #15-->
@@ -1048,6 +1094,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Share dataset')"
               ></base-button>
             </div>
             <!--graph list on the right #16-->
@@ -1062,6 +1109,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Stacked area chart')"
               ></base-button>
             </div>
             
@@ -1082,6 +1130,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar brush')"
               ></base-button>
             </div>
 
@@ -1097,6 +1146,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar label rotation')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1111,6 +1161,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar race')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -1125,6 +1176,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar with background')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -1139,6 +1191,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Bar y-category')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -1153,6 +1206,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic bar chart')"
               ></base-button>
             </div>
             
@@ -1168,6 +1222,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Series layout bar chart')"
               ></base-button>
             </div>
         </div>
@@ -1187,6 +1242,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic line chart')"
               ></base-button>
             </div>
             
@@ -1202,6 +1258,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Line AQI')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1216,6 +1273,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Line race')"
               ></base-button>
             </div>
             
@@ -1231,6 +1289,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Series layout bar chart')"
               ></base-button>
             </div>
             <!--graph list on the right #5-->
@@ -1245,6 +1304,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Share dataset')"
               ></base-button>
             </div>
             <!--graph list on the right #6-->
@@ -1259,6 +1319,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Stacked area chart')"
               ></base-button>
             </div>
           </div>
@@ -1282,6 +1343,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Basic pie chart')"
               ></base-button>
             </div>
             <!--graph list on the right #2-->
@@ -1298,6 +1360,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Customized pie')"
               ></base-button>
             </div>
             <!--graph list on the right #3-->
@@ -1314,6 +1377,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Doughnut chart')"
               ></base-button>
             </div>
             <!--graph list on the right #4-->
@@ -1330,6 +1394,7 @@
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
                   buttonBorderColor="border-blue10"
+                  :callback="preview('Nightingale chart')"
               ></base-button>
             </div>
           </div>  
@@ -1361,7 +1426,8 @@ export default {
   data() {
     return {
       ShowContent: true,
-      GraphName: 'All Chart'
+      GraphName: 'All Chart',
+      GraphType: ''
     }
   },
   watch: {
@@ -1384,11 +1450,18 @@ export default {
     PreviousPage() {
       this.$router.push('/DataVisualization')
     },
-    chooseGraph(choice){
+    chooseGraph(choice){ //เลือกด้านซ้ายชนิดกราฟว่า bar line
       this.GraphName = choice
       console.log(this.GraphName)
-      console.log('current graph no' + this.currentGraphNo)
+      console.log('current graph no' + this.currentGraphNo) // เลือกจากหน้าแรกว่าหัวข้ออะไร
     },
+    preview(graph){
+      this.GraphType = graph
+      this.$router.push({
+        name: 'PreviewGraph',
+        params: { GraphType : this.GraphType}
+      })
+    }
   }
 }
 </script>
