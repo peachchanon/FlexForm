@@ -46,7 +46,7 @@
               <div class="tw-flex tw-flex-row tw-relative">
                 <!-- Short Input Component -->
                 <div v-if="componentElement.ComponentType === 'short-input'" class="tw-w-full">
-                  <short-input 
+                  <short-input
                       :dataShortInput="componentElement.ComponentProperties"
                       :dataInput="{
                         FormId: FormStructure.FormId,
@@ -58,7 +58,7 @@
                 </div>
                 <!-- Long Input Component -->
                 <div v-if="componentElement.ComponentType === 'long-input'" class="tw-w-full">
-                  <long-input 
+                  <long-input
                       :dataLongInput="componentElement.ComponentProperties"
                       :dataInput="{
                         FormId: FormStructure.FormId,
@@ -78,7 +78,7 @@
                 </div>
                 <!-- Dropdown Component -->
                 <div v-if="componentElement.ComponentType === 'dropdown'" class="tw-w-full">
-                  <dropdown-component 
+                  <dropdown-component
                       :dataDropdown="componentElement.ComponentProperties"
                       :dataInput="{
                         FormId: FormStructure.FormId,
@@ -90,7 +90,7 @@
                 </div>
                 <!-- Choice Component -->
                 <div v-if="componentElement.ComponentType === 'choice'" class="tw-w-full">
-                  <choice-component 
+                  <choice-component
                       :dataChoice="componentElement.ComponentProperties"
                       :dataInput="{
                         FormId: FormStructure.FormId,
@@ -140,6 +140,7 @@ import HeaderComponent from "@/components/formbuildercomponent/Header"
 import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
 import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
+import axios from "axios";
 
 export default {
   name: "FormFill",
@@ -155,14 +156,55 @@ export default {
     ChoiceComponent,
     ButtonSection,
   },
+  props: {
+    ClickedForm: String
+  },
   data() {
     return {
       // State Sections and Components
       StateSelectSectionIndex: 0,
       // Form Structure
       FormStructure: {
-        "FormId":"formid-text555656565",
-        "FormName":"Form Test",
+        // "FormId":"formid-text555656565",
+        // "FormName":"Form Test",
+        // "FormDescription":"",
+        // "FormCreatedTimestamp":"",
+        // "FormModifiedTimestamp":"",
+        // "CreatedByUser":"",
+        // "ModifiedByUser":"",
+        // "UseTemplate":false,
+        // "ActionButton":{
+        //   "ActionButtonName":"Submit",
+        //   "ActionButtonProperties":{
+        //     "FontColor":"white",
+        //     "BackgroundColor":"bg-blue5"
+        //   }
+        // },
+        // "Sections":[
+        //   {
+        //     "SectionId":"Sqsqs",
+        //     "SectionName":"Untitled Section 1",
+        //     "SectionProperties":{
+        //       "SectionFontName":"Prompt",
+        //       "SectionFontSize":16,
+        //       "SectionFontColor":"grey10",
+        //       "SectionBackgroundColor":"bg-white"
+        //     },
+        //     "Components":[
+        //       {
+        //         "ComponentId":"215151505",
+        //         "ComponentType":"heading",
+        //         "ComponentTemplate":false,
+        //         "ComponentProperties":{
+        //           "HeadingText":"Untitled Section",
+        //           "SubheadingText":"Descriptive Section",
+        //           "Alignment":"left",
+        //           "HeadingFontColor":"grey10",
+        //           "HeadingFontSize":48,
+        //           "SubheadingFontColor":"grey5",
+        //           "SubheadingFontSize":16,
+        "FormId":"",
+        "FormName":"",
         "FormDescription":"",
         "FormCreatedTimestamp":"",
         "FormModifiedTimestamp":"",
@@ -170,154 +212,233 @@ export default {
         "ModifiedByUser":"",
         "UseTemplate":false,
         "ActionButton":{
-          "ActionButtonName":"Submit",
+          "ActionButtonName":"",
           "ActionButtonProperties":{
-            "FontColor":"white",
-            "BackgroundColor":"bg-blue5"
+            "FontColor":"",
+            "BackgroundColor":""
           }
         },
         "Sections":[
           {
-            "SectionId":"Sqsqs",
-            "SectionName":"Untitled Section 1",
+            "SectionId":"",
+            "SectionName":"",
             "SectionProperties":{
-              "SectionFontName":"Prompt",
-              "SectionFontSize":16,
-              "SectionFontColor":"grey10",
-              "SectionBackgroundColor":"bg-white"
+              "SectionFontName":"",
+              "SectionFontSize":0,
+              "SectionFontColor":"",
+              "SectionBackgroundColor":""
             },
             "Components":[
               {
-                "ComponentId":"215151505",
-                "ComponentType":"heading",
+                "ComponentId":"",
+                "ComponentType":"",
                 "ComponentTemplate":false,
                 "ComponentProperties":{
-                  "HeadingText":"Untitled Section",
-                  "SubheadingText":"Descriptive Section",
-                  "Alignment":"left",
-                  "HeadingFontColor":"grey10",
-                  "HeadingFontSize":48,
-                  "SubheadingFontColor":"grey5",
-                  "SubheadingFontSize":16
+                  "HeadingText":"",
+                  "SubheadingText":"",
+                  "Alignment":"",
+                  "HeadingFontColor":"",
+                  "HeadingFontSize":0,
+                  "SubheadingFontColor":"",
+                  "SubheadingFontSize":0,
+                  LabelText: '',
+                  SubLabelText: '',
+                  Required: false,
+                  Placeholder: '',
+                  FixWidth: true,
+                  Width: 0,
+                  ReadOnly: false,
+                  CharacterLimit: true,
+                  CharacterLimitValue: 0,
+                  FontColor: '',
+                  InputBgColor: '',
+                  BorderColor: '',
+                  LabelFontSize: 0,
+                  Validation: '',
+                  PredefinedOptions: '',
+                  Options: [],
+                  MultipleChoice: false,
+                  SpreadToColumns: false
                 }
-              },
-              {
-                "ComponentId":"3c22bc18-2c06-476a-a1c4-3d592e2c6aa0",
-                "ComponentType":"short-input",
-                "ComponentTemplate":false,
-                "ComponentProperties":{
-                  "LabelText":"Type a question",
-                  "SubLabelText":"Type a description",
-                  "Alignment":"left",
-                  "Required":true,
-                  "Placeholder":"Enter",
-                  "FixWidth":true,
-                  "Width":200,
-                  "ReadOnly":false,
-                  "CharacterLimit":true,
-                  "CharacterLimitValue":1000,
-                  "Validation":"Alphabetic",
-                  "FontColor":"grey10",
-                  "InputBgColor":"bg-grey1",
-                  "BorderColor":"white",
-                  "LabelFontSize":16
-                }
-              },
-              {
-                "ComponentId":"a0902693-bb4c-4249-abfb-96f0d363971d",
-                "ComponentType":"long-input",
-                "ComponentTemplate":false,
-                "ComponentProperties":{
-                  "LabelText":"Type a question",
-                  "SubLabelText":"Type a description",
-                  "Alignment":"left",
-                  "Required":true,
-                  "Placeholder":"Enter",
-                  "FixWidth":true,
-                  "Width":200,
-                  "ReadOnly":false,
-                  "CharacterLimit":true,
-                  "CharacterLimitValue":2000,
-                  "FontColor":"grey10",
-                  "InputBgColor":"bg-grey1",
-                  "BorderColor":"white",
-                  "LabelFontSize":16
-                }
-              },
-              {
-                "ComponentId":"9f6034cf-27dc-4f94-8a9a-9080f61c4267",
-                "ComponentType":"dropdown",
-                "ComponentTemplate":false,
-                "ComponentProperties":{
-                  "LabelText":"Type a question",
-                  "SubLabelText":"Type a description",
-                  "Alignment":"left",
-                  "Required":true,
-                  "Placeholder":"Enter",
-                  "FixWidth":true,
-                  "Width":200,
-                  "ReadOnly":false,
-                  "PredefinedOptions":"None",
-                  "Options":[
-                    "Text 1",
-                    "Text 2",
-                    "Text 3"
-                  ],
-                  "FontColor":"grey10",
-                  "InputBgColor":"bg-grey1",
-                  "BorderColor":"white",
-                  "LabelFontSize":16
-                }
-              },
-              {
-                "ComponentId":"2b503383-c0c4-4d8f-a1c3-94f6e4062989",
-                "ComponentType":"choice",
-                "ComponentTemplate":false,
-                "ComponentProperties":{
-                  "MultipleChoice":false,
-                  "LabelText":"Type a question",
-                  "SubLabelText":"Type a description",
-                  "Required":true,
-                  "ReadOnly":false,
-                  "SpreadToColumns":false,
-                  "PredefinedOptions":"None",
-                  "Options":[
-                    "Choice 1",
-                    "Choice 2",
-                    "Choice 3"
-                  ],
-                  "FontColor":"grey10",
-                  "BorderColor":"blue5",
-                  "LabelFontSize":16
-                }
-              },
-              {
-                "ComponentId":"23baff26-fa1b-4964-bf60-f53d294b5284",
-                "ComponentType":"choice",
-                "ComponentTemplate":false,
-                "ComponentProperties":{
-                  "MultipleChoice":true,
-                  "LabelText":"Type a question",
-                  "SubLabelText":"Type a description",
-                  "Required":false,
-                  "ReadOnly":false,
-                  "SpreadToColumns":false,
-                  "PredefinedOptions":"None",
-                  "Options":[
-                    "Choice 1",
-                    "Choice 2",
-                    "Choice 3"
-                  ],
-                  "FontColor":"grey10",
-                  "BorderColor":"blue5",
-                  "LabelFontSize":16
-                }
+              // },
+              // {
+              //   "ComponentId":"3c22bc18-2c06-476a-a1c4-3d592e2c6aa0",
+              //   "ComponentType":"short-input",
+              //   "ComponentTemplate":false,
+              //   "ComponentProperties":{
+              //     "LabelText":"Type a question",
+              //     "SubLabelText":"Type a description",
+              //     "Alignment":"left",
+              //     "Required":true,
+              //     "Placeholder":"Enter",
+              //     "FixWidth":true,
+              //     "Width":200,
+              //     "ReadOnly":false,
+              //     "CharacterLimit":true,
+              //     "CharacterLimitValue":1000,
+              //     "Validation":"Alphabetic",
+              //     "FontColor":"grey10",
+              //     "InputBgColor":"bg-grey1",
+              //     "BorderColor":"white",
+              //     "LabelFontSize":16,
+              //     HeadingText: '',
+              //     SubheadingText: '',
+              //     HeadingFontColor: '',
+              //     HeadingFontSize: 0,
+              //     SubheadingFontColor: '',
+              //     SubheadingFontSize: 0,
+              //     PredefinedOptions: '',
+              //     Options: [],
+              //     MultipleChoice: false,
+              //     SpreadToColumns: false
+              //   }
+              // },
+              // {
+              //   "ComponentId":"a0902693-bb4c-4249-abfb-96f0d363971d",
+              //   "ComponentType":"long-input",
+              //   "ComponentTemplate":false,
+              //   "ComponentProperties":{
+              //     "LabelText":"Type a question",
+              //     "SubLabelText":"Type a description",
+              //     "Alignment":"left",
+              //     "Required":true,
+              //     "Placeholder":"Enter",
+              //     "FixWidth":true,
+              //     "Width":200,
+              //     "ReadOnly":false,
+              //     "CharacterLimit":true,
+              //     "CharacterLimitValue":2000,
+              //     "FontColor":"grey10",
+              //     "InputBgColor":"bg-grey1",
+              //     "BorderColor":"white",
+              //     "LabelFontSize":16,
+              //     HeadingText: '',
+              //     SubheadingText: '',
+              //     HeadingFontColor: '',
+              //     HeadingFontSize: 0,
+              //     SubheadingFontColor: '',
+              //     SubheadingFontSize: 0,
+              //     Validation: '',
+              //     PredefinedOptions: '',
+              //     Options: [],
+              //     MultipleChoice: false,
+              //     SpreadToColumns: false
+              //   }
+              // },
+              // {
+              //   "ComponentId":"9f6034cf-27dc-4f94-8a9a-9080f61c4267",
+              //   "ComponentType":"dropdown",
+              //   "ComponentTemplate":false,
+              //   "ComponentProperties":{
+              //     "LabelText":"Type a question",
+              //     "SubLabelText":"Type a description",
+              //     "Alignment":"left",
+              //     "Required":true,
+              //     "Placeholder":"Enter",
+              //     "FixWidth":true,
+              //     "Width":200,
+              //     "ReadOnly":false,
+              //     "PredefinedOptions":"None",
+              //     "Options":[
+              //       "Text 1",
+              //       "Text 2",
+              //       "Text 3"
+              //     ],
+              //     "FontColor":"grey10",
+              //     "InputBgColor":"bg-grey1",
+              //     "BorderColor":"white",
+              //     "LabelFontSize":16,
+              //     HeadingText: '',
+              //     SubheadingText: '',
+              //     HeadingFontColor: '',
+              //     HeadingFontSize: 0,
+              //     SubheadingFontColor: '',
+              //     SubheadingFontSize: 0,
+              //     CharacterLimit: true,
+              //     CharacterLimitValue: 0,
+              //     Validation: '',
+              //     MultipleChoice: false,
+              //     SpreadToColumns: false
+              //   }
+              // },
+              // {
+              //   "ComponentId":"2b503383-c0c4-4d8f-a1c3-94f6e4062989",
+              //   "ComponentType":"choice",
+              //   "ComponentTemplate":false,
+              //   "ComponentProperties":{
+              //     "MultipleChoice":false,
+              //     "LabelText":"Type a question",
+              //     "SubLabelText":"Type a description",
+              //     "Required":true,
+              //     "ReadOnly":false,
+              //     "SpreadToColumns":false,
+              //     "PredefinedOptions":"None",
+              //     "Options":[
+              //       "Choice 1",
+              //       "Choice 2",
+              //       "Choice 3"
+              //     ],
+              //     "FontColor":"grey10",
+              //     "BorderColor":"blue5",
+              //     "LabelFontSize":16,
+              //     HeadingText: '',
+              //     SubheadingText: '',
+              //     Alignment: '',
+              //     HeadingFontColor: '',
+              //     HeadingFontSize: 0,
+              //     SubheadingFontColor: '',
+              //     SubheadingFontSize: 0,
+              //     Placeholder: '',
+              //     FixWidth: true,
+              //     Width: 0,
+              //     CharacterLimit: true,
+              //     CharacterLimitValue: 0,
+              //     InputBgColor: '',
+              //     Validation: ''
+              //   }
+              // },
+              // {
+              //   "ComponentId":"23baff26-fa1b-4964-bf60-f53d294b5284",
+              //   "ComponentType":"choice",
+              //   "ComponentTemplate":false,
+              //   "ComponentProperties":{
+              //     "MultipleChoice":true,
+              //     "LabelText":"Type a question",
+              //     "SubLabelText":"Type a description",
+              //     "Required":false,
+              //     "ReadOnly":false,
+              //     "SpreadToColumns":false,
+              //     "PredefinedOptions":"None",
+              //     "Options":[
+              //       "Choice 1",
+              //       "Choice 2",
+              //       "Choice 3"
+              //     ],
+              //     "FontColor":"grey10",
+              //     "BorderColor":"blue5",
+              //     "LabelFontSize":16,
+              //     HeadingText: '',
+              //     SubheadingText: '',
+              //     Alignment: '',
+              //     HeadingFontColor: '',
+              //     HeadingFontSize: 0,
+              //     SubheadingFontColor: '',
+              //     SubheadingFontSize: 0,
+              //     Placeholder: '',
+              //     FixWidth: true,
+              //     Width: 0,
+              //     CharacterLimit: true,
+              //     CharacterLimitValue: 0,
+              //     InputBgColor: 'bg-grey1',
+              //     Validation: ''
+              //   }
               }
             ]
           }
         ]
       },
-      FormInput: {}
+      FormInput: {},
+      FormData: []
     }
   },
   computed: {
@@ -327,37 +448,74 @@ export default {
     },
   },
   mounted() {
-    this.FormInput.FormId= this.FormStructure.FormId
-    this.FormInput.InputByUser= ''
-    this.FormInput.Timestamp= this.timestamp
-    this.FormInput.Sections= []
-    this.FormStructure.Sections.forEach(
-        (elementSection, indexSection)=>{
-          this.FormInput.Sections.push(
-              {
-                SectionId: this.FormStructure.Sections[indexSection].SectionId,
-                Components: []
-              }
-          )
-          this.FormStructure.Sections[indexSection].Components.forEach(
-              (elementComponent, indexComponent)=>{
-                if(
-                    elementComponent.ComponentType !== 'heading' 
-                    && elementComponent.ComponentType !== 'paragraph'
-                ){
-                  this.FormInput.Sections[indexSection].Components.push(
+    axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+        .then(response => {
+          if(response.status===200 && response.data) {
+            this.FormData = response.data
+            console.log(this.ClickedForm)
+            console.log(this.FormData)
+
+            this.FormStructure = this.CapitalObj(this.FormData)
+            console.log(this.FormStructure)
+            
+            this.FormInput.FormId = this.FormStructure.FormId
+            this.FormInput.InputByUser= ''
+            this.FormInput.Timestamp= this.timestamp
+            this.FormInput.Sections= []
+            this.FormStructure.Sections.forEach(
+                (elementSection, indexSection)=>{
+                  this.FormInput.Sections.push(
                       {
-                        ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
-                        ComponentValue: []
+                        SectionId: this.FormStructure.Sections[indexSection].SectionId,
+                        Components: []
+                      }
+                  )
+                  this.FormStructure.Sections[indexSection].Components.forEach(
+                      (elementComponent, indexComponent)=>{
+                        if(
+                            elementComponent.ComponentType !== 'heading'
+                            && elementComponent.ComponentType !== 'paragraph'
+                        ){
+                          this.FormInput.Sections[indexSection].Components.push(
+                              {
+                                ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
+                                ComponentValue: []
+                              }
+                          )
+                        }
                       }
                   )
                 }
-              }
-          )
-        }
-    )
+            )
+          }
+        })
+        .catch(error => {
+          // this.errors.push(error)
+          console.log(error)
+        })
   },
   methods: {
+    CapitalFirstLetter(string){
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+    CapitalObj(obj){
+      const newObj = {}
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value !== 'object')
+          newObj[this.CapitalFirstLetter(key)] = value
+        else {
+          if (Array.isArray(value)) {
+            if (typeof value?.[0] === 'object')
+              newObj[this.CapitalFirstLetter(key)] = value.map(this.CapitalObj)
+            else
+              newObj[this.CapitalFirstLetter(key)] = value
+          }
+          else
+            newObj[this.CapitalFirstLetter(key)] = this.CapitalObj(value)
+        }
+      }
+      return newObj
+    },
     doSectionStyleConfig(indexSection) {
       return {
         '--section--style--font--name': this.FormStructure.Sections[indexSection].SectionProperties.SectionFontName,
@@ -365,8 +523,10 @@ export default {
       }
     },
     doShortInput(item) {
+      console.log(item)
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
+      console.log(this.FormInput)
       if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
       else
@@ -393,8 +553,17 @@ export default {
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
     },
-    doActionButton() {
+    async doActionButton() {
       console.log(this.FormInput)
+      axios.post('http://localhost:4000/api/FormInput/CreateFormInput', this.FormInput)
+          .then(response => {
+            console.log(response.status)
+            if (response.status === 200 && response.data) {
+              console.log(response.status)
+              console.log(response.data)
+              this.$router.push('/form')
+            }
+          })
     }
   }
 }
