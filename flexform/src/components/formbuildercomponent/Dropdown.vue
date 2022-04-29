@@ -40,7 +40,7 @@
           }"
             :style="widthStyle"
         >
-          <span class="light14 red5">Please fill out this field.</span>
+          <span class="light14 red5">Please selected this field.</span>
         </div>
         <div class="dropdown__input__style tw-relative tw-flex tw-flex-row" @click="toggle()">
           <input

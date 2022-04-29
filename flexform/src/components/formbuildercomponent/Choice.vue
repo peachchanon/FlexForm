@@ -7,6 +7,17 @@
           v-if="dataChoice.Required"
       >*</span>
     </div>
+    <div class="tw-flex tw-flex-col tw-justify-end">
+      <div
+          class="tw-w-full tw-flex tw-flex-col tw-items-end widthBox "
+          :class="{
+        'tw-visible': dataChoice.Required || valueChoice.Text==='',
+        'tw-invisible': !dataChoice.Required || valueChoice.Text!==''
+          }"
+      >
+        <span class="light14 red5">Please selected this field.</span>
+      </div>
+    </div>
     <!-- Radio -->
     <radio-component
         v-if="!dataChoice.MultipleChoice"
