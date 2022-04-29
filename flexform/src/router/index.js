@@ -81,7 +81,8 @@ const routes = [
     meta: {
       title: 'Form Fill',
       //requireAuthen: true
-    }
+    },
+    props: true
   },
   {
     path: '/report',

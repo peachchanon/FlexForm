@@ -50,7 +50,7 @@
                     <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
                     </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                    <div class="formname tw-flex tw-flex-col tw-items-start tw-mx-2">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                       <label class="medium16 blue10">{{ FormData.formName }}</label>
                     </div>
@@ -67,7 +67,7 @@
                           buttonIcon="heroicons-outline:trash"
                       ></BaseButtonDelete>
                     </div>
-                    <div class="tw-mx-2">
+                    <div class="">
                       <base-button-blue
                           buttonID="buttonViewMore"
                           buttonText="View More"
@@ -96,18 +96,21 @@
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
                     <div class="">
-                      <BaseButtonDelete
-                          buttonID="buttonDelete"
-                          buttonText="Delete"
-                          buttonIcon="heroicons-outline:trash"
-                      ></BaseButtonDelete>
-                    </div>
-                    <div class="tw-mx-2">
                       <base-button-blue
                           buttonID="buttonViewMore"
-                          buttonText="View More"
+                          buttonText="Response"
                           buttonIcon="heroicons-outline:eye"
                       ></base-button-blue>
+                    </div>
+                    <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
+                      <base-button-fill
+                      buttonID="buttonFill"
+                      buttonText="Fill"
+                      buttonTextColor="white"
+                      buttonBgColor="bg-blue5"
+                      @callbackObject="GoFillForm"
+                      :id="FormData.formId"
+                      ></base-button-fill>
                     </div>
                     <div class="tw-mx-2">
                       <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail">
@@ -257,6 +260,7 @@ import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
 import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
 import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
+import BaseButtonFill from '@/components/BaseButtonId'
 import BaseButtonDelete from '@/components/BaseButtonDelete'
 import SearchBar from "@/components/SearchBar";
 import axios from "axios";
@@ -267,6 +271,7 @@ export default {
     LayoutSidebarNavbar,
     BaseHorizontalNavigation,
     Icon,
+    BaseButtonFill,
     BaseButtonWhite,
     BaseButtonBlue,
     BaseButtonDelete,
@@ -343,6 +348,13 @@ export default {
       this.$router.push({
         name: 'Builder',
         params: { CreateForm: this.CreateFormBtnClick}})
+    },
+    async GoFillForm(string){
+      this.ClickedFormId = string
+      console.log("clicked for id: " + this.ClickedFormId)
+      this.$router.push({
+        name: 'Fill',
+        params: { ClickedForm: this.ClickedFormId}})
     },
     async SelectForm(formId){
       this.CreateFormBtnClick = false
