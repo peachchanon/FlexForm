@@ -133,15 +133,6 @@ const routes = [
     props: true
   },
   {
-    path: '/DataVisualization/SelectGraph/ExportGraph',
-    name: 'ExportGraph',
-    component: ExportGraph,
-    meta: {
-      title: 'ExportGraph',
-      // requireAuthen: true
-    }
-  },
-  {
     path: '/DataVisualization/SelectGraph/PreviewGraph',
     name: 'PreviewGraph',
     component: PreviewGraph,
@@ -150,6 +141,15 @@ const routes = [
       // requireAuthen: true
     },
     props: true
+  },
+  {
+    path: '/DataVisualization/SelectGraph/ExportGraph',
+    name: 'ExportGraph',
+    component: ExportGraph,
+    meta: {
+      title: 'ExportGraph',
+      // requireAuthen: true
+    }
   },
   {
     path: '/AllTicket',
