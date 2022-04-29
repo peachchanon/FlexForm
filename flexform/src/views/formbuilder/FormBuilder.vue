@@ -1379,8 +1379,8 @@ export default {
         TicketId: '',
         FormName: 'Untitled Form',
         FormDescriptions: '',
-        FormCreatedTimestamp: '2022-04-24T08:27:21.548Z',
-        FormModifiedTimestamp: '2022-04-24T08:27:21.548Z',
+        FormCreatedTimestamp: '',
+        FormModifiedTimestamp: '',
         CreatedByUser: '',
         ModifiedByUser: '',
         UseTemplate: false,
@@ -1393,7 +1393,6 @@ export default {
         },
         Sections: [
           {
-            // อย่าลืม Gen ID
             SectionId: '',
             SectionName: 'Untitled Section 1',
             SectionProperties: {
@@ -1404,7 +1403,6 @@ export default {
             },
             Components: [
               {
-                // อย่าลืม Gen ID
                 ComponentId: '',
                 ComponentType: 'heading',
                 ComponentTemplate: false,
