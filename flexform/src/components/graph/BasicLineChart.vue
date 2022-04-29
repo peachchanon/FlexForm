@@ -1,0 +1,81 @@
+﻿<template>
+  <div>
+    <v-chart class="chart" :option="option" />
+  </div>
+</template>
+
+<script>
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { LineChart } from "echarts/charts";
+import VChart from "vue-echarts";
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  ToolboxComponent,
+  GridComponent
+} from "echarts/components";
+use([
+  CanvasRenderer,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  ToolboxComponent,
+  GridComponent
+]);
+
+export default {
+  components: {
+    VChart
+  },
+  // provide: {
+  //   [THEME_KEY]: "dark"
+  // },
+  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+    title: {
+      type: String,
+      required: false,
+      default: ""
+    },
+    dataset: {
+      type: Array,
+      require: true,
+    },
+  },
+  data() {
+    return {
+       option :{}
+    }
+  },
+  mounted() {
+    this.initialEcharts()
+  },
+  methods: {
+    initialEcharts() {
+      this.option = {
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // this.data ที่จะเอามาพล็อต
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: [150, 230, 224, 218, 135, 147, 260],
+            type: 'line'
+          }
+        ]
+      }
+    }
+ }
+}
+</script>
+
+<style lang="scss" scoped>
+.chart {
+  height: 50vh;
+}
+</style>
