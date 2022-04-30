@@ -3,6 +3,9 @@
     <div v-if="GraphTypes === 'Bar brush'">
       <BarBrush></BarBrush> 
     </div>
+    <div v-if="GraphTypes === 'Bar label rotation'">
+    <bar-label-rotation></bar-label-rotation>
+    </div>
     <div v-if="GraphTypes === 'Stacked area chart'">
     <stackedareachart></stackedareachart>
     </div>
@@ -15,13 +18,15 @@
 <script>
 import Stackedareachart from '@/components/graph/StackedAreaChart'
 import BarBrush from '@/components/graph/BarBrush'
+import BarLabelRotation from "@/components/graph/BarLabelRotation";
 import BasicLineChart from '@/components/graph/BasicLineChart'
 export default {
   name: "PreviewGraph.vue",
   components: {
     Stackedareachart,
     BarBrush, // barbrush ยังแก้ไม่เสร็จ
-    BasicLineChart
+    BasicLineChart,
+    BarLabelRotation
   },
   props: {
     GraphTypes : String
