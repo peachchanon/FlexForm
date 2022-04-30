@@ -7,7 +7,7 @@
 <script>
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { LineChart } from "echarts/charts";
+import { BarChart } from "echarts/charts";
 import VChart from "vue-echarts";
 import {
   TitleComponent,
@@ -18,7 +18,7 @@ import {
 } from "echarts/components";
 use([
   CanvasRenderer,
-  LineChart,
+  BarChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
@@ -30,23 +30,26 @@ export default {
   components: {
     VChart
   },
-  // provide: {
-  //   [THEME_KEY]: "dark"
-  // },
-  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+  props: {
     title: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
-    dataset: {
-      type: Array,
-      require: true,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
+    },
+    max: {
+      type: Number,
+      required: false,
+      default: 100,
     },
   },
   data() {
     return {
-       option :{}
+      option: {},
     }
   },
   mounted() {
@@ -68,25 +71,25 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // this.data ที่จะเอามาพล็อต
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: 'line'
+            data: [120, 200, 150, 80, 70, 110, 130],
+            type: 'bar'
           }
         ]
-      }
+      };
     }
- }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .chart {
-  height: 50vh;
+  height: 100vh;
 }
 </style>

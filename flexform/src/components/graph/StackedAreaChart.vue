@@ -53,8 +53,14 @@ export default {
           data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
         },
         toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
           feature: {
-            saveAsImage: {}
+            mark: { show: true },
+            dataView: { show: true, readOnly: true },
+            saveAsImage: { show: true }
           }
         },
         grid: {

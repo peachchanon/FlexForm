@@ -7,7 +7,7 @@
 <script>
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { LineChart } from "echarts/charts";
+import { BarChart } from "echarts/charts";
 import VChart from "vue-echarts";
 import {
   TitleComponent,
@@ -18,7 +18,7 @@ import {
 } from "echarts/components";
 use([
   CanvasRenderer,
-  LineChart,
+  BarChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
@@ -30,23 +30,26 @@ export default {
   components: {
     VChart
   },
-  // provide: {
-  //   [THEME_KEY]: "dark"
-  // },
-  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+  props: {
     title: {
       type: String,
       required: false,
-      default: ""
+      default: "",
     },
-    dataset: {
-      type: Array,
-      require: true,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
+    },
+    max: {
+      type: Number,
+      required: false,
+      default: 100,
     },
   },
   data() {
     return {
-       option :{}
+      option: {},
     }
   },
   mounted() {
@@ -55,6 +58,22 @@ export default {
   methods: {
     initialEcharts() {
       this.option = {
+        title: {
+          text: 'World Population'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {},
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
         toolbox: {
           show: true,
           orient: 'vertical',
@@ -67,26 +86,33 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // this.data ที่จะเอามาพล็อต
+          type: 'value',
+          boundaryGap: [0, 0.01]
         },
         yAxis: {
-          type: 'value'
+          type: 'category',
+          data: ['Brazil', 'Indonesia', 'USA', 'India', 'China', 'World']
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: 'line'
+            name: '2011',
+            type: 'bar',
+            data: [18203, 23489, 29034, 104970, 131744, 630230]
+          },
+          {
+            name: '2012',
+            type: 'bar',
+            data: [19325, 23438, 31000, 121594, 134141, 681807]
           }
         ]
-      }
+      };
     }
- }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .chart {
-  height: 50vh;
+  height: 100vh;
 }
 </style>

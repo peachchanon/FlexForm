@@ -86,11 +86,14 @@ export default {
               xAxisIndex: 0
             },
             toolbox: {
+              show: true,
+              orient: 'vertical',
+              left: 'right',
+              top: 'center',
               feature: {
-                magicType: {
-                  type: ['stack']
-                },
-                dataView: {}
+                mark: { show: true },
+                dataView: { show: true, readOnly: true },
+                saveAsImage: { show: true }
               }
             },
             tooltip: {},

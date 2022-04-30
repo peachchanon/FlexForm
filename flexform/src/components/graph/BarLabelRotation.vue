@@ -57,21 +57,21 @@ export default {
   },
   methods: {
     initialEcharts() {
-      const posList = [
-        'left',
-        'right',
-        'top',
-        'bottom',
-        'inside',
-        'insideTop',
-        'insideLeft',
-        'insideRight',
-        'insideBottom',
-        'insideTopLeft',
-        'insideTopRight',
-        'insideBottomLeft',
-        'insideBottomRight'
-      ];
+      // const posList = [
+      //   'left',
+      //   'right',
+      //   'top',
+      //   'bottom',
+      //   'inside',
+      //   'insideTop',
+      //   'insideLeft',
+      //   'insideRight',
+      //   'insideBottom',
+      //   'insideTopLeft',
+      //   'insideTopRight',
+      //   'insideBottomLeft',
+      //   'insideBottomRight'
+      // ];
 
       const labelOption = {
         show: true,
@@ -103,9 +103,7 @@ export default {
           top: 'center',
           feature: {
             mark: { show: true },
-            dataView: { show: true, readOnly: false },
-            magicType: { show: true, type: ['line', 'bar', 'stack'] },
-            restore: { show: true },
+            dataView: { show: true, readOnly: true },
             saveAsImage: { show: true }
           }
         },
