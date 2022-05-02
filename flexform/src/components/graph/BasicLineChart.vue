@@ -55,6 +55,9 @@ export default {
   methods: {
     initialEcharts() {
       this.option = {
+        title: {
+          text: 'GraphTitle'
+        },
         toolbox: {
           show: true,
           orient: 'vertical',
@@ -87,6 +90,6 @@ export default {
 
 <style lang="scss" scoped>
 .chart {
-  height: 50vh;
+  height: 100vh;
 }
 </style>

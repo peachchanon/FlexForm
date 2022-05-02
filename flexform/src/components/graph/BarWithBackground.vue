@@ -57,7 +57,10 @@ export default {
   },
   methods: {
     initialEcharts() {
-      this.option = {
+      this.option = { 
+        title: {
+          text: 'World Population'
+        },
         toolbox: {
           show: true,
           orient: 'vertical',

@@ -77,6 +77,9 @@ export default {
       };
       this.option =
           {
+            title: {
+              text: 'GraphTitle'
+            },
             legend: {
               data: ['bar', 'bar2', 'bar3', 'bar4'],
               left: '10%'

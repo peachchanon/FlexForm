@@ -57,9 +57,12 @@ export default {
   },
   methods: {
     initialEcharts() {
-      const data = [1,2,3,4,10];
+      let data = [1,2,3,4,10];
       let myChart
       this.option = {
+        title: {
+          text: 'GraphTitle'
+        },
         xAxis: {
           max: '10'
         },

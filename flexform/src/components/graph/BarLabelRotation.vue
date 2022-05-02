@@ -87,6 +87,9 @@ export default {
         }
       };
       this.option = {
+        title: {
+          text: 'GraphTitle'
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
