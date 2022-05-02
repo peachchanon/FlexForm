@@ -308,7 +308,7 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    axios.get('http://localhost:4000/api/Flexform/AllForm')
+    await axios.get('http://localhost:4000/api/Flexform/AllForm')
         .then(response => {
           if(response.status===200 && response.data) {
            // this.FormData = response.data[1]["createdByUser"]

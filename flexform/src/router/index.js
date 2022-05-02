@@ -174,6 +174,13 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach(
+    (to, from, next) => {
+      document.title = 'FlexForm | '+to.name[0].toUpperCase()+to.name.substring(1)
+      next()
+    }
+)
+
 router.beforeEach(async(to, from, next)=> {
   if (to.meta.requireAuthen) {
     if (localStorage.getItem("token")) {
