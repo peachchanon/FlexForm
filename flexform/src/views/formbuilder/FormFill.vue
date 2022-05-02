@@ -9,7 +9,7 @@
           </div>
         </div>
         <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:folder"/>
-        <span class="semibold18 blue10">NT Form</span>
+        <span class="semibold18 blue10">{{FormStructure.FormName}}</span>
       </div>
       <div class="tw-flex tw-flex-col tw-items-center">
         <base-navigation-section-form-builder

@@ -13,6 +13,7 @@ import SelectGraph from "@/views/datavisualization/SelectGraph";
 import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 import AllTicket from "@/views/AllTicket";
+import FormResponse from "@/views/formbuilder/FormResponse";
 import FormFill from "@/views/formbuilder/FormFill";
 import PreviewGraph from "@/views/datavisualization/PreviewGraph";
 import Home from '../views/Home.vue'
@@ -80,6 +81,16 @@ const routes = [
     component: FormFill,
     meta: {
       title: 'Form Fill',
+      //requireAuthen: true
+    },
+    props: true
+  },
+  {
+    path: '/form/response',
+    name: 'Response',
+    component: FormResponse,
+    meta: {
+      title: 'Form Response',
       //requireAuthen: true
     },
     props: true
@@ -176,7 +187,8 @@ const router = new VueRouter({
 
 router.beforeEach(
     (to, from, next) => {
-      document.title = 'FlexForm | '+to.name[0].toUpperCase()+to.name.substring(1)
+      //document.title = 'FlexForm | '+to.name[0].toUpperCase()+to.name.substring(1)
+      document.title = 'FlexForm | '+to.meta.title
       next()
     }
 )
