@@ -50,11 +50,11 @@
                     <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
                     </div>
-                    <div class="formname tw-flex tw-flex-col tw-items-start tw-mx-2">
-                      <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                      <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form Name</label>
                       <label class="medium16 blue10">{{ FormData.formName }}</label>
                     </div>
-                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
+                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start">
                       <label class="medium16 grey5">Created By</label>
                       <label class="light16 grey7">{{ FormData.createdByUser }}</label>
                     </div>
@@ -85,13 +85,20 @@
                     <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out tw-cursor-pointer hover:tw-bg-green3" style="height: fit-content" @click="SelectForm">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                     </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:120px">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                       <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm(FormData.formId)">{{ FormData.formName }}</label>
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
-                      <label class="medium16 grey5">Created By</label>
-                      <label class="light16 grey7">{{ FormData.createdByUser }}</label>
+                      <label class="medium16 grey5 tw-mb-1">Type</label>
+                      <base-badge 
+                          BadgeText="Form" 
+                          BadgeColor="white" 
+                          BadgeBgColor="bg-green4"></base-badge>
+                    </div>
+                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
+                      <label class="medium16 grey5">Form Description</label>
+                      <label class="light16 grey7">{{ FormData.formDescriptions }}</label>
                     </div>
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
@@ -99,7 +106,7 @@
                       <base-button-blue
                           buttonID="buttonViewMore"
                           buttonText="Response"
-                          buttonIcon="heroicons-outline:eye"
+                          buttonIcon="heroicons-outline:chat"
                       ></base-button-blue>
                     </div>
                     <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
@@ -262,6 +269,7 @@ import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
 import BaseButtonFill from '@/components/BaseButtonId'
 import BaseButtonDelete from '@/components/BaseButtonDelete'
+import BaseBadge from "@/components/BaseBadge";
 import SearchBar from "@/components/SearchBar";
 import axios from "axios";
 
@@ -275,6 +283,7 @@ export default {
     BaseButtonWhite,
     BaseButtonBlue,
     BaseButtonDelete,
+    BaseBadge,
     SearchBar
   },
   data() {
@@ -375,6 +384,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .verticalbutton {
   color: $blue5;
   padding: 0.75rem;
