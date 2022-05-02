@@ -34,22 +34,17 @@ export default {
   components: {
     VChart
   },
-  props: {
-    // title: {
-    //   type: String,
-    //   required: false,
-    //   default: "",
-    // },
-    // value: {
-    //   type: Number,
-    //   required: true,
-    //   default: 90,
-    // },
-    // max: {
-    //   type: Number,
-    //   required: false,
-    //   default: 100,
-    // },
+  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+    title:String,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
+    },
+    dataset: {
+      type: Array,
+      require: true,
+    },
   },
   data() {
     return {
@@ -63,6 +58,10 @@ export default {
     initialEcharts() {
       let myChart
         this.option = {
+          title: {
+            text: this.title,
+            left: 'left'
+          },
           legend: {},
           tooltip: {
             trigger: 'axis',

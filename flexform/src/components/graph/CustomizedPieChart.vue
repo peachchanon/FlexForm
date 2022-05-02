@@ -30,21 +30,16 @@ export default {
   components: {
     VChart
   },
-  props: {
-    title: {
-      type: String,
-      required: false,
-      default: "",
-    },
+  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+    title:String,
     value: {
       type: Number,
       required: true,
       default: 90,
     },
-    max: {
-      type: Number,
-      required: false,
-      default: 100,
+    dataset: {
+      type: Array,
+      require: true,
     },
   },
   data() {
@@ -60,7 +55,7 @@ export default {
       this.option = {
         backgroundColor: '#2c343c',
         title: {
-          text: 'Customized Pie',
+          text: this.title,
           left: 'center',
           top: 20,
           textStyle: {

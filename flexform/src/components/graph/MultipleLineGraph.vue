@@ -34,7 +34,12 @@ export default {
   //   [THEME_KEY]: "dark"
   // },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
-    title:[],
+    title:String,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
+    },
     dataset: {
       type: Array,
       require: true,
@@ -46,14 +51,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.title)
     this.initialEcharts()
   },
   methods: {
     initialEcharts() {
       this.option = {
         title: {
-          text: this.title
+          text: this.title,
         },
         tooltip: {
           trigger: 'axis'

@@ -40,10 +40,11 @@ export default {
   //   [THEME_KEY]: "dark"
   // },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
-    title: {
-      type: String,
-      required: false,
-      default: ""
+    title:String,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
     },
     dataset: {
       type: Array,
@@ -63,7 +64,7 @@ export default {
       let dataX = [112, 113, 114, 115, 116, 117, 118, 119, 120] // x axis
       this.option = {
         title: {
-          text: 'Beijing AQI',
+          text: this.title,
           left: '1%'
         },
         tooltip: {
