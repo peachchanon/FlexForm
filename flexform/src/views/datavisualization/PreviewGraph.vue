@@ -102,6 +102,7 @@ import MultipleLineGraph from "@/components/graph/MultipleLineGraph";
 import NightingaleChart from "@/components/graph/NightingaleChart";
 import SeriesLayoutBarChart from "@/components/graph/SeriesLayoutBarChart";
 import ShareDataset from "@/components/graph/ShareDataset";
+import {mapActions, mapGetters} from "vuex";
 export default {
   name: "PreviewGraph.vue",
   components: {
@@ -129,10 +130,17 @@ export default {
   },
   data(){
     return{
-      GraphName:''
+      GraphName:'',
+      StateShowContentForWindowSize: true,
+    }
+  },
+  watch:{
+    windowResize (){
+      this.StateShowContentForWindowSize = window.innerWidth >= 768
     }
   },
   computed: {
+    ...mapGetters(['windowResize']),
     ChangeGraphName() {
       if(this.GraphTitle === 'Graph1'){
         return 'จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์'
@@ -169,10 +177,15 @@ export default {
       }
     },
   },
-  async mounted(){
-    console.log(this.ChangeGraphName)
+  async mounted () {
+    window.onresize = () => {
+      this.flapWindowResize()
+    }
+    this.StateShowContentForWindowSize = window.innerWidth >= 768
+  },
+  methods: {
+    ...mapActions(['flapWindowResize']),
   }
-
 }
 </script>
 
