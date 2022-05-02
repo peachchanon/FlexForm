@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <v-chart class="chart" :option="option" />
+    <v-chart class="chart" :option="option" autoresize/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { LineChart } from "echarts/charts";
-import VChart, { THEME_KEY } from "vue-echarts";
+import VChart from "vue-echarts";
 import {
   TitleComponent,
   TooltipComponent,
@@ -30,14 +30,23 @@ export default {
   components: {
     VChart
   },
-  provide: {
-    [THEME_KEY]: "dark"
+  props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
+    title:String,
+    value: {
+      type: Number,
+      required: true,
+      default: 90,
+    },
+    dataset: {
+      type: Array,
+      require: true,
+    },
   },
   data() {
     return {
       option : {
         title: {
-          text: 'Stacked Area Chart'
+          text: this.title
           // 1 npm install echarts vue-echart --save 2 npm i -D @vue/composition-api --save
         },
         tooltip: {
