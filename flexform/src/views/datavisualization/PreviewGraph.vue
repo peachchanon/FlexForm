@@ -1,84 +1,86 @@
 ﻿<template>
-  <div>
-    <div v-if="GraphTypes === 'Bar brush'">
-      <BarBrush
-          :title="ChangeGraphName">
-      </BarBrush>
-    </div>
-    <div v-if="GraphTypes === 'Bar label rotation'">
-      <bar-label-rotation
-          :title="ChangeGraphName">
-      </bar-label-rotation>
-    </div>
-    <div v-if="GraphTypes === 'Bar race'">
-      <bar-race
-          :title="ChangeGraphName">
-      </bar-race>
-    </div>
-    <div v-if="GraphTypes === 'Bar with background'">
-      <bar-with-background
-          :title="ChangeGraphName">
-      </bar-with-background>
-    </div>
-    <div v-if="GraphTypes === 'Bar y-category'">
-      <bar-y-category
-          :title="ChangeGraphName">
-      </bar-y-category>
-    </div>
-    <div v-if="GraphTypes === 'Basic bar chart'">
-      <basic-bar-chart
-          :title="ChangeGraphName">
-      </basic-bar-chart>
-    </div>
-    <div v-if="GraphTypes === 'Basic line chart'">
-      <basic-line-chart
-          :title="ChangeGraphName">
-      </basic-line-chart>
-    </div>
-    <div v-if="GraphTypes === 'Basic pie chart'">
-      <basic-pie-chart
-          :title="ChangeGraphName">
-      </basic-pie-chart>
-    </div>
-    <div v-if="GraphTypes === 'Customized pie chart'">
-      <customized-pie-chart
-          :title="ChangeGraphName">
-      </customized-pie-chart>
-    </div>
-    <div v-if="GraphTypes === 'Doughnut chart'">
-      <doughnut-chart
-          :title="ChangeGraphName">
-      </doughnut-chart>
-    </div>
-    <div v-if="GraphTypes === 'Line AQI chart'">
-      <LineAQIChart
-          :title="ChangeGraphName">
-      </LineAQIChart>
-    </div>
-    <div v-if="GraphTypes === 'Multiple line graph'">
-      <multiple-line-graph
-          :title="ChangeGraphName"
-      ></multiple-line-graph>
-    </div>
-    <div v-if="GraphTypes === 'Nightingale chart'">
-      <nightingale-chart
-          :title="ChangeGraphName">
-      </nightingale-chart>
-    </div>
-    <div v-if="GraphTypes === 'Series layout bar chart'">
-      <series-layout-bar-chart
-          :title="ChangeGraphName">
-      </series-layout-bar-chart>
-    </div>
-    <div v-if="GraphTypes === 'Share dataset chart'">
-      <share-dataset
-          :title="ChangeGraphName">
-      </share-dataset>
-    </div>
-    <div v-if="GraphTypes === 'Stacked area chart'">
-      <stackedareachart
-          :title="ChangeGraphName">
-      </stackedareachart>
+  <div class="bg-grey1 tw-h-full sm:tw-p-2">
+    <div class="box bg-white tw-h-full">
+      <div v-if="GraphTypes === 'Bar brush'">
+        <BarBrush
+            :title="ChangeGraphName">
+        </BarBrush>
+      </div>
+      <div v-if="GraphTypes === 'Bar label rotation'">
+        <bar-label-rotation
+            :title="ChangeGraphName">
+        </bar-label-rotation>
+      </div>
+      <div v-if="GraphTypes === 'Bar race'">
+        <bar-race
+            :title="ChangeGraphName">
+        </bar-race>
+      </div>
+      <div v-if="GraphTypes === 'Bar with background'">
+        <bar-with-background
+            :title="ChangeGraphName">
+        </bar-with-background>
+      </div>
+      <div v-if="GraphTypes === 'Bar y-category'">
+        <bar-y-category
+            :title="ChangeGraphName">
+        </bar-y-category>
+      </div>
+      <div v-if="GraphTypes === 'Basic bar chart'">
+        <basic-bar-chart
+            :title="ChangeGraphName">
+        </basic-bar-chart>
+      </div>
+      <div v-if="GraphTypes === 'Basic line chart'">
+        <basic-line-chart
+            :title="ChangeGraphName">
+        </basic-line-chart>
+      </div>
+      <div v-if="GraphTypes === 'Basic pie chart'">
+        <basic-pie-chart
+            :title="ChangeGraphName">
+        </basic-pie-chart>
+      </div>
+      <div v-if="GraphTypes === 'Customized pie chart'">
+        <customized-pie-chart
+            :title="ChangeGraphName">
+        </customized-pie-chart>
+      </div>
+      <div v-if="GraphTypes === 'Doughnut chart'">
+        <doughnut-chart
+            :title="ChangeGraphName">
+        </doughnut-chart>
+      </div>
+      <div v-if="GraphTypes === 'Line AQI chart'">
+        <LineAQIChart
+            :title="ChangeGraphName">
+        </LineAQIChart>
+      </div>
+      <div v-if="GraphTypes === 'Multiple line graph'">
+        <multiple-line-graph
+            :title="ChangeGraphName"
+        ></multiple-line-graph>
+      </div>
+      <div v-if="GraphTypes === 'Nightingale chart'">
+        <nightingale-chart
+            :title="ChangeGraphName">
+        </nightingale-chart>
+      </div>
+      <div v-if="GraphTypes === 'Series layout bar chart'">
+        <series-layout-bar-chart
+            :title="ChangeGraphName">
+        </series-layout-bar-chart>
+      </div>
+      <div v-if="GraphTypes === 'Share dataset chart'">
+        <share-dataset
+            :title="ChangeGraphName">
+        </share-dataset>
+      </div>
+      <div v-if="GraphTypes === 'Stacked area chart'">
+        <stackedareachart
+            :title="ChangeGraphName">
+        </stackedareachart>
+      </div>
     </div>
   </div>
 </template>
@@ -133,7 +135,7 @@ export default {
   computed: {
     ChangeGraphName() {
       if(this.GraphTitle === 'Graph1'){
-         return 'จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์'
+        return 'จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์'
       }
       else if(this.GraphTitle === 'Graph2'){
         return 'จำนวน ticket แต่ละประเภทที่ถูกสร้างขึ้นรายสัปดาห์'
