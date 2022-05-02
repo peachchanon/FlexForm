@@ -2,11 +2,16 @@
   <div>
     <div class="base-padding">
       <span 
-          v-for="item in field" :key="item.field" 
-          class="tw-mr-5"
-          :class="{'navigation-button-active':selectField===item.field,'navigation-button':selectField!==item.field}"
-          @click="doHorizontalNavigation(item.field)"
-      >{{item.field}}</span>
+          v-for="(item, index) in field" :key="index" 
+          class="tw-mr-5 tw-cursor-pointer"
+          :class="{
+            'navigation-button-active': index === stateSectionIndex,
+            'navigation-button': index === stateSectionIndex
+          }"
+          @click="doHorizontalNavigation(index, item.field)"
+      >
+        {{item.field}}
+      </span>
     </div>
   </div>
 </template>
@@ -20,12 +25,14 @@ export default {
   },
   data() {
     return {
-      selectField: this.field[0]
+      //selectField: this.field[0],
+      stateSectionIndex: 0
     }
   },
   methods: {
-    doHorizontalNavigation(field) {
-      this.selectField = field
+    doHorizontalNavigation(index, field) {
+      //this.selectField = field
+      this.stateSectionIndex = index
       this.$emit('callbackField', field)
     }
   }
@@ -52,14 +59,6 @@ export default {
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
   }
-  &:hover{
-    color: #4098D7;
-  }
-  &:hover:after{
-    color: #62B0E8;
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
 }
 
 .navigation-button-active {
@@ -67,5 +66,6 @@ export default {
   cursor: pointer;
   padding-bottom: 1px;
   border-bottom: solid #4098D7 2px;
+  
 }
 </style>
