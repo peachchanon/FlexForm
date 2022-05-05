@@ -19,7 +19,7 @@
             <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
               <!-- Search Box -->
               <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
-                <SearchBar></SearchBar>
+                <SearchBar placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
               </div>
               <div class="tw-flex tw-flex-row tw-items-center">
                 <!-- My Template Button -->
@@ -42,7 +42,7 @@
               </div>
             </div>
             <!-- Form list-->
-          <div v-for="FormData in FormData" :key="FormData.formId">
+          <div v-for="FormData in filteredList" :key="FormData.formId">
             <div v-if="FormData.useTemplate === true">
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
@@ -85,7 +85,7 @@
                     <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out tw-cursor-pointer hover:tw-bg-green3" style="height: fit-content" @click="SelectForm">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                     </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:200px">
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:200px; max-width: 200px">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                       <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm(FormData.formId)">{{ FormData.formName }}</label>
                     </div>
@@ -302,7 +302,8 @@ export default {
       showFormDetailLayout: false,
       CreateFormBtnClick: true,
       ClickedFormId: '',
-      ModalFormId: ''
+      ModalFormId: '',
+      formNameSearch: ''
     }
   },
   watch:{
@@ -312,6 +313,11 @@ export default {
   },
   computed: {
     ...mapGetters(['windowResize']),
+    filteredList: function () {
+      return this.FormData.filter(FormData =>
+          FormData.formName.toLowerCase().match(this.formNameSearch.toLowerCase())
+      );
+    },
   },
   async mounted () {
     window.onresize = () => {
@@ -345,6 +351,9 @@ export default {
     },
     HorizontalModalNavigation(page){
       this.ModalPage = page
+    },
+    formNameInput(input){
+      this.formNameSearch = input
     },
     CreateFormModal(){
       this.showFormBuilderLayout = !this.showFormBuilderLayout
