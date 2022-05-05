@@ -103,6 +103,7 @@ import NightingaleChart from "@/components/graph/NightingaleChart";
 import SeriesLayoutBarChart from "@/components/graph/SeriesLayoutBarChart";
 import ShareDataset from "@/components/graph/ShareDataset";
 import {mapActions, mapGetters} from "vuex";
+// import axios from "axios";
 export default {
   name: "PreviewGraph.vue",
   components: {
@@ -126,12 +127,14 @@ export default {
   props: {
     GraphTypes : String,
     GraphTitle : String,
-    title: String
+    title: String,
+    dataset: Array
   },
   data(){
     return{
       GraphName:'',
       StateShowContentForWindowSize: true,
+      GraphData: []
     }
   },
   watch:{
@@ -182,6 +185,51 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
+    // axios.get('http://localhost:4000/api/Flexform/')
+    //     .then(response => {
+    //       if(response.status===200 && response.data) {
+    //            this.GraphData = response.data
+    //        if(this.GraphTitle === 'Graph1'){
+    //          if(this.GraphData.UseTemplate === true){
+    //          const saveDate = this.GraphData.map((item) => { เอาข้อมูลวันที่ย้อนหลัง 7 วันจากวันนี้
+    //            const d = new Date(item.date)
+    //            d.setDate(t.getDate() - 7) // to get previous date
+    //            const saveConverted = d.toLocalString(); //แปลงวันที่ใน  iso database ให้เป็นวันที่ธรรมดา
+    //          }
+    //          console.log(saveDate) // ข้อมูลวันที่ 7 วันย้อนหลัง
+    //          }
+    //
+    //        }
+           // else if(this.GraphTitle === 'Graph2'){
+           //  
+           // }
+           // else if(this.GraphTitle === 'Graph4'){
+           // 
+           // }
+           // else if(this.GraphTitle === 'Graph5'){
+           //  
+           // }
+           // else if(this.GraphTitle === 'Graph6'){
+           //
+           // }
+           // else if(this.GraphTitle === 'Graph7'){
+           //
+           // }
+           // else if(this.GraphTitle === 'Graph8'){
+           //
+           // }
+           // else if(this.GraphTitle === 'Graph9'){
+           //
+           // }
+           // else{
+           //
+           // }
+        //   }
+        // })
+        // .catch(error => {
+        //   // this.errors.push(error)
+        //   console.log(error)
+        // })
   },
   methods: {
     ...mapActions(['flapWindowResize']),

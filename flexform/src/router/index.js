@@ -10,7 +10,6 @@ import Report from '../views/Report'
 import ManageUsers from '@/views/ManageUsers'
 import DataVisualization from "@/views/datavisualization/DataVisualization";
 import SelectGraph from "@/views/datavisualization/SelectGraph";
-import ExportGraph from "@/views/datavisualization/ExportGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 import AllTicket from "@/views/AllTicket";
 import FormResponse from "@/views/formbuilder/FormResponse";
@@ -153,15 +152,6 @@ const routes = [
       // requireAuthen: true
     },
     props: true
-  },
-  {
-    path: '/DataVisualization/SelectGraph/ExportGraph',
-    name: 'ExportGraph',
-    component: ExportGraph,
-    meta: {
-      title: 'ExportGraph',
-      // requireAuthen: true
-    }
   },
   {
     path: '/AllTicket',
