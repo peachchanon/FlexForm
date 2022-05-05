@@ -23,15 +23,28 @@
           <div>
             <SearchBar></SearchBar>
           </div>
-          <div class="tw-w-full" style="max-width: 120px">
-            <base-button
-                buttonID="buttonLogin"
-                buttonText="Fill"
-                buttonTextColor="white"
-                buttonBgColor="bg-blue5"
-                @callback="doFill"
-            ></base-button>
+          <div class="tw-flex tw-flex-row tw-items-end tw-justify-end tw-w-full">
+            <div class="tw-w-full tw-ml-1 tw-mr-1" style="max-width: 120px">
+              <base-button
+                  buttonID="buttonLogin"
+                  buttonText="Export"
+                  buttonTextColor="white"
+                  buttonBgColor="blue5"
+                  buttonIconRight="heroicons-outline:upload"
+                  buttonBorderColor="border-blue5"
+              ></base-button>
+            </div>
+            <div class="tw-w-full tw-ml-1" style="max-width: 120px">
+              <base-button
+                  buttonID="buttonLogin"
+                  buttonText="Fill"
+                  buttonTextColor="white"
+                  buttonBgColor="bg-blue5"
+                  @callback="doFill"
+              ></base-button>
+            </div>
           </div>
+          
         </div>
         <div class="base-padding">
           <vue-good-table
@@ -42,34 +55,32 @@
               :pagination-options="{
                 enabled: true
               }"
+              @on-row-click="openDetailModal"
           ></vue-good-table>
         </div>
       </div>
     </div>
     <!-- Detail Modal -->
-    <!--
-    <transition name="theme-modal-fade">
+    <transition name="theme-modal-fade" v-if="stateShowDetailModal">
       <div class="theme-modal-backdrop">
         <div class="theme-modal">
           <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
-            <Icon class="icon__style__large tw-mr-2 red5" icon="heroicons-outline:trash"/>
-            <span class="semibold24 red5">Delete Section ?</span>
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+              <label class="semibold24 blue10">Form</label>
+            </div>
+            <div class="button__close tw-absolute tw-right-0" @click="closeDetailModal">
+              <Icon class="semibold24" icon="heroicons-outline:x"/>
+            </div>
           </header>
           <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
-            <span class="medium16 grey10">You're about to delete .</span>
+            <div v-for="element in FormResponseTable.columns" :key="element.field">
+              <span class="medium16 grey10">{{element.label}}</span>
+            </div>
           </section>
-          <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
-            <div class="tw-w-1/3 tw-mr-1">
-              <div class="button__style__white red">No</div>
-            </div>
-            <div class="tw-w-1/3 tw-ml-1">
-              <div class="button__style__red">Yes</div>
-            </div>
-          </footer>
         </div>
       </div>
     </transition>
-    -->
   </div>
 </template>
 
@@ -94,6 +105,7 @@ export default {
   },
   data() {
     return {
+      stateShowDetailModal: false,
       columns: [
         {
           label: 'Name',
@@ -119,8 +131,8 @@ export default {
     }
   },
   async mounted() {
-    // this.FormID
-    const idForm =this.FormID
+    // const idForm = this.FormID
+    const idForm = '9b960055-8010-47f7-90db-8870b39f1b72'
     // Form Structure
     //console.log('Form Structure')
     await axios.get('http://localhost:4000/api/FlexForm/'+idForm)
@@ -198,6 +210,17 @@ export default {
   methods:{
     doFill() {
       console.log('Fill')
+    },
+    openDetailModal(params){
+      console.log(params.row)
+      console.log(params.row.originalIndex)
+      //console.log(Object.keys(params.row))
+      //console.log(params.row.originalIndex)
+      //console.log(Object.keys(params.row)[params.row.originalIndex])
+      this.stateShowDetailModal = true
+    },
+    closeDetailModal(){
+      this.stateShowDetailModal = false
     },
   }
 }
@@ -312,6 +335,19 @@ export default {
   background-color: $red5;
   &:hover{
     background-color: $red6;
+  }
+}
+.button__close{
+  width: fit-content;
+  color: $blue10;
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  transition: all .1s ease-in;
+  &:hover{
+    color: $red5;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
   }
 }
 </style>
