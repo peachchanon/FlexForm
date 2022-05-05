@@ -120,10 +120,10 @@ export default {
   },
   async mounted() {
     // this.FormID
-    const idFormTest ='9b960055-8010-47f7-90db-8870b39f1b72'
+    const idForm =this.FormID
     // Form Structure
     //console.log('Form Structure')
-    await axios.get('http://localhost:4000/api/FlexForm/'+idFormTest)
+    await axios.get('http://localhost:4000/api/FlexForm/'+idForm)
         .then(response => {
           if(response.status===200 && response.data){
             this.FormStructureData = response.data
@@ -135,7 +135,7 @@ export default {
         })
     // Form Response
     //console.log('Form Response')
-    await axios.get('http://localhost:4000/api/FormInput/FormInput/'+idFormTest)
+    await axios.get('http://localhost:4000/api/FormInput/FormInput/'+idForm)
         .then(response => {
           if(response.status===200 && response.data){
             this.FormResponseData = response.data
