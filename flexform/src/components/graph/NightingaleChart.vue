@@ -1,13 +1,13 @@
 ﻿<template>
   <div>
-    <v-chart class="chart" :option="option" autoresize />
+    <v-chart class="chart" :option="option" autoresize/>
   </div>
 </template>
 
 <script>
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { LineChart } from "echarts/charts";
+import { PieChart } from "echarts/charts";
 import VChart from "vue-echarts";
 import {
   TitleComponent,
@@ -18,7 +18,7 @@ import {
 } from "echarts/components";
 use([
   CanvasRenderer,
-  LineChart,
+  PieChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
@@ -30,9 +30,6 @@ export default {
   components: {
     VChart
   },
-  // provide: {
-  //   [THEME_KEY]: "dark"
-  // },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
     value: {
@@ -47,7 +44,7 @@ export default {
   },
   data() {
     return {
-       option :{}
+      option: {},
     }
   },
   mounted() {
@@ -57,35 +54,46 @@ export default {
     initialEcharts() {
       this.option = {
         title: {
-          text: this.title
+          text: this.title,
+          left: 'center'
+        },
+        legend: {
+          top: 'bottom'
         },
         toolbox: {
           show: true,
-          orient: 'vertical',
-          left: 'right',
-          top: 'center',
           feature: {
             mark: { show: true },
-            dataView: { show: true, readOnly: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
             saveAsImage: { show: true }
           }
         },
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // this.data ที่จะเอามาพล็อต
-        },
-        yAxis: {
-          type: 'value'
-        },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: 'line'
+            name: 'Nightingale Chart',
+            type: 'pie',
+            radius: [50, 250],
+            center: ['50%', '50%'],
+            roseType: 'area',
+            itemStyle: {
+              borderRadius: 8
+            },
+            data: [
+              { value: 40, name: 'rose 1' },
+              { value: 38, name: 'rose 2' },
+              { value: 32, name: 'rose 3' },
+              { value: 30, name: 'rose 4' },
+              { value: 28, name: 'rose 5' },
+              { value: 26, name: 'rose 6' },
+              { value: 22, name: 'rose 7' },
+              { value: 18, name: 'rose 8' }
+            ]
           }
         ]
-      }
+      };
     }
- }
+  }
 }
 </script>
 

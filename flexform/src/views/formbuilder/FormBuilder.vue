@@ -18,7 +18,7 @@
         <!-- Form Name Navbar -->
         <div class="tw-w-full bg-white base-padding">
           <div class="tw-flex tw-flex-row tw-items-center">
-            <div class="tw-mr-4">
+            <div class="tw-mr-4" @click="doShowSaveModal">
               <div class="button__circle">
                 <Icon class="icon__style__large blue10" icon="heroicons-outline:chevron-left"/>
               </div>
@@ -49,6 +49,31 @@
             </div>
           </div>
         </div>
+        <!-- Save Modal -->
+        <transition name="theme-modal-fade" v-if="StateSaveModal">
+          <div class="theme-modal-backdrop">
+            <div class="theme-modal">
+              <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+                <Icon class="icon__style__large tw-mr-2 red5" icon="heroicons-outline:download"/>
+                <span class="semibold24 red5">Save Changes ?</span>
+              </header>
+              <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
+                <span class="medium16 grey10">Do you want to save your changes before exit? <br>If you don’t save, your changes will be lost.</span>
+              </section>
+              <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
+                <div class="tw-w-1/3 tw-mr-1">
+                  <div class="button__style__white red" @click="doShowSaveModal">Cancel</div>
+                </div>
+                <div class="tw-w-1/3 tw-mr-1">
+                  <div class="button__style__white red" @click="PrevPage">Don't Save</div>
+                </div>
+                <div class="tw-w-1/3 tw-ml-1">
+                  <div class="button__style__red" @click="SaveFormStructure">Save</div>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </transition>
         <!-- Blue Navbar -->
         <div class="tw-w-full tw-flex tw-flex-row bg-blue10" style="padding: 0.5rem">
           <div class="tw-w-full tw-flex tw-flex-row tw-justify-start">
@@ -1353,6 +1378,8 @@ export default {
     return {
       // Window Size
       StateShowContentForWindowSize: true,
+      // Save
+      StateSaveModal: false,
       // Page
       PageList: [{field:'Build'},{field:'Preview'},{field:'Setting'}],
       StatePage: 'Build',
@@ -1479,7 +1506,7 @@ export default {
   watch:{
     windowResize () {
       this.StateShowContentForWindowSize = window.innerWidth >= 768
-    },
+    }
   },
   computed: {
     ...mapGetters(['windowResize']),
@@ -1488,6 +1515,10 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
+    // window.onbeforeunload  = function() {
+    //   return "Data will be lost if you leave the page, are you sure?"
+    // }
+    
     this.StateShowContentForWindowSize = window.innerWidth >= 768
     if(this.CreateForm === false){
     axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
@@ -1511,26 +1542,33 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
-    capital(string){
+    CapitalFirstLetter(string){
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     CapitalObj(obj){
       const newObj = {}
       for (const [key, value] of Object.entries(obj)) {
         if (typeof value !== 'object')
-          newObj[this.capital(key)] = value
+          newObj[this.CapitalFirstLetter(key)] = value
         else {
           if (Array.isArray(value)) {
             if (typeof value?.[0] === 'object')
-              newObj[this.capital(key)] = value.map(this.CapitalObj)
+              newObj[this.CapitalFirstLetter(key)] = value.map(this.CapitalObj)
             else
-              newObj[this.capital(key)] = value
+              newObj[this.CapitalFirstLetter(key)] = value
           }
           else
-            newObj[this.capital(key)] = this.CapitalObj(value)
+            newObj[this.CapitalFirstLetter(key)] = this.CapitalObj(value)
         }
       }
       return newObj
+    },
+    PrevPage(){
+      this.$router.push('/form')
+    },
+    // Save form
+    doShowSaveModal(){
+        this.StateSaveModal = this.StateSaveModal !== true
     },
     // Page
     doNavigationFormBuilder(namePage) {
@@ -2894,6 +2932,104 @@ export default {
   border: none;
   border-radius: 12px;
   transition: all .1s ease-in;
+}
+
+.icon__style__large{
+  font-size: 24px;
+}
+.theme-modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+}
+.theme-modal {
+  margin: 10rem 0;
+  min-width: 375px;
+  width: 460px;
+  background-color: white;
+  padding: 0.75rem;
+  box-shadow: 0 0 0.5px rgba(10, 10, 10, 0.5);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  .button-close{
+    color: #102A43;
+    padding: 0.75rem;
+    transition: all .1s ease-in;
+    border-radius: 12px;
+    margin: 0.25rem 0;
+    cursor: pointer;
+    &:hover{
+      color: #D64545;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    }
+  }
+}
+.theme-modal-fade-enter, .theme-modal-fade-leave-to {
+  opacity: 0;
+}
+.theme-modal-fade-enter-active, .theme-modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.button__style__white {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $blue5;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: $blue5;
+  background-color: white;
+  &:hover{
+    color: $blue3;
+    border-color: $blue3;
+  }
+}
+.button__style__white.red {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $red5;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: $red5;
+  background-color: white;
+  &:hover{
+    color: $red3;
+    border-color: $red3;
+  }
+}
+
+.button__style__red {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  background-color: $red5;
+  &:hover{
+    background-color: $red6;
+  }
 }
 
 </style>
