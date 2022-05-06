@@ -76,12 +76,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarBrushClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #2-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -97,12 +91,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="BarLabelRotationClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #3-->
@@ -120,12 +108,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarRaceClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #4-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -141,12 +123,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="BarWithBackgroundClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #5-->
@@ -164,12 +140,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarYCategoryClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #6-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -186,12 +156,6 @@
                     buttonBgColor="bg-white"
                     :callback="BasicBarChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #7-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -207,12 +171,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="BasicLineChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #8-->
@@ -232,12 +190,6 @@
                     buttonBgColor="bg-white"
                     :callback="BasicPieChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #9-->
               <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
@@ -255,12 +207,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="CustomizedPieChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #10-->
@@ -280,12 +226,6 @@
                     buttonBgColor="bg-white"
                     :callback="DoughnutChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #11-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -302,12 +242,6 @@
                     buttonBgColor="bg-white"
                     :callback="LineAQIClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #12-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -323,12 +257,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="MultipleLineGraphClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #13-->
@@ -348,12 +276,6 @@
                     buttonBgColor="bg-white"
                     :callback="NightingaleChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #14-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -369,12 +291,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="SeriesLayoutBarChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
               <!--graph list on the right #15-->
@@ -392,12 +308,6 @@
                     buttonBgColor="bg-white"
                     :callback="ShareDatasetChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
               <!--graph list on the right #16-->
               <div class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
@@ -413,12 +323,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="StackedAreaChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -442,12 +346,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarBrushClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #2-->
@@ -464,12 +362,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="BarLabelRotationClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -488,12 +380,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarRaceClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #4-->
@@ -510,12 +396,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="BarWithBackgroundClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -534,12 +414,6 @@
                     buttonBgColor="bg-white"
                     :callback="BarYCategoryClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #6-->
@@ -557,12 +431,6 @@
                     buttonBgColor="bg-white"
                     :callback="BasicBarChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #7-->
@@ -579,12 +447,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="SeriesLayoutBarChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -608,12 +470,6 @@
                     buttonBgColor="bg-white"
                     :callback="BasicLineChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #2-->
@@ -630,12 +486,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="LineAQIClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -654,12 +504,6 @@
                     buttonBgColor="bg-white"
                     :callback="MultipleLineGraphClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #4-->
@@ -677,12 +521,6 @@
                     buttonBgColor="bg-white"
                     :callback="ShareDatasetChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #5-->
@@ -699,12 +537,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="StackedAreaChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -728,12 +560,6 @@
                     buttonBgColor="bg-white"
                     :callback="BasicPieChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #2-->
@@ -750,12 +576,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="CustomizedPieChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -774,12 +594,6 @@
                     buttonBgColor="bg-white"
                     :callback="DoughnutChartClick"
                 ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
-                ></base-button>
               </div>
 
               <!--graph list on the right #4-->
@@ -796,12 +610,6 @@
                     buttonBorderColor="border-white"
                     buttonBgColor="bg-white"
                     :callback="NightingaleChartClick"
-                ></base-button>
-                <base-button
-                    buttonID="buttonExport"
-                    buttonText="Export"
-                    buttonTextColor="white"
-                    buttonBgColor="bg-green5"
                 ></base-button>
               </div>
 
@@ -872,7 +680,7 @@
               <!--                <Icon class="semibold24 blue10 tw-mx-3 tw-my-2" icon="heroicons-outline:eye"/>-->
               <!--              </div>-->
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -888,7 +696,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar label rotation</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -903,7 +711,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar race</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -918,7 +726,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar with background</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -933,7 +741,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar y-category</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -948,7 +756,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic bar chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -963,7 +771,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic line chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -980,7 +788,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic pie chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -997,7 +805,7 @@
                 <span class="medium16 blue10 tw-m-1">Customized pie</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1014,7 +822,7 @@
                 <span class="medium16 blue10 tw-m-1">Doughnut chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1029,7 +837,7 @@
                 <span class="medium16 blue10 tw-m-1">Line AQI</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1044,7 +852,7 @@
                 <span class="medium16 blue10 tw-m-1">Multiple line graph</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1061,7 +869,7 @@
                 <span class="medium16 blue10 tw-m-1">Nightingale chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1076,7 +884,7 @@
                 <span class="medium16 blue10 tw-m-1">Series layout bar chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1091,7 +899,7 @@
                 <span class="medium16 blue10 tw-m-1">Share dataset</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1106,7 +914,7 @@
                 <span class="medium16 blue10 tw-m-1">Stacked area chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1127,7 +935,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar brush</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1143,7 +951,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar label rotation</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1158,7 +966,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar race</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1173,7 +981,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar with background</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1188,7 +996,7 @@
                 <span class="medium16 blue10 tw-m-1">Bar y-category</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1203,7 +1011,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic bar chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1219,7 +1027,7 @@
                 <span class="medium16 blue10 tw-m-1">Series layout bar chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1239,7 +1047,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic line chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1255,7 +1063,7 @@
                 <span class="medium16 blue10 tw-m-1">Line AQI</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1270,7 +1078,7 @@
                 <span class="medium16 blue10 tw-m-1">Multiple line graph</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1286,7 +1094,7 @@
                 <span class="medium16 blue10 tw-m-1">Series layout bar chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1301,7 +1109,7 @@
                 <span class="medium16 blue10 tw-m-1">Share dataset</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1316,7 +1124,7 @@
                 <span class="medium16 blue10 tw-m-1">Stacked area chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1340,7 +1148,7 @@
                 <span class="medium16 blue10 tw-m-1">Basic pie chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1357,7 +1165,7 @@
                 <span class="medium16 blue10 tw-m-1">Customized pie</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1374,7 +1182,7 @@
                 <span class="medium16 blue10 tw-m-1">Doughnut chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"
@@ -1391,7 +1199,7 @@
                 <span class="medium16 blue10 tw-m-1">Nightingale chart</span>
               </div>
               <base-button
-                  buttonID="buttonExport"
+                  buttonID="buttonPreview"
                   buttonText="Preview"
                   buttonTextColor="blue5"
                   buttonBgColor="bg-white"

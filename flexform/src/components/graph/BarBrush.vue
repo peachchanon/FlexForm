@@ -28,7 +28,7 @@ use([
 
 export default {
   components: {
-    VChart
+    VChart,
   },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
@@ -92,7 +92,7 @@ export default {
               feature: {
                 mark: { show: true },
                 dataView: { show: true, readOnly: true },
-                saveAsImage: { show: true }
+                saveAsImage: { show: true },
               }
             },
             tooltip: {},

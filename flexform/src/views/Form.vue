@@ -19,7 +19,7 @@
             <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
               <!-- Search Box -->
               <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
-                <SearchBar></SearchBar>
+                <SearchBar placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
               </div>
               <div class="tw-flex tw-flex-row tw-items-center">
                 <!-- My Template Button -->
@@ -42,7 +42,7 @@
               </div>
             </div>
             <!-- Form list-->
-          <div v-for="FormData in FormData" :key="FormData.formId">
+          <div v-for="FormData in filteredList" :key="FormData.formId">
             <div v-if="FormData.useTemplate === true">
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
@@ -85,7 +85,7 @@
                     <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out tw-cursor-pointer hover:tw-bg-green3" style="height: fit-content" @click="SelectForm">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                     </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:120px">
+                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:200px; max-width: 200px">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                       <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm(FormData.formId)">{{ FormData.formName }}</label>
                     </div>
@@ -120,17 +120,95 @@
                       ></base-button-fill>
                     </div>
                     <div class="tw-mx-2">
-                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail">
+                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId)">
                         <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
                       </div>
                     </div>
+                    <!-- Vertical dot button !-->
+                    <transition name="theme-modal-fade" v-if="showFormDetailLayout">
+                      <div class="theme-modal-backdrop">
+                        <div v-if="showFormDetailLayout === true" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
+                          <div class="detailcard bg-white radius12px base-shadow base-padding base-margin">
+                            <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
+                              <div class="tw-flex tw-flex-row tw-items-center tw-relative">
+                                <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+                                <label class="semibold24 blue10">Form</label>
+                              </div>
+                              <div class="button__close" @click="showFormDetail()">
+                                <Icon class="semibold24" icon="heroicons-outline:x"/>
+                              </div>
+                            </div>
+                            <div>
+                              <div class="">
+                                <div>
+                                  <base-horizontal-navigation
+                                      v-bind:field="horizontalNavigationModal"
+                                      @callbackField="HorizontalModalNavigation"
+                                  >
+                                  </base-horizontal-navigation>
+                                </div>
+                                <div v-if="ModalPage==='Setting'">
+                                  <div class="tw-flex tw-flex-row">
+                                    <div class="tw-flex tw-flex-col">
+                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                                        <Icon class="semibold24 icon" icon="heroicons-outline:folder"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16">Fill Form</label>
+                                      </div>
+                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:inbox-in"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Import Data</label>
+                                      </div>
+                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Export Response</label>
+                                      </div>
+                                    </div>
+                                    <div class="tw-flex tw-flex-col">
+                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:eye"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16 ">View Response</label>
+                                      </div>
+                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5" @click="SelectForm(ModalFormId)">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Edit Form</label>
+                                      </div>
+                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
+                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Save As Template</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div v-if="ModalPage==='Detail'">
+                                  <div class="tw-flex tw-flex-row">
+                                    <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                                      <label class="semibold16 blue10">Created By</label>
+                                      <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
+                                    </div>
+                                    <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                                      <label class="semibold16 blue10">Date Created</label>
+                                      <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
+                                    </div>
+                                  </div>
+                                  <div class="tw-flex tw-flex-col tw-mx-2.5 tw-my-3">
+                                    <label class="semibold16 blue10">Description</label>
+                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </transition>
                   </div>
                 </div>
               </div>
             </div>
+            
           </div>
           </div>
-          <!-- Create an Account Modal -->
+          <!-- Create Form Modal -->
           <transition name="theme-modal-fade" v-if="showFormBuilderLayout">
             <div class="theme-modal-backdrop">
               <div v-if="showFormBuilderLayout === true" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
@@ -161,84 +239,6 @@
                       <div class="tw-flex tw-flex-col tw-items-start tw-m-4 md:tw-items-center">
                         <label class="text__blue tw-my-2">Use Template</label>
                         <label class="text__grey tw-my-2">Choose form template</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </transition>
-
-          <!-- Vertical dot button !-->
-          <transition name="theme-modal-fade" v-if="showFormDetailLayout">
-            <div class="theme-modal-backdrop">
-              <div v-if="showFormDetailLayout === true" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
-                <div class="detailcard bg-white radius12px base-shadow base-padding base-margin">
-                  <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
-                    <div class="tw-flex tw-flex-row tw-items-center tw-relative">
-                      <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
-                      <label class="semibold24 blue10">Form</label>
-                    </div>
-                    <div class="button__close" @click="showFormDetail">
-                      <Icon class="semibold24" icon="heroicons-outline:x"/>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="">
-                      <div>
-                        <base-horizontal-navigation
-                            v-bind:field="horizontalNavigationModal"
-                            @callbackField="HorizontalModalNavigation"
-                        >
-                        </base-horizontal-navigation>
-                      </div>
-                      <div v-if="ModalPage==='Setting'">
-                        <div class="tw-flex tw-flex-row">
-                          <div class="tw-flex tw-flex-col">
-                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
-                              <Icon class="semibold24 icon" icon="heroicons-outline:folder"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16">Fill Form</label>
-                            </div>
-                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
-                              <Icon class="semibold24 icon " icon="heroicons-outline:inbox-in"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16 ">Import Data</label>
-                            </div>
-                            <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
-                              <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16 ">Export Response</label>
-                            </div>
-                          </div>
-                          <div class="tw-flex tw-flex-col">
-                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
-                              <Icon class="semibold24 icon " icon="heroicons-outline:eye"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16 ">View Response</label>
-                            </div>
-                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
-                              <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16 ">Edit Form</label>
-                            </div>
-                            <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
-                              <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
-                              <label class="tw-mx-3 tw-my-1 semibold16 ">Save As Template</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div v-if="ModalPage==='Detail'">
-                        <div class="tw-flex tw-flex-row">
-                          <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
-                            <label class="semibold16 blue10">Created By</label>
-                            <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
-                          </div>
-                          <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
-                            <label class="semibold16 blue10">Date Created</label>
-                            <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
-                          </div>
-                        </div>
-                        <div class="tw-flex tw-flex-col tw-mx-2.5 tw-my-3">
-                          <label class="semibold16 blue10">Description</label>
-                          <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -301,7 +301,9 @@ export default {
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
       CreateFormBtnClick: true,
-      ClickedFormId: ''
+      ClickedFormId: '',
+      ModalFormId: '',
+      formNameSearch: ''
     }
   },
   watch:{
@@ -311,6 +313,11 @@ export default {
   },
   computed: {
     ...mapGetters(['windowResize']),
+    filteredList: function () {
+      return this.FormData.filter(FormData =>
+          FormData.formName.toLowerCase().match(this.formNameSearch.toLowerCase())
+      );
+    },
   },
   async mounted () {
     window.onresize = () => {
@@ -345,14 +352,17 @@ export default {
     HorizontalModalNavigation(page){
       this.ModalPage = page
     },
+    formNameInput(input){
+      this.formNameSearch = input
+    },
     CreateFormModal(){
       this.showFormBuilderLayout = !this.showFormBuilderLayout
     },
-    GenerateFormId() {
-      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-      )
-    },
+    // GenerateFormId() {
+    //   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    //       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    //   )
+    // },
     async CreateBlankForm(){
       this.$router.push({
         name: 'Builder',
@@ -376,9 +386,10 @@ export default {
         }
       })
     },
-    showFormDetail(){
+    showFormDetail(formId){
       this.showFormDetailLayout = !this.showFormDetailLayout
       this.ModalPage = 'Setting'
+      this.ModalFormId = formId
     }
   }
 }

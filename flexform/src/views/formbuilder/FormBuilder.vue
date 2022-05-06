@@ -1515,12 +1515,13 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-    // window.onbeforeunload  = function() {
-    //   return "Data will be lost if you leave the page, are you sure?"
-    // }
+
+    window.onbeforeunload = function () {
+      return "Data will be lost if you leave the page, are you sure?"
+    }
     
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    if(this.CreateForm === false){
+    if(this.CreateForm === false && this.ClickedForm !== undefined){
     axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
         .then(response => {
           if(response.status===200 && response.data) {
@@ -1538,6 +1539,8 @@ export default {
           // this.errors.push(error)
           console.log(error)
         })
+    }else if (this.CreateForm === false && this.ClickedForm === undefined){
+      this.$router.push('/form')
     }
   },
   methods: {
