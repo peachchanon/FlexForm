@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <v-chart class="chart" :option="option" autoresize/>
+    <v-chart :class="[chartstyle]" :option="option" autoresize/>
   </div>
 </template>
 
@@ -32,6 +32,7 @@ export default {
   },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
+    chartstyle: String,
     value: {
       type: Number,
       required: true,
@@ -59,10 +60,6 @@ export default {
         },
         tooltip: {
           trigger: 'item'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'left'
         },
         toolbox: {
           show: true,
@@ -104,5 +101,9 @@ export default {
 <style lang="scss" scoped>
 .chart {
   height: 100vh;
+}
+.chartdashboard{
+  width: 200px;
+  height: 200px;
 }
 </style>

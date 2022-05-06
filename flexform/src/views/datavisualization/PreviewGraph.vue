@@ -43,7 +43,9 @@
       </div>
       <div v-if="GraphTypes === 'Customized pie chart'">
         <customized-pie-chart
-            :title="ChangeGraphName">
+            :title="ChangeGraphName"
+            chartstyle="chart"
+        >
         </customized-pie-chart>
       </div>
       <div v-if="GraphTypes === 'Doughnut chart'">

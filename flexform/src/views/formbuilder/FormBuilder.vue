@@ -1196,7 +1196,7 @@
       <!-- Preview -->
       <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 170px" v-if="StatePage==='Preview'">
         <div class="base-padding">
-          {{FormStructure}}
+<!--          {{FormStructure}}-->
         </div>
         <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
           <div
