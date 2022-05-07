@@ -2,6 +2,7 @@
   <div class="tw-flex tw-flex-row tw-w-full tw-h-full">
     <div v-show="showSidebar">
       <sidebar
+          :pageSelect="page"
           @path="selectMenu"
           :propstateSidebarExpand="stateSidebar"
           @emitStateSidebarExpand="doSidebarExpandForSidebar"
@@ -28,6 +29,9 @@ export default {
   components: {
     Sidebar,
     Navbar
+  },
+  props: {
+    page: String
   },
   data () {
     return {
