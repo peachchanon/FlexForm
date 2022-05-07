@@ -72,7 +72,7 @@
       </div>
     </transition>
     <!-- Rename Section Alert : Complete -->
-    <base-alert-form-builder
+      <base-alert-form-builder
         v-if="StateBadgeRenameComplete"
         type="success"
         data="Rename Complete"
@@ -141,7 +141,7 @@
 <script>
 import { Icon } from '@iconify/vue2'
 import { mapGetters, mapActions } from 'vuex'
-import BaseAlertFormBuilder from '@/components/formbuildercomponent/BaseAlertFormBuilder'
+import BaseAlertFormBuilder from '@/components/BaseAlertFormBuilder'
 
 import draggable from 'vuedraggable'
 
@@ -188,6 +188,7 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 1024
+    document.addEventListener('click', this.closeAlert)
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -207,9 +208,15 @@ export default {
         this.StateBadgeRenameComplete = true
       }
       this.StateRenameModal = this.StateRenameModal !== true
+      setTimeout(() => this.StateBadgeRenameComplete = false, 5000)
     },
     doRenameSectionAlertBadge(state) {
       this.StateBadgeRenameComplete = this.StateBadgeRenameComplete === state // Close Badge
+    },
+    closeAlert(e){
+      if(!this.$el.contains(e.target)) {
+            this.StateBadgeRenameComplete = false
+          }
     },
     // Move Section
     doShowMoveModal () {
