@@ -43,7 +43,9 @@
       </div>
       <div v-if="GraphTypes === 'Customized pie chart'">
         <customized-pie-chart
-            :title="ChangeGraphName">
+            :title="ChangeGraphName"
+            chartstyle="chart"
+        >
         </customized-pie-chart>
       </div>
       <div v-if="GraphTypes === 'Doughnut chart'">
@@ -103,6 +105,7 @@ import NightingaleChart from "@/components/graph/NightingaleChart";
 import SeriesLayoutBarChart from "@/components/graph/SeriesLayoutBarChart";
 import ShareDataset from "@/components/graph/ShareDataset";
 import {mapActions, mapGetters} from "vuex";
+// import dayjs from 'dayjs' npm install dayjs --save
 // import axios from "axios";
 export default {
   name: "PreviewGraph.vue",
@@ -134,7 +137,8 @@ export default {
     return{
       GraphName:'',
       StateShowContentForWindowSize: true,
-      GraphData: []
+      GraphData: [],
+      GraphData1: []
     }
   },
   watch:{
@@ -191,45 +195,68 @@ export default {
     //            this.GraphData = response.data
     //        if(this.GraphTitle === 'Graph1'){
     //          if(this.GraphData.UseTemplate === true){
-    //          const saveDate = this.GraphData.map((item) => { เอาข้อมูลวันที่ย้อนหลัง 7 วันจากวันนี้
-    //            const d = new Date(item.date)
-    //            d.setDate(t.getDate() - 7) // to get previous date
-    //            const saveConverted = d.toLocalString(); //แปลงวันที่ใน  iso database ให้เป็นวันที่ธรรมดา
+    //            const last7 = dayjs().subtract(7, 'day')     // เอาข้อมูลวันที่ย้อนหลัง 7 วันจากวันนี้
+    //            const data
+    //            const condition = data => {
+    //              return dayjs(data.FormCreatedTimestamp.toISOString()) > last7
+    //            }     
+    //            const filterdata = this.GraphData.filter(condition) // filter condition 7 วัน
+    //            console.log(filterdata.length) // นับจำนวนใน array ว่ามีกี่ ticket
     //          }
-    //          console.log(saveDate) // ข้อมูลวันที่ 7 วันย้อนหลัง
     //          }
-    //
     //        }
-           // else if(this.GraphTitle === 'Graph2'){
-           //  
-           // }
-           // else if(this.GraphTitle === 'Graph4'){
-           // 
-           // }
-           // else if(this.GraphTitle === 'Graph5'){
-           //  
-           // }
-           // else if(this.GraphTitle === 'Graph6'){
-           //
-           // }
-           // else if(this.GraphTitle === 'Graph7'){
-           //
-           // }
-           // else if(this.GraphTitle === 'Graph8'){
-           //
-           // }
-           // else if(this.GraphTitle === 'Graph9'){
-           //
-           // }
-           // else{
-           //
-           // }
-        //   }
-        // })
-        // .catch(error => {
-        //   // this.errors.push(error)
-        //   console.log(error)
-        // })
+    // else if(this.GraphTitle === 'Graph2'){
+    //         if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    //  
+    // }
+    //        else if(this.GraphTitle === 'Graph3'){
+    //        if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph4'){
+    //  if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph5'){
+    //  if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph6'){
+    //if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph7'){
+    //if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph8'){
+    //if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else if(this.GraphTitle === 'Graph9'){
+    //if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    // else{
+    //        if(this.GraphData.UseTemplate === true){
+    //          
+    //        }
+    // }
+    //   }
+    // })
+    // .catch(error => {
+    //   // this.errors.push(error)
+    //   console.log(error)
+    // })
   },
   methods: {
     ...mapActions(['flapWindowResize']),
