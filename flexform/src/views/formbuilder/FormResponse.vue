@@ -9,7 +9,7 @@
           </div>
         </div>
         <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:folder"/>
-        <span class="semibold18 blue10">NT Form</span>
+        <span class="semibold18 blue10">{{FormResponseName}}</span>
       </div>
     </div>
     <!-- Form -->
@@ -112,6 +112,7 @@ export default {
     return {
       stateShowDetailModal: false,
       valueObjectRow: Object,
+      FormResponseName: String,
       FormStructureData: {},
       FormResponseData: {},
       FormResponseTable: {
@@ -146,6 +147,8 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    // Form Response Name
+    this.FormResponseName = this.FormStructureData.formName
     // Create Data in Table
     this.FormStructureData.sections.forEach(
         (elementSection)=>{
