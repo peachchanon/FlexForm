@@ -131,6 +131,13 @@
           ></base-navigation-section-form-builder>
         </div>
       </div>
+      <!-- Save form Alert : Complete -->
+      <base-alert-form-builder
+          v-if="StateBadgeSaveComplete"
+          type="success"
+          data="Save"
+          @callbackClose="doSaveAlertBadge"
+      ></base-alert-form-builder>
       <!-- Tools Sidebar -->
       <div
           class="tw-fixed"
@@ -1346,6 +1353,7 @@ import HeaderComponent from "@/components/formbuildercomponent/Header"
 import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
 import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
+import BaseAlertFormBuilder from '@/components/BaseAlertFormBuilder'
 import axios from "axios";
 
 export default {
@@ -1369,6 +1377,7 @@ export default {
     DropdownComponent,
     ChoiceComponent,
     ButtonSection,
+    BaseAlertFormBuilder,
   },
   props: {
     CreateForm: Boolean,
@@ -1383,6 +1392,8 @@ export default {
       // Page
       PageList: [{field:'Build'},{field:'Preview'},{field:'Setting'}],
       StatePage: 'Build',
+      // Alert Badge
+      StateBadgeSaveComplete: false,
       // Rename Form
       StateShowRenameForm: false,
       StateSaveRenameForm: false,
@@ -1515,7 +1526,9 @@ export default {
     window.onresize = () => {
       this.flapWindowResize()
     }
-
+    
+    document.addEventListener('click', this.closeAlert)
+    
     window.onbeforeunload = function () {
       return "Data will be lost if you leave the page, are you sure?"
     }
@@ -1545,6 +1558,7 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
+    // Change form data first letter
     CapitalFirstLetter(string){
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
@@ -1566,6 +1580,16 @@ export default {
       }
       return newObj
     },
+    // Alert
+    doSaveAlertBadge(state) {
+      this.StateBadgeSaveComplete = this.StateBadgeSaveComplete === state // Close Badge
+    },
+    closeAlert(e){
+      if(!this.$el.contains(e.target)) {
+        this.StateBadgeSaveComplete = false
+      }
+    },
+    // previous page
     PrevPage(){
       this.$router.push('/form')
     },
@@ -1601,6 +1625,8 @@ export default {
         this.FormStructure.CreatedByUser = localStorage.getItem('username')
         this.FormStructure.ModifiedByUser = localStorage.getItem('username')
         console.log(this.FormStructure)
+        this.StateBadgeSaveComplete = true
+        setTimeout(() => this.StateBadgeSaveComplete = false, 5000)
         axios.post('http://localhost:4000/api/Flexform/CreateForm', this.FormStructure)
             .then(response => {
               console.log(response.status)

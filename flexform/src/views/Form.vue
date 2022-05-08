@@ -102,12 +102,17 @@
                     </div>
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
-                    <div class="">
-                      <base-button-blue
-                          buttonID="buttonViewMore"
+                    <div class="tw-mt-1">
+                      <base-button-fill
+                          buttonID="buttonResponse"
                           buttonText="Response"
-                          buttonIcon="heroicons-outline:chat"
-                      ></base-button-blue>
+                          buttonTextColor="blue5"
+                          buttonBgColor="bg-white"
+                          buttonBorderColor="border-blue5"
+                          buttonIconLeft="heroicons-outline:chat"
+                          @callbackObject="GoResponse"
+                          :id="FormData.formId"
+                      ></base-button-fill>
                     </div>
                     <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
                       <base-button-fill
@@ -385,6 +390,13 @@ export default {
           ClickedForm: this.ClickedFormId
         }
       })
+    },
+    async GoResponse(string){
+      this.ClickedFormId = string
+      console.log("clicked for id: " + this.ClickedFormId)
+      this.$router.push({
+        name: 'Response',
+        params: { FormId: this.ClickedFormId}})
     },
     showFormDetail(formId){
       this.showFormDetailLayout = !this.showFormDetailLayout
