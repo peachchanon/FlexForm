@@ -121,8 +121,7 @@ export default {
     }
   },
   async mounted() {
-    // const idForm = this.FormID
-    const idForm = '9b960055-8010-47f7-90db-8870b39f1b72'
+    const idForm = this.FormID
     // Form Structure
     //console.log('Form Structure')
     await axios.get('http://localhost:4000/api/FlexForm/'+idForm)
