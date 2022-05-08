@@ -177,7 +177,6 @@ const router = new VueRouter({
 
 router.beforeEach(
     (to, from, next) => {
-      //document.title = 'FlexForm | '+to.name[0].toUpperCase()+to.name.substring(1)
       document.title = 'FlexForm | '+to.meta.title
       next()
     }
