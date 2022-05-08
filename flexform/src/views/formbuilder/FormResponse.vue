@@ -106,7 +106,7 @@ export default {
     VueGoodTable,
   },
   props: {
-    FormID: String
+    FormId: String
   },
   data() {
     return {
@@ -121,7 +121,7 @@ export default {
     }
   },
   async mounted() {
-    const idForm = this.FormID
+    const idForm = this.FormId
     // Form Structure
     //console.log('Form Structure')
     await axios.get('http://localhost:4000/api/FlexForm/'+idForm)
