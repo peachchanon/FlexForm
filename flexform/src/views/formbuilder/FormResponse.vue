@@ -4,7 +4,7 @@
     <div class="tw-w-full bg-white base-padding base-shadow tw-fixed tw-z-40">
       <div class="tw-flex tw-flex-row tw-items-center">
         <div class="tw-mr-4">
-          <div class="button__circle">
+          <div class="button__circle" @click="doExit">
             <Icon class="icon__style__large blue10" icon="heroicons-outline:chevron-left"/>
           </div>
         </div>
@@ -118,14 +118,15 @@ export default {
       FormResponseTable: {
         columns: [],
         rows: [],
-      }
+      },
+      IdForm: String
     }
   },
   async mounted() {
-    const idForm = this.FormId
+    window.addEventListener('beforeunload', this.handler)
     // Form Structure
     //console.log('Form Structure')
-    await axios.get('http://localhost:4000/api/FlexForm/'+idForm)
+    await axios.get('http://localhost:4000/api/FlexForm/'+this.IdForm)
         .then(response => {
           if(response.status===200 && response.data){
             this.FormStructureData = response.data
@@ -137,7 +138,7 @@ export default {
         })
     // Form Response
     //console.log('Form Response')
-    await axios.get('http://localhost:4000/api/FormInput/FormInput/'+idForm)
+    await axios.get('http://localhost:4000/api/FormInput/FormInput/'+this.IdForm)
         .then(response => {
           if(response.status===200 && response.data){
             this.FormResponseData = response.data
@@ -200,6 +201,9 @@ export default {
     )
   },
   methods:{
+    handler() {
+      this.IdForm = this.FormId
+    },
     doFill() {
       console.log('Fill')
     },
@@ -215,6 +219,9 @@ export default {
     closeDetailModal(){
       this.stateShowDetailModal = false
     },
+    doExit(){
+      this.$router.push('/form')
+    }
   }
 }
 </script>
