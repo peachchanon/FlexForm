@@ -106,7 +106,7 @@ export default {
     VueGoodTable,
   },
   props: {
-    FormId: String
+    PropFormId: String
   },
   data() {
     return {
@@ -119,35 +119,63 @@ export default {
         columns: [],
         rows: [],
       },
-      IdForm: String
+      FormId: String
     }
   },
   async mounted() {
-    window.addEventListener('beforeunload', this.handler)
-    // Form Structure
-    //console.log('Form Structure')
-    await axios.get('http://localhost:4000/api/FlexForm/'+this.IdForm)
-        .then(response => {
-          if(response.status===200 && response.data){
-            this.FormStructureData = response.data
-            //console.log(this.FormStructureData)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    // Form Response
-    //console.log('Form Response')
-    await axios.get('http://localhost:4000/api/FormInput/FormInput/'+this.IdForm)
-        .then(response => {
-          if(response.status===200 && response.data){
-            this.FormResponseData = response.data
-            //console.log(this.FormResponseData)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    // Form Structure open for the first time
+    if(this.PropFormId !== undefined){
+      await axios.get('http://localhost:4000/api/FlexForm/' + this.PropFormId)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormStructureData = response.data
+              //console.log(this.FormStructureData)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      // Form Response
+      //console.log('Form Response')
+      await axios.get('http://localhost:4000/api/FormInput/FormInput/' + this.PropFormId)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormResponseData = response.data
+              //console.log(this.FormResponseData)
+              localStorage.setItem('formid', this.PropFormId)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    }
+    // get formid from local storage
+    this.FormId = window.localStorage.getItem('formid')
+    // reload page
+    if(this.PropFormId === undefined){
+      await axios.get('http://localhost:4000/api/FlexForm/' + this.FormId)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormStructureData = response.data
+              //console.log(this.FormStructureData)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      // Form Response
+      //console.log('Form Response')
+      await axios.get('http://localhost:4000/api/FormInput/FormInput/' +this.FormId)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormResponseData = response.data
+              //console.log(this.FormResponseData)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+    }
     // Form Response Name
     this.FormResponseName = this.FormStructureData.formName
     // Create Data in Table
@@ -202,7 +230,10 @@ export default {
   },
   methods:{
     handler() {
-      this.IdForm = this.FormId
+      this.FormId = this.PropFormId
+      this.ReloadPage = false
+      console.log("Reload propformid" + this.PropFormId)
+      console.log("Reload formid" + this.FormId)
     },
     doFill() {
       console.log('Fill')
