@@ -125,7 +125,7 @@
                       ></base-button-fill>
                     </div>
                     <div class="tw-mx-2">
-                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId)">
+                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId,FormData.formName)">
                         <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
                       </div>
                     </div>
@@ -137,7 +137,7 @@
                             <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
                               <div class="tw-flex tw-flex-row tw-items-center tw-relative">
                                 <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
-                                <label class="semibold24 blue10">Form</label>
+                                <label class="semibold24 blue10">{{ModalFormName}}</label>
                               </div>
                               <div class="button__close" @click="showFormDetail()">
                                 <Icon class="semibold24" icon="heroicons-outline:x"/>
@@ -153,39 +153,70 @@
                                   </base-horizontal-navigation>
                                 </div>
                                 <div v-if="ModalPage==='Setting'">
-                                  <div class="tw-flex tw-flex-row">
-                                    <div class="tw-flex tw-flex-col">
-                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
-                                        <Icon class="semibold24 icon" icon="heroicons-outline:folder"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16">Fill Form</label>
+                                  <div>
+                                  <div class="tw-flex tw-flex-row border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
+                                    <div class="tw-flex tw-flex-col tw-ml-4">
+                                      <div class="tw-ml-2 tw-my-1.5">
+                                        <label class="blue10 medium18">Data</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
-                                        <Icon class="semibold24 icon " icon="heroicons-outline:inbox-in"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Import Data</label>
+                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
+                                        <Icon class="semibold24 icon" icon="heroicons-outline:inbox-in"/>
+                                        <label class="tw-mx-3 tw-cursor-pointer semibold16">Import Data</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1.5">
+                                      <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Export Response</label>
+                                        <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Export Response</label>
                                       </div>
                                     </div>
+                                    <div class="border-grey3 bg-grey3 tw-mt-6 tw-mx-10" style="height: 180px; border-width: 0.5px">
+                                    </div>
                                     <div class="tw-flex tw-flex-col">
-                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
-                                        <Icon class="semibold24 icon " icon="heroicons-outline:eye"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16 ">View Response</label>
+                                      <div class="tw-my-1.5 tw-ml-2">
+                                        <label class="blue10 medium18">Form</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5" @click="SelectForm(ModalFormId)">
+                                      <div class="choose tw-flex tw-flex-row tw-ml-2 tw-my-1" @click="SelectForm(ModalFormId)">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Edit Form</label>
+                                        <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Edit Form</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-ml-12 tw-my-1.5">
+                                      <div class="choose tw-flex tw-flex-row tw-ml-2 tw-my-1">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
-                                        <label class="tw-mx-3 tw-my-1 semibold16 ">Save As Template</label>
+                                        <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Save As Template</label>
+                                      </div>
+                                      <div class="choose-delete tw-flex tw-flex-row tw-ml-2 tw-my-1">
+                                        <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
+                                        <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Delete Form</label>
                                       </div>
                                     </div>
                                   </div>
+                                    <div class="tw-flex tw-flex-row-reverse tw-mx-2 tw-mt-4 tw-mb-2">
+                                      <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
+                                        <base-button-fill
+                                            buttonID="buttonFill"
+                                            buttonText="Fill"
+                                            buttonTextColor="white"
+                                            buttonBgColor="bg-blue5"
+                                            @callbackObject="GoFillForm"
+                                            :id="ModalFormId"
+                                        ></base-button-fill>
+                                      </div>
+                                      <div class="tw-mt-1">
+                                        <base-button-fill
+                                            buttonID="buttonResponse"
+                                            buttonText="Response"
+                                            buttonTextColor="blue5"
+                                            buttonBgColor="bg-white"
+                                            buttonBorderColor="border-blue5"
+                                            buttonIconLeft="heroicons-outline:chat"
+                                            @callbackObject="GoResponse"
+                                            :id="ModalFormId"
+                                        ></base-button-fill>
+                                      </div>
+                                    </div>
+                                    </div>
                                 </div>
                                 <div v-if="ModalPage==='Detail'">
-                                  <div class="tw-flex tw-flex-row">
+                                  <div class="border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
+                                  <div class="tw-flex tw-flex-row tw-justify-between tw-mr-16">
                                     <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
                                       <label class="semibold16 blue10">Created By</label>
                                       <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
@@ -195,10 +226,35 @@
                                       <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
                                     </div>
                                   </div>
-                                  <div class="tw-flex tw-flex-col tw-mx-2.5 tw-my-3">
+                                  <div class="tw-flex tw-flex-col tw-mx-2.5 tw-mt-3">
                                     <label class="semibold16 blue10">Description</label>
                                     <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
                                   </div>
+                                  </div>
+                                  <div class="tw-flex tw-flex-row-reverse tw-mx-2 tw-mt-4 tw-mb-2">
+                                    <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
+                                      <base-button-fill
+                                          buttonID="buttonFill"
+                                          buttonText="Fill"
+                                          buttonTextColor="white"
+                                          buttonBgColor="bg-blue5"
+                                          @callbackObject="GoFillForm"
+                                          :id="ModalFormId"
+                                      ></base-button-fill>
+                                    </div>
+                                    <div class="tw-mt-1">
+                                      <base-button-fill
+                                          buttonID="buttonResponse"
+                                          buttonText="Response"
+                                          buttonTextColor="blue5"
+                                          buttonBgColor="bg-white"
+                                          buttonBorderColor="border-blue5"
+                                          buttonIconLeft="heroicons-outline:chat"
+                                          @callbackObject="GoResponse"
+                                          :id="ModalFormId"
+                                      ></base-button-fill>
+                                    </div>
+                                    </div>
                                 </div>
                               </div>
                             </div>
@@ -294,9 +350,9 @@ export default {
   data() {
     return {
       horizontalNavigationID: [{field: 'All Form'}, {field: 'My Form'}, {field: 'Shared with me'}],
-      horizontalNavigationModal: [{field: 'Setting'}, {field: 'Detail'}],
+      horizontalNavigationModal: [{field: 'Detail'}, {field: 'Setting'}],
       namePage: 'All Form',
-      ModalPage: 'Setting',
+      ModalPage: 'Detail',
       StateShowContentForWindowSize: true,
       FormData: [],
       TicketTemplate: false,
@@ -308,6 +364,7 @@ export default {
       CreateFormBtnClick: true,
       ClickedFormId: '',
       ModalFormId: '',
+      ModalFormName: '',
       formNameSearch: ''
     }
   },
@@ -398,10 +455,11 @@ export default {
         name: 'Response',
         params: { PropFormId: this.ClickedFormId}})
     },
-    showFormDetail(formId){
+    showFormDetail(formId,formName){
       this.showFormDetailLayout = !this.showFormDetailLayout
-      this.ModalPage = 'Setting'
+      this.ModalPage = 'Detail'
       this.ModalFormId = formId
+      this.ModalFormName = formName
     }
   }
 }
@@ -471,7 +529,7 @@ export default {
   color: $blue10;
   border-radius: 12px;
   padding: 0.75rem;
-  margin: 0.25rem 0;
+  margin: 2px 0;
   cursor: pointer;
   transition: all .1s ease-in;
   &:hover{
@@ -482,12 +540,24 @@ export default {
 .choose{
   color: $blue10;
   border-radius: 10px;
-  padding: 0.125rem 0.125rem 0.125rem 0.5rem;
+  padding: 0.75rem;
   cursor: pointer;
   transition: all .1s ease-in;
   &:hover{
     color: $blue5;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+  }
+}
+.choose-delete{
+  color: $red5;
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all .1s ease-in;
+  &:hover{
+    color: white;
+    background-color: $red5;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.1);
   }
 }
 .select__create__form {
@@ -543,8 +613,9 @@ export default {
 }
 
 .detailcard{
-  width:450px;
-  height:270px;
+  width:100%;
+  max-width: 650px;
+  //height:270px;
 }
 .modaldescriptiondetail{
   border-radius: 7px;

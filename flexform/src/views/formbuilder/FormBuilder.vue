@@ -1633,7 +1633,7 @@ export default {
               if (response.status === 200 && response.data) {
                 console.log(response.status)
                 console.log(response.data)
-                this.$router.push('/form')
+                setTimeout(() => this.$router.push('/form'),1000)
               }
             })
       }
@@ -1641,10 +1641,12 @@ export default {
         axios.put('http://localhost:4000/api/Flexform/' + this.ClickedForm, this.FormStructure)
             .then(response => {
               console.log(response.status)
+              this.StateBadgeSaveComplete = true
+              setTimeout(() => this.StateBadgeSaveComplete = false, 5000)
               if ([200,204].includes(response.status)) {
                 console.log(response.status)
                 console.log(response.data)
-                this.$router.push('/form')
+                setTimeout(() => this.$router.push('/form'),1000)
               }
             })
       }
