@@ -1,5 +1,5 @@
 ﻿<template>
-  <layout-sidebar-navbar>
+  <layout-sidebar-navbar page="manageUsers">
     <template #content>
       <div class="bg-grey1 tw-h-full sm:tw-p-2 tw-w-full card">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
@@ -40,7 +40,7 @@
           </div>
           
           <!-- Create an Account Modal -->
-          <transition name="theme-modal-fade" v-if="stateShowCreateAndAccountModal">
+          <transition name="theme-modal-fade" v-if="stateShowCreateAnAccountModal">
             <div class="theme-modal-backdrop">
               <div class="theme-modal">
                 <header class="base-padding tw-flex tw-flex-col tw-items-center tw-relative">
@@ -326,7 +326,7 @@ export default {
         showPager: true,
       },
       StateShowContentForWindowSize: true,
-      stateShowCreateAndAccountModal: false,
+      stateShowCreateAnAccountModal: false,
       stateCreateAnAccount: {
         username: '', password: '', confirmPassword: '', 
         // employeeID: '', 
@@ -364,7 +364,7 @@ export default {
   methods: {
     ...mapActions(['flapWindowResize']),
     doShowRenameButton (state) {
-      if(!this.stateShowCreateAndAccountModal){
+      if(!this.stateShowCreateAnAccountModal){
         this.stateProfile.username = true
         this.stateProfile.password = true
         this.stateProfile.confirmPasswordHaveValue = false
@@ -378,7 +378,7 @@ export default {
         this.stateProfile.phone_number = true
         this.stateProfile.role_id = true
         this.stateProfile.division_id = true
-        this.stateShowCreateAndAccountModal = state
+        this.stateShowCreateAnAccountModal = state
       }else{
         this.stateProfile.username = false
         this.stateProfile.password = false
@@ -393,7 +393,7 @@ export default {
         this.stateProfile.phone_number = false
         this.stateProfile.role_id = false
         this.stateProfile.division_id = false
-        this.stateShowCreateAndAccountModal = state
+        this.stateShowCreateAnAccountModal = state
       }
     },
     inputUsername(username){
@@ -458,19 +458,19 @@ export default {
     },
     // doRegister(e){
     //   console.log(e)
-    //   this.stateProfile.username = this.stateCreateAndAccount.username !== '';
-    //   this.stateProfile.password = this.stateCreateAndAccount.password !== '';
-    //   this.stateProfile.employeeID = this.stateCreateAndAccount.employeeID !== '';
-    //   this.stateProfile.gender = this.stateCreateAndAccount.gender !== '';
-    //   this.stateProfile.title = this.stateCreateAndAccount.title !== '';
-    //   this.stateProfile.firstName = this.stateCreateAndAccount.firstName !== '';
-    //   this.stateProfile.lastName = this.stateCreateAndAccount.lastName !== '';
-    //   this.stateProfile.email = this.stateCreateAndAccount.email !== '';
-    //   this.stateProfile.dob = this.stateCreateAndAccount.dob !== '';
-    //   this.stateProfile.phoneNumber = this.stateCreateAndAccount.phoneNumber !== '';
-    //   this.stateProfile.jobTitle = this.stateCreateAndAccount.jobTitle !== '';
-    //   this.stateProfile.division = this.stateCreateAndAccount.division !== '';
-    //   console.log(this.stateCreateAndAccount)
+    //   this.stateProfile.username = this.stateCreateAnAccount.username !== '';
+    //   this.stateProfile.password = this.stateCreateAnAccount.password !== '';
+    //   this.stateProfile.employeeID = this.stateCreateAnAccount.employeeID !== '';
+    //   this.stateProfile.gender = this.stateCreateAnAccount.gender !== '';
+    //   this.stateProfile.title = this.stateCreateAnAccount.title !== '';
+    //   this.stateProfile.firstName = this.stateCreateAnAccount.firstName !== '';
+    //   this.stateProfile.lastName = this.stateCreateAnAccount.lastName !== '';
+    //   this.stateProfile.email = this.stateCreateAnAccount.email !== '';
+    //   this.stateProfile.dob = this.stateCreateAnAccount.dob !== '';
+    //   this.stateProfile.phoneNumber = this.stateCreateAnAccount.phoneNumber !== '';
+    //   this.stateProfile.jobTitle = this.stateCreateAnAccount.jobTitle !== '';
+    //   this.stateProfile.division = this.stateCreateAnAccount.division !== '';
+    //   console.log(this.stateCreateAnAccount)
     // },
     doFilterColumn(value) {
       this.dataTable.columnShow = []

@@ -1,5 +1,5 @@
 ﻿<template>
-  <layout-sidebar-navbar>
+  <layout-sidebar-navbar page="form">
     <template #content>
       <div class="bg-grey1 tw-h-full sm:tw-p-2">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">

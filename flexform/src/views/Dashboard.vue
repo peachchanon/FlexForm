@@ -1,5 +1,5 @@
 ﻿<template>
-  <layout-sidebar-navbar>
+  <layout-sidebar-navbar page="dashboard">
     <template #content>
       <div class="bg-grey1 tw-h-full sm:tw-p-2">
         <div class="base-margin tw-flex tw-flex-row tw-items-center">
@@ -82,12 +82,15 @@
             <div class="lg:tw-flex lg:tw-flex-row lg:tw-w-2/3">
               <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
                 <span class="grey10 semibold24">Form Priority</span>
+                <customized-pie-chart chartstyle="chartdashboard"></customized-pie-chart>
               </div>
               <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
                 <span class="grey10 semibold24">Form Status</span>
+                <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
               </div>
               <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
                 <span class="grey10 semibold24">Form Active</span>
+                <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
               </div>
             </div>
           </div>
@@ -100,11 +103,15 @@
 <script>
 import { Icon } from '@iconify/vue2'
 import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
+import CustomizedPieChart from "@/components/graph/CustomizedPieChart";
+import BasicPieChart from "@/components/graph/BasicPieChart";
 export default {
   name: 'Dashboard',
   components: {
     Icon,
     LayoutSidebarNavbar,
+    CustomizedPieChart,
+    BasicPieChart
   },
   methods: {
     buttonClick (e) {
