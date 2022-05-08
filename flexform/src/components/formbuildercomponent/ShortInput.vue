@@ -212,13 +212,13 @@ export default {
   methods: {
     doInput() {
       if(this.dataShortInput.Validation === 'Alphabetic') {
-        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput,label:this.dataShortInput.LabelText})
       } else if(this.dataShortInput.Validation === 'Numeric') {
-        this.$emit('valueShortInput',{value:~~this.valueShortInput.Number,dataInput:this.dataInput})
+        this.$emit('valueShortInput',{value:~~this.valueShortInput.Number,dataInput:this.dataInput,label:this.dataShortInput.LabelText})
       } else if(this.dataShortInput.Validation === 'Email') {
-        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput,label:this.dataShortInput.LabelText})
       } else if(this.dataShortInput.Validation === 'URL') {
-        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput})
+        this.$emit('valueShortInput',{value:this.valueShortInput.Text,dataInput:this.dataInput,label:this.dataShortInput.LabelText})
       }
     }
   }

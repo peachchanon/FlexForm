@@ -173,7 +173,7 @@ export default {
     clickElement(element, index) {
       this.valueDropdown.Text = element
       this.valueDropdown.Index = index
-      this.$emit('valueDropdown', {value:this.valueDropdown.Text,index:this.valueDropdown.Index,dataInput:this.dataInput})
+      this.$emit('valueDropdown', {value:this.valueDropdown.Text,index:this.valueDropdown.Index,dataInput:this.dataInput,label:this.dataDropdown.LabelText})
       this.toggle();
     },
     closeDropdown(e) {

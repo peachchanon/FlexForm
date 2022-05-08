@@ -305,7 +305,8 @@ export default {
                             this.FormInput.Sections[indexSection].Components.push(
                                 {
                                   ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
-                                  ComponentValue: []
+                                  ComponentValue: [],
+                                  ComponentLabel: []
                                 }
                             )
                           }
@@ -366,35 +367,52 @@ export default {
       
     },
     doShortInput(item) {
-      console.log(item)
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      console.log(this.FormInput)
-      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-      else
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      }
+      else {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
+      }
     },
     doLongInput(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-      else
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      }
+      else {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
+      }
     },
     doDropdown(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0)
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-      else
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      }
+      else {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
+      }
     },
     doChoice(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
+      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      }
+      else {
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
+        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
+      }
     },
     async doActionButton() {
       console.log(this.FormInput)

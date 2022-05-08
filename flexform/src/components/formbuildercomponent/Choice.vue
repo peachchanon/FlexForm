@@ -103,9 +103,9 @@ export default {
   methods: {
     doClickOption(element){
       if(!this.dataChoice.MultipleChoice){
-        this.$emit('valueChoice',{value:[element.value],index:element.index,dataInput:this.dataInput})
+        this.$emit('valueChoice',{value:[element.value],index:element.index,dataInput:this.dataInput,label:this.dataChoice.LabelText})
       }else {
-        this.$emit('valueChoice',{value:element,dataInput:this.dataInput})
+        this.$emit('valueChoice',{value:element,dataInput:this.dataInput,label:this.dataChoice.LabelText})
       }
     }
   }

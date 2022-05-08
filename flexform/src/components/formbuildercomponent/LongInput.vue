@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     doInput() {
-      this.$emit('valueLongInput',{value:this.valueLongInput.Text,dataInput:this.dataInput})
+      this.$emit('valueLongInput',{value:this.valueLongInput.Text,dataInput:this.dataInput,label:this.dataLongInput.LabelText})
     }
   }
 }
