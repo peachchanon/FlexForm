@@ -396,7 +396,7 @@ export default {
       console.log("clicked for id: " + this.ClickedFormId)
       this.$router.push({
         name: 'Response',
-        params: { FormId: this.ClickedFormId}})
+        params: { PropFormId: this.ClickedFormId}})
     },
     showFormDetail(formId){
       this.showFormDetailLayout = !this.showFormDetailLayout
