@@ -74,8 +74,13 @@
             </div>
           </header>
           <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
-            <div v-for="element in FormResponseTable.columns" :key="element.field">
-              <span class="medium16 grey10">{{element.label}}</span>
+            <div v-for="(element) in FormResponseTable.columns" :key="element.field" class="tw-mt-3 tw-mb-3">
+              <div>
+                <div class="tw-mt-3 tw-mb-3">
+                  <span class="medium16 grey10">{{element.label}}</span>
+                  <span class="medium16 grey10"></span>
+                </div>
+              </div>
             </div>
           </section>
         </div>
@@ -106,22 +111,7 @@ export default {
   data() {
     return {
       stateShowDetailModal: false,
-      columns: [
-        {
-          label: 'Name',
-          field: 'name',
-          type: 'string',
-        },
-        {
-          label: 'Age',
-          field: 'age',
-          type: 'number',
-        },
-      ],
-      rows: [
-        { id:1, name:"John", age: 20,},
-        { id:2, name:"Jane", age: 24,},
-      ],
+      valueObjectRow: Object,
       FormStructureData: {},
       FormResponseData: {},
       FormResponseTable: {
@@ -214,6 +204,7 @@ export default {
     openDetailModal(params){
       console.log(params.row)
       console.log(params.row.originalIndex)
+      this.valueObjectRow(params.row)
       //console.log(Object.keys(params.row))
       //console.log(params.row.originalIndex)
       //console.log(Object.keys(params.row)[params.row.originalIndex])
