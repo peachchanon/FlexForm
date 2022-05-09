@@ -81,15 +81,15 @@
             <div v-if="FormData.useTemplate === false">
               <div class="tw-my-2">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
-                  <div class="tw-flex tw-flex-row">
-                    <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out tw-cursor-pointer hover:tw-bg-green3" style="height: fit-content" @click="SelectForm">
+                  <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
+                    <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                     </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-mx-2" style="width:200px; max-width: 200px">
+                    <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <label class="medium16 blue10 tw-cursor-pointer hover:tw-underline" @click="SelectForm(FormData.formId)">{{ FormData.formName }}</label>
+                      <label class="medium16 blue10">{{ FormData.formName }}</label>
                     </div>
-                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
+                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">
                       <label class="medium16 grey5 tw-mb-1">Type</label>
                       <base-badge 
                           BadgeText="Form" 
@@ -98,7 +98,9 @@
                     </div>
                     <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                       <label class="medium16 grey5">Form Description</label>
+                      <div class=" tw-truncate" style="width: 100%; max-width: 260px;">
                       <label class="light16 grey7">{{ FormData.formDescriptions }}</label>
+                      </div>
                     </div>
                   </div>
                   <div class="tw-flex tw-flex-row tw-mx-2">
@@ -125,7 +127,7 @@
                       ></base-button-fill>
                     </div>
                     <div class="tw-mx-2">
-                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId,FormData.formName)">
+                      <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId,FormData.formName,FormData.formDescriptions)">
                         <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
                       </div>
                     </div>
@@ -228,7 +230,7 @@
                                   </div>
                                   <div class="tw-flex tw-flex-col tw-mx-2.5 tw-mt-3">
                                     <label class="semibold16 blue10">Description</label>
-                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
+                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{ModalFormDescription}}</div>
                                   </div>
                                   </div>
                                   <div class="tw-flex tw-flex-row-reverse tw-mx-2 tw-mt-4 tw-mb-2">
@@ -365,6 +367,7 @@ export default {
       ClickedFormId: '',
       ModalFormId: '',
       ModalFormName: '',
+      ModalFormDescription: '',
       formNameSearch: ''
     }
   },
@@ -455,11 +458,12 @@ export default {
         name: 'Response',
         params: { PropFormId: this.ClickedFormId}})
     },
-    showFormDetail(formId,formName){
+    showFormDetail(formId,formName,formDescription){
       this.showFormDetailLayout = !this.showFormDetailLayout
       this.ModalPage = 'Detail'
       this.ModalFormId = formId
       this.ModalFormName = formName
+      this.ModalFormDescription = formDescription
     }
   }
 }
