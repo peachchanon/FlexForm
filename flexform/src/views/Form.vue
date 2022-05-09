@@ -128,7 +128,7 @@
                         ></base-button-fill>
                       </div>
                       <div class="tw-mx-2">
-                        <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId,FormData.formName,FormData.formDescriptions)">
+                        <div class="verticalbutton tw-flex tw-flex-row tw-items-center medium16" @click="showFormDetail(FormData.formId,FormData.formName,FormData.formDescriptions,FormData.createdByUser,FormData.formCreatedTimestamp)">
                           <Icon class="icon semibold24" icon="heroicons-outline:dots-vertical"/>
                         </div>
                       </div>
@@ -222,11 +222,11 @@
                                       <div class="tw-flex tw-flex-row tw-justify-between tw-mr-16">
                                         <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
                                           <label class="semibold16 blue10">Created By</label>
-                                          <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
+                                          <label class="tw-ml-4 light14 grey7">{{ ModalFormCreatedByUser }}</label>
                                         </div>
                                         <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
                                           <label class="semibold16 blue10">Date Created</label>
-                                          <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
+                                          <label class="tw-ml-2 light14 grey7">{{ ModalFormCreated }}</label>
                                         </div>
                                       </div>
                                       <div class="tw-flex tw-flex-col tw-mx-2.5 tw-mt-3">
@@ -497,6 +497,7 @@ import BaseButtonDelete from '@/components/BaseButtonDelete'
 import BaseBadge from "@/components/BaseBadge";
 import SearchBar from "@/components/SearchBar";
 import BaseButtonBack from "@/components/BaseButtonBack";
+import dayjs from "dayjs"
 import axios from "axios";
 
 export default {
@@ -533,6 +534,8 @@ export default {
       ClickedFormId: '',
       ModalFormId: '',
       ModalFormName: '',
+      ModalFormCreatedByUser:'',
+      ModalFormCreated: '',
       ModalFormDescription: '',
       formNameSearch: '',
       UseTemplateModal: false,
@@ -630,12 +633,16 @@ export default {
         name: 'Response',
         params: { PropFormId: this.ClickedFormId}})
     },
-    showFormDetail(formId,formName,formDescription){
+    showFormDetail(formId,formName,formDescription,createdByUser,formCreatedTimestamp){
       this.showFormDetailLayout = !this.showFormDetailLayout
       this.ModalPage = 'Detail'
       this.ModalFormId = formId
       this.ModalFormName = formName
+      this.ModalFormCreatedByUser = createdByUser
+      this.ModalFormCreated = dayjs(formCreatedTimestamp).format('DD/MM/YYYY') // แปลงเป็นวันที่ธรรมดา
+      console.log(this.ModalFormCreated)
       this.ModalFormDescription = formDescription
+      
     },
     SelectTemplate(){
       this.UseTemplateModal = !this.UseTemplateModal

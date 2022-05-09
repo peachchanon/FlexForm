@@ -1314,7 +1314,7 @@
                 <span class="medium16 grey10">Create Date</span>
               </div>
               <div>
-                <span class="light16 grey7">{{FormStructure.FormCreatedTimestamp}}</span> 
+                <span class="light16 grey7">{{CreatedDateStr}}</span> 
               </div>
             </div>
             <div class="tw-flex tw-flex-row">
@@ -1322,7 +1322,7 @@
                 <span class="medium16 grey10">Modified Date</span>
               </div>
               <div>
-                <span class="light16 grey7">{{FormStructure.FormModifiedTimestamp}}</span>
+                <span class="light16 grey7">{{ModifiedDateStr}}</span>
               </div>
             </div>
           </div>
@@ -1354,6 +1354,7 @@ import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
 import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 import ButtonSection from '@/components/formbuildercomponent/ButtonSection'
 import BaseAlertFormBuilder from '@/components/BaseAlertFormBuilder'
+import dayjs from "dayjs";
 import axios from "axios";
 
 export default {
@@ -1385,6 +1386,9 @@ export default {
   },
   data() {
     return {
+      // Date string format
+      CreatedDateStr:'',
+      ModifiedDateStr:'',
       // Window Size
       StateShowContentForWindowSize: true,
       // Save
@@ -1545,6 +1549,8 @@ export default {
             console.log(this.FormData)
             
             this.FormStructure = this.CapitalObj(this.FormData)
+            this.CreatedDateStr = dayjs(this.FormStructure.FormCreatedTimestamp).format('DD/MM/YYYY')
+            this.ModifiedDateStr = dayjs(this.FormStructure.FormModifiedTimestamp).format('DD/MM/YYYY')
             console.log(this.FormStructure)
           }
         })
@@ -1621,7 +1627,6 @@ export default {
         const current = new Date() //แปลง string เป็น Date
         this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
         this.FormStructure.FormModifiedTimestamp = current.toISOString()
-        // this.FormStructure.UseTemplate = false
         this.FormStructure.CreatedByUser = localStorage.getItem('username')
         this.FormStructure.ModifiedByUser = localStorage.getItem('username')
         console.log(this.FormStructure)
@@ -1638,6 +1643,9 @@ export default {
             })
       }
       else{
+        const current = new Date() //แปลง string เป็น Date
+        this.FormStructure.ModifiedByUser = localStorage.getItem('username')
+        this.FormStructure.FormModifiedTimestamp = current.toISOString()
         axios.put('http://localhost:4000/api/Flexform/' + this.ClickedForm, this.FormStructure)
             .then(response => {
               console.log(response.status)
