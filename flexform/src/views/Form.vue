@@ -295,7 +295,7 @@
                         <label class="text__grey tw-my-2">A blank slate is all you need.</label>
                       </div>
                     </div>
-                    <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="doButton('templateFormButton')">
+                    <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="SelectTemplate">
                       <div class="button__grey tw-my-2">
                         <Icon class="icon" icon="heroicons-outline:folder"/>
                       </div>
@@ -307,6 +307,187 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </transition>
+          <!--          Select template modal-->
+          <transition name="theme-modal-fade" v-if="UseTemplateModal">
+            <div class="theme-modal-backdrop">
+              <div v-if="UseTemplateModal === true" class="base-padding tw-h-full tw-w-full tw-flex tw-flex-col tw-items-center md:tw-justify-center tw-justify-start">
+                <div class="bg-white radius12px base-shadow base-padding base-margin" style="width: fit-content">
+                  <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
+                    <div class="tw-flex tw-flex-row tw-items-center tw-relative tw-my-2">
+                      <base-button-back
+                          :callback="SelectTemplate"></base-button-back>
+                      <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+                      <label class="semibold24 blue10">Choose a Template</label>
+                    </div>
+                  </div>
+                  <div class="tw-mx-4 tw-my-2">
+                    Select a template from the largest selection of free form templates available online.
+                  </div>
+                  <div>
+                    <div class="">
+                      <div>
+                        <base-horizontal-navigation
+                            v-bind:field="UseTemplateNavagationModal"
+                            @callbackField="useTemplateNavagation"
+                        >
+                        </base-horizontal-navigation>
+                      </div>
+                      <div v-if="UseTemplatepage==='Form List'">
+                        <div class="tw-ml-3">
+                          <SearchBar  placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
+                        </div>
+                        <!--                        <div v-for="FormData in filteredList" :key="FormData.formId">-->
+                        <!--                          <div v-if="FormData.UseTemplate === true">-->
+                        <div class="scroller">
+                          <div class="tw-ml-3 tw-my-2">
+                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
+                              <div class="tw-flex tw-flex-row">
+                                <div class="base-padding radius12px" style="height: fit-content">
+                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                                </div>
+                                <div class="tw-flex tw-flex-col tw-items-start tw-mx-2 base-padding radius12px" style="height: fit-content">
+                                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
+                                  <label class="medium16 blue10">Test1</label>
+                                </div>
+                              </div>
+                              <div class="tw-flex tw-flex-row tw-mx-2">
+                                <div class="">
+                                  <base-button-blue
+                                      buttonID="buttonPreview"
+                                      buttonText="Preview"
+                                  ></base-button-blue>
+                                </div>
+                                <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" @click="buttonClicked">
+                                  <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" v-if="StateShowContentForWindowSize">Use Template</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tw-ml-3 tw-my-2">
+                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                              <div class="tw-flex tw-flex-row">
+                                <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
+                                  <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
+                                </div>
+                                <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                                  <label  class="medium16 grey5">Form Name</label>
+                                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
+                                  <label class="medium16 blue10">Test1</label>
+                                </div>
+                                <div  class="tw-flex tw-flex-col tw-items-start">
+                                  <label class="medium16 grey5">Created By</label>
+                                  <!--                                      <label class="light16 grey7">{{ FormData.createdByUser }}</label>-->
+                                  <label class="light16 grey7">test1</label>
+                                </div>
+                              </div>
+                              <div class="tw-flex tw-flex-row tw-mx-2">
+                                <div class="">
+                                  <BaseButtonDelete
+                                      buttonID="buttonDelete"
+                                      buttonText="Delete"
+                                      buttonIcon="heroicons-outline:trash"
+                                  ></BaseButtonDelete>
+                                </div>
+                                <div class="">
+                                  <base-button-blue
+                                      buttonID="buttonViewMore"
+                                      buttonText="View More"
+                                      buttonIcon="heroicons-outline:eye"
+                                  ></base-button-blue>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tw-ml-3 tw-my-2">
+                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                              <div class="tw-flex tw-flex-row">
+                                <div class="bg-blue1 base-padding radius12px" style="height: fit-content">
+                                  <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
+                                </div>
+                                <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                                  <label  class="medium16 grey5">Form Name</label>
+                                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
+                                  <label class="medium16 blue10">Test1</label>
+                                </div>
+                                <div  class="tw-flex tw-flex-col tw-items-start">
+                                  <label class="medium16 grey5">Created By</label>
+                                  <!--                                      <label class="light16 grey7">{{ FormData.createdByUser }}</label>-->
+                                  <label class="light16 grey7">test1</label>
+                                </div>
+                              </div>
+                              <div class="tw-flex tw-flex-row tw-mx-2">
+                                <div class="">
+                                  <BaseButtonDelete
+                                      buttonID="buttonDelete"
+                                      buttonText="Delete"
+                                      buttonIcon="heroicons-outline:trash"
+                                  ></BaseButtonDelete>
+                                </div>
+                                <div class="">
+                                  <base-button-blue
+                                      buttonID="buttonViewMore"
+                                      buttonText="View More"
+                                      buttonIcon="heroicons-outline:eye"
+                                  ></base-button-blue>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tw-ml-3 tw-my-3">
+                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                              <div class="tw-flex tw-flex-row">
+                                <div>
+                                  <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+                                </div>
+                                <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
+                                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
+                                  <label class="medium16 blue10">Test1</label>
+                                </div>
+                              </div>
+                              <div class="tw-flex tw-flex-row tw-mx-2">
+                                <div class="">
+                                  <BaseButtonDelete
+                                      buttonID="buttonDelete"
+                                      buttonText="Delete"
+                                      buttonIcon="heroicons-outline:trash"
+                                  ></BaseButtonDelete>
+                                </div>
+                                <div class="">
+                                  <base-button-blue
+                                      buttonID="buttonViewMore"
+                                      buttonText="View More"
+                                      buttonIcon="heroicons-outline:eye"
+                                  ></base-button-blue>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div v-if="UseTemplatepage==='My Template'">
+                          <div class="tw-flex tw-flex-row">
+                            <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                              <label class="semibold16 blue10">Created By</label>
+                              <label class="tw-ml-4 light14 grey7">{{ CreatedByUser }}</label>
+                            </div>
+                            <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
+                              <label class="semibold16 blue10">Date Created</label>
+                              <label class="tw-ml-2 light14 grey7">{{ DateCreated }}</label>
+                            </div>
+                          </div>
+                          <div class="tw-flex tw-flex-col tw-mx-2.5 tw-my-3">
+                            <label class="semibold16 blue10">Description</label>
+                            <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{FormDescription}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
           </transition>
           <!-- My Ticket-->
@@ -334,6 +515,7 @@ import BaseButtonFill from '@/components/BaseButtonId'
 import BaseButtonDelete from '@/components/BaseButtonDelete'
 import BaseBadge from "@/components/BaseBadge";
 import SearchBar from "@/components/SearchBar";
+import BaseButtonBack from "@/components/BaseButtonBack";
 import axios from "axios";
 
 export default {
@@ -347,7 +529,8 @@ export default {
     BaseButtonBlue,
     BaseButtonDelete,
     BaseBadge,
-    SearchBar
+    SearchBar,
+    BaseButtonBack,
   },
   data() {
     return {
@@ -358,6 +541,7 @@ export default {
       StateShowContentForWindowSize: true,
       FormData: [],
       TicketTemplate: false,
+      UseTemplatepage: 'Form List',
       CreatedByUser: 'Chanon Panarong',
       FormDescription: 'Form สำหรับเก็บข้อมูล',
       DateCreated: '24/4/2022',
@@ -368,7 +552,8 @@ export default {
       ModalFormId: '',
       ModalFormName: '',
       ModalFormDescription: '',
-      formNameSearch: ''
+      formNameSearch: '',
+      UseTemplateModal: false
     }
   },
   watch:{
@@ -416,6 +601,9 @@ export default {
     },
     HorizontalModalNavigation(page){
       this.ModalPage = page
+    },
+    useTemplateNavagation(page){
+      this.UseTemplatepage = page
     },
     formNameInput(input){
       this.formNameSearch = input
@@ -468,6 +656,10 @@ export default {
       this.ModalFormId = formId
       this.ModalFormName = formName
       this.ModalFormDescription = formDescription
+    },
+    SelectTemplate(){
+      this.UseTemplateModal = !this.UseTemplateModal
+      this.showFormBuilderLayout = !this.showFormBuilderLayout
     }
   }
 }
@@ -631,5 +823,26 @@ export default {
   border-color: $grey3;
   padding: 0.5rem;
   //background-color: $grey6;
+}
+.button-usetemplate {
+  color: white;
+  background-color: $green5;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+  &:hover{
+    color: white;
+    background-color: $green3;
+  }
+}
+.scroller{
+  width: fit-content;
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 </style>
