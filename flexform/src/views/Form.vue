@@ -354,13 +354,13 @@
                                 </div>
                               </div>
                               <div class="tw-flex tw-flex-row tw-mx-2">
-                                <div class="tw-mr-2">
-                                  <base-button-blue
-                                      buttonID="buttonPreview"
-                                      buttonText="Preview"
-                                      buttonIcon="heroicons-outline:eye"
-                                  ></base-button-blue>
-                                </div>
+<!--                                <div class="tw-mr-2">-->
+<!--                                  <base-button-blue-->
+<!--                                      buttonID="buttonPreview"-->
+<!--                                      buttonText="Preview"-->
+<!--                                      buttonIcon="heroicons-outline:eye"-->
+<!--                                  ></base-button-blue>-->
+<!--                                </div>-->
                                 <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
                                   <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
                                 </div>
@@ -377,13 +377,13 @@
                                   </div>
                                 </div>
                                 <div class="tw-flex tw-flex-row tw-mx-2">
-                                  <div class="tw-mr-2">
-                                    <base-button-blue
-                                        buttonID="buttonPreview"
-                                        buttonText="Preview"
-                                        buttonIcon="heroicons-outline:eye"
-                                    ></base-button-blue>
-                                  </div>
+<!--                                  <div class="tw-mr-2">-->
+<!--                                    <base-button-blue-->
+<!--                                        buttonID="buttonPreview"-->
+<!--                                        buttonText="Preview"-->
+<!--                                        buttonIcon="heroicons-outline:eye"-->
+<!--                                    ></base-button-blue>-->
+<!--                                  </div>-->
                                   <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
                                     <span class="tw-mt-0.5 tw-mr-3 tw-ml-2">Use Template</span>
                                   </div>
@@ -419,13 +419,13 @@
                                 <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
                               </div>
                               </div>
-                              <div class="tw-mr-2">
-                                <base-button-blue
-                                    buttonID="buttonPreview"
-                                    buttonText="Preview"
-                                    buttonIcon="heroicons-outline:eye"
-                                ></base-button-blue>
-                              </div>
+<!--                              <div class="tw-mr-2">-->
+<!--                                <base-button-blue-->
+<!--                                    buttonID="buttonPreview"-->
+<!--                                    buttonText="Preview"-->
+<!--                                    buttonIcon="heroicons-outline:eye"-->
+<!--                                ></base-button-blue>-->
+<!--                              </div>-->
                               <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
                                 <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
                               </div>
@@ -448,13 +448,13 @@
                                     <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
                                   </div>
                                 </div>
-                                <div class="tw-mr-2">
-                                  <base-button-blue
-                                      buttonID="buttonPreview"
-                                      buttonText="Preview"
-                                      buttonIcon="heroicons-outline:eye"
-                                  ></base-button-blue>
-                                </div>
+<!--                                <div class="tw-mr-2">-->
+<!--                                  <base-button-blue-->
+<!--                                      buttonID="buttonPreview"-->
+<!--                                      buttonText="Preview"-->
+<!--                                      buttonIcon="heroicons-outline:eye"-->
+<!--                                  ></base-button-blue>-->
+<!--                                </div>-->
                                 <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
                                   <span class="tw-mt-0.5 tw-mr-3 tw-ml-2">Use Template</span>
                                 </div>
