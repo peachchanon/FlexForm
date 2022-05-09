@@ -40,7 +40,7 @@
                   buttonText="Fill"
                   buttonTextColor="white"
                   buttonBgColor="bg-blue5"
-                  @callback="doFill"
+                  :callback="doFill"
               ></base-button>
             </div>
           </div>
@@ -291,6 +291,15 @@ export default {
     },
     doFill() {
       console.log('Fill')
+      const formID = this.FormStructureData.formId
+      console.log(formID)
+      this.$router.push({
+        name: 'Fill',
+        params: {
+          ClickedForm: formID,
+          BackToPage: 'Response',
+        }
+      })
     },
     openDetailModal(params){
       console.log(params.row)
@@ -333,14 +342,13 @@ export default {
       axios.delete('http://localhost:4000/api/FormInput/Delete/Mongo/'+idMongo)
           .then(response => {
             if (response.status === 200 && response.data) {
-              console.log( 'Delete Complete!' )
-              console.log( response.data )
+              console.log('Delete Complete!')
+              console.log(response.data)
             }
           })
           .catch(error => {
             console.log(error)
           })
-      
       this.stateShowDeleteModal = false
       this.stateShowDetailModal = false
     },

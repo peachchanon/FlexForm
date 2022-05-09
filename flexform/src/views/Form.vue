@@ -438,7 +438,11 @@ export default {
       console.log("clicked for id: " + this.ClickedFormId)
       this.$router.push({
         name: 'Fill',
-        params: { ClickedForm: this.ClickedFormId}})
+        params: { 
+          ClickedForm: this.ClickedFormId,
+          BackToPage: 'Form'
+        }
+      })
     },
     async SelectForm(formId){
       this.CreateFormBtnClick = false

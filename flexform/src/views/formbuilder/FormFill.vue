@@ -189,7 +189,8 @@ export default {
     ButtonSection,
   },
   props: {
-    ClickedForm: String
+    ClickedForm: String,
+    BackToPage: String,
   },
   data() {
     return {
@@ -330,7 +331,18 @@ export default {
   },
   methods: {
     PrevPage(){
-      this.$router.push('/form')
+      if(this.BackToPage==='Form'){
+        this.$router.push('/form')
+      } else if(this.BackToPage==='Response'){
+        this.$router.push({
+          name: 'Response',
+          params: {
+            PropFormId: this.FormStructure.FormId
+          }
+        })
+      } else {
+        this.$router.push('/form')
+      }
     },
     // Save form
     doShowSaveModal(){
