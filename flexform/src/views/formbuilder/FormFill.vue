@@ -406,7 +406,7 @@ export default {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
-      this.FormInput.Sections.find(elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
     },
     async doActionButton() {
       console.log(this.FormInput)
