@@ -75,15 +75,15 @@
         <div class="theme-modal">
           <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
             <div class="tw-flex tw-flex-row tw-items-center">
-              <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
-              <label class="semibold24 blue10">Form</label>
+              <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:chat"/>
+              <label class="semibold24 blue10">Detail</label>
             </div>
             <div class="button__close tw-absolute tw-right-0" @click="closeDetailModal">
               <Icon class="semibold24" icon="heroicons-outline:x"/>
             </div>
           </header>
           <div class="tw-ml-3 tw-mr-3 tw-mb-2 tw-flex tw-flex-row tw-justify-end">
-            <div class="tw-mr-2 tw-py-3 tw-px-5 radius10px blue10 hover:tw-text-blue5 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
+            <div @click="doShowEditModal(indexSelectRow)" class="tw-mr-2 tw-py-3 tw-px-5 radius10px blue10 hover:tw-text-blue5 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
               <Icon class="semibold24" icon="heroicons-outline:pencil-alt"/>
               <span class="medium16 tw-ml-2">Edit</span>
             </div>
@@ -126,12 +126,91 @@
           <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
             <span class="medium16 grey10">You're about to delete this row.</span>
           </section>
-          <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
-            <div class="tw-w-1/3 tw-mr-1">
+          <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end" style="max-height: 400px">
+            <div class="tw-w-1/3 tw-mr-1" style="width: 100%; max-width: 150px">
               <div class="button__style__white red" @click="doShowDeleteModal">No</div>
             </div>
-            <div class="tw-w-1/3 tw-ml-1">
+            <div class="tw-w-1/3 tw-ml-1" style="width: 100%; max-width: 150px">
               <div class="button__style__red" @click="doDeleteRow">Yes</div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </transition>
+    <!-- Edit Row Modal -->
+    <transition name="theme-modal-fade" v-if="stateShowEditModal">
+      <div class="theme-modal-backdrop">
+        <div class="theme-modal">
+          <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:pencil-alt"/>
+              <label class="semibold24 blue10">Edit Detail</label>
+            </div>
+          </header>
+          <section 
+              class="tw-pl-2 tw-ml-3 tw-mr-3 tw-mb-3 tw-overflow-x-hidden" style="max-height: 400px"
+          >
+            <div
+                class="tw-border-2 radius10px tw-pt-3"
+                v-for="(elementSection, indexSection) in FormStructureData.sections" :key="elementSection.sectionId"
+                :class="{
+                  'tw-mb-4': indexSection !== FormStructureData.sections.length-1,
+                  '': indexSection === FormStructureData.sections.length-1,
+                }"
+            >
+              <div
+                  v-for="(componentElement, indexComponent) in FormStructureData.sections[indexSection].components"
+                  :key="componentElement.componentId"
+              >
+                <div v-if="componentElement.componentType === 'short-input'" class="tw-w-full">
+                  <short-input-component
+                      :dataShortInput="FormEditStructure[indexSection].ComponentProperties"
+                      :dataInput="{
+                        FormId: FormResponseData[indexSelectRow].formId,
+                        SectionId: FormResponseData[indexSelectRow].sections[indexSection].sectionId,
+                        ComponentId: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentId,
+                      }"
+                      :propValueShortInput="{
+                        Text: FormEditStructure[indexSelectRow].ComponentValue,
+                        Number: 0,
+                      }"
+                      @valueShortInput="doShortInputEdit"
+                  ></short-input-component>
+                </div>
+                <div v-if="componentElement.componentType === 'long-input'" class="tw-w-full">
+                  {{FormEditStructure[indexSelectRow]}}
+                  <long-input-component
+                      :dataLongInput="FormEditStructure[indexSection].ComponentProperties"
+                      :dataInput="{
+                        FormId: FormResponseData[indexSelectRow].formId,
+                        SectionId: FormResponseData[indexSelectRow].sections[indexSection].sectionId,
+                        ComponentId: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentId,
+                      }"
+                      :propValueLongInput="{
+                        Text: FormEditStructure[indexSelectRow].ComponentValue,
+                      }"
+                      @valueLongInput="doLongInputEdit"
+                  ></long-input-component>
+                </div>
+                <div v-if="componentElement.componentType === 'dropdown'" class="tw-w-full">
+                  <dropdown-component
+                      :dataDropdown="FormEditStructure[indexSection].ComponentProperties"
+                  ></dropdown-component>
+                </div>
+                <div v-if="componentElement.componentType === 'choice'" class="tw-w-full">
+                  <choice-component
+                      :dataChoice="FormEditStructure[indexSection].ComponentProperties"
+                  ></choice-component>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="tw-pl-3 tw-pr-3 tw-pb-3 tw-flex tw-flex-row tw-justify-end">
+            <div class="tw-w-1/3 tw-mr-1" style="width: 100%; max-width: 150px">
+              <div class="button__style__white green" @click="doCancelShowEditModal">Cancel</div>
+            </div>
+            <div class="tw-w-1/3 tw-ml-1" style="width: 100%; max-width: 150px">
+              <div class="button__style__green" @click="doSaveEdit">Save</div>
             </div>
           </footer>
         </div>
@@ -145,8 +224,13 @@ import { Icon } from '@iconify/vue2'
 import SearchBar from "@/components/SearchBar"
 import BaseButton from "@/components/BaseButton"
 import 'vue-good-table/dist/vue-good-table.css'
-import { VueGoodTable } from 'vue-good-table';
-import axios from "axios";
+import { VueGoodTable } from 'vue-good-table'
+import axios from "axios"
+// Import Component
+import ShortInputComponent from '@/components/formbuildercomponent/ShortInput'
+import LongInputComponent from '@/components/formbuildercomponent/LongInput'
+import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
+import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 
 export default {
   name: "FormResponse.vue",
@@ -155,6 +239,10 @@ export default {
     SearchBar,
     BaseButton,
     VueGoodTable,
+    ShortInputComponent,
+    LongInputComponent,
+    DropdownComponent,
+    ChoiceComponent,
   },
   props: {
     PropFormId: String
@@ -165,6 +253,7 @@ export default {
       valueSelectRow: [],
       indexSelectRow: Number,
       stateShowDeleteModal: false,
+      stateShowEditModal: false,
       FormResponseName: String,
       FormStructureData: {},
       FormResponseData: {},
@@ -173,7 +262,89 @@ export default {
         rows: [],
       },
       ValueSearchTerm: '',
-      FormId: String
+      FormId: String,
+      FormEditStructure: [],
+      ComponentStyle: [
+        {
+          ComponentType: 'short-input',
+          ComponentProperties: {
+            LabelText: '',
+            SubLabelText: '',
+            Alignment: 'top',
+            Required: false,
+            Placeholder: '',
+            FixWidth: true,
+            Width: 200,
+            ReadOnly: false,
+            CharacterLimit: false,
+            CharacterLimitValue: 100000,
+            Validation: 'Alphabetic',
+            FontColor: 'grey10',
+            InputBgColor: 'bg-grey1',
+            BorderColor: 'white',
+            LabelFontSize: 16,
+          },
+        },
+        {
+          ComponentType: 'long-input',
+          ComponentProperties: {
+            LabelText: '',
+            SubLabelText: '',
+            Alignment: 'top',
+            Required: false,
+            Placeholder: '',
+            FixWidth: true,
+            Width: 200,
+            ReadOnly: false,
+            CharacterLimit: false,
+            CharacterLimitValue: 100000,
+            Validation: 'Alphabetic',
+            FontColor: 'grey10',
+            InputBgColor: 'bg-grey1',
+            BorderColor: 'white',
+            LabelFontSize: 16,
+          },
+        },
+        {
+          ComponentType: 'dropdown',
+          ComponentProperties: {
+            LabelText: '',
+            SubLabelText: '',
+            Alignment: 'top',
+            Required: false,
+            Placeholder: '',
+            FixWidth: true,
+            Width: 200,
+            ReadOnly: false,
+            PredefinedOptions: 'None',
+            Options: [],
+            FontColor: 'grey10',
+            InputBgColor: 'bg-grey1',
+            BorderColor: 'white',
+            LabelFontSize: 16,
+          },
+        },
+        {
+          ComponentType: 'choice',
+          ComponentProperties: {
+            LabelText: '',
+            SubLabelText: '',
+            Alignment: 'top',
+            Required: false,
+            Placeholder: '',
+            FixWidth: true,
+            Width: 200,
+            ReadOnly: false,
+            PredefinedOptions: 'None',
+            Options: [],
+            FontColor: 'grey10',
+            InputBgColor: 'bg-grey1',
+            BorderColor: 'white',
+            LabelFontSize: 16,
+            MultipleChoice: false,
+          }
+        },
+      ],
     }
   },
   async mounted() {
@@ -191,7 +362,7 @@ export default {
           })
       // Form Response
       console.log('Form Response')
-      await axios.get('http://localhost:4000/api/FormInput/FormInput/' + this.PropFormId)
+      await axios.get('http://localhost:4000/api/Flexform/FormInput/FormInput/' + this.PropFormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data
@@ -219,7 +390,7 @@ export default {
           })
       // Form Response
       //console.log('Form Response')
-      await axios.get('http://localhost:4000/api/FormInput/FormInput/' +this.FormId)
+      await axios.get('http://localhost:4000/api/Flexform/FormInput/FormInput/' +this.FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data
@@ -241,7 +412,7 @@ export default {
               (elementComponent)=>{
                 //console.log(elementComponent.componentType)
                 //console.log(elementComponent.componentProperties)
-                if(elementComponent.componentType !== 'heading' && 'paragraph') {
+                if(elementComponent.componentType !== 'heading' && elementComponent.componentType !== 'paragraph') {
                   this.FormResponseTable.columns.push({
                     label: elementComponent.componentProperties.labelText,
                     field: elementComponent.componentId,
@@ -250,11 +421,66 @@ export default {
                     sectionId: elementSection.sectionId,
                     componentId: elementComponent.componentId,
                   })
-                }
+                  // Create Form Edit Structure
+                  if(elementComponent.componentType === 'short-input' || elementComponent.componentType === 'long-input') {
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
+                    valueProperties.LabelText = elementComponent.componentProperties.labelText
+                    valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
+                    valueProperties.Placeholder = elementComponent.componentProperties.placeholder
+                    this.FormEditStructure.push({
+                      ComponentType: 'short-input',
+                      ComponentProperties: valueProperties,
+                      ComponentValue: [],
+                      FormId: this.FormStructureData.formId,
+                      SectionId: elementSection.sectionId,
+                      ComponentId: elementComponent.componentId,
+                    })
+                  } else if (elementComponent.componentType === 'dropdown'){
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
+                    valueProperties.LabelText = elementComponent.componentProperties.labelText
+                    valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
+                    valueProperties.Placeholder = elementComponent.componentProperties.placeholder
+                    valueProperties.Options = elementComponent.componentProperties.options
+                    this.FormEditStructure.push({
+                      ComponentType: 'short-input',
+                      ComponentProperties: valueProperties,
+                      ComponentValue: [],
+                      FormId: this.FormStructureData.formId,
+                      SectionId: elementSection.sectionId,
+                      ComponentId: elementComponent.componentId,
+                    })
+                  } else if (elementComponent.componentType === 'choice'){
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
+                    valueProperties.LabelText = elementComponent.componentProperties.labelText
+                    valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
+                    valueProperties.Placeholder = elementComponent.componentProperties.placeholder
+                    valueProperties.Options = elementComponent.componentProperties.options
+                    valueProperties.MultipleChoice = elementComponent.componentProperties.multipleChoice
+                    this.FormEditStructure.push({
+                      ComponentType: 'short-input',
+                      ComponentProperties: valueProperties,
+                      ComponentValue: [],
+                      FormId: this.FormStructureData.formId,
+                      SectionId: elementSection.sectionId,
+                      ComponentId: elementComponent.componentId,
+                    })
+                  }
+                  // Create Form Edit Input
+                  // console.log(this.FormEditInput)
+                  /* this.FormEditInput.push({
+                    ComponentValue: this.FormResponseData,
+                    FormId: this.FormStructureData.formId,
+                    SectionId: elementSection.sectionId,
+                    ComponentId: elementComponent.componentId,
+                  })
+                  */
+                } 
               }
           )
         }
     )
+    console.log(this.FormEditStructure)
+    console.log(this.FormEditInput)
     // Insert Data to Table
     //console.log(this.FormResponseData)
     this.FormResponseData.forEach(
@@ -343,7 +569,59 @@ export default {
       this.stateShowDetailModal = false
     },
     doShowDeleteModal(){
-      this.stateShowDeleteModal = !this.stateShowDeleteModal;
+      this.stateShowDeleteModal = !this.stateShowDeleteModal
+    },
+    doShowEditModal(){
+      this.stateShowEditModal = true
+      const sectionId = this.FormEditStructure[this.indexSelectRow].SectionId
+      const componentId = this.FormEditStructure[this.indexSelectRow].ComponentId
+      this.FormEditStructure[this.indexSelectRow].ComponentValue = this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===sectionId).components.find(item=>item.componentId===componentId).componentValue
+    },
+    doCancelShowEditModal(){
+      this.stateShowEditModal = false
+      this.$router.go()
+    },
+    doShortInputEdit(value) {
+      //console.log(value.value)
+      //console.log(value.dataInput)
+      if(this.FormEditStructure[this.indexSelectRow].ComponentValue.length<=0){
+        this.FormEditStructure[this.indexSelectRow].ComponentValue.push = value.value
+      } else{
+        this.FormEditStructure[this.indexSelectRow].ComponentValue[0] = value.value
+      }
+      //console.log(this.FormEditStructure[this.indexSelectRow].ComponentValue[0])
+    },
+    doLongInputEdit(value) {
+      if(this.FormEditStructure[this.indexSelectRow].ComponentValue.length<=0){
+        this.FormEditStructure[this.indexSelectRow].ComponentValue.push = value.value
+      } else{
+        this.FormEditStructure[this.indexSelectRow].ComponentValue[0] = value.value
+      }
+    },
+    async doSaveEdit(){
+      this.FormEditStructure.forEach(
+          (component)=>{
+            //console.log(component.ComponentValue)
+            //console.log(component.SectionId)
+            //console.log(component.ComponentId)
+            this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===component.SectionId).components.find(item=>item.componentId===component.ComponentId).componentValue = component.ComponentValue
+          }
+      )
+      console.log(this.FormResponseData[this.indexSelectRow].id)
+      // Axios
+      axios.put('http://localhost:4000/api/Flexform/FormInput/'+this.FormResponseData[this.indexSelectRow].id, this.FormResponseData[this.indexSelectRow])
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              console.log('Update Complete!')
+              console.log(response.data)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      this.stateShowEditModal = false
+      this.stateShowDetailModal = false
+      this.$router.go()
     },
     async doDeleteRow(){
       // console.log(this.FormResponseTable.rows[this.indexSelectRow])
@@ -400,7 +678,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   z-index: 45;
 }
 .theme-modal {
@@ -493,6 +771,39 @@ export default {
   background-color: $red5;
   &:hover{
     background-color: $red6;
+  }
+}
+.button__style__white.green {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $green5;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: $green5;
+  background-color: white;
+  &:hover{
+    color: $green3;
+    border-color: $green3;
+  }
+}
+.button__style__green {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  background-color: $green5;
+  &:hover{
+    background-color: $green6;
   }
 }
 .button__close{
