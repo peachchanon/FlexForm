@@ -425,7 +425,7 @@ export default {
     },
     async doActionButton() {
       console.log(this.FormInput)
-      axios.post('http://localhost:4000/api/FormInput/CreateFormInput', this.FormInput)
+      axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
           .then(response => {
             console.log(response.status)
             if (response.status === 200 && response.data) {

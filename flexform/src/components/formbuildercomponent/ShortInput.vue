@@ -164,12 +164,26 @@ export default {
       FormId: String,
       SectionId: String,
       ComponentId: String,
+    },
+    propValueShortInput: {
+      Text: String,
+      Number: Number,
     }
   },
   emits: ['valueShortInput'],
   data() {
     return {
       valueShortInput: {
+        Text: '',
+        Number: 0,
+      }
+    }
+  },
+  mounted() {
+    if(this.propValueShortInput) {
+      this.valueShortInput = this.propValueShortInput
+    } else {
+      this.valueShortInput = {
         Text: '',
         Number: 0,
       }

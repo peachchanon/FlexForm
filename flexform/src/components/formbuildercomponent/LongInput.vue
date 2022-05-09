@@ -92,12 +92,24 @@ export default {
       FormId: String,
       SectionId: String,
       ComponentId: String,
+    },
+    propValueLongInput: {
+      Text: String,
     }
   },
   emits: ['valueLongInput'],
   data() {
     return {
       valueLongInput: {
+        Text: '',
+      }
+    }
+  },
+  mounted() {
+    if(this.propValueLongInput) {
+      this.valueLongInput = this.propValueLongInput
+    } else {
+      this.valueLongInput = {
         Text: '',
       }
     }
