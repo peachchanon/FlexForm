@@ -53,7 +53,9 @@
                       </div>
                       <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">
                         <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form Name</label>
+                        <div class=" tw-truncate" style="width: 100%; max-width: 195px;">
                         <label class="medium16 blue10">{{ FormData.formName }}</label>
+                        </div>
                       </div>
                       <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start">
                         <label class="medium16 grey5">Created By</label>
@@ -88,7 +90,9 @@
                       </div>
                       <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
                         <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
+                        <div class=" tw-truncate" style="width: 100%; max-width: 195px;">
                         <label class="medium16 blue10">{{ FormData.formName }}</label>
+                        </div>
                       </div>
                       <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">
                         <label class="medium16 grey5 tw-mb-1">Type</label>
