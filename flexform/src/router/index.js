@@ -15,6 +15,7 @@ import AllTicket from "@/views/AllTicket";
 import FormResponse from "@/views/formbuilder/FormResponse";
 import FormFill from "@/views/formbuilder/FormFill";
 import PreviewGraph from "@/views/datavisualization/PreviewGraph";
+import MyTemplate from "@/views/MyTemplate";
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -53,7 +54,7 @@ const routes = [
     component: Dashboard,
     meta: {
       title: 'Dashboard',
-      requireAuthen: true
+      //requireAuthen: true
     }
   },
   {
@@ -71,6 +72,15 @@ const routes = [
     component: Form,
     meta: {
       title: 'Form',
+      //requireAuthen: true
+    }
+  },
+  {
+    path: '/MyTemplate',
+    name: 'MyTemplate',
+    component: MyTemplate,
+    meta: {
+      title: 'MyTemplate',
       //requireAuthen: true
     }
   },
