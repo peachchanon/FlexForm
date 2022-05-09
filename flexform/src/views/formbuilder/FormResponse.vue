@@ -20,8 +20,11 @@
           <span class="semibold24 blue10 tw-ml-2">Response</span>
         </div>
         <div class="tw-ml-3 tw-mt-3 tw-mr-3 tw-flex tw-flex-row tw-justify-between tw-items-center">
-          <div>
-            <SearchBar></SearchBar>
+          <div class="tw-w-full">
+            <SearchBar
+                placeholder="Search"
+                @callBackString="doSearchTable"
+            ></SearchBar>
           </div>
           <div class="tw-flex tw-flex-row tw-items-end tw-justify-end tw-w-full">
             <div class="tw-w-full tw-ml-1 tw-mr-1" style="max-width: 120px">
@@ -46,16 +49,23 @@
           </div>
         </div>
         <div class="base-padding">
-          <vue-good-table
-              :columns="FormResponseTable.columns"
-              :rows="FormResponseTable.rows"
-              max-height="300px"
-              :line-numbers="true"
-              :pagination-options="{
+          <div class="radius10px" style="height: 500px;">
+            <vue-good-table
+                :columns="FormResponseTable.columns"
+                :rows="FormResponseTable.rows"
+                max-height="600px"
+                :line-numbers="true"
+                :pagination-options="{
                 enabled: true
               }"
-              @on-row-click="openDetailModal"
-          ></vue-good-table>
+                :search-options="{
+                enabled: true,
+                placeholder: 'Search data',
+                externalQuery: ValueSearchTerm
+              }"
+                @on-row-click="openDetailModal"
+            ></vue-good-table>
+          </div>
         </div>
       </div>
     </div>
@@ -162,6 +172,7 @@ export default {
         columns: [],
         rows: [],
       },
+      ValueSearchTerm: '',
       FormId: String
     }
   },
@@ -283,6 +294,9 @@ export default {
     )
   },
   methods:{
+    doSearchTable(value) {
+      this.ValueSearchTerm = value
+    },
     handler() {
       this.FormId = this.PropFormId
       this.ReloadPage = false

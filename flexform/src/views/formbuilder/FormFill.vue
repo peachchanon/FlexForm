@@ -331,9 +331,12 @@ export default {
   },
   methods: {
     PrevPage(){
+      console.log(this.BackToPage)
       if(this.BackToPage==='Form'){
+        console.log('Back to Form')
         this.$router.push('/form')
       } else if(this.BackToPage==='Response'){
+        console.log('Back to Form Response')
         this.$router.push({
           name: 'Response',
           params: {
@@ -428,7 +431,21 @@ export default {
             if (response.status === 200 && response.data) {
               console.log(response.status)
               console.log(response.data)
-              this.$router.push('/form')
+              console.log(this.BackToPage)
+              if(this.BackToPage==='Form'){
+                console.log('Back to Form')
+                this.$router.push('/form')
+              } else if(this.BackToPage==='Response'){
+                console.log('Back to Form Response')
+                this.$router.push({
+                  name: 'Response',
+                  params: {
+                    PropFormId: this.FormStructure.FormId
+                  }
+                })
+              } else {
+                this.$router.push('/form')
+              }
             }
           })
     }
@@ -505,7 +522,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  z-index: 2;
+  z-index: 50;
 }
 .theme-modal {
   margin: 10rem 0;
