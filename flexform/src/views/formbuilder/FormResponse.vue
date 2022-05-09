@@ -333,8 +333,8 @@ export default {
       axios.delete('http://localhost:4000/api/FormInput/Delete/Mongo/'+idMongo)
           .then(response => {
             if (response.status === 200 && response.data) {
-              console.log('Delete Complete!')
-              console.log(response.data)
+              console.log( 'Delete Complete!' )
+              console.log( response.data )
             }
           })
           .catch(error => {
