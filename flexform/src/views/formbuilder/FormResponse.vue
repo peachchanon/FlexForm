@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <!-- Detail Modal -->
+    <!-- Detail Row Modal -->
     <transition name="theme-modal-fade" v-if="stateShowDetailModal">
       <div class="theme-modal-backdrop">
         <div class="theme-modal">
@@ -77,7 +77,7 @@
               <Icon class="semibold24" icon="heroicons-outline:pencil-alt"/>
               <span class="medium16 tw-ml-2">Edit</span>
             </div>
-            <div class="tw-py-3 tw-px-5 radius10px red5 hover:tw-text-red4 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
+            <div @click="doShowDeleteModal" class="tw-py-3 tw-px-5 radius10px red5 hover:tw-text-red4 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
               <Icon class="semibold24" icon="heroicons-outline:trash"/>
               <span class="medium16 tw-ml-2">Delete</span>
             </div>
@@ -102,6 +102,28 @@
               </div>
             </div>
           </section>
+        </div>
+      </div>
+    </transition>
+    <!-- Delete Row Modal -->
+    <transition name="theme-modal-fade" v-if="stateShowDeleteModal">
+      <div class="theme-modal-backdrop">
+        <div class="theme-modal-small">
+          <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+            <Icon class="icon__style__large tw-mr-2 red5" icon="heroicons-outline:trash"/>
+            <span class="semibold24 red5">Delete Row ?</span>
+          </header>
+          <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
+            <span class="medium16 grey10">You're about to delete this row.</span>
+          </section>
+          <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
+            <div class="tw-w-1/3 tw-mr-1">
+              <div class="button__style__white red" @click="doShowDeleteModal">No</div>
+            </div>
+            <div class="tw-w-1/3 tw-ml-1">
+              <div class="button__style__red" @click="doDeleteRow">Yes</div>
+            </div>
+          </footer>
         </div>
       </div>
     </transition>
@@ -131,6 +153,8 @@ export default {
     return {
       stateShowDetailModal: false,
       valueSelectRow: [],
+      indexSelectRow: Number,
+      stateShowDeleteModal: false,
       FormResponseName: String,
       FormStructureData: {},
       FormResponseData: {},
@@ -155,7 +179,7 @@ export default {
             console.log(error)
           })
       // Form Response
-      //console.log('Form Response')
+      console.log('Form Response')
       await axios.get('http://localhost:4000/api/FormInput/FormInput/' + this.PropFormId)
           .then(response => {
             if (response.status === 200 && response.data) {
@@ -176,7 +200,7 @@ export default {
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormStructureData = response.data
-              //console.log(this.FormStructureData)
+              // console.log(this.FormStructureData)
             }
           })
           .catch(error => {
@@ -195,6 +219,7 @@ export default {
             console.log(error)
           })
     }
+    // console.log(this.FormResponseData)
     // Form Response Name
     this.FormResponseName = this.FormStructureData.formName
     // Create Data in Table
@@ -273,6 +298,8 @@ export default {
       console.log(Object.keys(params.row))
       console.log(Object.values(params.row))
       this.valueSelectRow = []
+      this.indexSelectRow = params.row.originalIndex
+      console.log(this.indexSelectRow)
       Object.keys(params.row).forEach(
           (element)=>{
             //console.log(element)
@@ -290,6 +317,31 @@ export default {
       this.stateShowDetailModal = true
     },
     closeDetailModal(){
+      this.stateShowDetailModal = false
+    },
+    doShowDeleteModal(){
+      this.stateShowDeleteModal = !this.stateShowDeleteModal;
+    },
+    async doDeleteRow(){
+      // console.log(this.FormResponseTable.rows[this.indexSelectRow])
+      this.FormResponseTable.rows.splice(this.indexSelectRow,1)
+      const idMongo = this.FormResponseData[this.indexSelectRow].id
+      console.log(idMongo)
+      this.FormResponseData.splice(this.indexSelectRow,1)
+      console.log(this.FormResponseData)
+      // Axios
+      axios.delete('http://localhost:4000/api/FormInput/Delete/Mongo/'+idMongo)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              console.log('Delete Complete!')
+              console.log(response.data)
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      
+      this.stateShowDeleteModal = false
       this.stateShowDetailModal = false
     },
     doExit(){
@@ -351,6 +403,17 @@ export default {
       box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     }
   }
+}
+.theme-modal-small {
+  margin: 10rem 0;
+  min-width: 375px;
+  width: 460px;
+  background-color: white;
+  padding: 0.75rem;
+  box-shadow: 0 0 0.5px rgba(10, 10, 10, 0.5);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
 }
 .theme-modal-fade-enter, .theme-modal-fade-leave-to {
   opacity: 0;
