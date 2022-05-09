@@ -80,7 +80,7 @@
             </div>
             <div v-if="FormData.useTemplate === false">
               <div class="tw-my-2">
-                <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                <div class="bg-white base-padding base-shadow radius10px tw-flex tw-flex-row tw-items-start tw-justify-between">
                   <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
                     <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
                       <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
@@ -156,8 +156,8 @@
                                 </div>
                                 <div v-if="ModalPage==='Setting'">
                                   <div>
-                                  <div class="tw-flex tw-flex-row border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
-                                    <div class="tw-flex tw-flex-col tw-ml-4">
+                                  <div class="tw-flex tw-flex-row border-grey3 tw-border radius10px tw-mx-3">
+                                    <div class="tw-flex tw-flex-col tw-w-1/2 base-padding">
                                       <div class="tw-ml-2 tw-my-1.5">
                                         <label class="blue10 medium18">Data</label>
                                       </div>
@@ -170,21 +170,22 @@
                                         <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Export Response</label>
                                       </div>
                                     </div>
-                                    <div class="border-grey3 bg-grey3 tw-mt-6 tw-mx-10" style="height: 180px; border-width: 0.5px">
-                                    </div>
-                                    <div class="tw-flex tw-flex-col">
+                                    <div 
+                                        class="border-grey2 tw-border bg-grey3" style="height: 210px;"
+                                    ></div>
+                                    <div class="tw-flex tw-flex-col tw-w-1/2 base-padding">
                                       <div class="tw-my-1.5 tw-ml-2">
                                         <label class="blue10 medium18">Form</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-ml-2 tw-my-1" @click="SelectForm(ModalFormId)">
+                                      <div class="choose tw-flex tw-flex-row" @click="SelectForm(ModalFormId)">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
                                         <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Edit Form</label>
                                       </div>
-                                      <div class="choose tw-flex tw-flex-row tw-ml-2 tw-my-1">
+                                      <div class="choose tw-flex tw-flex-row">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
                                         <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Save As Template</label>
                                       </div>
-                                      <div class="choose-delete tw-flex tw-flex-row tw-ml-2 tw-my-1">
+                                      <div class="choose-delete tw-flex tw-flex-row">
                                         <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
                                         <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Delete Form</label>
                                       </div>
@@ -217,7 +218,7 @@
                                     </div>
                                 </div>
                                 <div v-if="ModalPage==='Detail'">
-                                  <div class="border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
+                                  <div class="border-grey3 tw-border radius10px tw-mx-3 base-padding">
                                   <div class="tw-flex tw-flex-row tw-justify-between tw-mr-16">
                                     <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
                                       <label class="semibold16 blue10">Created By</label>

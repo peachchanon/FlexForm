@@ -56,13 +56,13 @@
                 max-height="600px"
                 :line-numbers="true"
                 :pagination-options="{
-                enabled: true
-              }"
+                  enabled: true
+                }"
                 :search-options="{
-                enabled: true,
-                placeholder: 'Search data',
-                externalQuery: ValueSearchTerm
-              }"
+                  enabled: true,
+                  placeholder: 'Search data',
+                  externalQuery: ValueSearchTerm
+                }"
                 @on-row-click="openDetailModal"
             ></vue-good-table>
           </div>
