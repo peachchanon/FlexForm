@@ -139,7 +139,7 @@
                             <div class="detailcard bg-white radius12px base-shadow base-padding base-margin">
                               <div class="tw-flex tw-flex-row tw-items-center tw-justify-between">
                                 <div class="tw-flex tw-flex-row tw-items-center tw-relative">
-                                  <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+                                  <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:document-text"/>
                                   <label class="semibold24 blue10">{{ModalFormName}}</label>
                                 </div>
                                 <div class="button__close" @click="showFormDetail()">
