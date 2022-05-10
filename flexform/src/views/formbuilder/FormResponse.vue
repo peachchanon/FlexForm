@@ -250,6 +250,7 @@ export default {
   },
   data() {
     return {
+      keyComponent: 0,
       stateShowDetailModal: false,
       valueSelectRow: [],
       indexSelectRow: Number,
@@ -527,12 +528,6 @@ export default {
     doSearchTable(value) {
       this.ValueSearchTerm = value
     },
-    handler() {
-      this.FormId = this.PropFormId
-      this.ReloadPage = false
-      console.log("Reload propformid" + this.PropFormId)
-      console.log("Reload formid" + this.FormId)
-    },
     doFill() {
       console.log('Fill')
       const formID = this.FormStructureData.formId
@@ -584,6 +579,7 @@ export default {
     },
     doCancelShowEditModal(){
       this.stateShowEditModal = false
+      this.$router.go()
     },
     doShortInputEdit(value) {
       const sectionId=value.dataInput.SectionId
@@ -662,7 +658,6 @@ export default {
           })
       this.stateShowEditModal = false
       this.stateShowDetailModal = false
-      //this.$router.go()
       this.resetRowTable()
     },
     async doDeleteRow(){
