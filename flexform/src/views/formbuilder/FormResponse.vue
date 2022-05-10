@@ -171,14 +171,13 @@
                         ComponentId: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentId,
                       }"
                       :propValueShortInput="{
-                        Text: FormEditStructure[indexSelectRow].ComponentValue,
+                        Text: FormEditStructure[indexComponent].ComponentValue,
                         Number: 0,
                       }"
                       @valueShortInput="doShortInputEdit"
                   ></short-input-component>
                 </div>
                 <div v-if="componentElement.componentType === 'long-input'" class="tw-w-full">
-                  {{FormEditStructure[indexSelectRow]}}
                   <long-input-component
                       :dataLongInput="FormEditStructure[indexSection].ComponentProperties"
                       :dataInput="{
@@ -187,11 +186,12 @@
                         ComponentId: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentId,
                       }"
                       :propValueLongInput="{
-                        Text: FormEditStructure[indexSelectRow].ComponentValue,
+                        Text: FormEditStructure[indexComponent].ComponentValue,
                       }"
                       @valueLongInput="doLongInputEdit"
                   ></long-input-component>
                 </div>
+                <!--
                 <div v-if="componentElement.componentType === 'dropdown'" class="tw-w-full">
                   <dropdown-component
                       :dataDropdown="FormEditStructure[indexSection].ComponentProperties"
@@ -202,6 +202,7 @@
                       :dataChoice="FormEditStructure[indexSection].ComponentProperties"
                   ></choice-component>
                 </div>
+                -->
               </div>
             </div>
           </section>
@@ -229,8 +230,8 @@ import axios from "axios"
 // Import Component
 import ShortInputComponent from '@/components/formbuildercomponent/ShortInput'
 import LongInputComponent from '@/components/formbuildercomponent/LongInput'
-import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
-import ChoiceComponent from '@/components/formbuildercomponent/Choice'
+//import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
+//import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 
 export default {
   name: "FormResponse.vue",
@@ -241,8 +242,8 @@ export default {
     VueGoodTable,
     ShortInputComponent,
     LongInputComponent,
-    DropdownComponent,
-    ChoiceComponent,
+    //DropdownComponent,
+    //ChoiceComponent,
   },
   props: {
     PropFormId: String
@@ -422,13 +423,26 @@ export default {
                     componentId: elementComponent.componentId,
                   })
                   // Create Form Edit Structure
-                  if(elementComponent.componentType === 'short-input' || elementComponent.componentType === 'long-input') {
+                  if(elementComponent.componentType === 'short-input') {
                     const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
                     valueProperties.LabelText = elementComponent.componentProperties.labelText
                     valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
                     valueProperties.Placeholder = elementComponent.componentProperties.placeholder
                     this.FormEditStructure.push({
                       ComponentType: 'short-input',
+                      ComponentProperties: valueProperties,
+                      ComponentValue: [],
+                      FormId: this.FormStructureData.formId,
+                      SectionId: elementSection.sectionId,
+                      ComponentId: elementComponent.componentId,
+                    })
+                  } else if(elementComponent.componentType === 'long-input') {
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='long-input').ComponentProperties
+                    valueProperties.LabelText = elementComponent.componentProperties.labelText
+                    valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
+                    valueProperties.Placeholder = elementComponent.componentProperties.placeholder
+                    this.FormEditStructure.push({
+                      ComponentType: 'long-input',
                       ComponentProperties: valueProperties,
                       ComponentValue: [],
                       FormId: this.FormStructureData.formId,
@@ -436,13 +450,13 @@ export default {
                       ComponentId: elementComponent.componentId,
                     })
                   } else if (elementComponent.componentType === 'dropdown'){
-                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='dropdown').ComponentProperties
                     valueProperties.LabelText = elementComponent.componentProperties.labelText
                     valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
                     valueProperties.Placeholder = elementComponent.componentProperties.placeholder
                     valueProperties.Options = elementComponent.componentProperties.options
                     this.FormEditStructure.push({
-                      ComponentType: 'short-input',
+                      ComponentType: 'dropdown',
                       ComponentProperties: valueProperties,
                       ComponentValue: [],
                       FormId: this.FormStructureData.formId,
@@ -450,14 +464,14 @@ export default {
                       ComponentId: elementComponent.componentId,
                     })
                   } else if (elementComponent.componentType === 'choice'){
-                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
+                    const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='choice').ComponentProperties
                     valueProperties.LabelText = elementComponent.componentProperties.labelText
                     valueProperties.SubLabelText = elementComponent.componentProperties.subLabelText
                     valueProperties.Placeholder = elementComponent.componentProperties.placeholder
                     valueProperties.Options = elementComponent.componentProperties.options
                     valueProperties.MultipleChoice = elementComponent.componentProperties.multipleChoice
                     this.FormEditStructure.push({
-                      ComponentType: 'short-input',
+                      ComponentType: 'choice',
                       ComponentProperties: valueProperties,
                       ComponentValue: [],
                       FormId: this.FormStructureData.formId,
@@ -465,22 +479,12 @@ export default {
                       ComponentId: elementComponent.componentId,
                     })
                   }
-                  // Create Form Edit Input
-                  // console.log(this.FormEditInput)
-                  /* this.FormEditInput.push({
-                    ComponentValue: this.FormResponseData,
-                    FormId: this.FormStructureData.formId,
-                    SectionId: elementSection.sectionId,
-                    ComponentId: elementComponent.componentId,
-                  })
-                  */
                 } 
               }
           )
         }
     )
     console.log(this.FormEditStructure)
-    console.log(this.FormEditInput)
     // Insert Data to Table
     //console.log(this.FormResponseData)
     this.FormResponseData.forEach(
@@ -541,17 +545,13 @@ export default {
         }
       })
     },
+
+    // Detail Input
     openDetailModal(params){
-      console.log(params.row)
-      //console.log(params.row.originalIndex)
-      console.log(Object.keys(params.row))
-      console.log(Object.values(params.row))
       this.valueSelectRow = []
       this.indexSelectRow = params.row.originalIndex
-      console.log(this.indexSelectRow)
       Object.keys(params.row).forEach(
           (element)=>{
-            //console.log(element)
             this.valueSelectRow.push({
               key: element
             })
@@ -559,7 +559,6 @@ export default {
       )
       Object.values(params.row).forEach(
           (element, index)=>{
-            //console.log(element)
             this.valueSelectRow[index].value = element
           }
       )
@@ -571,43 +570,85 @@ export default {
     doShowDeleteModal(){
       this.stateShowDeleteModal = !this.stateShowDeleteModal
     },
+    // Edit Input
     doShowEditModal(){
       this.stateShowEditModal = true
-      const sectionId = this.FormEditStructure[this.indexSelectRow].SectionId
-      const componentId = this.FormEditStructure[this.indexSelectRow].ComponentId
-      this.FormEditStructure[this.indexSelectRow].ComponentValue = this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===sectionId).components.find(item=>item.componentId===componentId).componentValue
+      this.FormEditStructure.forEach(
+          (inputElement)=>{
+            const sectionId = inputElement.SectionId
+            const componentId = inputElement.ComponentId
+            const value = this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===sectionId).components.find(item=>item.componentId===componentId).componentValue
+            inputElement.ComponentValue = value
+          }
+      )
     },
     doCancelShowEditModal(){
       this.stateShowEditModal = false
-      this.$router.go()
     },
     doShortInputEdit(value) {
-      //console.log(value.value)
-      //console.log(value.dataInput)
-      if(this.FormEditStructure[this.indexSelectRow].ComponentValue.length<=0){
-        this.FormEditStructure[this.indexSelectRow].ComponentValue.push = value.value
+      const sectionId=value.dataInput.SectionId
+      const componentId=value.dataInput.ComponentId
+      if(this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue.length<=0){
+        this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue.push = value.value
       } else{
-        this.FormEditStructure[this.indexSelectRow].ComponentValue[0] = value.value
+        this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue[0] = value.value
       }
-      //console.log(this.FormEditStructure[this.indexSelectRow].ComponentValue[0])
     },
     doLongInputEdit(value) {
-      if(this.FormEditStructure[this.indexSelectRow].ComponentValue.length<=0){
-        this.FormEditStructure[this.indexSelectRow].ComponentValue.push = value.value
+      const sectionId=value.dataInput.SectionId
+      const componentId=value.dataInput.ComponentId
+      if(this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue.length<=0){
+        this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue.push = value.value
       } else{
-        this.FormEditStructure[this.indexSelectRow].ComponentValue[0] = value.value
+        this.FormEditStructure.find(item=>item.SectionId===sectionId&&item.ComponentId===componentId).ComponentValue[0] = value.value
       }
     },
-    async doSaveEdit(){
-      this.FormEditStructure.forEach(
-          (component)=>{
-            //console.log(component.ComponentValue)
-            //console.log(component.SectionId)
-            //console.log(component.ComponentId)
-            this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===component.SectionId).components.find(item=>item.componentId===component.ComponentId).componentValue = component.ComponentValue
+    resetRowTable() {
+      this.FormResponseTable.rows = []
+      this.FormResponseData.forEach(
+          (elementForm)=>{
+            let objectValue = new Object()
+            if(this.FormResponseTable.columns.find(item=>item.formId === elementForm.formId)) {
+              elementForm.sections.forEach(
+                  (elementSection)=>{
+                    if(this.FormResponseTable.columns.find(item=>item.sectionId === elementSection.sectionId)) {
+                      elementSection.components.forEach(
+                          (elementComponent)=>{
+                            if(this.FormResponseTable.columns.find(item=>item.componentId === elementComponent.componentId)) {
+                              objectValue[elementComponent.componentId] = elementComponent.componentValue[0]
+                            } else {
+                              this.FormResponseTable.columns.push({
+                                label: elementComponent.componentLabel[0],
+                                field: elementComponent.componentId,
+                                type: 'string',
+                                formId: this.FormStructureData.formId,
+                                sectionId: elementSection.sectionId,
+                                componentId: elementComponent.componentId,
+                              })
+                              objectValue[elementComponent.componentId] = elementComponent.componentValue[0]
+                            }
+                          }
+                      )
+                    }
+                  }
+              )
+              this.FormResponseTable.rows.push(objectValue)
+            }
           }
       )
-      console.log(this.FormResponseData[this.indexSelectRow].id)
+    },
+    async doSaveEdit(){
+      console.log(this.FormEditStructure)
+      this.FormEditStructure.forEach(
+          (component)=>{
+            const sectionId = component.SectionId
+            const componentId = component.ComponentId
+            console.log(componentId)
+            console.log(component.ComponentValue)
+            this.FormResponseData[this.indexSelectRow].sections.find(item=>item.sectionId===sectionId).components.find(item=>item.componentId===componentId).componentValue = component.ComponentValue
+          }
+      )
+      console.log(this.FormResponseData[this.indexSelectRow])
       // Axios
       axios.put('http://localhost:4000/api/Flexform/FormInput/'+this.FormResponseData[this.indexSelectRow].id, this.FormResponseData[this.indexSelectRow])
           .then(response => {
@@ -621,7 +662,8 @@ export default {
           })
       this.stateShowEditModal = false
       this.stateShowDetailModal = false
-      this.$router.go()
+      //this.$router.go()
+      this.resetRowTable()
     },
     async doDeleteRow(){
       // console.log(this.FormResponseTable.rows[this.indexSelectRow])
@@ -631,7 +673,7 @@ export default {
       this.FormResponseData.splice(this.indexSelectRow,1)
       console.log(this.FormResponseData)
       // Axios
-      axios.delete('http://localhost:4000/api/FormInput/Delete/Mongo/'+idMongo)
+      axios.delete('http://localhost:4000/api/Flexform/FormInput/Delete/Mongo/'+idMongo)
           .then(response => {
             if (response.status === 200 && response.data) {
               console.log('Delete Complete!')

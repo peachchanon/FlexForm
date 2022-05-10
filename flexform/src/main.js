@@ -14,7 +14,6 @@ Vue.use(BeeGridTable, {
   capture: true,
 });
 
-
 Vue.config.productionTip = false
 
 new Vue({
