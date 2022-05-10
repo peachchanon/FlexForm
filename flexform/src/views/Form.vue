@@ -231,7 +231,8 @@
                                   </div>
                                   <div class="tw-flex tw-flex-col tw-mx-2.5 tw-mt-3">
                                     <label class="semibold16 blue10">Description</label>
-                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{ModalFormDescription}}</div>
+                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey10" v-if="ModalFormDescription.length!==0">{{ModalFormDescription}}</div>
+                                    <div class="modaldescriptiondetail tw-my-3 medium14 grey5" v-if="ModalFormDescription.length===0">-</div>
                                   </div>
                                   </div>
                                   <div class="tw-flex tw-flex-row-reverse tw-mx-2 tw-mt-4 tw-mb-2">
