@@ -106,6 +106,7 @@ import SeriesLayoutBarChart from "@/components/graph/SeriesLayoutBarChart";
 import ShareDataset from "@/components/graph/ShareDataset";
 import {mapActions, mapGetters} from "vuex";
 // import dayjs from 'dayjs' npm install dayjs --save
+// import _ from 'lodash'; npm install lodash --save
 // import axios from "axios";
 export default {
   name: "PreviewGraph.vue",
@@ -207,9 +208,25 @@ export default {
     //        }
     // else if(this.GraphTitle === 'Graph2'){
     //         if(this.GraphData.UseTemplate === true){
-    //          
+    //          const last7 =dayjs().subtract(7, 'day')
+    // const filtered = data.filter(newdata => dayjs(newdata.date) > last7)
+    //console.log(filtered)
+//     let graph2 = _(filtered).groupBy(newfiltered => newfiltered.type).map((value,key) => ({type: key, id: value})).value();
+//     console.log(graph2)
+        //console.log(graph2[0].id[0].date)
+        //console.log(graph2[0].id.length)
+        //console.log(graph2[1].id.length)
+//     let obj =[]
+//     let k =0;
+//     for(let i =0; i <graph2.length; i++){
+//       for(let j =0; j < graph2[i].id.length; j++){
+//         obj[k] = graph2[i].id[j]
+//         // console.log(obj[k]) 
+//         k++
+//       }
+//     }
+//     console.log(obj)
     //        }
-    //  
     // }
     //        else if(this.GraphTitle === 'Graph3'){
     //        if(this.GraphData.UseTemplate === true){
