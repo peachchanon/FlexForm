@@ -368,6 +368,7 @@
                   </div>
                 </div>
               </div>
+              <span class="red5 medium16" v-if="StateCheckUsername">* Couldn't create an account, Because there's your username in database.</span>
             </section>
             <footer class="base-padding">
               <base-button
@@ -469,6 +470,7 @@ export default {
         role_id: '',
         division_id: '',
       },
+      StateCheckUsername: false,
       // Delete
       StateShowDeleteModal: false,
     }
@@ -587,8 +589,6 @@ export default {
     },
     inputCreateUsername(username){
       this.UserRegister.username = username
-      if(this.UserRegister.username==='') this.StateUserRegister.username=false
-      else this.StateUserRegister.username=true
     },
     inputCreatePassword(password){
       this.UserRegister.password = password
@@ -625,8 +625,59 @@ export default {
       this.UserRegister.division_id = division_id
     },
     async doRegister() {
-      console.log(this.UserRegister)
-      let user = this.UserRegister
+      // this.StateCheckUsername
+      console.log(this.UserRegister.username)
+      let checkUsername = ''
+      await axios.get('http://localhost:4000/api/User/'+this.UserRegister.username)
+          .then(response => {
+            if(response.status === 200 && response.data) {
+              console.log(response.status)
+              checkUsername = response.data.username
+              if(checkUsername===this.UserRegister.username) this.StateCheckUsername=true
+              else {
+                this.StateCheckUsername=false
+              }
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      // แก้ไขบัค API หลังบ้านให้สร้าง Account ให้ได้
+      if(!this.StateCheckUsername) {
+        let user = this.UserRegister
+        user.title = this.Title.find(item=>item.option===user.title).id
+        user.gender = this.Gender.find(item=>item.option===user.gender).id
+        user.role_id = this.Role.find(item=>item.option===user.role_id).id
+        user.division_id = this.Division.find(item=>item.option===user.division_id).id
+        user.activated = true
+        user.profile_pic= 'string'
+        console.log(user)
+        await axios.post('http://localhost:4000/api/User/Register', user)
+            .then(response => {
+              if(response.status === 200 && response.data) {
+                console.log(response.status)
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        this.StateShowCreateAnAccountModal = false
+        this.UserRegister = {
+          username: '',
+          password: '',
+          gender: '',
+          title: '',
+          first_name: '',
+          last_name: '',
+          email: '',
+          birth_date: '',
+          phone_number: '',
+          role_id: '',
+          division_id: '',
+        }
+        this.$router.go()
+      }
+      /*let user = this.UserRegister
       user.title = this.Title.find(item=>item.option===user.title).id
       user.gender = this.Gender.find(item=>item.option===user.gender).id
       user.role_id = this.Role.find(item=>item.option===user.role_id).id
@@ -657,7 +708,7 @@ export default {
         role_id: '',
         division_id: '',
       }
-      this.$router.go()
+      this.$router.go()*/
     },
     openDeleteModal() {
       this.StateShowDeleteModal = true
@@ -668,8 +719,9 @@ export default {
     async doDeleteAccount() {
       console.log(this.SelectUserId)
       console.log(this.SelectUserIndexRow)
-      /*
-      await axios.delete('http://localhost:4000/api/User/Register', this.SelectUserId)
+      let username = this.ManageUsersData.find(item=>item.employee_id===this.SelectUserId).username
+      console.log(username)
+      await axios.delete('http://localhost:4000/api/User/'+username)
           .then(response => {
             if(response.status === 200 && response.data) {
               console.log(response.status)
@@ -677,8 +729,8 @@ export default {
           })
           .catch(error => {
             console.log(error)
-          })   
-       */
+          })
+      this.StateShowDeleteModal = false
       this.$router.go()
     },
   },
