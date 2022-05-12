@@ -12,6 +12,7 @@ import DataVisualization from "@/views/datavisualization/DataVisualization";
 import SelectGraph from "@/views/datavisualization/SelectGraph";
 import FormBuilder from '@/views/formbuilder/FormBuilder'
 import AllTicket from "@/views/AllTicket";
+import FormOpenTicket from "@/views/formbuilder/FormOpenTicket";
 import FormResponse from "@/views/formbuilder/FormResponse";
 import FormFill from "@/views/formbuilder/FormFill";
 import PreviewGraph from "@/views/datavisualization/PreviewGraph";
@@ -169,6 +170,16 @@ const routes = [
     component: AllTicket,
     meta: {
       title: 'AllTicket',
+      // requireAuthen: true
+    },
+    props: true
+  },
+  {
+    path: '/AllTicket/OpenTicket',
+    name: 'OpenTicket',
+    component: FormOpenTicket,
+    meta: {
+      title: 'Open Ticket',
       // requireAuthen: true
     },
     props: true
