@@ -31,8 +31,9 @@
               <base-button
                   buttonID="buttonExport"
                   buttonText="Export"
-                  buttonTextColor="white"
-                  buttonBgColor="bg-blue5"
+                  buttonTextColor="blue5"
+                  buttonBorderColor="border-blue5"
+                  buttonBgColor="bg-white"
                   buttonIconLeft="heroicons-outline:upload"
                   :callback="GoExport"
               ></base-button>
