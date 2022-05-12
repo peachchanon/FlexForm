@@ -9,231 +9,46 @@
         </div>
       </div>
       <div class="tw-my-4 tw-mx-4">
-      <SearchBar placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
+        <SearchBar placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
       </div>
-      <!--                        <div v-for="FormData in filteredList" :key="FormData.formId">-->
-      <!--                          <div v-if="FormData.UseTemplate === true && Form.Data.ComponentTemplate === true" && Form.Data.CreatedByUser ==={{Username}}>-->
       <div class="scroller">
-          <div class="tw-ml-3 tw-my-3">
-            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-              <div class="tw-flex tw-flex-row">
-                <div class="base-padding radius12px" style="height: fit-content">
-                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-                </div>
-                <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                  <label class="medium16 blue10">My Ticket System Template1</label>
-                </div>
-              </div>
-              <div class="tw-flex tw-flex-row tw-mx-2">
-                <div class="tw-mr-2">
-                  <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                    <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                    <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
+      <div v-for="FormData in filteredList" :key="FormData.formId">
+        <div v-if="FormData.useTemplate === true && FormData.ticketId ===''">
+            <div class="tw-ml-3 tw-my-3">
+              <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
+                <div class="tw-flex tw-flex-row">
+                  <div class="base-padding radius12px" style="height: fit-content">
+                    <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                  </div>
+                  <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
+                    <div class=" tw-truncate" style="width: 100%; max-width: 220px;">
+                    <label class="medium16 blue10">{{ FormData.formName }}</label>
+                    </div>
                   </div>
                 </div>
-<!--                <div class="tw-mr-2">-->
-<!--                  <base-button-blue-->
-<!--                      buttonID="buttonPreview"-->
-<!--                      buttonText="Preview"-->
-<!--                      buttonIcon="heroicons-outline:eye"-->
-<!--                  ></base-button-blue>-->
-<!--                </div>-->
-                <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                  <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
+                <div class="tw-flex tw-flex-row tw-mx-2">
+<!--                  <div class="tw-mr-2">-->
+<!--                    <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">-->
+<!--                      <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>-->
+<!--                      <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>-->
+<!--                    </div>-->
+<!--                  </div>-->
+                  <!--                <div class="tw-mr-2">-->
+                  <!--                  <base-button-blue-->
+                  <!--                      buttonID="buttonPreview"-->
+                  <!--                      buttonText="Preview"-->
+                  <!--                      buttonIcon="heroicons-outline:eye"-->
+                  <!--                  ></base-button-blue>-->
+                  <!--                </div>-->
+                  <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" @click="SelectTicketTemplate(FormData.formId)">
+                    <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template2</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
         </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template3</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template4</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template5</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template6</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tw-ml-3 tw-my-3">
-          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-            <div class="tw-flex tw-flex-row">
-              <div class="base-padding radius12px" style="height: fit-content">
-                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
-              </div>
-              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                <label class="medium16 blue10">My Ticket System Template7</label>
-              </div>
-            </div>
-            <div class="tw-flex tw-flex-row tw-mx-2">
-              <div class="tw-mr-2">
-                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                </div>
-              </div>
-<!--              <div class="tw-mr-2">-->
-<!--                <base-button-blue-->
-<!--                    buttonID="buttonPreview"-->
-<!--                    buttonText="Preview"-->
-<!--                    buttonIcon="heroicons-outline:eye"-->
-<!--                ></base-button-blue>-->
-<!--              </div>-->
-              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-<!--    </div>-->
-<!--  </div>-->
     </div>
   </div>
 </template>
@@ -252,11 +67,12 @@ export default {
     Icon,
     BaseButtonBack,
     SearchBar,
-   // BaseButtonBlue
+    // BaseButtonBlue
   },
   data() {
     return {
       ShowContent: true,
+      formNameSearch: '',
       FormData: [],
     }
   },
@@ -278,14 +94,13 @@ export default {
       this.flapWindowResize()
     }
     this.ShowContent = window.innerWidth >= 1440
-    this.Username = localStorage.getItem('username') // check user ว่ามี my template อะไรบ้าง
     await axios.get('http://localhost:4000/api/Flexform/AllForm')
         .then(response => {
           if(response.status===200 && response.data) {
             // this.FormData = response.data[1]["createdByUser"]
             this.FormData = response.data
-            console.log(response.status)
-            console.log(this.FormData)
+            //console.log(response.status)
+            //console.log(this.FormData)
           }
         })
         .catch(error => {
@@ -300,6 +115,13 @@ export default {
     },
     formNameInput(input){
       this.formNameSearch = input
+    },
+    async SelectTicketTemplate(string){
+      this.ClickedFormId = string
+      //console.log("clicked for id: " + this.ClickedFormId)
+      this.$router.push({
+        name: 'Builder', // ไปหน้าที่ทำ ticket
+        params: { ClickedForm: this.ClickedFormId}})
     },
   }
 }
@@ -351,7 +173,7 @@ export default {
 }
 .scroller{
   width: 100%;
-  height: 420px;
+  //height: 420px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
