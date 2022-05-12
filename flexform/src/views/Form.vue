@@ -173,11 +173,11 @@
                                           <div class="tw-ml-2 tw-my-1.5">
                                             <label class="blue10 medium18">Data</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-items-center tw-mx-1 tw-my-1">
+                                          <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
                                             <Icon class="semibold24 icon" icon="heroicons-outline:inbox-in"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16">Import Data</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-items-center tw-mx-1 tw-my-1">
+                                          <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Export Response</label>
                                           </div>
@@ -188,15 +188,15 @@
                                           <div class="tw-my-1.5 tw-ml-2">
                                             <label class="blue10 medium18">Form</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-ml-2 tw-items-center tw-my-1" @click="SelectForm(ModalFormId)">
+                                          <div class="choose tw-flex tw-flex-row" @click="SelectForm(ModalFormId)">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:pencil-alt"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Edit Form</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-ml-2 tw-items-center tw-my-1">
+                                          <div class="choose tw-flex tw-flex-row">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Save As Template</label>
                                           </div>
-                                          <div class="choose-delete tw-flex tw-flex-row tw-ml-2 tw-items-center tw-my-1">
+                                          <div class="choose-delete tw-flex tw-flex-row">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Delete Form</label>
                                           </div>
