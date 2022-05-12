@@ -421,9 +421,16 @@ export default {
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
     },
+    uuidv4() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      )
+    },
     async doActionButton() {
       console.log(this.FormInput)
-      axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
+      this.FormInput.TicketId = this.uuidv4()
+      this.FormInput.InputByUser = localStorage.getItem('username')
+      axios.post('http://localhost:4000/api/Flexform/TicketInput/CreateTicketInput', this.FormInput)
           .then(response => {
             console.log(response.status)
             if (response.status === 200 && response.data) {
@@ -442,7 +449,9 @@ export default {
                   }
                 })
               } else {
-                this.$router.push('/form')
+                this.$router.push({
+                  name: 'AllTicket', // ไปหน้าที่ทำ ticket
+                  params: { ClickedForm: this.ClickedForm}})
               }
             }
           })

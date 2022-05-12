@@ -425,6 +425,7 @@ export default {
     },
     async doActionButton() {
       console.log(this.FormInput)
+      this.FormInput.InputByUser = localStorage.getItem('username')
       axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
           .then(response => {
             console.log(response.status)
