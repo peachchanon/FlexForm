@@ -151,7 +151,7 @@
               <div class="button__style__white red" @click="PrevPage">No</div>
             </div>
             <div class="tw-w-1/3 tw-ml-1">
-              <div class="button__style__red" @click="doActionButton">Fill Form</div>
+              <div class="button__style__red" @click="doShowSaveModal">Fill Form</div>
             </div>
           </footer>
         </div>
@@ -330,9 +330,11 @@ export default {
   methods: {
     PrevPage(){
       console.log(this.BackToPage)
-      if(this.BackToPage==='Form'){
+      if(this.BackToPage==='All Ticket'){
         console.log('Back to Form')
-        this.$router.push('/form')
+        this.$router.push({
+          name: 'AllTicket', // ไปหน้าที่ทำ ticket
+          params: { ClickedForm: this.ClickedForm}})
       } else if(this.BackToPage==='Response'){
         console.log('Back to Form Response')
         this.$router.push({
@@ -342,7 +344,9 @@ export default {
           }
         })
       } else {
-        this.$router.push('/form')
+        this.$router.push({
+          name: 'AllTicket', // ไปหน้าที่ทำ ticket
+          params: { ClickedForm: this.ClickedForm}})
       }
     },
     // Save form
@@ -437,9 +441,11 @@ export default {
               console.log(response.status)
               console.log(response.data)
               console.log(this.BackToPage)
-              if(this.BackToPage==='Form'){
+              if(this.BackToPage==='All Ticket'){
                 console.log('Back to Form')
-                this.$router.push('/form')
+                this.$router.push({
+                  name: 'AllTicket', // ไปหน้าที่ทำ ticket
+                  params: { ClickedForm: this.ClickedForm}})
               } else if(this.BackToPage==='Response'){
                 console.log('Back to Form Response')
                 this.$router.push({

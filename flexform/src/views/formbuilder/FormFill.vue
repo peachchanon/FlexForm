@@ -151,7 +151,7 @@
               <div class="button__style__white red" @click="PrevPage">No</div>
             </div>
             <div class="tw-w-1/3 tw-ml-1">
-              <div class="button__style__red" @click="doActionButton">Fill Form</div>
+              <div class="button__style__red" @click="doShowSaveModal">Fill Form</div>
             </div>
           </footer>
         </div>
