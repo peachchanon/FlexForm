@@ -8,7 +8,7 @@
           <span class="semibold24 blue10 tw-pl-1">Manage Users</span>
         </div>
         <!-- Manage User -->
-        <div class="bg-white base-shadow radius12px tw-w-full base-padding">
+        <div class="bg-white base-shadow radius12px base-padding">
           <!-- Header -->
           <div class="tw-flex tw-flex-row tw-justify-end tw-items-center">
             <div class="button-blue tw-flex tw-flex-row tw-items-center medium16" style="width: fit-content" @click="openCreateModal">
@@ -627,22 +627,20 @@ export default {
     async doRegister() {
       // this.StateCheckUsername
       console.log(this.UserRegister.username)
-      let checkUsername = ''
       await axios.get('http://localhost:4000/api/User/'+this.UserRegister.username)
           .then(response => {
             if(response.status === 200 && response.data) {
               console.log(response.status)
-              checkUsername = response.data.username
-              if(checkUsername===this.UserRegister.username) this.StateCheckUsername=true
-              else {
-                this.StateCheckUsername=false
-              }
+              this.StateCheckUsername=true
             }
           })
           .catch(error => {
-            console.log(error)
+            if(error.status === 404 && error.data) {
+              console.log(error.status)
+              this.StateCheckUsername=false
+            }
           })
-      // แก้ไขบัค API หลังบ้านให้สร้าง Account ให้ได้
+      console.log(this.StateCheckUsername)
       if(!this.StateCheckUsername) {
         let user = this.UserRegister
         user.title = this.Title.find(item=>item.option===user.title).id
@@ -677,38 +675,6 @@ export default {
         }
         this.$router.go()
       }
-      /*let user = this.UserRegister
-      user.title = this.Title.find(item=>item.option===user.title).id
-      user.gender = this.Gender.find(item=>item.option===user.gender).id
-      user.role_id = this.Role.find(item=>item.option===user.role_id).id
-      user.division_id = this.Division.find(item=>item.option===user.division_id).id
-      user.activated = true
-      user.profile_pic= 'string'
-      console.log(user)
-      await axios.post('http://localhost:4000/api/User/Register', user)
-          .then(response => {
-            if(response.status === 200 && response.data) {
-              console.log(response.status)
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      this.StateShowCreateAnAccountModal = false
-      this.UserRegister = {
-        username: '',
-        password: '',
-        gender: '',
-        title: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        birth_date: '',
-        phone_number: '',
-        role_id: '',
-        division_id: '',
-      }
-      this.$router.go()*/
     },
     openDeleteModal() {
       this.StateShowDeleteModal = true
