@@ -26,8 +26,8 @@
                 <div class="tw-mx-1">
                   <base-button-blue
                       buttonID="buttonCreateForm"
-                      buttonText="My Template"
-                      buttonIcon="heroicons-outline:folder"
+                      buttonText="Ticket Template"
+                      buttonIcon="heroicons-outline:ticket"
                       :callback="MyTemplatePage"
                   ></base-button-blue>
                 </div>
@@ -47,8 +47,8 @@
               <div v-if="FormData.useTemplate === true">
                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                   <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
-                    <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
-                      <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
+                    <div v-if= "TicketTemplate === false" class="bg-blue1 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
+                      <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
                     </div>
                     <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
                       <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
@@ -85,46 +85,6 @@
                     </div>
                   </div>
                 </div>
-<!--                <div class="tw-my-2">-->
-<!--                  <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">-->
-<!--                    <div class="tw-flex tw-flex-row">-->
-<!--                      <div class="bg-blue1 base-padding radius12px" style="height: fit-content">-->
-<!--                        <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>-->
-<!--                      </div>-->
-<!--                      <div class="tw-flex tw-flex-col tw-items-start tw-mx-2">-->
-<!--                        <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form Name</label>-->
-<!--                        <div class=" tw-truncate" style="width: 100%; max-width: 195px;">-->
-<!--                          <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">-->
-<!--                        <label class="medium16 grey5 tw-mb-1">Type</label>-->
-<!--                        <base-badge-->
-<!--                            BadgeText="Template"-->
-<!--                            BadgeColor="white"-->
-<!--                            BadgeBgColor="bg-blue5"></base-badge>-->
-<!--                      </div>-->
-<!--                      <div class="tw-flex tw-flex-col tw-mx-6">-->
-<!--                        <label class="medium16 grey5">Created By</label>-->
-<!--                        <label class="light16 grey7">{{ FormData.createdByUser }}</label>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div class="tw-flex tw-flex-row tw-mx-1">-->
-<!--                      <div class="">-->
-<!--                        <base-button-fill-->
-<!--                            buttonID="buttonViewmore"-->
-<!--                            buttonText="View More"-->
-<!--                            buttonTextColor="blue5"-->
-<!--                            buttonBgColor="bg-white"-->
-<!--                            buttonBorderColor="border-blue5"-->
-<!--                            buttonIconLeft="heroicons-outline:eye"-->
-<!--                            @callbackObject="GoAllTicket"-->
-<!--                            :id="FormData.formId"-->
-<!--                        ></base-button-fill>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
               </div>
               <div v-if="FormData.useTemplate === false">
                 <div class="tw-my-2">
@@ -368,7 +328,7 @@
                     <div class="tw-flex tw-flex-row tw-items-center tw-relative tw-my-2">
                       <base-button-back
                           :callback="SelectTemplate"></base-button-back>
-                      <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:folder"/>
+                      <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:ticket"/>
                       <label class="semibold24 blue10">Choose a Template</label>
                     </div>
                   </div>
@@ -384,7 +344,7 @@
                         >
                         </base-horizontal-navigation>
                       </div>
-                      <div v-if="UseTemplatepage==='Form List'">
+                      <div v-if="UseTemplatepage==='Ticket Template'">
                         <div class="tw-ml-3">
                           <SearchBar  placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
                         </div>
@@ -395,7 +355,7 @@
                             <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                               <div class="tw-flex tw-flex-row">
                                 <div class="base-padding radius12px" style="height: fit-content">
-                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
                                 </div>
                                 <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
                                   <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
@@ -410,16 +370,21 @@
                                 <!--                                      buttonIcon="heroicons-outline:eye"-->
                                 <!--                                  ></base-button-blue>-->
                                 <!--                                </div>-->
-                                <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                                  <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-                                </div>
+                                <base-button-fill
+                                    buttonID="buttonUseTemplate"
+                                    buttonText="Use Template"
+                                    buttonTextColor="white"
+                                    buttonBgColor="bg-green5"
+                                    @callbackObject="SelectTicketTemplate"
+                                    :id="ModalFormId"
+                                ></base-button-fill>
                               </div>
                             </div>
                             <div class=" tw-my-2">
                               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                                 <div class="tw-flex tw-flex-row">
                                   <div class="base-padding radius12px" style="height: fit-content">
-                                    <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                                    <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
                                   </div>
                                   <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
                                     <label class="medium16 blue10">Helpdesk Ticket{{ FormData.FormName }}</label>
@@ -433,9 +398,14 @@
                                   <!--                                        buttonIcon="heroicons-outline:eye"-->
                                   <!--                                    ></base-button-blue>-->
                                   <!--                                  </div>-->
-                                  <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                                    <span class="tw-mt-0.5 tw-mr-3 tw-ml-2">Use Template</span>
-                                  </div>
+                                  <base-button-fill
+                                      buttonID="buttonUseTemplate"
+                                      buttonText="Use Template"
+                                      buttonTextColor="white"
+                                      buttonBgColor="bg-green5"
+                                      @callbackObject="SelectTicketTemplate"
+                                      :id="ModalFormId"
+                                  ></base-button-fill>
                                 </div>
                               </div>
                             </div>
@@ -454,7 +424,7 @@
                           <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                             <div class="tw-flex tw-flex-row">
                               <div class="base-padding radius12px" style="height: fit-content">
-                                <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                                <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
                               </div>
                               <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
                                 <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
@@ -475,16 +445,21 @@
                               <!--                                    buttonIcon="heroicons-outline:eye"-->
                               <!--                                ></base-button-blue>-->
                               <!--                              </div>-->
-                              <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                                <span class="tw-mt-0.5 tw-mr-3 tw-ml-2" >Use Template</span>
-                              </div>
+                              <base-button-fill
+                                  buttonID="buttonUseTemplate"
+                                  buttonText="Use Template"
+                                  buttonTextColor="white"
+                                  buttonBgColor="bg-green5"
+                                  @callbackObject="SelectTicketTemplate"
+                                  :id="ModalFormId"
+                              ></base-button-fill>
                             </div>
                           </div>
                           <div class=" tw-my-2">
                             <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                               <div class="tw-flex tw-flex-row">
                                 <div class="base-padding radius12px" style="height: fit-content">
-                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:folder"/>
+                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
                                 </div>
                                 <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
                                   <label class="medium16 blue10">My Ticket System Template2{{ FormData.FormName }}</label>
@@ -504,9 +479,14 @@
                                 <!--                                      buttonIcon="heroicons-outline:eye"-->
                                 <!--                                  ></base-button-blue>-->
                                 <!--                                </div>-->
-                                <div class="button-usetemplate tw-flex tw-flex-row tw-items-center tw-ml-2 medium16" >
-                                  <span class="tw-mt-0.5 tw-mr-3 tw-ml-2">Use Template</span>
-                                </div>
+                                <base-button-fill
+                                    buttonID="buttonUseTemplate"
+                                    buttonText="Use Template"
+                                    buttonTextColor="white"
+                                    buttonBgColor="bg-green5"
+                                    @callbackObject="SelectTicketTemplate"
+                                    :id="ModalFormId"
+                                ></base-button-fill>
                               </div>
                             </div>
                           </div>
@@ -565,16 +545,13 @@ export default {
     return {
       horizontalNavigationID: [{field: 'All Form'}, {field: 'My Form'}, {field: 'Shared with me'}],
       horizontalNavigationModal: [{field: 'Detail'}, {field: 'Setting'}],
-      UseTemplateNavagationModal: [{field: 'Form List'}, {field: 'My Template'}],
+      UseTemplateNavagationModal: [{field: 'Ticket Template'}],
       namePage: 'All Form',
       ModalPage: 'Detail',
       StateShowContentForWindowSize: true,
       FormData: [],
       TicketTemplate: false,
-      UseTemplatepage: 'Form List',
-      CreatedByUser: 'Chanon Panarong',
-      FormDescription: 'Form สำหรับเก็บข้อมูล',
-      DateCreated: '24/4/2022',
+      UseTemplatepage: 'Ticket Template',
       showFormBuilderLayout: false,
       showFormDetailLayout: false,
       CreateFormBtnClick: true,
@@ -667,6 +644,13 @@ export default {
       //console.log("clicked for id: " + this.ClickedFormId)
       this.$router.push({
         name: 'AllTicket',
+        params: { ClickedForm: this.ClickedFormId}})
+    },
+    async SelectTicketTemplate(string){
+      this.ClickedFormId = string
+      //console.log("clicked for id: " + this.ClickedFormId)
+      this.$router.push({
+        name: 'Builder', // ไปหน้าที่ทำ ticket
         params: { ClickedForm: this.ClickedFormId}})
     },
     async SelectForm(formId){
