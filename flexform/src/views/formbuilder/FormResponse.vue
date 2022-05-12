@@ -83,17 +83,18 @@
             </div>
           </header>
           <div class="tw-ml-3 tw-mr-3 tw-mb-2 tw-flex tw-flex-row tw-justify-end">
+            <!--
             <div @click="doShowEditModal(indexSelectRow)" class="tw-mr-2 tw-py-3 tw-px-5 radius10px blue10 hover:tw-text-blue5 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
               <Icon class="semibold24" icon="heroicons-outline:pencil-alt"/>
               <span class="medium16 tw-ml-2">Edit</span>
             </div>
+            -->
             <div @click="doShowDeleteModal" class="tw-py-3 tw-px-5 radius10px red5 hover:tw-text-red4 tw-transition tw-ease-in tw-cursor-pointer tw-bg-white hover:tw-shadow-base tw-flex tw-flex-row tw-items-center" style="width: fit-content">
               <Icon class="semibold24" icon="heroicons-outline:trash"/>
               <span class="medium16 tw-ml-2">Delete</span>
             </div>
           </div>
           <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden tw-border-2 radius10px tw-ml-3 tw-mr-3 tw-mb-3">
-            
             <div 
                 v-for="(element, index) in FormResponseTable.columns" :key="element.field"
                 :class="{
@@ -138,6 +139,7 @@
       </div>
     </transition>
     <!-- Edit Row Modal -->
+    <!--
     <transition name="theme-modal-fade" v-if="stateShowEditModal">
       <div class="theme-modal-backdrop">
         <div class="theme-modal">
@@ -186,23 +188,22 @@
                         ComponentId: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentId,
                       }"
                       :propValueLongInput="{
-                        Text: FormEditStructure[indexComponent].ComponentValue,
+                        Text: FormResponseData[indexSelectRow].sections[indexSection].components[indexComponent].componentValue,
                       }"
                       @valueLongInput="doLongInputEdit"
                   ></long-input-component>
                 </div>
-                <!--
                 <div v-if="componentElement.componentType === 'dropdown'" class="tw-w-full">
                   <dropdown-component
                       :dataDropdown="FormEditStructure[indexSection].ComponentProperties"
                   ></dropdown-component>
                 </div>
+                
                 <div v-if="componentElement.componentType === 'choice'" class="tw-w-full">
                   <choice-component
                       :dataChoice="FormEditStructure[indexSection].ComponentProperties"
                   ></choice-component>
                 </div>
-                -->
               </div>
             </div>
           </section>
@@ -217,6 +218,7 @@
         </div>
       </div>
     </transition>
+    -->
   </div>
 </template>
 
@@ -228,8 +230,8 @@ import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
 import axios from "axios"
 // Import Component
-import ShortInputComponent from '@/components/formbuildercomponent/ShortInput'
-import LongInputComponent from '@/components/formbuildercomponent/LongInput'
+//import ShortInputComponent from '@/components/formbuildercomponent/ShortInput'
+//import LongInputComponent from '@/components/formbuildercomponent/LongInput'
 //import DropdownComponent from '@/components/formbuildercomponent/Dropdown'
 //import ChoiceComponent from '@/components/formbuildercomponent/Choice'
 
@@ -240,8 +242,8 @@ export default {
     SearchBar,
     BaseButton,
     VueGoodTable,
-    ShortInputComponent,
-    LongInputComponent,
+    //ShortInputComponent,
+    //LongInputComponent,
     //DropdownComponent,
     //ChoiceComponent,
   },
@@ -250,6 +252,7 @@ export default {
   },
   data() {
     return {
+      keyComponent: 0,
       stateShowDetailModal: false,
       valueSelectRow: [],
       indexSelectRow: Number,
@@ -422,6 +425,7 @@ export default {
                     sectionId: elementSection.sectionId,
                     componentId: elementComponent.componentId,
                   })
+                  /*
                   // Create Form Edit Structure
                   if(elementComponent.componentType === 'short-input') {
                     const valueProperties = this.ComponentStyle.find(item=>item.ComponentType==='short-input').ComponentProperties
@@ -478,7 +482,7 @@ export default {
                       SectionId: elementSection.sectionId,
                       ComponentId: elementComponent.componentId,
                     })
-                  }
+                  }*/
                 } 
               }
           )
@@ -527,12 +531,6 @@ export default {
     doSearchTable(value) {
       this.ValueSearchTerm = value
     },
-    handler() {
-      this.FormId = this.PropFormId
-      this.ReloadPage = false
-      console.log("Reload propformid" + this.PropFormId)
-      console.log("Reload formid" + this.FormId)
-    },
     doFill() {
       console.log('Fill')
       const formID = this.FormStructureData.formId
@@ -571,6 +569,7 @@ export default {
       this.stateShowDeleteModal = !this.stateShowDeleteModal
     },
     // Edit Input
+    /*
     doShowEditModal(){
       this.stateShowEditModal = true
       this.FormEditStructure.forEach(
@@ -582,8 +581,17 @@ export default {
           }
       )
     },
+    createPropValue(componentElement, elementSection){
+      const value = this.FormEditStructure.find( 
+          o=>{
+            o.ComponentId=componentElement.componentId && o.SectionId===elementSection.sectionId
+          } 
+      )
+      return value
+    },
     doCancelShowEditModal(){
       this.stateShowEditModal = false
+      this.$router.go()
     },
     doShortInputEdit(value) {
       const sectionId=value.dataInput.SectionId
@@ -662,9 +670,8 @@ export default {
           })
       this.stateShowEditModal = false
       this.stateShowDetailModal = false
-      //this.$router.go()
       this.resetRowTable()
-    },
+    },*/
     async doDeleteRow(){
       // console.log(this.FormResponseTable.rows[this.indexSelectRow])
       this.FormResponseTable.rows.splice(this.indexSelectRow,1)

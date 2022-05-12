@@ -116,7 +116,7 @@ export default {
       FormId: String,
       SectionId: String,
       ComponentId: String,
-    }
+    },
   },
   data() {
     return {
@@ -126,9 +126,6 @@ export default {
         Index: Number,
       }
     }
-  },
-  watch:{
-    
   },
   computed: {
     fontSizeStyle() {
