@@ -309,11 +309,11 @@
                     </div>
                     <div class="select__create__form tw-flex tw-flex-row tw-items-start md:tw-flex-col md:tw-mx-5 md:tw-items-center" @click="SelectTemplate">
                       <div class="button__grey tw-my-2">
-                        <Icon class="icon" icon="heroicons-outline:folder"/>
+                        <Icon class="icon" icon="heroicons-outline:ticket"/>
                       </div>
                       <div class="tw-flex tw-flex-col tw-items-start tw-m-4 md:tw-items-center">
                         <label class="text__blue tw-my-2">Use Template</label>
-                        <label class="text__grey tw-my-2">Choose form template</label>
+                        <label class="text__grey tw-my-2">Choose ticket template</label>
                       </div>
                     </div>
                   </div>
@@ -348,147 +348,40 @@
                       </div>
                       <div v-if="UseTemplatepage==='Ticket Template'">
                         <div class="tw-ml-3">
-                          <SearchBar  placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
+                          <SearchBar  placeholder="Search By Form Name" @callBackString="formNameInputModal"></SearchBar>
                         </div>
-                        <!--                        <div v-for="FormData in filteredList" :key="FormData.formId">-->
-                        <!--                          <div v-if="FormData.UseTemplate === true && Form.Data.ComponentTemplate === true">-->
                         <div class="scroller">
-                          <div class="tw-ml-3 tw-my-3">
-                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-                              <div class="tw-flex tw-flex-row">
-                                <div class="base-padding radius12px" style="height: fit-content">
-                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
-                                </div>
-                                <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                                  <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                                  <label class="medium16 blue10">HP Form</label>
-                                </div>
-                              </div>
-                              <div class="tw-flex tw-flex-row tw-mx-2">
-                                <!--                                <div class="tw-mr-2">-->
-                                <!--                                  <base-button-blue-->
-                                <!--                                      buttonID="buttonPreview"-->
-                                <!--                                      buttonText="Preview"-->
-                                <!--                                      buttonIcon="heroicons-outline:eye"-->
-                                <!--                                  ></base-button-blue>-->
-                                <!--                                </div>-->
-                                <base-button-fill
-                                    buttonID="buttonUseTemplate"
-                                    buttonText="Use Template"
-                                    buttonTextColor="white"
-                                    buttonBgColor="bg-green5"
-                                    @callbackObject="SelectTicketTemplate"
-                                    :id="ModalFormId"
-                                ></base-button-fill>
-                              </div>
-                            </div>
-                            <div class=" tw-my-2">
-                              <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-                                <div class="tw-flex tw-flex-row">
-                                  <div class="base-padding radius12px" style="height: fit-content">
-                                    <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
+                          <div v-for="FormData in filteredListModal" :key="FormData.formId">
+                            <div v-if="FormData.useTemplate === true && FormData.ticketId ===''">
+                              <div class="tw-ml-3 tw-my-3">
+                                <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
+                                  <div class="tw-flex tw-flex-row">
+                                    <div class="base-padding radius12px" style="height: fit-content">
+                                      <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
+                                    </div>
+                                    <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
+                                      <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
+                                      <label class="medium16 blue10">{{ FormData.formName }}</label>
+                                    </div>
                                   </div>
-                                  <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                                    <label class="medium16 blue10">Helpdesk Ticket{{ FormData.FormName }}</label>
+                                  <div class="tw-flex tw-flex-row tw-mx-2">
+                                    <!--                                <div class="tw-mr-2">-->
+                                    <!--                                  <base-button-blue-->
+                                    <!--                                      buttonID="buttonPreview"-->
+                                    <!--                                      buttonText="Preview"-->
+                                    <!--                                      buttonIcon="heroicons-outline:eye"-->
+                                    <!--                                  ></base-button-blue>-->
+                                    <!--                                </div>-->
+                                    <base-button-fill
+                                        buttonID="buttonUseTemplate"
+                                        buttonText="Use Template"
+                                        buttonTextColor="white"
+                                        buttonBgColor="bg-green5"
+                                        @callbackObject="SelectTicketTemplate"
+                                        :id="FormData.formId"
+                                    ></base-button-fill>
                                   </div>
                                 </div>
-                                <div class="tw-flex tw-flex-row tw-mx-2">
-                                  <!--                                  <div class="tw-mr-2">-->
-                                  <!--                                    <base-button-blue-->
-                                  <!--                                        buttonID="buttonPreview"-->
-                                  <!--                                        buttonText="Preview"-->
-                                  <!--                                        buttonIcon="heroicons-outline:eye"-->
-                                  <!--                                    ></base-button-blue>-->
-                                  <!--                                  </div>-->
-                                  <base-button-fill
-                                      buttonID="buttonUseTemplate"
-                                      buttonText="Use Template"
-                                      buttonTextColor="white"
-                                      buttonBgColor="bg-green5"
-                                      @callbackObject="SelectTicketTemplate"
-                                      :id="ModalFormId"
-                                  ></base-button-fill>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-if="UseTemplatepage==='My Template'">
-                      <div class="tw-ml-3">
-                        <SearchBar  placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
-                      </div>
-                      <!--                        <div v-for="FormData in filteredList" :key="FormData.formId">-->
-                      <!--                          <div v-if="FormData.UseTemplate === true && Form.Data.ComponentTemplate === true" && Form.Data.CreatedByUser ==={{Username}}>-->
-                      <div class="scroller">
-                        <div class="tw-ml-3 tw-my-3">
-                          <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-                            <div class="tw-flex tw-flex-row">
-                              <div class="base-padding radius12px" style="height: fit-content">
-                                <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
-                              </div>
-                              <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                                <!--                                      <label class="medium16 blue10">{{ FormData.formName }}</label>-->
-                                <label class="medium16 blue10">My Ticket System Template1</label>
-                              </div>
-                            </div>
-                            <div class="tw-flex tw-flex-row tw-mx-2">
-                              <div class="tw-mr-2">
-                                <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                                  <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                                  <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                                </div>
-                              </div>
-                              <!--                              <div class="tw-mr-2">-->
-                              <!--                                <base-button-blue-->
-                              <!--                                    buttonID="buttonPreview"-->
-                              <!--                                    buttonText="Preview"-->
-                              <!--                                    buttonIcon="heroicons-outline:eye"-->
-                              <!--                                ></base-button-blue>-->
-                              <!--                              </div>-->
-                              <base-button-fill
-                                  buttonID="buttonUseTemplate"
-                                  buttonText="Use Template"
-                                  buttonTextColor="white"
-                                  buttonBgColor="bg-green5"
-                                  @callbackObject="SelectTicketTemplate"
-                                  :id="ModalFormId"
-                              ></base-button-fill>
-                            </div>
-                          </div>
-                          <div class=" tw-my-2">
-                            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
-                              <div class="tw-flex tw-flex-row">
-                                <div class="base-padding radius12px" style="height: fit-content">
-                                  <Icon class="semibold32 icon blue10" icon="heroicons-outline:ticket"/>
-                                </div>
-                                <div class="tw-flex tw-flex-col tw-items-start base-padding radius12px" style="height: fit-content">
-                                  <label class="medium16 blue10">My Ticket System Template2{{ FormData.FormName }}</label>
-                                </div>
-                              </div>
-                              <div class="tw-flex tw-flex-row tw-mx-2">
-                                <div class="tw-mr-2">
-                                  <div class="choose-delete tw-flex tw-flex-row tw-items-center tw-ml-2 medium16">
-                                    <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
-                                    <label class="tw-mt-0.5 tw-mx-3 tw-cursor-pointer semibold16 ">Delete</label>
-                                  </div>
-                                </div>
-                                <!--                                <div class="tw-mr-2">-->
-                                <!--                                  <base-button-blue-->
-                                <!--                                      buttonID="buttonPreview"-->
-                                <!--                                      buttonText="Preview"-->
-                                <!--                                      buttonIcon="heroicons-outline:eye"-->
-                                <!--                                  ></base-button-blue>-->
-                                <!--                                </div>-->
-                                <base-button-fill
-                                    buttonID="buttonUseTemplate"
-                                    buttonText="Use Template"
-                                    buttonTextColor="white"
-                                    buttonBgColor="bg-green5"
-                                    @callbackObject="SelectTicketTemplate"
-                                    :id="ModalFormId"
-                                ></base-button-fill>
                               </div>
                             </div>
                           </div>
@@ -498,8 +391,6 @@
                   </div>
                 </div>
               </div>
-              <!--                </div>-->
-              <!--              </div>-->
             </div>
           </transition>
           <!-- My Ticket-->
@@ -565,7 +456,8 @@ export default {
       ModalFormDescription: '',
       formNameSearch: '',
       UseTemplateModal: false,
-      Username:''
+      Username:'',
+      formNameSearchModal:''
     }
   },
   watch:{
@@ -578,6 +470,11 @@ export default {
     filteredList: function () {
       return this.FormData.filter(FormData =>
           FormData.formName.toLowerCase().match(this.formNameSearch.toLowerCase())
+      );
+    },
+    filteredListModal: function () {
+      return this.FormData.filter(FormData =>
+          FormData.formName.toLowerCase().match(this.formNameSearchModal.toLowerCase())
       );
     },
   },
@@ -620,6 +517,9 @@ export default {
     },
     formNameInput(input){
       this.formNameSearch = input
+    },
+    formNameInputModal(input){
+      this.formNameSearchModal = input
     },
     CreateFormModal(){
       this.showFormBuilderLayout = !this.showFormBuilderLayout
