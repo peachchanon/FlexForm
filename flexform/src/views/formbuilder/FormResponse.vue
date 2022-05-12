@@ -29,12 +29,12 @@
           <div class="tw-flex tw-flex-row tw-items-end tw-justify-end tw-w-full">
             <div class="tw-w-full tw-ml-1 tw-mr-1" style="max-width: 120px">
               <base-button
-                  buttonID="buttonLogin"
+                  buttonID="buttonExport"
                   buttonText="Export"
                   buttonTextColor="white"
-                  buttonBgColor="blue5"
-                  buttonIconRight="heroicons-outline:upload"
-                  buttonBorderColor="border-blue5"
+                  buttonBgColor="bg-blue5"
+                  buttonIconLeft="heroicons-outline:upload"
+                  :callback="GoExport"
               ></base-button>
             </div>
             <div class="tw-w-full tw-ml-1" style="max-width: 120px">
@@ -252,6 +252,7 @@ export default {
   },
   data() {
     return {
+      exportLink: '',
       keyComponent: 0,
       stateShowDetailModal: false,
       valueSelectRow: [],
@@ -528,6 +529,20 @@ export default {
     )
   },
   methods:{
+    async GoExport(){
+      await axios({
+            url: 'http://localhost:4000/api/Flexform/exportBasic?id=' + this.FormId,
+            method: 'GET',
+            responseType: 'blob',})
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.xlsx'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+          })
+    },
     doSearchTable(value) {
       this.ValueSearchTerm = value
     },
