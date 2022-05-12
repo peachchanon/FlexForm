@@ -45,43 +45,45 @@
             <!-- Form list-->
             <div v-for="FormData in filteredList" :key="FormData.formId">
               <div v-if="FormData.useTemplate === true">
-                <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
-                  <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
-                    <div v-if= "TicketTemplate === false" class="bg-blue1 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
-                      <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
-                    </div>
-                    <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
-                      <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
-                      <div class=" tw-truncate" style="width: 100%; max-width: 190px;">
-                        <label class="medium16 blue10">{{ FormData.formName }}</label>
+                <div class="tw-my-2">
+                  <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                    <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
+                      <div v-if= "TicketTemplate === false" class="bg-blue1 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
+                        <Icon class="semibold24 icon blue10" icon="heroicons-outline:ticket"/>
+                      </div>
+                      <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
+                        <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
+                        <div class=" tw-truncate" style="width: 100%; max-width: 190px;">
+                          <label class="medium16 blue10">{{ FormData.formName }}</label>
+                        </div>
+                      </div>
+                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">
+                        <label class="medium16 grey5 tw-mb-1">Type</label>
+                        <base-badge
+                            BadgeText="Template"
+                            BadgeColor="white"
+                            BadgeBgColor="bg-blue5"></base-badge>
+                      </div>
+                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
+                        <label class="medium16 grey5">Created By</label>
+                        <div class=" tw-truncate" style="width: 100%; max-width: 260px;">
+                          <label class="light16 grey7">{{ FormData.createdByUser }}</label>
+                        </div>
                       </div>
                     </div>
-                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">
-                      <label class="medium16 grey5 tw-mb-1">Type</label>
-                      <base-badge
-                          BadgeText="Template"
-                          BadgeColor="white"
-                          BadgeBgColor="bg-blue5"></base-badge>
-                    </div>
-                    <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
-                      <label class="medium16 grey5">Created By</label>
-                      <div class=" tw-truncate" style="width: 100%; max-width: 260px;">
-                        <label class="light16 grey7">{{ FormData.createdByUser }}</label>
+                    <div class="">
+                      <div class="tw-mt-1 tw-mx-1">
+                        <base-button-fill
+                            buttonID="buttonViewmore"
+                            buttonText="View More"
+                            buttonTextColor="blue5"
+                            buttonBgColor="bg-white"
+                            buttonBorderColor="border-blue5"
+                            buttonIconLeft="heroicons-outline:eye"
+                            @callbackObject="GoAllTicket"
+                            :id="FormData.formId"
+                        ></base-button-fill>
                       </div>
-                    </div>
-                  </div>
-                  <div class="">
-                    <div class="tw-mt-1 tw-mx-1">
-                      <base-button-fill
-                          buttonID="buttonViewmore"
-                          buttonText="View More"
-                          buttonTextColor="blue5"
-                          buttonBgColor="bg-white"
-                          buttonBorderColor="border-blue5"
-                          buttonIconLeft="heroicons-outline:eye"
-                          @callbackObject="GoAllTicket"
-                          :id="FormData.formId"
-                      ></base-button-fill>
                     </div>
                   </div>
                 </div>
