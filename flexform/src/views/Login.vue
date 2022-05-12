@@ -22,10 +22,16 @@
           @callBackString="inputPassword"
         >
         </base-text-input>
+        <div class="tw-my-5" v-if="!stateCheckAccount">
+          <span class="red5 medium16">* The username or password is incorrect.</span>
+        </div>
+        <!--
         <div class="tw-py-3 tw-text-right">
           <a @click="selectPath('buttonForgotPassword')">Forgot password?</a>
         </div>
+        -->
         <base-button
+            class="tw-mt-3"
             buttonID="buttonLogin"
             buttonText="Login"
             buttonTextColor="white"
@@ -67,7 +73,8 @@ export default {
       dataLogin :{
         username:'',
         password:''
-      }
+      },
+      stateCheckAccount: true,
     }
   },
   watch: {
@@ -110,13 +117,16 @@ export default {
         })
         console.log(response.data.username)
         if(response.status===200 && response.data) {
+          this.stateCheckAccount = true
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('role_id', response.data.role_id)
           localStorage.setItem('username', response.data.username)
           this.$router.push('/dashboard')
+          this.stateCheckAccount = true
         }
       } catch(error){
-        console.log(error)
+        //console.log(error)
+        this.stateCheckAccount = false
       }
     }
   }
