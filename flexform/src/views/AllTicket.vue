@@ -44,7 +44,7 @@
           </div>
 
           <!-- Ticket List !-->
-          <!--  <div v-for="(TicketID, FormID) in TicketID" :key="FormID"> เปิดเมื่อต่อดาต้าเบส !-->
+          <!--  <div v-for="TicketID in FormID" :key="TicketID"> เปิดเมื่อต่อดาต้าเบส !-->
           <div class="tw-my-2">
             <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
               <div class="tw-flex tw-flex-row">
@@ -140,6 +140,10 @@ export default {
     BaseHorizontalNavigation,
     BaseBadge,
   },
+  props: {
+    ClickedForm: String,
+    BackToPage: String,
+  },
   data() {
     return {
       horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
@@ -167,19 +171,23 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    try {
-        const response = await axios.get("http://localhost:4000/{ticketid}")
-        this.Ticket = response
-        /*if(Ticket.validation === 'Priority'){
-        this.Urgent = validation.Priority
-      }
-      if(Ticket.validation === 'Status'){
-        this.Status = validation.Status
-      }
-      }*/
-      }catch(error){
-        console.log(error)
-      }
+    console.log(this.ClickedForm)
+    if(this.ClickedForm !== undefined){
+      axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormData = response.data
+              console.log(this.ClickedForm)
+              console.log(this.FormData)
+            }
+          })
+          .catch(error => {
+            // this.errors.push(error)
+            console.log(error)
+          })
+    }  else {
+      this.$router.push('/form')
+    }
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -190,7 +198,7 @@ export default {
         this.$router.push('/form-builder')
     },
     PreviousPage(){
-      this.$router.push('/Dashboard')
+      this.$router.push('/form')
     },
     ViewDataVisualization(){
       this.$router.push('/DataVisualization')

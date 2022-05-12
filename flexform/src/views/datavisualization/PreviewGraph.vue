@@ -230,7 +230,25 @@ export default {
     // }
     //        else if(this.GraphTitle === 'Graph3'){
     //        if(this.GraphData.UseTemplate === true){
-    //          
+    //          const last7 =dayjs().subtract(1, 'month')
+//console.log(last7)
+//     const filtered = data.filter(newdata => dayjs(newdata.date) > last7)
+//     console.log(filtered)
+//     let graph2 = _(filtered).groupBy(newfiltered => newfiltered.type).map((value,key) => ({type: key, id: value})).value();
+//     console.log(graph2)
+//console.log(graph2[0].id)
+//console.log(graph2[0].id.length) // จำนวน type แต่ละประเภท
+//console.log(graph2[1].id.length)
+//     var obj =[]
+//     var k =0;
+//     for(var i =0; i <graph2.length; i++){
+//       for(var j =0; j < graph2[i].id.length; j++){
+//         obj[k] = graph2[i].id[j]
+//         // console.log(obj[k]) 
+//         k++
+//       }
+//     }
+//     console.log(obj)
     //        }
     // }
     // else if(this.GraphTitle === 'Graph4'){

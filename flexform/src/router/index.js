@@ -170,7 +170,8 @@ const routes = [
     meta: {
       title: 'AllTicket',
       // requireAuthen: true
-    }
+    },
+    props: true
   },
   {
     path: '/home',
