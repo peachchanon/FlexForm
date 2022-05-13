@@ -45,19 +45,17 @@
               </div>
             </div>
           </div>
-          {{test(1)}}
-          <div v-if="test(1) === 2">
-            Helloo
-          </div>
+<!--          {{test(1)}}-->
+<!--          <div v-if="test(1) === 2">-->
+<!--            Helloo-->
+<!--          </div>-->
           <!-- Ticket List !-->
           <div v-for="FormData in TicketData" :key="FormData.ticketId">
             <div class="tw-my-2">
               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                 <div class="tw-flex tw-flex-row">
-                  <div v-for="section in FormData" :key="section.sectionId">
-<!--                    <div v-for="component in section" :key="component.componentId">-->
-<!--                      <div v-if="componentLabel[0] ==='Priority' && componentValue[0]==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
-<!--                        &lt;!&ndash;                <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">&ndash;&gt;-->
+<!--                      <div v-if="FormData.sections[0].components.componentLabel[0] ==='Priority' && FormData.sections[0].components.componentValue[0] ==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
+<!--                                        <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
 <!--                        <span class="red7">{{ componentValue}}</span>-->
 <!--                      </div>-->
                       <div v-if="Urgent === 'Medium'" class="bg-yellow4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
@@ -67,7 +65,6 @@
                         <span class="green10">{{ Urgent }}</span>
                       </div>
 <!--                  </div>-->
-                </div>
                 <div class="tw-flex tw-flex-col tw-items-start tw-mx-3">
                   <label v-if="StateShowContentForWindowSize" class="medium16 grey5 tw-mt-0.5 ">Name</label>
                   <label v-if="Urgent === 'High'" class="tw-mt-0.5 medium16 red7">{{ ComponentTemplate }}</label>
@@ -218,13 +215,16 @@ export default {
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
+              console.log('FormData',this.FormData)
               const data = this.FormData.map((form) => {
                 form.timestamp = dayjs(form.timestamp).format('DD/MM/YYYY')
                 return form
               })
               this.TicketData = data
-              console.log(this.TicketData)
-
+              // const componentLabel = this.FormData.sections.map((label)=>{
+              //   return label.componentLabel
+              // })
+              // console.log(componentLabel)
 
               // this.LatestUpdate = dayjs(this.FormData.timestamp).format('DD/MM/YYYY') // แปลงเป็นวันที่ธรรมดา
               //console.log(this.ClickedForm)
@@ -251,10 +251,6 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
-    test(input){
-      input= input+1
-      return input
-    },
     doHorizontalNavigation(page) {
       this.namePage = page
     },
@@ -265,25 +261,27 @@ export default {
       this.$router.push('/form')
     },
     async GoResponseTicket(string){
-      this.ClickedFormId = string
+      this.TicketId = string
       //console.log("clicked for id: " + this.ClickedFormId)
-      console.log(this.TicketId)
+      console.log(this.ClickedForm)
+      console.log('Ticket Id',this.TicketId)
       this.$router.push({
         name: 'TicketResponse',
         params: {
-          PropFormId: this.ClickedFormId,
+          PropFormId: this.ClickedForm,
           PropTicketId: this.TicketId,
         }
       })
     },
     async GoAddActivityTicket(string){
-      this.ClickedFormId = string
+      this.TicketId = string
       //console.log("clicked for id: " + this.ClickedFormId)
+      console.log(this.ClickedForm)
       console.log(this.TicketId)
       this.$router.push({
         name: 'TicketResponse',
         params: {
-          PropFormId: this.ClickedFormId,
+          PropFormId: this.ClickedForm,
           PropTicketId: this.TicketId,
         }
       })
