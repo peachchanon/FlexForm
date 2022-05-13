@@ -121,6 +121,8 @@
                       buttonBgColor="bg-white"
                       buttonBorderColor="border-blue5"
                       buttonIconLeft="heroicons-outline:chat"
+                      @callbackObject="GoResponseTicket"
+                      :id="FormData.ticketId"
                   ></base-button-id>
                 </div>
                 <div  class="tw-mt-1 tw-mr-2 tw-ml-3">
@@ -129,6 +131,8 @@
                       buttonText="Add Activity"
                       buttonTextColor="white"
                       buttonBgColor="bg-blue10"
+                      @callbackObject="GoAddActivityTicket"
+                      :id="FormData.ticketId"
                   ></base-button-id>
                 </div>
               </div>
@@ -191,7 +195,8 @@ export default {
       CreatedByUser:'Chanon Panarong',
       Status:'Finish', //check
       FormData:[],
-      TicketData: []
+      TicketData: [],
+      TicketId:''
     }
   },
   watch:{
@@ -258,6 +263,30 @@ export default {
     },
     PreviousPage(){
       this.$router.push('/form')
+    },
+    async GoResponseTicket(string){
+      this.ClickedFormId = string
+      //console.log("clicked for id: " + this.ClickedFormId)
+      console.log(this.TicketId)
+      this.$router.push({
+        name: 'TicketResponse',
+        params: {
+          PropFormId: this.ClickedFormId,
+          PropTicketId: this.TicketId,
+        }
+      })
+    },
+    async GoAddActivityTicket(string){
+      this.ClickedFormId = string
+      //console.log("clicked for id: " + this.ClickedFormId)
+      console.log(this.TicketId)
+      this.$router.push({
+        name: 'TicketResponse',
+        params: {
+          PropFormId: this.ClickedFormId,
+          PropTicketId: this.TicketId,
+        }
+      })
     },
     ViewDataVisualization(){
       this.$router.push('/DataVisualization')
