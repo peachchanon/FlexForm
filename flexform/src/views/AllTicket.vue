@@ -222,6 +222,7 @@ export default {
                 return form
               })
               this.TicketData = data
+              localStorage.setItem('formId', response.data[0].formId) // set localStorage formId
               // const componentLabel = this.FormData.sections.map((label)=>{
               //   return label.componentLabel
               // })
