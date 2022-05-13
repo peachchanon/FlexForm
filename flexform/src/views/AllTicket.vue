@@ -263,7 +263,7 @@ export default {
     },
     async GoResponseTicket(string){
       this.TicketId = string
-      localStorage.setItem('formid', response.data[0].formId) // set localStorage formId
+      localStorage.setItem('formid', this.ClickedForm) // set localStorage formId
       localStorage.setItem('ticketid', this.TicketId)
       //console.log("clicked for id: " + this.ClickedFormId)
       console.log(this.ClickedForm)
