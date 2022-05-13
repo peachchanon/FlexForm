@@ -147,10 +147,10 @@ export default {
     }
   },
   async mounted() {
-    //let FormId = = this.PropFormId
-    //let TicketId = this.PropTicketId
-    let FormId = '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
-    let TicketId = 'c4923602-707b-4b91-bb92-baee9604fbc1'
+    let FormId = this.PropFormId
+    let TicketId = this.PropTicketId
+    //let FormId = '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
+    //let TicketId = 'c4923602-707b-4b91-bb92-baee9604fbc1'
     // Not Reload page
     if(FormId !== undefined && TicketId !== undefined){
       // Form Structure
