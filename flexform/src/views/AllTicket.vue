@@ -21,7 +21,7 @@
         <div v-if="namePage==='All Ticket'" class="tw-px-3">
           <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
             <div class=" tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
-              <SearchBar @callBackString="SearchInput"></SearchBar>
+              <SearchBar placeholder="Search By Ticket Name" @callBackString="formNameInput"></SearchBar>
             </div>
             <div class="tw-flex tw-flex-row tw-items-center">
               <div class="tw-mx-1">
@@ -45,107 +45,119 @@
               </div>
             </div>
           </div>
-<!--          {{test(1)}}-->
-<!--          <div v-if="test(1) === 2">-->
-<!--            Helloo-->
-<!--          </div>-->
           <!-- Ticket List !-->
-          <div v-for="FormData in TicketData" :key="FormData.ticketId">
+          <div v-for="FormData in filteredList" :key="FormData.ticketId">
             <div class="tw-my-2">
               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                 <div class="tw-flex tw-flex-row">
-<!--                  check-->
-<!--                      <div v-if="FormData.sections[0].components.componentLabel[0] ==='Priority' && FormData.sections[0].components.componentValue[0] ==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
-<!--                                        <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
-<!--                        <span class="red7">{{ componentValue}}</span>-->
-<!--                      </div>-->
-                      <div v-if="Urgent === 'Medium'" class="bg-yellow4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
-                        <span class="yellow9">{{ componentValue[0] }}</span>
+                  <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: 68px; width:76px">
+                    <span class="red7">{{ FormData.sections[0].components[0].componentValue[0]}}</span>
+                  </div>
+                  <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='Medium'" class="bg-yellow4 tw-p-5 radius12px tw-mr-3" style="height: 68px; width:76px">
+                    <div class=" tw-truncate" style="width: 44px;">
+                      <span class="yellow9">{{ FormData.sections[0].components[0].componentValue[0]}}</span>
+                    </div>
+                  </div>
+                  <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='Low'" class="bg-green2 tw-p-5 radius12px tw-mr-3" style="height: 68px; width:76px">
+                    <span class="green10">{{ FormData.sections[0].components[0].componentValue[0]}}</span>
+                  </div>
+                  <div class="tw-flex tw-flex-col tw-items-start tw-mx-3">
+                    <label v-if="StateShowContentForWindowSize" class="medium16 grey5 tw-mt-0.5 ">Name</label>
+                    <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='High' && FormData.sections[0].components[23].componentLabel[0] ==='Title'" style="width:120px">
+                      <label class="tw-mt-0.5 medium16 red7" >{{ FormData.sections[0].components[23].componentValue[0] }}</label>
+                    </div>
+                    <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='Medium' && FormData.sections[0].components[23].componentLabel[0] ==='Title'" style="width:120px">
+                      <label class="tw-mt-0.5 medium16 yellow9">{{ FormData.sections[0].components[23].componentValue[0] }}</label>
+                    </div>
+                    <div v-if="FormData.sections[0].components[0].componentLabel[0] ==='Priority' && FormData.sections[0].components[0].componentValue[0] ==='Low' && FormData.sections[0].components[23].componentLabel[0] ==='Title'" style="width:120px">
+                      <label class="tw-mt-0.5 medium16 green10">{{ FormData.sections[0].components[23].componentValue[0] }}</label>
+                    </div>
+                  </div>
+                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5 ">
+                    <label class="medium16 grey5 tw-mt-0.5">Status</label>
+                    <div v-if="FormData.sections[1].components[2].componentLabel[0] ==='Status' && FormData.sections[1].components[2].componentValue[0] ==='Open'" class="tw-mt-0.5">
+                      <BaseBadge
+                          BadgeText="Open"
+                          BadgeColor="white"
+                          BadgeBgColor="bg-red5"
+                          BadgeBroderColor="border-red10"></BaseBadge>
+                    </div>
+                    <div v-if="FormData.sections[1].components[2].componentLabel[0] ==='Status' && FormData.sections[1].components[2].componentValue[0] ==='Update'" class="tw-mt-0.5">
+                      <BaseBadge
+                          BadgeText="Update"
+                          BadgeColor="white"
+                          BadgeBgColor="bg-yellow6"
+                          BadgeBroderColor="border-yellow10"></BaseBadge>
+                    </div>
+                    <div v-if="FormData.sections[1].components[2].componentLabel[0] ==='Status' && FormData.sections[1].components[2].componentValue[0] ==='Finish'" class="tw-mt-0.5">
+                      <BaseBadge
+                          BadgeText="Finish"
+                          BadgeColor="green7"
+                          BadgeBgColor="bg-green2"
+                          BadgeBroderColor="border-green7"></BaseBadge>
+                    </div>
+                    <div v-if="FormData.sections[1].components[2].componentLabel[0] ==='Status' && FormData.sections[1].components[2].componentValue[0] ==='Close'" class="tw-mt-0.5">
+                      <BaseBadge
+                          BadgeText="Close"
+                          BadgeColor="grey4"
+                          BadgeBgColor="bg-grey1"
+                          BadgeBroderColor="border-grey2"></BaseBadge>
+                    </div>
+                  </div>
+                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5" style="width: 100px;">
+                    <label class="medium16 grey5 tw-mt-0.5">Last Update</label>
+                    <label class="medium16 grey7 tw-mt-0.5">{{ FormData.timestamp }}</label>
+                  </div>
+                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-8">
+                    <label class="medium16 grey5 tw-mt-0.5">Description</label>
+                    <div v-if="FormData.sections[0].components[24].componentLabel[0] ==='Descriptions'" style="width: 100px;">
+                      <div class=" tw-truncate" style="width: 100px;">
+                        <label class="medium16 grey7 tw-mt-0.5">{{ FormData.sections[0].components[24].componentValue[0] }}</label>
                       </div>
-                      <div v-if="Urgent === 'Low'" class="bg-green2 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
-                        <span class="green10">{{ Urgent }}</span>
-                      </div>
-<!--                  </div>-->
-                <div class="tw-flex tw-flex-col tw-items-start tw-mx-3">
-                  <label v-if="StateShowContentForWindowSize" class="medium16 grey5 tw-mt-0.5 ">Name</label>
-                  <label v-if="Urgent === 'High'" class="tw-mt-0.5 medium16 red7">{{ ComponentTemplate }}</label>
-                  <label v-if="Urgent === 'Medium'" class="tw-mt-0.5 medium16 yellow9">{{ ComponentTemplate }}</label>
-                  <label v-if="Urgent === 'Low'" class="tw-mt-0.5 medium16 green10">{{ ComponentTemplate }}</label>
-                </div>
-                <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5 ">
-                  <label class="medium16 grey5 tw-mt-0.5">Status</label>
-                  <div v-if="Status==='Open'" class="tw-mt-0.5">
-                    <BaseBadge
-                        BadgeText="Open"
-                        BadgeColor="white"
-                        BadgeBgColor="bg-red5"
-                        BadgeBroderColor="border-red10"></BaseBadge>
+                    </div>
                   </div>
-                  <div v-if="Status==='Update'" class="tw-mt-0.5">
-                    <BaseBadge
-                        BadgeText="Update"
-                        BadgeColor="white"
-                        BadgeBgColor="bg-yellow6"
-                        BadgeBroderColor="border-yellow10"></BaseBadge>
-                  </div>
-                  <div v-if="Status==='Finish'" class="tw-mt-0.5">
-                    <BaseBadge
-                        BadgeText="Finish"
-                        BadgeColor="green7"
-                        BadgeBgColor="bg-green2"
-                        BadgeBroderColor="border-green7"></BaseBadge>
+                  <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6" style="width: 100px;">
+                    <label class="medium16 grey5 tw-mt-0.5">Created By</label>
+                    <label class="medium16 grey7 tw-mt-0.5">{{FormData.inputByUser}}</label>
                   </div>
                 </div>
-                <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5">
-                  <label class="medium16 grey5 tw-mt-0.5">Last Update</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{ FormData.timestamp }}</label>
-                </div>
-                <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-8">
-                  <label class="medium16 grey5 tw-mt-0.5">Description</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{ Description }}</label>
-                </div>
-                <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
-                  <label class="medium16 grey5 tw-mt-0.5">Created By</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{FormData.inputByUser}}</label>
-                </div>
-              </div>
- 
-              <div class="tw-flex tw-flex-row tw-mx-2">
-                <div class="tw-mt-1">
-                  <base-button-id
-                      buttonID="buttonResponse"
-                      buttonText="Response"
-                      buttonTextColor="blue5"
-                      buttonBgColor="bg-white"
-                      buttonBorderColor="border-blue5"
-                      buttonIconLeft="heroicons-outline:chat"
-                      @callbackObject="GoResponseTicket"
-                      :id="FormData.ticketId"
-                  ></base-button-id>
-                </div>
-                <div  class="tw-mt-1 tw-mr-2 tw-ml-3">
-                  <base-button-id
-                      buttonID="buttonAddActivity"
-                      buttonText="Add Activity"
-                      buttonTextColor="white"
-                      buttonBgColor="bg-blue10"
-                      @callbackObject="GoAddActivityTicket"
-                      :id="FormData.ticketId"
-                  ></base-button-id>
+
+                <div class="tw-flex tw-flex-row tw-mx-2">
+                  <div class="tw-mt-1">
+                    <base-button-id
+                        buttonID="buttonResponse"
+                        buttonText="Response"
+                        buttonTextColor="blue5"
+                        buttonBgColor="bg-white"
+                        buttonBorderColor="border-blue5"
+                        buttonIconLeft="heroicons-outline:chat"
+                        @callbackObject="GoResponseTicket"
+                        :id="FormData.ticketId"
+                    ></base-button-id>
+                  </div>
+                  <div  class="tw-mt-1 tw-mr-2 tw-ml-3">
+                    <base-button-id
+                        buttonID="buttonAddActivity"
+                        buttonText="Add Activity"
+                        buttonTextColor="white"
+                        buttonBgColor="bg-blue10"
+                        @callbackObject="GoAddActivityTicket"
+                        :id="FormData.ticketId"
+                    ></base-button-id>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- My Ticket-->
-      <div v-if="namePage==='My Ticket'" class="base-padding">
-        My Ticket Page
-      </div>
-      <!-- Shared with me -->
-      <div v-if="namePage==='Shared with me'" class="base-padding">
-        Shared with me Page
-      </div>
+        <!-- My Ticket-->
+        <div v-if="namePage==='My Ticket'" class="base-padding">
+          My Ticket Page
+        </div>
+        <!-- Shared with me -->
+        <div v-if="namePage==='Shared with me'" class="base-padding">
+          Shared with me Page
+        </div>
       </div>
     </template>
   </layout-sidebar-navbar-vue>
@@ -186,7 +198,7 @@ export default {
       horizontalNavigationID: [{field:'All Ticket'},{field:'My Ticket'},{field:'Shared with me'}],
       namePage: 'All Ticket',
       StateShowContentForWindowSize: true,
-      Urgent:'Low', // ตัวแปรรับค่ามาจากดาต้าเบส impact ของ ticket // check
+      Urgent:'Medium', // ตัวแปรรับค่ามาจากดาต้าเบส impact ของ ticket // check
       ComponentTemplate:'สายเคเบิลขาด', //check
       Timestamp:'18/11/64',
       Description:'สายเคเบิลแถวเอกมัยขาด', //check
@@ -194,7 +206,8 @@ export default {
       Status:'Finish', //check
       FormData:[],
       TicketData: [],
-      TicketId:''
+      TicketId:'',
+      formNameSearch: '',
     }
   },
   watch:{
@@ -203,7 +216,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['windowResize'])
+    ...mapGetters(['windowResize']),
+    filteredList: function () {
+      return this.TicketData.filter(TicketData =>
+          TicketData.sections[0].components[23].componentValue[0].toLowerCase().match(this.formNameSearch.toLowerCase())
+      );
+    },
   },
   async mounted () {
     window.onresize = () => {
@@ -216,7 +234,6 @@ export default {
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
-              console.log('FormData',this.FormData)
               const data = this.FormData.map((form) => {
                 form.timestamp = dayjs(form.timestamp).format('DD/MM/YYYY')
                 return form
@@ -278,6 +295,8 @@ export default {
     },
     async GoAddActivityTicket(string){
       this.TicketId = string
+      localStorage.setItem('formid', this.ClickedForm) // set localStorage formId
+      localStorage.setItem('ticketid', this.TicketId)
       //console.log("clicked for id: " + this.ClickedFormId)
       console.log(this.ClickedForm)
       console.log(this.TicketId)
@@ -292,8 +311,8 @@ export default {
     ViewDataVisualization(){
       this.$router.push('/DataVisualization')
     },
-    SearchInput(Searchquery){
-      this.Searchquery = Searchquery
+    formNameInput(input){
+      this.formNameSearch = input
     },
     async SelectTicketTemplate(string){
       this.ClickedFormId = string
