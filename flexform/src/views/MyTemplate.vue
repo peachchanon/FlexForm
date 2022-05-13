@@ -5,11 +5,11 @@
         <base-button-back :callback="PreviousPage"></base-button-back>
         <div class="tw-ml-2 tw-flex tw-flex-row tw-items-center tw-flex-wrap">
           <Icon class="icon blue10 tw-mr-1.5" icon="heroicons-outline:folder"/>
-          <span class="semibold24 blue10">My Template</span>
+          <span class="semibold24 blue10">Ticket Template</span>
         </div>
       </div>
       <div class="tw-my-4 tw-mx-4">
-        <SearchBar placeholder="Search By Form Name" @callBackString="formNameInput"></SearchBar>
+        <SearchBar placeholder="Search By Ticket Name" @callBackString="formNameInput"></SearchBar>
       </div>
       <div class="scroller">
       <div v-for="FormData in filteredList" :key="FormData.formId">
@@ -98,13 +98,13 @@ export default {
         .then(response => {
           if(response.status===200 && response.data) {
             // this.FormData = response.data[1]["createdByUser"]
-            this.FormData = response.data
+            this.FormData = response.data;
             //console.log(response.status)
             //console.log(this.FormData)
           }
         })
         .catch(error => {
-          this.errors.push(error)
+          // this.errors.push(error)
           console.log(error)
         })
   },
