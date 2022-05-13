@@ -33,29 +33,40 @@
                 ></base-button-blue>
               </div>
               <div class="tw-mx-1">
-                <base-button-white
-                    buttonID="buttonOpenTicket"
+                <base-button-id
+                    buttonID="buttonUseTemplate"
                     buttonText="Open Ticket"
-                    buttonIcon="heroicons-outline:plus"
-                    :callback="doButton"
-                ></base-button-white>
+                    buttonTextColor="blue10"
+                    buttonBgColor="bg-white"
+                    buttonIconRight="heroicons-outline:plus"
+                    @callbackObject="SelectTicketTemplate"
+                    :id="ClickedForm"
+                ></base-button-id>
               </div>
             </div>
           </div>
-
+          {{test(1)}}
+          <div v-if="test(1) === 2">
+            Helloo
+          </div>
           <!-- Ticket List !-->
-          <!--  <div v-for="TicketID in FormID" :key="TicketID"> เปิดเมื่อต่อดาต้าเบส !-->
-          <div class="tw-my-2">
-            <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
-              <div class="tw-flex tw-flex-row">
-                <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
-                  <span class="red7">{{ Urgent }}</span>
-                </div>
-                <div v-if="Urgent === 'Medium'" class="bg-yellow4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
-                  <span class="yellow9">{{ Urgent }}</span>
-                </div>
-                <div v-if="Urgent === 'Low'" class="bg-green2 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
-                  <span class="green10">{{ Urgent }}</span>
+          <div v-for="FormData in TicketData" :key="FormData.ticketId">
+            <div class="tw-my-2">
+              <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
+                <div class="tw-flex tw-flex-row">
+                  <div v-for="section in FormData" :key="section.sectionId">
+<!--                    <div v-for="component in section" :key="component.componentId">-->
+<!--                      <div v-if="componentLabel[0] ==='Priority' && componentValue[0]==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
+<!--                        &lt;!&ndash;                <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">&ndash;&gt;-->
+<!--                        <span class="red7">{{ componentValue}}</span>-->
+<!--                      </div>-->
+                      <div v-if="Urgent === 'Medium'" class="bg-yellow4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
+                        <span class="yellow9">{{ componentValue[0] }}</span>
+                      </div>
+                      <div v-if="Urgent === 'Low'" class="bg-green2 tw-p-5 radius12px tw-mr-3" style="height: fit-content">
+                        <span class="green10">{{ Urgent }}</span>
+                      </div>
+<!--                  </div>-->
                 </div>
                 <div class="tw-flex tw-flex-col tw-items-start tw-mx-3">
                   <label v-if="StateShowContentForWindowSize" class="medium16 grey5 tw-mt-0.5 ">Name</label>
@@ -88,8 +99,8 @@
                   </div>
                 </div>
                 <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-5">
-                  <label class="medium16 grey5 tw-mt-0.5">Latest Updates</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{ Timestamp}}</label>
+                  <label class="medium16 grey5 tw-mt-0.5">Last Update</label>
+                  <label class="medium16 grey7 tw-mt-0.5">{{ FormData.timestamp }}</label>
                 </div>
                 <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-8">
                   <label class="medium16 grey5 tw-mt-0.5">Description</label>
@@ -97,13 +108,34 @@
                 </div>
                 <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
                   <label class="medium16 grey5 tw-mt-0.5">Created By</label>
-                  <label class="medium16 grey7 tw-mt-0.5">{{CreatedByUser}}</label>
+                  <label class="medium16 grey7 tw-mt-0.5">{{FormData.inputByUser}}</label>
+                </div>
+              </div>
+
+              <div class="tw-flex tw-flex-row tw-mx-2">
+                <div class="tw-mt-1">
+                  <base-button-id
+                      buttonID="buttonResponse"
+                      buttonText="Response"
+                      buttonTextColor="blue5"
+                      buttonBgColor="bg-white"
+                      buttonBorderColor="border-blue5"
+                      buttonIconLeft="heroicons-outline:chat"
+                  ></base-button-id>
+                </div>
+                <div  class="tw-mt-1 tw-mr-2 tw-ml-3">
+                  <base-button-id
+                      buttonID="buttonAddActivity"
+                      buttonText="Add Activity"
+                      buttonTextColor="white"
+                      buttonBgColor="bg-blue10"
+                  ></base-button-id>
                 </div>
               </div>
             </div>
           </div>
         </div>
-<!--      </div>-->
+      </div>
       <!-- My Ticket-->
       <div v-if="namePage==='My Ticket'" class="base-padding">
         My Ticket Page
@@ -122,12 +154,14 @@ import LayoutSidebarNavbarVue from "@/layouts/LayoutSidebarNavbar";
 import BaseButtonBack from "@/components/BaseButtonBack";
 import { Icon } from '@iconify/vue2'
 import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
-import BaseButtonWhite from '@/components/BaseButtonWhite'
+// import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
 import {mapActions, mapGetters} from "vuex";
 import SearchBar from "@/components/SearchBar";
 import BaseBadge from "@/components/BaseBadge";
+import BaseButtonId from "@/components/BaseButtonId";
 import axios from 'axios'
+import dayjs from "dayjs";
 export default {
   name: "AllTicket.vue",
   components: {
@@ -135,10 +169,11 @@ export default {
     LayoutSidebarNavbarVue,
     BaseButtonBack,
     Icon,
-    BaseButtonWhite,
+    //BaseButtonWhite,
     BaseButtonBlue,
     BaseHorizontalNavigation,
     BaseBadge,
+    BaseButtonId
   },
   props: {
     ClickedForm: String,
@@ -155,7 +190,8 @@ export default {
       Description:'สายเคเบิลแถวเอกมัยขาด', //check
       CreatedByUser:'Chanon Panarong',
       Status:'Finish', //check
-      Ticket:[]
+      FormData:[],
+      TicketData: []
     }
   },
   watch:{
@@ -171,14 +207,33 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    console.log(this.ClickedForm)
+    //console.log(this.ClickedForm)
     if(this.ClickedForm !== undefined){
-      axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+      axios.get('http://localhost:4000/api/Flexform/TicketInput/' + this.ClickedForm)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
-              console.log(this.ClickedForm)
-              console.log(this.FormData)
+              const data = this.FormData.map((form) => {
+                form.timestamp = dayjs(form.timestamp).format('DD/MM/YYYY')
+                return form
+              })
+              this.TicketData = data
+              console.log(this.TicketData)
+
+
+              // this.LatestUpdate = dayjs(this.FormData.timestamp).format('DD/MM/YYYY') // แปลงเป็นวันที่ธรรมดา
+              //console.log(this.ClickedForm)
+              // console.log(this.FormData)
+              // this.FormData.forEach(element => {
+              //   //console.log(element);
+              //   element.sections.forEach(elementsection =>{
+              //         //console.log(elementsection)
+              //         elementsection.components.forEach(elementcomponent =>{
+              //           console.log(elementcomponent)
+              //         })
+              //       }
+              //   )
+              // });
             }
           })
           .catch(error => {
@@ -191,11 +246,15 @@ export default {
   },
   methods: {
     ...mapActions(['flapWindowResize']),
+    test(input){
+      input= input+1
+      return input
+    },
     doHorizontalNavigation(page) {
       this.namePage = page
     },
     doButton(){
-        this.$router.push('/form-builder')
+      this.$router.push('/form-builder')
     },
     PreviousPage(){
       this.$router.push('/form')
@@ -205,6 +264,13 @@ export default {
     },
     SearchInput(Searchquery){
       this.Searchquery = Searchquery
+    },
+    async SelectTicketTemplate(string){
+      this.ClickedFormId = string
+      //console.log("clicked for id: " + this.ClickedFormId)
+      this.$router.push({
+        name: 'OpenTicket', // ไปหน้าที่ทำ ticket
+        params: { ClickedForm: this.ClickedFormId}})
     },
   }
 }
