@@ -8,7 +8,7 @@
             <Icon class="icon__style__large blue10" icon="heroicons-outline:chevron-left"/>
           </div>
         </div>
-        <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:folder"/>
+        <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:ticket"/>
         <span class="semibold18 blue10">{{FormResponseName}}</span>
       </div>
       <div class="tw-flex tw-flex-row tw-justify-center">
@@ -25,7 +25,7 @@
       <div class="box tw-w-full tw-max-w-screen-sm md:tw-max-w-screen-md lg:tw-max-w-screen-lg">
         <div class="tw-m-3 tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:chat"/>
-          <span class="semibold24 blue10 tw-ml-2">{{FormResponseName}}</span>
+          <span class="semibold24 blue10 tw-ml-2">{{TicketResponseName}}</span>
         </div>
         <div class="tw-ml-3 tw-mr-3 tw-mb-3 tw-border tw-border-grey2 radius10px base-padding tw-flex tw-flex-wrap">
           <div
@@ -42,7 +42,11 @@
               >
                 <div class="tw-w-1/6"><span class="medium16 blue5"># {{indexComponent}}</span></div>
                 <div class="tw-w-1/3"><span class="medium16 blue10">{{itemComponent.componentProperties.labelText}}</span></div>
-                <div class="tw-w-1/2"><span class="medium16 grey8">{{TicketResponseData[0].sections.find(section=>section.sectionId===itemSection.sectionId).components.find(component=>component.componentId===itemComponent.componentId).componentValue[0]}}</span></div>
+                <div class="tw-w-1/2">
+                  <div class="" v-for="item in TicketIncidentValue" :key="item.componentId">
+                    <span class="medium16 grey8" v-if="item.componentId===itemComponent.componentId">{{item.componentValue[0]}}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -98,11 +102,47 @@
                   placeholder: 'Search data',
                   externalQuery: ValueSearchTerm
                 }"
+                @on-row-click="openDetailModal"
             ></vue-good-table>
           </div>
         </div>
       </div>
     </div>
+    <!-- Detail Row Modal -->
+    <transition name="theme-modal-fade" v-if="StateShowDetailModal">
+      <div class="theme-modal-backdrop">
+        <div class="theme-modal">
+          <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <Icon class="semibold32 icon blue10 tw-pr-1 tw-mx-1 " icon="heroicons-outline:chat"/>
+              <label class="semibold24 blue10">Detail</label>
+            </div>
+            <div class="button__close tw-absolute tw-right-0" @click="closeDetailModal">
+              <Icon class="semibold24" icon="heroicons-outline:x"/>
+            </div>
+          </header>
+          <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden tw-border-2 radius10px tw-ml-3 tw-mr-3 tw-mb-3">
+            <div
+                v-for="(element, index) in TicketResponseTable.columns" :key="element.field"
+                :class="{
+                  'tw-mb-4': index !== TicketResponseTable.columns.length-1,
+                  '': index === TicketResponseTable.columns.length-1,
+                }"
+            >
+              <div class="tw-flex tw-flex-row">
+                <div class="tw-w-1/3">
+                  <span class="medium16 blue10">{{ element.label }}</span>
+                </div>
+                <div class="tw-w-2/3">
+                  <span class="medium16 grey10" v-if="ValueSelectRow.find(item=>item.key===element.field)">{{ ValueSelectRow.find(item=>item.key===element.field).value }}</span>
+                  <span class="medium16 grey5" v-if="!ValueSelectRow.find(item=>item.key===element.field)"> - </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -136,6 +176,7 @@ export default {
       // Use
       FormStructureData: {},
       TicketResponseData: [],
+      TicketIncidentValue : {},
       TicketResponseTable: {
         columns: [],
         rows: []
@@ -143,14 +184,23 @@ export default {
       ValueSearchTerm: '',
       // Value
       FormResponseName: String,
+      TicketResponseName: String,
       StateSelectSectionIndex: 0,
+      ValueSelectRow: [],
+      IndexSelectRow: 0,
+      // Detail
+      StateShowDetailModal: false,
     }
   },
   async mounted() {
     let FormId = this.PropFormId
     let TicketId = this.PropTicketId
+    //console.log(FormId)
+    //console.log(TicketId)
     //let FormId = '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
     //let TicketId = 'c4923602-707b-4b91-bb92-baee9604fbc1'
+    console.log(FormId)
+    console.log(TicketId)
     // Not Reload page
     if(FormId !== undefined && TicketId !== undefined){
       // Form Structure
@@ -176,10 +226,11 @@ export default {
           })
       //console.log(this.FormResponseData)
     }
-    // Get FormId from local storage
-    FormId = window.localStorage.getItem('formid')
     // Reload page
     if(FormId === undefined && TicketId === undefined){
+      // Get FormId from local storage
+      FormId = window.localStorage.getItem('formid')
+      TicketId = window.localStorage.getItem('ticketid')
       // Form Structure
       await axios.get('http://localhost:4000/api/FlexForm/' + FormId)
           .then(response => {
@@ -203,6 +254,7 @@ export default {
           })
       //console.log(this.FormResponseData)
     }
+    // Select Ticket by Ticket ID
     this.FormResponseData.forEach(
         (ticket)=>{
           if(ticket.ticketId === TicketId){
@@ -210,7 +262,20 @@ export default {
           }
         }
     )
-    //console.log(this.TicketResponseData)
+    // Create Incident Value
+    this.TicketIncidentValue = this.TicketResponseData[0].sections[0].components
+    // Creare Form Response Name
+    this.TicketResponseData[0].sections[0].components.forEach(
+        (component)=>{
+          //console.log(component.componentLabel[0])
+          if(component.componentLabel[0]==='Title'){
+            //console.log(component.componentValue[0])
+            this.TicketResponseName=component.componentValue[0]
+          }
+        }
+    )
+    //console.log(this.TicketResponseName)
+    // Create Name
     this.FormResponseName = this.FormStructureData.formName
     // Create column
     this.FormStructureData.sections.forEach(
@@ -275,8 +340,34 @@ export default {
     changeStateSelectSectionIndex(index) {
       this.StateSelectSectionIndex = index
     },
+    async findComponentValue(sectionId, componentId){
+      console.log(sectionId)
+      console.log(componentId)
+      const value = this.TicketResponseData[0].sections
+      return value
+    },
     doSearchTable(value) {
       this.ValueSearchTerm = value
+    },
+    openDetailModal(params){
+      this.ValueSelectRow = []
+      this.IndexSelectRow = params.row.originalIndex
+      Object.keys(params.row).forEach(
+          (element)=>{
+            this.ValueSelectRow.push({
+              key: element
+            })
+          }
+      )
+      Object.values(params.row).forEach(
+          (element, index)=>{
+            this.ValueSelectRow[index].value = element
+          }
+      )
+      this.StateShowDetailModal = true
+    },
+    closeDetailModal(){
+      this.StateShowDetailModal = false
     },
     doExit(){
       this.$router.push({
