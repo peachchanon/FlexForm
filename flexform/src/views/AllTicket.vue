@@ -54,6 +54,7 @@
             <div class="tw-my-2">
               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                 <div class="tw-flex tw-flex-row">
+<!--                  check-->
 <!--                      <div v-if="FormData.sections[0].components.componentLabel[0] ==='Priority' && FormData.sections[0].components.componentValue[0] ==='High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
 <!--                                        <div v-if="Urgent === 'High'" class="bg-red4 tw-p-5 radius12px tw-mr-3" style="height: fit-content">-->
 <!--                        <span class="red7">{{ componentValue}}</span>-->
@@ -108,7 +109,7 @@
                   <label class="medium16 grey7 tw-mt-0.5">{{FormData.inputByUser}}</label>
                 </div>
               </div>
-
+ 
               <div class="tw-flex tw-flex-row tw-mx-2">
                 <div class="tw-mt-1">
                   <base-button-id
