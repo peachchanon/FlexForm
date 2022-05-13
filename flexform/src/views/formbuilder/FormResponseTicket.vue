@@ -21,7 +21,7 @@
       
     </div>
     <!-- Initial Ticket -->
-    <div class="tw-w-full tw-flex tw-flex-col tw-items-center tw-h-" style="padding-top: 120px" v-if="StateSelectSectionIndex===0">
+    <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 120px" v-if="StateSelectSectionIndex===0">
       <div class="box tw-w-full tw-max-w-screen-sm md:tw-max-w-screen-md lg:tw-max-w-screen-lg">
         <div class="tw-m-3 tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:chat"/>
@@ -42,7 +42,7 @@
               >
                 <div class="tw-w-1/6"><span class="medium16 blue5"># {{indexComponent}}</span></div>
                 <div class="tw-w-1/3"><span class="medium16 blue10">{{itemComponent.componentProperties.labelText}}</span></div>
-                <div class="tw-w-1/2"><span class="medium16 grey8">Hi</span></div>
+                <div class="tw-w-1/2"><span class="medium16 grey8">{{TicketResponseData[0].sections.find(section=>section.sectionId===itemSection.sectionId).components.find(component=>component.componentId===itemComponent.componentId).componentValue[0]}}</span></div>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <!-- Activity All Ticket -->
-    <div class="tw-w-full tw-flex tw-flex-col tw-items-center tw-h-" style="padding-top: 120px" v-if="StateSelectSectionIndex===1">
+    <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 120px" v-if="StateSelectSectionIndex===1">
       <div class="box tw-w-full tw-max-w-screen-sm md:tw-max-w-screen-md lg:tw-max-w-screen-lg">
         <div class="tw-ml-3 tw-mt-3 tw-mr-3 tw-flex tw-flex-row tw-items-center">
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:chat"/>
@@ -96,6 +96,7 @@
                 :search-options="{
                   enabled: true,
                   placeholder: 'Search data',
+                  externalQuery: ValueSearchTerm
                 }"
             ></vue-good-table>
           </div>
@@ -139,6 +140,7 @@ export default {
         columns: [],
         rows: []
       },
+      ValueSearchTerm: '',
       // Value
       FormResponseName: String,
       StateSelectSectionIndex: 0,
@@ -227,6 +229,7 @@ export default {
                       formId: this.FormStructureData.formId,
                       sectionId: elementSection.sectionId,
                       componentId: elementComponent.componentId,
+                      width: '150px',
                     })
                   }
                 }
@@ -234,10 +237,46 @@ export default {
           )
         }
     )
+    // Create row
+    this.TicketResponseData.forEach(
+        (elementForm)=>{
+          let objectValue = new Object()
+          if(this.TicketResponseTable.columns.find(item=>item.formId === elementForm.formId)) {
+            elementForm.sections.forEach(
+                (elementSection, indexSection)=>{
+                  if(this.TicketResponseTable.columns.find(item=>item.sectionId === elementSection.sectionId) && indexSection===1) {
+                    elementSection.components.forEach(
+                        (elementComponent)=>{
+                          if(this.TicketResponseTable.columns.find(item=>item.componentId === elementComponent.componentId)) {
+                            objectValue[elementComponent.componentId] = elementComponent.componentValue[0]
+                          } else {
+                            this.TicketResponseTable.columns.push({
+                              label: elementComponent.componentLabel[0],
+                              field: elementComponent.componentId,
+                              type: 'string',
+                              formId: this.FormStructureData.formId,
+                              sectionId: elementSection.sectionId,
+                              componentId: elementComponent.componentId,
+                            })
+                            objectValue[elementComponent.componentId] = elementComponent.componentValue[0]
+                          }
+                        }
+                    )
+                  }
+                }
+            )
+            this.TicketResponseTable.rows.push(objectValue)
+          }
+        }
+    )
+    //console.log(this.TicketResponseTable.rows)
   },
   methods: {
     changeStateSelectSectionIndex(index) {
       this.StateSelectSectionIndex = index
+    },
+    doSearchTable(value) {
+      this.ValueSearchTerm = value
     },
     doExit(){
       this.$router.push({
