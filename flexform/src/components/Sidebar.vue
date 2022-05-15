@@ -46,7 +46,7 @@
 <!--        </div>-->
 <!--      </li>-->
     </ul>
-    <ul class="tw-w-full tw-h-full tw-flex tw-items-end">
+    <ul v-if="LocalRoleId === '003'" class="tw-w-full tw-h-full tw-flex tw-items-end">
       <li  v-if="pageSelect !== 'manageUsers'" class="tw-w-full" @click="selectMenu('/manage-users')">
         <div class="button tw-flex tw-items-center medium18">
           <Icon class="icon tw-ml-2 tw-mr-2 semibold24" icon="heroicons-outline:user-group"/>
@@ -79,10 +79,12 @@ export default {
   data () {
     return {
       stateSidebarExpand: false,
-      showSidebar: true
+      showSidebar: true,
+      LocalRoleId: ''
     }
   },
-  computed:{
+  async mounted(){
+    this.LocalRoleId = localStorage.getItem('role_id')
   },
   methods: {
     selectMenu (path) {
