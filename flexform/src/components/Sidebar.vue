@@ -33,18 +33,18 @@
             <span class="tw-mt-1" v-if="stateSidebarExpand">Form</span>
           </div>
       </li>
-      <li v-if="pageSelect !== 'report'" class="tw-w-full" @click="selectMenu('/report')">
-        <div class="button tw-flex tw-items-center medium18">
-          <Icon class="icon tw-ml-2 tw-mr-2 semibold24 tw-my-1" icon="heroicons-outline:document-report"/>
-          <span class="tw-mt-1" v-if="stateSidebarExpand">Report</span>
-        </div>
-      </li>
-      <li v-if="pageSelect === 'report'" class="tw-w-full" @click="selectMenu('/report')">
-        <div class="button-active tw-flex tw-items-center medium18">
-          <Icon class="icon tw-ml-2 tw-mr-2 semibold24 tw-my-1" icon="heroicons-outline:document-report"/>
-          <span class="tw-mt-1" v-if="stateSidebarExpand">Report</span>
-        </div>
-      </li>
+<!--      <li v-if="pageSelect !== 'report'" class="tw-w-full" @click="selectMenu('/report')">-->
+<!--        <div class="button tw-flex tw-items-center medium18">-->
+<!--          <Icon class="icon tw-ml-2 tw-mr-2 semibold24 tw-my-1" icon="heroicons-outline:document-report"/>-->
+<!--          <span class="tw-mt-1" v-if="stateSidebarExpand">Report</span>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li v-if="pageSelect === 'report'" class="tw-w-full" @click="selectMenu('/report')">-->
+<!--        <div class="button-active tw-flex tw-items-center medium18">-->
+<!--          <Icon class="icon tw-ml-2 tw-mr-2 semibold24 tw-my-1" icon="heroicons-outline:document-report"/>-->
+<!--          <span class="tw-mt-1" v-if="stateSidebarExpand">Report</span>-->
+<!--        </div>-->
+<!--      </li>-->
     </ul>
     <ul class="tw-w-full tw-h-full tw-flex tw-items-end">
       <li  v-if="pageSelect !== 'manageUsers'" class="tw-w-full" @click="selectMenu('/manage-users')">
