@@ -15,7 +15,7 @@
             </base-horizontal-navigation>
           </div>
           <!-- All Ticket-->
-          <div v-if="namePage==='All Form'" class="tw-px-3">
+          <div v-if="namePage==='All Form' || namePage==='Basic Form' || namePage === 'Ticket'" class="tw-px-3">
             <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
               <!-- Search Box -->
               <div class="tw-pr-4" :class="{'tw-w-full': !StateShowContentForWindowSize, 'tw-w-2/5':StateShowContentForWindowSize}">
@@ -23,7 +23,7 @@
               </div>
               <div class="tw-flex tw-flex-row tw-items-center">
                 <!-- My Template Button -->
-                <div class="tw-mx-1">
+                <div v-if="namePage==='All Form' || namePage === 'Ticket'" class="tw-mx-1">
                   <base-button-blue
                       buttonID="buttonCreateForm"
                       buttonText="Ticket Template"
@@ -44,7 +44,7 @@
             </div>
             <!-- Form list-->
             <div v-for="FormData in filteredList" :key="FormData.formId">
-              <div v-if="FormData.useTemplate === true">
+              <div v-if="(FormData.useTemplate === true && namePage==='All Form') || (FormData.useTemplate === true && namePage==='Ticket')">
                 <div class="tw-my-2">
                   <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                     <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
@@ -88,27 +88,27 @@
                   </div>
                 </div>
               </div>
-              <div v-if="FormData.useTemplate === false">
+              <div v-if="(FormData.useTemplate === false  && namePage==='All Form') || (FormData.useTemplate === false && namePage==='Basic Form')">
                 <div class="tw-my-2">
                   <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                     <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
                       <div v-if= "TicketTemplate === false" class="bg-green2 base-padding radius12px tw-transition tw-ease-out" style="height: fit-content">
                         <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-text"/>
                       </div>
-                      <div class="tw-flex tw-flex-col tw-items-start tw-ml-2" style="width: 100%; max-width: 200px">
+                      <div class="tw-flex tw-flex-col tw-items-start tw-ml-2 tw-mr-5" style="width: 100%; max-width: 200px">
                         <label v-if="StateShowContentForWindowSize" class="medium16 grey5">Form name</label>
                         <div class=" tw-truncate" style="width: 100%; max-width: 195px;">
                           <label class="medium16 blue10">{{ FormData.formName }}</label>
                         </div>
                       </div>
-                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6" style="width: 100%; max-width: 100px">
+                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-4" style="width: 100%; max-width: 100px">
                         <label class="medium16 grey5 tw-mb-1">Type</label>
                         <base-badge
                             BadgeText="Form"
                             BadgeColor="white"
                             BadgeBgColor="bg-green4"></base-badge>
                       </div>
-                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6">
+                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6">
                         <label class="medium16 grey5">Form Description</label>
                         <div class=" tw-truncate" style="width: 100%; max-width: 260px;">
                           <label class="light16 grey7">{{ FormData.formDescriptions }}</label>
@@ -394,13 +394,13 @@
             </div>
           </transition>
           <!-- My Ticket-->
-          <div v-if="namePage==='My Form'" class="base-padding">
-            My Form Page
-          </div>
+<!--          <div v-if="namePage==='Basic Form'" class="base-padding">-->
+<!--            My Form Page-->
+<!--          </div>-->
           <!-- Shared with me -->
-          <div v-if="namePage==='Shared with me'" class="base-padding">
-            Shared with me Page
-          </div>
+<!--          <div v-if="namePage==='Ticket'" class="base-padding">-->
+<!--            Shared with me Page-->
+<!--          </div>-->
         </div>
       </div>
     </template>
@@ -436,7 +436,7 @@ export default {
   },
   data() {
     return {
-      horizontalNavigationID: [{field: 'All Form'}, {field: 'My Form'}, {field: 'Shared with me'}],
+      horizontalNavigationID: [{field: 'All Form'}, {field: 'Basic Form'}, {field: 'Ticket'}],
       horizontalNavigationModal: [{field: 'Detail'}, {field: 'Setting'}],
       UseTemplateNavagationModal: [{field: 'Ticket Template'}],
       namePage: 'All Form',
