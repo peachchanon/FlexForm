@@ -10,13 +10,13 @@
         </div>
       </div>
       <div class="box bg-white tw-h-full">
-        <div>
-          <base-horizontal-navigation
-              v-bind:field="horizontalNavigationID"
-              @callbackField="doHorizontalNavigation"
-          >
-          </base-horizontal-navigation>
-        </div>
+<!--        <div>-->
+<!--          <base-horizontal-navigation-->
+<!--              v-bind:field="horizontalNavigationID"-->
+<!--              @callbackField="doHorizontalNavigation"-->
+<!--          >-->
+<!--          </base-horizontal-navigation>-->
+<!--        </div>-->
         <!-- All Ticket-->
         <div v-if="namePage==='All Ticket'" class="tw-px-3">
           <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
@@ -167,7 +167,7 @@
 import LayoutSidebarNavbarVue from "@/layouts/LayoutSidebarNavbar";
 import BaseButtonBack from "@/components/BaseButtonBack";
 import { Icon } from '@iconify/vue2'
-import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
+// import BaseHorizontalNavigation from '@/components/BaseHorizontalNavigation'
 // import BaseButtonWhite from '@/components/BaseButtonWhite'
 import BaseButtonBlue from '@/components/BaseButtonBlue'
 import {mapActions, mapGetters} from "vuex";
@@ -185,7 +185,7 @@ export default {
     Icon,
     //BaseButtonWhite,
     BaseButtonBlue,
-    BaseHorizontalNavigation,
+    // BaseHorizontalNavigation,
     BaseBadge,
     BaseButtonId
   },
