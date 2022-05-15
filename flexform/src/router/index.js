@@ -15,6 +15,7 @@ import AllTicket from "@/views/AllTicket";
 import FormOpenTicket from "@/views/formbuilder/FormOpenTicket";
 import FormResponse from "@/views/formbuilder/FormResponse";
 import FormResponseTicket from "@/views/formbuilder/FormResponseTicket";
+import FormAddActivity from "@/views/formbuilder/FormAddActivity";
 import FormFill from "@/views/formbuilder/FormFill";
 import PreviewGraph from "@/views/datavisualization/PreviewGraph";
 import MyTemplate from "@/views/MyTemplate";
@@ -191,6 +192,16 @@ const routes = [
     component: FormResponseTicket,
     meta: {
       title: 'Ticket Response',
+      //requireAuthen: true
+    },
+    props: true
+  },
+  {
+    path: '/AllTicket/AddActivity',
+    name: 'AddActivity',
+    component: FormAddActivity,
+    meta: {
+      title: 'Add Activity',
       //requireAuthen: true
     },
     props: true

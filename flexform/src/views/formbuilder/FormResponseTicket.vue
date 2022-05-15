@@ -83,6 +83,7 @@
                   buttonText="Add Activity"
                   buttonTextColor="white"
                   buttonBgColor="bg-blue5"
+                  :callback="goAddActivity"
               ></base-button>
             </div>
           </div>
@@ -373,11 +374,21 @@ export default {
       this.$router.push({
         name: 'AllTicket',
         params: { 
-          ClickedForm: '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
-          //ClickedForm: this.PropFormId
+          //ClickedForm: '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
+          ClickedForm: this.PropFormId
         }
       })
-    }
+    },
+    goAddActivity() {
+      this.$router.push({
+        name: 'AddActivity',
+        params: {
+          PropFormId: this.PropFormId,
+          PropTicketId: this.PropTicketId,
+          PropTicketName: this.TicketResponseName,
+        }
+      })
+    },
   }
 }
 </script>
