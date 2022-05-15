@@ -5,8 +5,8 @@
         <div class="base-margin tw-flex tw-flex-row tw-items-center ">
           <base-button-back
               :callback="PreviousPage"></base-button-back>
-          <Icon class="semibold32 icon blue10 tw-mx-1 md:tw-flex-col" icon="heroicons-outline:folder"/>
-          <span class="semibold24 blue10 tw-pl-1 md:tw-flex-col">National Telecom Public Company Limited Ticket (NOC) </span>
+          <Icon class="semibold32 icon blue10 tw-mx-1 md:tw-flex-col" icon="heroicons-outline:ticket"/>
+          <span class="semibold24 blue10 tw-pl-1 md:tw-flex-col">{{TicketName}}</span>
         </div>
       </div>
       <div class="box bg-white tw-h-full">
@@ -208,6 +208,7 @@ export default {
       TicketData: [],
       TicketId:'',
       formNameSearch: '',
+      TicketName:''
     }
   },
   watch:{
@@ -261,6 +262,16 @@ export default {
           })
           .catch(error => {
             // this.errors.push(error)
+            console.log(error)
+          })
+      await axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.TicketName = response.data.formName
+              console.log(this.TicketName)
+            }
+          })
+          .catch(error => {
             console.log(error)
           })
     }  else {
