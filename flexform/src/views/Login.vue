@@ -39,15 +39,15 @@
             :callback="login"
         ></base-button>
         
-        <base-button 
-            class="tw-pt-3"
-          buttonID="buttonCreateAnAccount"
-          buttonText="Create an Account"
-          buttonTextColor="blue5"
-          buttonBgColor="bg-white"
-          buttonBorderColor="border-blue5"
-          :callback="selectPath"
-        ></base-button>
+<!--        <base-button -->
+<!--            class="tw-pt-3"-->
+<!--          buttonID="buttonCreateAnAccount"-->
+<!--          buttonText="Create an Account"-->
+<!--          buttonTextColor="blue5"-->
+<!--          buttonBgColor="bg-white"-->
+<!--          buttonBorderColor="border-blue5"-->
+<!--          :callback="selectPath"-->
+<!--        ></base-button>-->
         <span class="tw-pt-3 light16 grey5 tw-text-center">
           Copyright © 2021 Freya
         </span>
