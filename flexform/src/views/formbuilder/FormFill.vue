@@ -16,13 +16,13 @@
             :field = "FormStructure.Sections"
             :stateSectionIndex = "StateSelectSectionIndex"
         ></base-navigation-section-form-builder>
-        <div 
-            class="tw-flex tw-flex-row tw-items-row tw-absolute tw-right-0 tw-text-blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in"
-            @click="doImport"
-        >
-          <Icon class="icon__style__large" icon="heroicons-outline:inbox-in"/>
-          <span class="tw-ml-2 medium16">Import Response</span>
-        </div>
+<!--        <div -->
+<!--            class="tw-flex tw-flex-row tw-items-row tw-absolute tw-right-0 tw-text-blue10 hover:tw-text-blue5 tw-cursor-pointer tw-transition tw-ease-in"-->
+<!--            @click="doImport"-->
+<!--        >-->
+<!--          <Icon class="icon__style__large" icon="heroicons-outline:inbox-in"/>-->
+<!--          <span class="tw-ml-2 medium16">Import Response</span>-->
+<!--        </div>-->
       </div>
     </div>
     <!-- Form -->
@@ -379,9 +379,9 @@ export default {
         '--section--style--font--size': this.FormStructure.Sections[indexSection].SectionProperties.SectionFontSize+'px',
       }
     },
-    doImport(){
-      
-    },
+    // doImport(){
+    //  
+    // },
     doShortInput(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
