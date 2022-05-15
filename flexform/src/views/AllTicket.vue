@@ -5,7 +5,7 @@
         <div class="base-margin tw-flex tw-flex-row tw-items-center ">
           <base-button-back
               :callback="PreviousPage"></base-button-back>
-          <Icon class="semibold32 icon blue10 tw-mx-1 md:tw-flex-col" icon="heroicons-outline:folder"/>
+          <Icon class="semibold32 icon blue10 tw-mx-1 md:tw-flex-col" icon="heroicons-outline:ticket"/>
           <span class="semibold24 blue10 tw-pl-1 md:tw-flex-col">National Telecom Public Company Limited Ticket (NOC) </span>
         </div>
       </div>
