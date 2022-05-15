@@ -194,6 +194,7 @@ export default {
   },
   data() {
     return {
+      componentNoValueCount : 0,
       // Save
       StateSaveModal: false,
       // State Sections and Components
@@ -307,7 +308,7 @@ export default {
                                 {
                                   ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
                                   ComponentValue: [],
-                                  ComponentLabel: []
+                                  ComponentLabel: [elementComponent.ComponentProperties.LabelText]
                                 }
                             )
                           }
@@ -386,23 +387,25 @@ export default {
       this.FormInput.Timestamp = date.toISOString()
       if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
       }
       else {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
       }
     },
     doLongInput(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
-      if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
+      if(this.FormInput.Sections
+          .find( elementSection => elementSection.SectionId===item.dataInput.SectionId)
+          .Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
+        this.FormInput.Sections
+            .find( elementSection => elementSection.SectionId===item.dataInput.SectionId)
+            .Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
       }
       else {
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
+        this.FormInput.Sections
+            .find( elementSection => elementSection.SectionId===item.dataInput.SectionId)
+            .Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
       }
     },
     doDropdown(item) {
@@ -410,45 +413,59 @@ export default {
       this.FormInput.Timestamp = date.toISOString()
       if(this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.length<=0) {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue.push(item.value)
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
       }
       else {
         this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue[0] = item.value
-        this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel[0] = item.label
       }
     },
     doChoice(item) {
       let date = new Date()
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
-      this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentLabel.push(item.label)
     },
     async doActionButton() {
-      console.log(this.FormInput)
+      // console.log(this.FormInput)
       this.FormInput.InputByUser = localStorage.getItem('username')
-      axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
-          .then(response => {
-            console.log(response.status)
-            if (response.status === 200 && response.data) {
-              console.log(response.status)
-              console.log(response.data)
-              console.log(this.BackToPage)
-              if(this.BackToPage==='Form'){
-                console.log('Back to Form')
-                this.$router.push('/form')
-              } else if(this.BackToPage==='Response'){
-                console.log('Back to Form Response')
-                this.$router.push({
-                  name: 'Response',
-                  params: {
-                    PropFormId: this.FormStructure.FormId
+      this.componentNoValueCount = 0
+      this.FormInput.Sections.forEach(
+          (elementSection)=>{
+            elementSection.Components.forEach(
+                (elementComponent)=> {
+                  console.log(elementComponent.ComponentValue)
+                  if (elementComponent.ComponentValue.length === 0
+                      && this.FormData.sections.find(FormSection => FormSection.sectionId === elementSection.SectionId).components.find(formComponent => formComponent.componentId === elementComponent.ComponentId).componentProperties.required === true
+                  ) {
+                    this.componentNoValueCount ++
                   }
-                })
-              } else {
-                this.$router.push('/form')
+                }
+            )}
+      )
+      
+      if(this.componentNoValueCount === 0) {
+        axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
+            .then(response => {
+              console.log(response.status)
+              if (response.status === 200 && response.data) {
+                console.log(response.status)
+                console.log(response.data)
+                console.log(this.BackToPage)
+                if (this.BackToPage === 'Form') {
+                  console.log('Back to Form')
+                  this.$router.push('/form')
+                } else if (this.BackToPage === 'Response') {
+                  console.log('Back to Form Response')
+                  this.$router.push({
+                    name: 'Response',
+                    params: {
+                      PropFormId: this.FormStructure.FormId
+                    }
+                  })
+                } else {
+                  this.$router.push('/form')
+                }
               }
-            }
-          })
+            })
+      }
     }
   }
 }
