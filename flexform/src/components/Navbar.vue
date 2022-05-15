@@ -8,26 +8,26 @@
     <img v-if="!ShowContent" class="logo" src="../assets/logo/FlexForm-medium-color-logo.png" alt="FlexForm">
     <div class="tw-flex tw-flex-row">
       <!--Notifications-->
-      <div class="tw-relative tw-inline-block tw-h-full">
-        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" @click="doNotifications">
-          <Icon class="icon semibold24" icon="heroicons-outline:bell"/>
-        </div>
-        <div class="notification-content" v-if="ShowNotifications">
-          <div class="tw-flex tw-flex-row tw-justify-between">
-            <div class="tw-flex tw-flex-row tw-items-center">
-              <Icon class="medium16 icon blue10" icon="heroicons-outline:bell"/>
-              <span class="medium16 blue10 tw-m-2">Notifications</span>
-            </div>
-            <div class="tw-flex tw-flex-row tw-items-center">
-              <span class="text-blue-button">Clear all</span>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="tw-relative tw-inline-block tw-h-full">-->
+<!--        <div class="button-blue tw-flex tw-flex-row tw-items-center medium18" @click="doNotifications">-->
+<!--          <Icon class="icon semibold24" icon="heroicons-outline:bell"/>-->
+<!--        </div>-->
+<!--        <div class="notification-content" v-if="ShowNotifications">-->
+<!--          <div class="tw-flex tw-flex-row tw-justify-between">-->
+<!--            <div class="tw-flex tw-flex-row tw-items-center">-->
+<!--              <Icon class="medium16 icon blue10" icon="heroicons-outline:bell"/>-->
+<!--              <span class="medium16 blue10 tw-m-2">Notifications</span>-->
+<!--            </div>-->
+<!--            <div class="tw-flex tw-flex-row tw-items-center">-->
+<!--              <span class="text-blue-button">Clear all</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <!--Profile-->
       <div class="tw-relative tw-inline-block">
         <div class="button-blue tw-flex tw-flex-row tw-items-center medium16 tw-flex tw-flex-row tw-items-center" style="width: fit-content" @click="doProfile">
-          <span v-if="ShowContent" class="tw-mr-1">Chanon Panarong</span>
+          <span v-if="ShowContent" class="tw-mr-1">{{ LocalName }}</span>
           <div class="icon-config-white radiusFull tw-p-0.5">
             <Icon class="icon semibold24" icon="heroicons-outline:user-circle"/>
           </div>
@@ -38,7 +38,7 @@
               <Icon class="icon blue10" style="font-size: 3rem" icon="heroicons-outline:user-circle"/>
             </div>
             <div class="tw-flex tw-flex-col tw-content-start">
-              <div class="medium18 blue10">Chanon Panarong</div>
+              <div class="medium18 blue10">{{ LocalName }}</div>
               <div class="light16 grey7">Username : {{DataUser.username}}</div>
             </div>
           </div>
@@ -85,6 +85,7 @@ export default {
       ShowContent: true,
       SelectUserId: '',
       DataUser: {},
+      LocalName: ''
     }
   },
   watch: {
@@ -101,6 +102,7 @@ export default {
     }
     this.ShowContent = window.innerWidth >= 768
     this.LocalUsername = localStorage.getItem('username')
+    this.LocalName = localStorage.getItem('name_lastname')
     await axios.get('http://localhost:4000/api/User/'+this.LocalUsername)
         .then(response => {
           if(response.status === 200 && response.data) {

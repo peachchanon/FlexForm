@@ -121,6 +121,7 @@ export default {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('role_id', response.data.role_id)
           localStorage.setItem('username', response.data.username)
+          localStorage.setItem('name_lastname', response.data.first_name + " " + response.data.last_name)
           this.$router.push('/dashboard')
           this.stateCheckAccount = true
         }
