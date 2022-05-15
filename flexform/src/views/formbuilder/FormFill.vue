@@ -425,6 +425,8 @@ export default {
     },
     async doActionButton() {
       // console.log(this.FormInput)
+      const current = new Date()
+      this.FormInput.Timestamp = current.toISOString()
       this.FormInput.InputByUser = localStorage.getItem('username')
       this.componentNoValueCount = 0
       this.FormInput.Sections.forEach(
