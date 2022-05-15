@@ -196,10 +196,6 @@ export default {
   async mounted() {
     let FormId = this.PropFormId
     let TicketId = this.PropTicketId
-    //console.log(FormId)
-    //console.log(TicketId)
-    //let FormId = '7d1caea0-fb04-49b5-a0ee-4acc3a7c4323'
-    //let TicketId = 'c4923602-707b-4b91-bb92-baee9604fbc1'
     console.log(FormId)
     console.log(TicketId)
     // Not Reload page
@@ -225,7 +221,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-      //console.log(this.FormResponseData)
+      console.log(this.FormResponseData)
     }
     // Reload page
     if(FormId === undefined && TicketId === undefined){
@@ -242,7 +238,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-      //console.log(this.FormStructureData)
+      console.log(this.FormStructureData)
       // Ticket Response
       await axios.get('http://localhost:4000/api/FlexForm/TicketInput/' + FormId)
           .then(response => {
@@ -253,7 +249,7 @@ export default {
           .catch(error => {
             console.log(error)
           })
-      //console.log(this.FormResponseData)
+      console.log(this.FormResponseData)
     }
     // Select Ticket by Ticket ID
     this.FormResponseData.forEach(

@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="tw-flex tw-flex-col md:tw-items-start tw-items-center">
-                <span class="semibold24 blue10 md:tw-mb-5 tw-ml-2">Chanon Panarong</span>
+                <span class="semibold24 blue10 md:tw-mb-5 tw-ml-2">{{DataUser.firstName}} {{DataUser.lastName}}</span>
                 <!--
                 <div class="medium16 tw-flex tw-flex-row tw-mb-3 tw-ml-2">
                   <span class="blue10 tw-mr-1">Employee ID:</span>

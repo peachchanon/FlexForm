@@ -19,10 +19,11 @@
             class="tw-w-full tw-flex tw-flex-col tw-items-center"
             v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
         >
-          <div class="section__top__style tw-w-full tw-flex tw-flex-col tw-items-start">
+          <div class="section__top__style tw-w-full tw-flex tw-flex-col tw-items-start" v-if="indexSection!==0">
             <span class="medium16 blue10 tw-my-3">{{itemSection.SectionName}}</span>
           </div>
           <div
+              v-if="indexSection!==0"
               class="section__style"
               :class="[
                     FormStructure.Sections[indexSection].SectionProperties.SectionFontColor,
@@ -97,7 +98,7 @@
               </div>
             </div>
           </div>
-          <div class="tw-mt-5">
+          <div class="tw-mt-5" v-if="indexSection!==0">
             <div class="with-line">
               <span class="light14 grey5">{{itemSection.SectionName}}</span>
             </div>
@@ -224,22 +225,72 @@ export default {
       FormInput: {},
       // Value
       TicketName: String,
+      TicketId: String,
+      componentNoValueCount: 0,
     }
   },
   async mounted() {
     let FormId = this.PropFormId
     let TicketId = this.PropTicketId
-    this.TicketName = this.PropTicketName
+    this.TicketId = this.PropTicketId
     let Incident = this.PropIncident
+    this.TicketName = this.PropTicketName
+    console.log(FormId)
+    console.log(TicketId)
+    console.log(this.TicketName)
+    console.log(Incident)
+    if(this.PropIncident === undefined || !JSON.parse(window.localStorage.getItem('activityincident'))){
+      this.$router.push('/form')
+    }
     if(this.PropFormId !== undefined && this.PropTicketId !== undefined && this.PropTicketName !== undefined && this.PropIncident !== undefined ) {
-      console.log('Not Find')
+      console.log('Found')
+      axios.get('http://localhost:4000/api/Flexform/' + FormId)
+          .then(response => {
+            if (response.status === 200 && response.data) {
+              this.FormData = response.data
+              this.FormStructure = this.CapitalObj(this.FormData)
+              //console.log(this.FormStructure)
+              this.FormInput.FormId = this.FormStructure.FormId
+              this.FormInput.InputByUser = ''
+              this.FormInput.Timestamp = this.timestamp
+              this.FormInput.Sections = []
+              this.FormStructure.Sections.forEach(
+                  (elementSection, indexSection) => {
+                    this.FormInput.Sections.push(
+                        {
+                          SectionId: this.FormStructure.Sections[indexSection].SectionId,
+                          Components: []
+                        }
+                    )
+                    this.FormStructure.Sections[indexSection].Components.forEach(
+                        (elementComponent, indexComponent) => {
+                          if (
+                              elementComponent.ComponentType !== 'heading'
+                              && elementComponent.ComponentType !== 'paragraph'
+                          ) {
+                            this.FormInput.Sections[indexSection].Components.push(
+                                {
+                                  ComponentId: this.FormStructure.Sections[indexSection].Components[indexComponent].ComponentId,
+                                  ComponentValue: [],
+                                  ComponentLabel: [elementComponent.ComponentProperties.LabelText]
+                                }
+                            )
+                          }
+                        }
+                    )
+                  }
+              )
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
     } else {
+      console.log('Not Found')
       FormId = window.localStorage.getItem('formid')
       TicketId = window.localStorage.getItem('ticketid')
+      this.TicketId = window.localStorage.getItem('ticketid')
       Incident = JSON.parse(window.localStorage.getItem('activityincident'))
-      console.log(FormId)
-      console.log(TicketId)
-      console.log(Incident)
       this.TicketName = window.localStorage.getItem('ticketname')
       axios.get('http://localhost:4000/api/Flexform/' + FormId)
           .then(response => {
@@ -282,8 +333,8 @@ export default {
           .catch(error => {
             console.log(error)
           })
-      console.log(this.FormInput)
     }
+    console.log(this.FormInput)
   },
   methods: {
     CapitalFirstLetter(string){
@@ -354,23 +405,68 @@ export default {
       this.FormInput.Timestamp = date.toISOString()
       this.FormInput.Sections.find( elementSection => elementSection.SectionId===item.dataInput.SectionId).Components.find( elementComponent => elementComponent.ComponentId===item.dataInput.ComponentId).ComponentValue = item.value
     },
+    uuidv4() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      )
+    },
     async doActionButton() {
-      console.log(this.FormInput)
+      const current = new Date()
+      this.FormInput.Timestamp = current.toISOString()
+      this.FormInput.TicketId = this.TicketId
+      this.FormInput.InputByUser = localStorage.getItem('username')
+      this.componentNoValueCount = 0
       this.FormInput.Sections.forEach(
           (elementSection, indexSection)=>{
             if(indexSection===0) {
               elementSection.Components.forEach(
                   (elementComponent)=>{
-                    console.log(elementComponent.ComponentValue)
+                    //console.log(elementComponent.ComponentLabel)
+                    //console.log(elementComponent.ComponentValue)
                     // ใส่ค่า Incident ลงใน Form Input ของ Section 0
+                    let Incident = JSON.parse(window.localStorage.getItem('activityincident'))
+                    //console.log(Incident.find(component=>component.componentId===elementComponent.ComponentId).componentValue)
+                    elementComponent.ComponentValue = Incident.find(component=>component.componentId===elementComponent.ComponentId).componentValue
                   }
               )
             }
             
           }
       )
+      //console.log(this.FormInput)
+      this.FormInput.Sections.forEach(
+          (elementSection)=>{
+            elementSection.Components.forEach(
+                (elementComponent)=> {
+                  //console.log(elementComponent.ComponentValue)
+                  if (elementComponent.ComponentValue.length === 0
+                      && this.FormData.sections.find(FormSection => FormSection.sectionId === elementSection.SectionId).components.find(formComponent => formComponent.componentId === elementComponent.ComponentId).componentProperties.required === true
+                  ) {
+                    this.componentNoValueCount ++
+                  }
+                }
+            )}
+      )
+      if(this.componentNoValueCount === 0) {
+        console.log(this.FormInput)
+        axios.post('http://localhost:4000/api/Flexform/TicketInput/CreateTicketInput/', this.FormInput)
+            .then(response => {
+              console.log(response.status)
+              if (response.status === 200 && response.data) {
+                localStorage.removeItem('activityincident')
+                this.$router.push({
+                  name: 'TicketResponse',
+                  params: {
+                    PropFormId: this.PropFormId,
+                    PropTicketId: this.PropTicketId,
+                  }
+                })
+              }
+            }).catch(error=>{console.log(error)})
+      }
     },
     doExit(){
+      localStorage.removeItem('activityincident')
       this.$router.push({
         name: 'TicketResponse',
         params: {
