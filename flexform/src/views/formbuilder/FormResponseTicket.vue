@@ -278,6 +278,7 @@ export default {
     //console.log(this.TicketResponseName)
     // Create Name
     this.FormResponseName = this.FormStructureData.formName
+    localStorage.setItem('ticketname', this.TicketResponseName)
     // Create column
     this.FormStructureData.sections.forEach(
         (elementSection, indexSection)=>{
@@ -380,12 +381,14 @@ export default {
       })
     },
     goAddActivity() {
+      localStorage.setItem('activityincident', JSON.stringify(this.TicketIncidentValue))
       this.$router.push({
         name: 'AddActivity',
         params: {
           PropFormId: this.PropFormId,
           PropTicketId: this.PropTicketId,
           PropTicketName: this.TicketResponseName,
+          PropIncident: this.TicketIncidentValue,
         }
       })
     },
