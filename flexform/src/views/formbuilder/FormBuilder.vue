@@ -74,6 +74,31 @@
             </div>
           </div>
         </transition>
+        <!-- Edit description Modal -->
+        <transition name="theme-modal-fade" v-if="StateEditDescriptionsModal">
+          <div class="theme-modal-backdrop">
+            <div class="theme-modal">
+              <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
+                <Icon class="icon__style__large tw-mr-2 blue10" icon="heroicons-outline:pencil-alt"/>
+                <span class="semibold24 blue10">Edit Form Detail</span>
+              </header>
+              <section class="tw-pl-2.5 tw-pr-2.5 tw-overflow-x-hidden">
+                <div class="tw-ml-2 tw-mb-2">Form Name</div>
+                <input class="medium16 base-padding radius10px tw-w-full" type="text" placeholder="Enter Form Name" v-model="ValueFormNameString">
+                <div class="tw-ml-2 tw-mb-2">Description</div>
+                <textarea class="medium16 base-padding radius10px tw-w-full" type="text" placeholder="Enter Description" v-model="ValueFormDescriptionsString"/>
+              </section>
+              <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
+                <div class="tw-w-1/3 tw-mr-1" @click="doEditDescriptionsModal">
+                  <div class="button__style__white">Cancel</div>
+                </div>
+                <div class="tw-w-1/3 tw-ml-1" @click="doEditDescriptions">
+                  <div class="button__style__blue">Save</div>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </transition>
         <!-- Blue Navbar -->
         <div class="tw-w-full tw-flex tw-flex-row bg-blue10" style="padding: 0.5rem">
           <div class="tw-w-full tw-flex tw-flex-row tw-justify-start">
@@ -1272,53 +1297,60 @@
       <!-- Setting -->
       <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 150px" v-if="StatePage==='Setting'">
         <div class="box" style="width: 560px">
-          <div class="base-margin tw-flex tw-flex-row tw-items-center">
-            <Icon class="semibold24 icon blue10" icon="clarity:cog-line"/>
-            <span class="semibold24 blue10 tw-ml-2">Setting</span>
+          <div class="base-margin tw-flex tw-flex-row tw-items-center tw-justify-between">
+              <div class="tw-flex tw-flex-row">
+                <Icon class="semibold24 icon blue10 tw-mt-1" icon="clarity:cog-line"/>
+              <span class="semibold24 blue10 tw-ml-2">Setting</span>
+              </div>
+            <div class="tw-mr-4" @click="doEditDescriptionsModal">
+              <div class="button__circle">
+                <Icon class="icon__style__large blue10" icon="heroicons-outline:pencil-alt"/>
+              </div>
+            </div>
           </div>
           <div class="base-margin tw-flex tw-flex-col tw-border-2 tw-border-gray2 radius12px base-padding">
             <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 170px">
                 <span class="medium16 grey10">Form Name</span>
               </div>
-              <div class="tw-w-full">
+              <div>
                 <span class="light16 grey7">{{FormStructure.FormName}}</span>
               </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-5">
               <div style="width: 170px">
-                <span class="medium16 grey10">Description</span>
+                <span class="medium16 grey10">Descriptions</span>
               </div>
-              <div class="tw-w-full">
-                <span class="light16 grey7">{{FormStructure.FormDescription}}</span>
+              <div>
+                <span class="light16 grey7">{{FormStructure.FormDescriptions}}</span>
               </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-5">
-              <div style="width: 150px">
-                <span class="medium16 grey10">Create by</span>
+              <div style="width: 170px">
+                <span class="medium16 grey10">Created by</span>
               </div>
-              <div class="tw-w-full">
+              <div>
                 <span class="light16 grey7">{{FormStructure.CreatedByUser}}</span>
               </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-5">
-              <div style="width: 150px">
+              <div style="width: 170px">
                 <span class="medium16 grey10">Modified by</span>
               </div>
-              <div class="tw-w-full">
+              <div>
                 <span class="light16 grey7">{{FormStructure.ModifiedByUser}}</span>
               </div>
             </div>
             <div class="tw-flex tw-flex-row tw-mb-5">
-              <div style="width: 150px">
-                <span class="medium16 grey10">Create Date</span>
+              <div style="width: 170px">
+                <span class="medium16 grey10">Created Date</span>
               </div>
               <div>
                 <span class="light16 grey7">{{CreatedDateStr}}</span> 
               </div>
             </div>
             <div class="tw-flex tw-flex-row">
-              <div style="width: 150px">
+              <div style="width: 170px">
                 <span class="medium16 grey10">Modified Date</span>
               </div>
               <div>
@@ -1393,6 +1425,12 @@ export default {
       StateShowContentForWindowSize: true,
       // Save
       StateSaveModal: false,
+      // Edit description
+      StateEditDescriptionsModal: false,
+      FormNameEdit: '',
+      ValueFormNameString: this.FormNameEdit,
+      FormDescriptionsEdit: '',
+      ValueFormDescriptionsString: this.FormDescriptionsEdit,
       // Page
       PageList: [{field:'Build'},{field:'Preview'},{field:'Setting'}],
       StatePage: 'Build',
@@ -1551,6 +1589,7 @@ export default {
             this.FormStructure = this.CapitalObj(this.FormData)
             this.CreatedDateStr = dayjs(this.FormStructure.FormCreatedTimestamp).format('DD/MM/YYYY')
             this.ModifiedDateStr = dayjs(this.FormStructure.FormModifiedTimestamp).format('DD/MM/YYYY')
+            this.FormNameEdit = this.FormStructure.FormName
             console.log(this.FormStructure)
           }
         })
@@ -1602,6 +1641,28 @@ export default {
     // Save form
     doShowSaveModal(){
         this.StateSaveModal = this.StateSaveModal !== true
+    },
+    doEditDescriptionsModal(){
+      this.ValueFormNameString = this.FormStructure.FormName
+      this.ValueFormDescriptionsString = this.FormStructure.FormDescriptions
+      this.StateEditDescriptionsModal = this.StateEditDescriptionsModal !== true
+    },
+    doEditDescriptions(){
+      if(this.ValueFormNameString === '' || this.ValueFormDescriptionsString === ''){
+        console.log(this.FormStructure.FormName)
+        console.log(this.FormStructure.FormDescriptions)
+      }
+      else if(this.ValueFormNameString !== '' && this.ValueFormDescriptionsString !== ''){
+        this.FormStructure.FormName = this.ValueFormNameString
+        this.FormStructure.FormDescriptions = this.ValueFormDescriptionsString
+      }
+      else if(this.ValueFormNameString !== ''){
+        this.FormStructure.FormName = this.ValueFormNameString
+      }
+      else if(this.ValueFormDescriptionsString !== ''){
+        this.FormStructure.Descriptions = this.ValueFormDescriptionsString
+      }
+      this.StateEditDescriptionsModal = this.StateEditDescriptionsModal !== true
     },
     // Page
     doNavigationFormBuilder(namePage) {
@@ -3071,4 +3132,44 @@ export default {
   }
 }
 
+.button__style__blue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding: 0.75rem;
+  transition: all .1s ease-in;
+  border-radius: 12px;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  background-color: $blue5;
+  &:hover{
+    background-color: $blue6;
+  }
+}
+
+input{
+  border: 1px solid $grey1;
+  background-color: $grey1;
+  color: $grey5;
+  transition: all .1s ease-in;
+}
+input:focus{
+  border: 1px solid $blue5;
+  background-color: white;
+  color: $grey10;
+  outline: none !important;
+}
+textarea{
+  border: 1px solid $grey1;
+  background-color: $grey1;
+  color: $grey5;
+  transition: all .1s ease-in;
+}
+textarea:focus{
+  border: 1px solid $blue5;
+  background-color: white;
+  color: $grey10;
+  outline: none !important;
+}
 </style>
