@@ -196,7 +196,7 @@
                                             <Icon class="semibold24 icon " icon="heroicons-outline:folder-download"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Save As Template</label>
                                           </div>
-                                          <div class="choose-delete tw-flex tw-flex-row">
+                                          <div class="choose-delete tw-flex tw-flex-row" @click="DoDeleteForm(ModalFormId)">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:trash"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Delete Form</label>
                                           </div>
@@ -523,6 +523,18 @@ export default {
     },
     CreateFormModal(){
       this.showFormBuilderLayout = !this.showFormBuilderLayout
+    },
+    async DoDeleteForm(formid){
+      await axios.delete('http://localhost:4000/api/Flexform/' + formid)
+          .then(response => {
+            if(response.status===200) {
+              console.log("Delete Successfully")
+            }
+          })
+          .catch(error => {
+            // this.errors.push(error)
+            console.log(error)
+          })
     },
     // GenerateFormId() {
     //   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
