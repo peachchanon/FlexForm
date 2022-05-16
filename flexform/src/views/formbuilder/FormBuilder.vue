@@ -85,7 +85,7 @@
               <section class="tw-pl-2.5 tw-pr-2.5 tw-overflow-x-hidden">
                 <div class="tw-ml-2 tw-mb-2">Form Name</div>
                 <input class="medium16 base-padding radius10px tw-w-full" type="text" placeholder="Enter Form Name" v-model="ValueFormNameString">
-                <div class="tw-ml-2 tw-mb-2">Description</div>
+                <div class="tw-ml-2 tw-mb-2 tw-mt-6">Description</div>
                 <textarea class="medium16 base-padding radius10px tw-w-full" type="text" placeholder="Enter Description" v-model="ValueFormDescriptionsString"/>
               </section>
               <footer class="tw-p-2.5 tw-flex tw-flex-row tw-justify-end">
@@ -1458,7 +1458,7 @@ export default {
         FormId: '',
         TicketId: '',
         FormName: 'Untitled Form',
-        FormDescriptions: '',
+        FormDescriptions: '-',
         FormCreatedTimestamp: '',
         FormModifiedTimestamp: '',
         CreatedByUser: '',
