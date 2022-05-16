@@ -117,7 +117,7 @@
                     </div>
                   </div>
                   <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mx-6" style="width: 100px;">
-                    <label class="medium16 grey5 tw-mt-0.5">Created By</label>
+                    <label class="medium16 grey5 tw-mt-0.5">Updated By</label>
                     <label class="medium16 grey7 tw-mt-0.5">{{FormData.inputByUser}}</label>
                   </div>
                 </div>
@@ -240,6 +240,9 @@ export default {
                 return form
               })
               this.TicketData = data
+
+              this.TicketData = this.TicketData.filter((v,i,a)=>a.findLastIndex(v2=>(v2.ticketId === v.ticketId)) === i)
+              
               // const componentLabel = this.FormData.sections.map((label)=>{
               //   return label.componentLabel
               // })
