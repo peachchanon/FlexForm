@@ -135,6 +135,7 @@
                         :id="FormData.ticketId"
                     ></base-button-id>
                   </div>
+                  <!--
                   <div  class="tw-mt-1 tw-mr-2 tw-ml-3">
                     <base-button-id
                         buttonID="buttonAddActivity"
@@ -145,6 +146,7 @@
                         :id="FormData.ticketId"
                     ></base-button-id>
                   </div>
+                  -->
                 </div>
               </div>
             </div>

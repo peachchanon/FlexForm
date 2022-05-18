@@ -108,10 +108,11 @@
                             BadgeColor="white"
                             BadgeBgColor="bg-green4"></base-badge>
                       </div>
-                      <div v-if="StateShowContentForWindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6">
+                      <div v-if="WindowSize" class="tw-flex tw-flex-col tw-items-start tw-mr-6">
                         <label class="medium16 grey5">Form Description</label>
                         <div class=" tw-truncate" style="width: 100%; max-width: 260px;">
-                          <label class="light16 grey7">{{ FormData.formDescriptions }}</label>
+                          <label class="light16 grey7" v-if="FormData.formDescriptions!==''">{{ FormData.formDescriptions }}</label>
+                          <label class="light16 grey5" v-if="FormData.formDescriptions===''">-</label>
                         </div>
                       </div>
                     </div>
@@ -128,7 +129,7 @@
                             :id="FormData.formId"
                         ></base-button-fill>
                       </div>
-                      <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
+                      <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3" v-if="StateShowContentForWindowSize">
                         <base-button-fill
                             buttonID="buttonFill"
                             buttonText="Fill"
@@ -168,23 +169,23 @@
                                   </div>
                                   <div v-if="ModalPage==='Setting'">
                                     <div>
-                                      <div class="tw-flex tw-flex-row border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
-                                        <div class="tw-flex tw-flex-col tw-ml-4">
+                                      <div class="tw-flex tw-flex-row border-grey3 tw-border radius10px tw-ml-3 tw-mr-3">
+                                        <div class="tw-flex tw-flex-col tw-w-1/2 base-padding">
                                           <div class="tw-ml-2 tw-my-1.5">
                                             <label class="blue10 medium18">Data</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
+                                          <div class="choose tw-flex tw-flex-row">
                                             <Icon class="semibold24 icon" icon="heroicons-outline:inbox-in"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16">Import Data</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row tw-mx-1 tw-my-1">
+                                          <div class="choose tw-flex tw-flex-row">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Export Response</label>
                                           </div>
                                         </div>
-                                        <div class="border-grey3 bg-grey3 tw-mt-6 tw-mx-10" style="height: 180px; border-width: 0.5px">
+                                        <div class="border-grey3" style="height: 215px; border-width: 0.1px">
                                         </div>
-                                        <div class="tw-flex tw-flex-col">
+                                        <div class="tw-flex tw-flex-col tw-w-1/2 base-padding">
                                           <div class="tw-my-1.5 tw-ml-2">
                                             <label class="blue10 medium18">Form</label>
                                           </div>
@@ -229,7 +230,7 @@
                                     </div>
                                   </div>
                                   <div v-if="ModalPage==='Detail'">
-                                    <div class="border-grey3 tw-border-2 radius10px tw-mx-3 base-padding">
+                                    <div class="border-grey3 tw-border radius10px tw-mx-3 base-padding">
                                       <div class="tw-flex tw-flex-row tw-justify-between tw-mr-16">
                                         <div class="tw-flex tw-flex-row tw-mx-2.5 tw-my-2">
                                           <label class="semibold16 blue10">Created By</label>
@@ -242,11 +243,12 @@
                                       </div>
                                       <div class="tw-flex tw-flex-col tw-mx-2.5 tw-mt-3">
                                         <label class="semibold16 blue10">Description</label>
-                                        <div class="modaldescriptiondetail tw-my-3 medium14 grey10">{{ModalFormDescription}}</div>
+                                        <div class="modaldescriptiondetail tw-my-3 medium14 grey10" v-if="ModalFormDescription!==''">{{ModalFormDescription}}</div>
+                                        <div class="modaldescriptiondetail tw-my-3 medium14 grey5" v-if="ModalFormDescription===''">-</div>
                                       </div>
                                     </div>
                                     <div class="tw-flex tw-flex-row-reverse tw-mx-2 tw-mt-4 tw-mb-2">
-                                      <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3">
+                                      <div  class="tw-mt-1 tw-mr-2 tw-w-24 tw-ml-3" >
                                         <base-button-fill
                                             buttonID="buttonFill"
                                             buttonText="Fill"
@@ -442,6 +444,7 @@ export default {
       namePage: 'All Form',
       ModalPage: 'Detail',
       StateShowContentForWindowSize: true,
+      WindowSize: true,
       FormData: [],
       TicketTemplate: false,
       UseTemplatepage: 'Ticket Template',
@@ -463,6 +466,7 @@ export default {
   watch:{
     windowResize (){
       this.StateShowContentForWindowSize = window.innerWidth >= 768
+      this.WindowSize = window.innerWidth >= 1024
     }
   },
   computed: {
@@ -483,6 +487,7 @@ export default {
       this.flapWindowResize()
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
+    this.WindowSize = window.innerWidth >= 1024
     this.Username = localStorage.getItem('username') // check user ว่ามี my template อะไรบ้าง
     await axios.get('http://localhost:4000/api/Flexform/AllForm')
         .then(response => {
