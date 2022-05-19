@@ -6,92 +6,53 @@
           <Icon class="semibold24 icon blue10" icon="heroicons-outline:home"/>
           <span class="semibold24 blue10 tw-pl-1">Dashboard</span>
         </div>
-        <div class="md:tw-flex md:tw-flex-row-reverse tw-w-full">
-          <!-- Bookmark -->
+        <div class="md:tw-flex md:tw-flex-row tw-w-full">
+          <!-- Form -->
           <div class="box bg-white md:tw-w-1/2">
             <div class="tw-flex tw-flex-row tw-items-center">
-              <Icon class="semibold24 icon blue10" icon="heroicons-outline:bookmark-alt"/>
-              <span class="semibold24 blue10 tw-m-2">Bookmark</span>
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+              <span class="semibold24 blue10 tw-pl-1">Form</span>
             </div>
-            <!-- Bookmark | Card list -->
-            <div class="tw-flex tw-flex-col tw-scroll-auto">
-
-              <div class="base-padding base-shadow radius12px bg-white tw-flex tw-flex-row tw-items-center tw-justify-between tw-mb-2 tw-scroll-auto">
-                <div class="semibold24 base-padding bg-blue1 radius12px tw-relative">
-                  <Icon class="icon blue10 tw-absolute tw-bottom-7 tw-left-0" icon="heroicons-solid:bookmark"/>
-                  <Icon class="icon blue10" icon="heroicons-outline:folder"/>
-                </div>
-                <div class="base-padding">
-                  <span>National Telecom Public Company Limited Ticket (NOC)</span>
-                </div>
-                <div class="base-padding radius12px tw-cursor-pointer">
-                  <Icon class="icon semibold24 red5" icon="heroicons-outline:minus"/>
+            <div class="lg:tw-flex lg:tw-flex-row tw-justify-center">
+              <div class="lg:tw-w-1/2 lg:tw-flex lg:tw-flex-col">
+                <span class="blue10" style="font-size: 76px">100</span>
+                <div class="tw-flex tw-flex-col">
+                  <span class="blue6 semibold24">Reports</span>
+                  <span class="grey7 medium16">จำนวน Form ภายในระบบ</span>
                 </div>
               </div>
-              
             </div>
-            
           </div>
-          <!-- Report -->
+          <!-- Form Priority -->
           <div class="box bg-white md:tw-w-1/2">
             <div class="tw-flex tw-flex-row tw-items-center">
-              <Icon class="semibold24 icon blue10" icon="heroicons-outline:document-report"/>
-              <span class="semibold24 blue10 tw-pl-1">Report</span>
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+              <span class="semibold24 blue10 tw-pl-1">Form Priority</span>
             </div>
-            <div class="lg:tw-flex lg:tw-flex-row">
-              <div class="lg:tw-w-1/2 lg:tw-flex lg:tw-flex-col">
-                <span class="blue10 semiblod72">100</span>
-                <div class="tw-flex tw-flex-col">
-                  <span class="blue6 semibold24">Reports</span>
-                  <span class="grey7 medium16">จำนวน Report ในระบบ FlexForm</span>
-                </div>
-              </div>
-              <div class="lg:tw-w-1/2 lg:tw-flex lg:tw-flex-col">
-                <span class="blue10 semiblod72">100</span>
-                <div class="tw-flex tw-flex-col">
-                  <span class="blue6 semibold24">Reports</span>
-                  <span class="grey7 medium16">จำนวน Report ของฉัน</span>
-                </div>
-              </div>
+            <div class="tw-flex tw-flex-col tw-items-center">
+              <customized-pie-chart chartstyle="chartdashboard"></customized-pie-chart>
             </div>
           </div>
         </div>
-        <!-- Form -->
-        <div class="box bg-white">
-          <div class="tw-flex tw-flex-row tw-items-center">
-            <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
-            <span class="semibold24 blue10 tw-pl-1">Form</span>
-          </div>
-          <div class="lg:tw-flex lg:tw-flex-row">
-            <div class="lg:tw-flex lg:tw-flex-row lg:tw-w-1/3">
-              <div class="lg:tw-w-1/2 lg:tw-flex lg:tw-flex-col">
-                <span class="blue10 semiblod72">100</span>
-                <div class="tw-flex tw-flex-col">
-                  <span class="blue6 semibold24">Reports</span>
-                  <span class="grey7 medium16">จำนวน Report ในระบบ FlexForm</span>
-                </div>
-              </div>
-              <div class="lg:tw-w-1/2 lg:tw-flex lg:tw-flex-col">
-                <span class="blue10 semiblod72">100</span>
-                <div class="tw-flex tw-flex-col">
-                  <span class="blue6 semibold24">Reports</span>
-                  <span class="grey7 medium16">จำนวน Report ของฉัน</span>
-                </div>
-              </div>
+        <div class="md:tw-flex md:tw-flex-row tw-w-full">
+          <!-- Form Status -->
+          <div class="box bg-white md:tw-w-1/2">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+              <span class="semibold24 blue10 tw-pl-1">Form Status</span>
             </div>
-            <div class="lg:tw-flex lg:tw-flex-row lg:tw-w-2/3">
-              <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
-                <span class="grey10 semibold24">Form Priority</span>
-                <customized-pie-chart chartstyle="chartdashboard"></customized-pie-chart>
-              </div>
-              <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
-                <span class="grey10 semibold24">Form Status</span>
-                <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
-              </div>
-              <div class="box bg-white lg:tw-w-1/3 lg:tw-flex lg:tw-flex-col">
-                <span class="grey10 semibold24">Form Active</span>
-                <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
-              </div>
+            <div class="tw-flex tw-flex-col tw-items-center">
+              <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
+            </div>
+          </div>
+          <!-- Form Active -->
+          <div class="box bg-white md:tw-w-1/2">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <Icon class="semibold24 icon blue10" icon="heroicons-outline:folder"/>
+              <span class="semibold24 blue10 tw-pl-1">Form Status</span>
+            </div>
+            <div class="tw-flex tw-flex-col tw-items-center">
+              <basic-pie-chart chartstyle="chartdashboard"></basic-pie-chart>
             </div>
           </div>
         </div>

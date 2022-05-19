@@ -205,12 +205,12 @@ const routes = [
       //requireAuthen: true
     },
     props: true
-  },
+  },/*
   {
     path: '/home',
     name: 'Home',
     component: Home
-  }
+  }*/
 ]
 
 const router = new VueRouter({
