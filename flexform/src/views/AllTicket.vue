@@ -1,5 +1,5 @@
 ﻿<template>
-  <layout-sidebar-navbar-vue>
+  <layout-sidebar-navbar-vue page="form">
     <template #content>
       <div class="box__style bg-grey1 tw-h-full md:tw-flex-col">
         <div class="base-margin tw-flex tw-flex-row tw-items-center ">
