@@ -381,7 +381,7 @@ export default {
           })
     }
     // get formid from local storage
-    this.FormId = window.localStorage.getItem('formid')
+    this.FormId = localStorage.getItem('formid')
     // reload page
     if(this.PropFormId === undefined){
       await axios.get('http://localhost:4000/api/FlexForm/' + this.FormId)
@@ -539,7 +539,7 @@ export default {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'file.xlsx'); //or any other extension
+            link.setAttribute('download', this.FormStructureData.formName + '.xlsx'); //or any other extension
             document.body.appendChild(link);
             link.click();
           })
