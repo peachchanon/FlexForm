@@ -36,9 +36,8 @@ export default {
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
     value: {
-      type: Number,
+      type: Array,
       required: true,
-      default: 90,
     },
     dataset: {
       type: Array,
@@ -48,6 +47,11 @@ export default {
   data() {
     return {
        option :{}
+    }
+  },
+  watch:{
+    dataset(){
+      this.initialEcharts()
     }
   },
   mounted() {
@@ -72,14 +76,14 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] // this.data ที่จะเอามาพล็อต
+          data: this.dataset // this.data ที่จะเอามาพล็อต
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [150, 230, 224, 218, 135, 147, 260],
+            data: this.value,
             type: 'line'
           }
         ]

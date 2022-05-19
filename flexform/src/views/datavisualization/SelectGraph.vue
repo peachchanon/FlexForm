@@ -45,8 +45,8 @@
                 </div>
               </div>
               <!-- Left menu click condition 'Pie' -->
-              <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+              <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                    class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Pie')">
                 <div v-if="GraphName === 'Pie'" class="tw-flex tw-flex-row tw-justify-between">
                   <span class="medium16 blue5 tw-cursor-pointer">Pie</span>
@@ -174,8 +174,8 @@
                 ></base-button>
               </div>
               <!--graph list on the right #8-->
-              <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+              <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                    class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
                 <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                   <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -192,8 +192,8 @@
                 ></base-button>
               </div>
               <!--graph list on the right #9-->
-              <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+              <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                    class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
                 <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                   <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -210,8 +210,8 @@
                 ></base-button>
               </div>
               <!--graph list on the right #10-->
-              <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+              <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                    class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
                 <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                   <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -260,8 +260,8 @@
                 ></base-button>
               </div>
               <!--graph list on the right #13-->
-              <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+              <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                    class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
                 <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                   <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -653,8 +653,8 @@
               </div>
             </div>
 
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="button__left__layout tw-py-1 md:tw-py-2 tw-px-2" @click="chooseGraph('Pie')">
               <div v-if="GraphName === 'Pie'" class="tw-flex tw-flex-col tw-justify-between">
                 <span class="medium16 blue5 tw-cursor-pointer">Pie</span>
@@ -780,8 +780,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #8-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -797,8 +797,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #9-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -814,8 +814,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #10-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -861,8 +861,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #13-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -1136,12 +1136,12 @@
         </div>
 
         <div v-if="GraphName === 'Pie'" class="right__layout tw-p-2 tw-overflow-auto">
-          <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+          <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                class="tw-flex tw-flex-col">
             <!--graph list on the right #1-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -1157,8 +1157,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #2-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -1174,8 +1174,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #3-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -1191,8 +1191,8 @@
               ></base-button>
             </div>
             <!--graph list on the right #4-->
-            <div v-if="currentGraphNo === 'Graph1' || currentGraphNo ==='Graph2' || currentGraphNo ==='Graph3'  || currentGraphNo ==='Graph4'
-               || currentGraphNo ==='Graph7' || currentGraphNo ==='Graph8' || currentGraphNo ==='Graph10'"
+            <div v-if="GraphTitle === 'Graph1' || GraphTitle ==='Graph2' || GraphTitle ==='Graph3'  || GraphTitle ==='Graph4'
+               || GraphTitle ==='Graph7' || GraphTitle ==='Graph8' || GraphTitle ==='Graph10'"
                  class="radius12px bg-white base-shadow base-padding tw-w-full tw-flex tw-flex-row tw-items-center tw-my-1">
               <div class="tw-flex tw-flex-row tw-items-center tw-w-full">
                 <Icon class="icon blue10 tw-m-1" icon="heroicons-outline:chart-square-bar"/>
@@ -1231,7 +1231,6 @@ export default {
     // ProgressBar
   },
   props: {
-    currentGraphNo: String,
   },
   data() {
     return {
@@ -1255,6 +1254,8 @@ export default {
       this.flapWindowResize()
     }
     this.ShowContent = window.innerWidth >= 1440
+    
+    this.GraphTitle = localStorage.getItem('graphtitle')
   },
   methods: {
     ...mapActions(['flapWindowResize']),
@@ -1263,183 +1264,208 @@ export default {
     },
     chooseGraph(choice){ //เลือกด้านซ้ายชนิดกราฟว่า bar line
       this.GraphName = choice
-      console.log(this.GraphName)
-      console.log('current graph no' + this.currentGraphNo) // เลือกจากหน้าแรกว่าหัวข้ออะไร
+      console.log(this.GraphName) // เลือกจากหน้าแรกว่าหัวข้ออะไร
     },
     BarBrushClick(){
       this.GraphType = 'Bar brush'
-      this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
       })
     },
     BarLabelRotationClick(){
       this.GraphType = 'Bar label rotation'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BarRaceClick(){
       this.GraphType = 'Bar race'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BarYCategoryClick(){
       this.GraphType = 'Bar y-category'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BarWithBackgroundClick(){
       this.GraphType = 'Bar with background'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BasicBarChartClick(){
       this.GraphType = 'Basic bar chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BasicLineChartClick(){
       this.GraphType = 'Basic line chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     BasicPieChartClick(){
       this.GraphType = 'Basic pie chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     CustomizedPieChartClick(){
       this.GraphType = 'Customized pie chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     DoughnutChartClick(){
       this.GraphType = 'Doughnut chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     LineAQIClick(){
       this.GraphType = 'Line AQI chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     MultipleLineGraphClick(){ 
       this.GraphType = 'Multiple line graph'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     NightingaleChartClick(){
       this.GraphType = 'Nightingale chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     SeriesLayoutBarChartClick(){
       this.GraphType = 'Series layout bar chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     ShareDatasetChartClick(){
       this.GraphType = 'Share dataset chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
     StackedAreaChartClick(){
       this.GraphType = 'Stacked area chart'
-      this.GraphTitle = this.currentGraphNo
+      // this.GraphTitle = this.currentGraphNo
+      localStorage.setItem('graphtype', this.GraphType)
+      // localStorage.setItem('graphtitle', this.GraphTitle)
       this.$router.push({
         name:'PreviewGraph',
-        params: {
-          GraphTypes: this.GraphType,
-          GraphTitle: this.GraphTitle
-        }
+        // params: {
+        //   GraphTypes: this.GraphType,
+        //   GraphTitle: this.GraphTitle
+        // }
       })
     },
   }

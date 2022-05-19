@@ -1,5 +1,5 @@
 ﻿<template>
-<layout-sidebar-navbar-vue>
+<layout-sidebar-navbar-vue page="form">
   <template #content>
     <div class="bg-grey1 tw-h-full tw-my-5">
       <div class="base-margin tw-flex tw-flex-row tw-items-center">
@@ -186,81 +186,81 @@ export default {
     Graph1(){
       console.log('Graph1')
       this.GraphNo = 'Graph1'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph', 
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph2(){
       console.log('Graph2')
       this.GraphNo = 'Graph2'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph3(){
       console.log('Graph3')
       this.GraphNo = 'Graph3'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph4(){
       console.log('Graph4')
       this.GraphNo = 'Graph4'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph5(){
       console.log('Graph5')
       this.GraphNo = 'Graph5'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph6(){
       console.log('Graph6')
       this.GraphNo = 'Graph6'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph7(){
       console.log('Graph7')
       this.GraphNo = 'Graph7'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph8(){
       console.log('Graph8')
       this.GraphNo = 'Graph8'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph9(){
       console.log('Graph9')
       this.GraphNo = 'Graph9'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
     Graph10(){
       console.log('Graph10')
       this.GraphNo = 'Graph10'
+      localStorage.setItem('graphtitle', this.GraphNo)
       this.$router.push({
-        name:'SelectGraph',
-        params: {currentGraphNo: this.GraphNo}
+        name:'SelectGraph'
       })
     },
   }

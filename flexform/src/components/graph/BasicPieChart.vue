@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <v-chart :class="[chartstyle]" :option="option" autoresize/>
+    <v-chart class="chart" :class="[chartstyle]" :option="option" autoresize/>
   </div>
 </template>
 
@@ -33,23 +33,30 @@ export default {
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
     chartstyle: String,
-    value: {
-      type: Number,
-      required: true,
-      default: 90,
-    },
+    // value: {
+    //   type: Array,
+    //   required: true
+    // },
     dataset: {
       type: Array,
-      require: true,
+      require: true
     },
   },
   data() {
     return {
-      option: {},
+      option: {}
     }
+  },
+  watch:{
+    dataset(){
+      this.initialEcharts()
+    }
+  },
+  computed:{
   },
   mounted() {
     this.initialEcharts()
+    console.log("hello")
   },
   methods: {
     initialEcharts() {
@@ -67,22 +74,16 @@ export default {
           left: 'right',
           top: 'center',
           feature: {
-            mark: { show: true },
-            saveAsImage: { show: true }
+            mark: {show: true},
+            saveAsImage: {show: true}
           }
         },
         series: [
           {
-            name: 'Access From',
+            name: this.title,
             type: 'pie',
             radius: '50%',
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ],
+            data: this.dataset,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -92,7 +93,7 @@ export default {
             }
           }
         ]
-      };
+      }
     }
   }
 }
