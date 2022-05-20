@@ -535,7 +535,7 @@ export default {
               this.filterData = data
               console.log(this.filterData)
               
-              let graph10 = _(this.GraphData).groupBy(newfiltered => newfiltered.ticketId).map((key) => ({
+              let graph10 = _(this.filterData).groupBy(newfiltered => newfiltered.ticketId).map((key) => ({
                 status: key.filter((v,i,a)=>a.findLastIndex(v2=>(v2.ticketId === v.ticketId))===i)[0].sections[1].components[2].componentValue[0]
               })).value();
               console.log(graph10)

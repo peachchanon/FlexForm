@@ -104,7 +104,7 @@ export default {
   height: 100vh;
 }
 .chartdashboard{
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
 }
 </style>
