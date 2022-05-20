@@ -19,7 +19,7 @@ import FormAddActivity from "@/views/formbuilder/FormAddActivity";
 import FormFill from "@/views/formbuilder/FormFill";
 import PreviewGraph from "@/views/datavisualization/PreviewGraph";
 import MyTemplate from "@/views/MyTemplate";
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 

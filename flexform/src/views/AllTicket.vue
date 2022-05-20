@@ -244,25 +244,6 @@ export default {
               this.TicketData = data
 
               this.TicketData = this.TicketData.filter((v,i,a)=>a.findLastIndex(v2=>(v2.ticketId === v.ticketId)) === i)
-              
-              // const componentLabel = this.FormData.sections.map((label)=>{
-              //   return label.componentLabel
-              // })
-              // console.log(componentLabel)
-
-              // this.LatestUpdate = dayjs(this.FormData.timestamp).format('DD/MM/YYYY') // แปลงเป็นวันที่ธรรมดา
-              //console.log(this.ClickedForm)
-              // console.log(this.FormData)
-              // this.FormData.forEach(element => {
-              //   //console.log(element);
-              //   element.sections.forEach(elementsection =>{
-              //         //console.log(elementsection)
-              //         elementsection.components.forEach(elementcomponent =>{
-              //           console.log(elementcomponent)
-              //         })
-              //       }
-              //   )
-              // });
             }
           })
           .catch(error => {

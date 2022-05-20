@@ -169,18 +169,6 @@ export default {
   },
   computed: {
     ...mapGetters(['windowResize']),
-    // ChangeXData() {
-    //   return this.XData
-    // },
-    // ChangeYData() {
-    //   return this.YData
-    // },
-    // ChangePieData() {
-    //   return this.PieDataset
-    // },
-    // ChangeAreaData(){
-    //   return this.AreaData
-    // },
     ChangeGraphName() {
       if(this.GraphTitle === 'Graph1'){
         return 'จำนวน ticket ที่ถูกสร้างขึ้นภายใน 1 สัปดาห์'

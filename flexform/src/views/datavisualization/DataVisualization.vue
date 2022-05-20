@@ -168,17 +168,26 @@ export default {
       this.flapWindowResize()
     }
     this.showBanner = window.innerWidth >= 1440
+
+    this.FormId = localStorage.getItem('formid')
   },
   data(){
     return{
       Searchquery:'',
-      GraphNo:''
+      GraphNo:'',
+      FormId: ''
     }
   },
   methods: {
     ...mapActions(['flapWindowResize']),
     PreviousPage(){
-      this.$router.push('/Dashboard')
+      this.$router.push({
+            name: 'AllTicket',
+            params: {
+              ClickedForm: this.FormId
+            }
+          }
+      )
     },
     SearchInput(Searchquery){
       this.Searchquery = Searchquery
