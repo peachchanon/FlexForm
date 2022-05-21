@@ -81,7 +81,7 @@ export default {
         },
         series: [
           {
-            name: 'Access From',
+            name: this.title,
             type: 'pie',
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,

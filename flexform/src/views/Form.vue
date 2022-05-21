@@ -178,7 +178,7 @@
                                             <Icon class="semibold24 icon" icon="heroicons-outline:inbox-in"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16">Import Data</label>
                                           </div>
-                                          <div class="choose tw-flex tw-flex-row">
+                                          <div class="choose tw-flex tw-flex-row" @click="GoExport(ModalFormId,ModalFormName)">
                                             <Icon class="semibold24 icon " icon="heroicons-outline:upload"/>
                                             <label class="tw-mx-3 tw-cursor-pointer semibold16 ">Export Response</label>
                                           </div>
@@ -611,6 +611,20 @@ export default {
     },
     MyTemplatePage(){
       this.$router.push('/MyTemplate')
+    },
+    async GoExport(formid,formname){
+      await axios({
+        url: 'http://localhost:4000/api/Flexform/exportBasic?id=' + formid,
+        method: 'GET',
+        responseType: 'blob',})
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', formname + '.xlsx'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+          })
     },
   }
 }
