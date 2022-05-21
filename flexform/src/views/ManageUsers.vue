@@ -166,7 +166,7 @@
           <div class="theme-modal-small">
             <header class="base-padding tw-flex tw-flex-row tw-items-center tw-justify-start tw-relative">
               <Icon class="icon__style__large tw-mr-2 red5" icon="heroicons-outline:trash"/>
-              <span class="semibold24 red5">Delete Accoutn ?</span>
+              <span class="semibold24 red5">Delete Account ?</span>
             </header>
             <section class="tw-pl-3 tw-pr-3 tw-py-4 tw-overflow-x-hidden">
               <span class="medium16 grey10">You're about to delete account.</span>

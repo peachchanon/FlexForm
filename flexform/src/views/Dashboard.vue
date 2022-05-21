@@ -102,7 +102,7 @@ export default {
         .then(response => {
           if (response.status === 200 && response.data) {
             this.GraphData = response.data
-            this.TicketCount =this.GraphData.length
+            this.TicketCount = this.GraphData.filter((v,i,a)=>a.findLastIndex(v2=>(v2.ticketId === v.ticketId))===i).length
             
             //graph 1
             let graph1 = _(this.GraphData).groupBy(newfiltered => newfiltered.ticketId).map((key) => ({

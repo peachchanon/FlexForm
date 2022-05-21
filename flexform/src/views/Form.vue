@@ -534,12 +534,16 @@ export default {
           .then(response => {
             if(response.status===200) {
               console.log("Delete Successfully")
+              const projectIndex = this.FormData.findIndex(p => p.formId === formid)
+              this.FormData.splice(projectIndex, 1)
             }
           })
           .catch(error => {
             // this.errors.push(error)
             console.log(error)
           })
+      this.showFormDetailLayout = false
+     
     },
     // GenerateFormId() {
     //   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
