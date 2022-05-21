@@ -56,7 +56,6 @@ export default {
   },
   mounted() {
     this.initialEcharts()
-    console.log("hello")
   },
   methods: {
     initialEcharts() {

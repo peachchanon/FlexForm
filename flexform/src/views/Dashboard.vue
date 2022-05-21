@@ -39,7 +39,7 @@
               <span class="semibold24 blue10 tw-pl-1">Ticket Priority</span>
             </div>
             <div class="tw-flex tw-flex-col tw-items-center">
-              <basic-pie-chart chartstyle="chartdashboard" :dataset="PiePriorityDataset"></basic-pie-chart>
+              <doughnut-chart chartstyle="chartdashboard" :dataset="PiePriorityDataset"></doughnut-chart>
             </div>
           </div>
         </div>
@@ -74,6 +74,7 @@
 import { Icon } from '@iconify/vue2'
 import LayoutSidebarNavbar from '@/layouts/LayoutSidebarNavbar'
 import BasicPieChart from "@/components/graph/BasicPieChart";
+import DoughnutChart from "@/components/graph/DoughnutChart";
 import _ from "lodash";
 import axios from "axios";
 export default {
@@ -81,7 +82,8 @@ export default {
   components: {
     Icon,
     LayoutSidebarNavbar,
-    BasicPieChart
+    BasicPieChart,
+    DoughnutChart
   },
   data(){
     return {

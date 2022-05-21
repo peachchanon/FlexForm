@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <v-chart class="chart" :option="option" autoresize/>
+    <v-chart class="chart" :class="[chartstyle]" :option="option" autoresize/>
   </div>
 </template>
 
@@ -32,19 +32,25 @@ export default {
   },
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
-    value: {
-      type: Number,
-      required: true,
-      default: 90,
-    },
+    chartstyle: String,
+    // value: {
+    //   type: Number,
+    //   required: true,
+    //   default: 90,
+    // },
     dataset: {
       type: Array,
-      require: true,
+      require: true
     },
   },
   data() {
     return {
       option: {},
+    }
+  },
+  watch:{
+    dataset(){
+      this.initialEcharts()
     }
   },
   mounted() {
@@ -93,13 +99,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ]
+            data: this.dataset
           }
         ]
       };
@@ -111,5 +111,9 @@ export default {
 <style lang="scss" scoped>
 .chart {
   height: 100vh;
+}
+.chartdashboard{
+  width: 300px;
+  height: 300px;
 }
 </style>

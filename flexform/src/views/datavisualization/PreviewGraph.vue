@@ -3,9 +3,7 @@
     <div class="box bg-white tw-h-full">
       <div v-if="GraphTypes === 'Bar brush'">
         <BarBrush
-            :title="ChangeGraphName"
-            :dataset="XData"
-            :value="AreaData">
+            :title="ChangeGraphName">
         </BarBrush>
       </div>
       <div v-if="GraphTypes === 'Bar label rotation'">
@@ -20,7 +18,9 @@
       </div>
       <div v-if="GraphTypes === 'Bar with background'">
         <bar-with-background
-            :title="ChangeGraphName">
+            :title="ChangeGraphName"
+            :dataset="XData"
+            :value="YData">
         </bar-with-background>
       </div>
       <div v-if="GraphTypes === 'Bar y-category'">
@@ -50,14 +50,13 @@
       </div>
       <div v-if="GraphTypes === 'Customized pie chart'">
         <customized-pie-chart
-            :title="ChangeGraphName"
-            chartstyle="chart"
-        >
+            :title="ChangeGraphName">
         </customized-pie-chart>
       </div>
       <div v-if="GraphTypes === 'Doughnut chart'">
         <doughnut-chart
-            :title="ChangeGraphName">
+            :title="ChangeGraphName"
+            :dataset="PieDataset">
         </doughnut-chart>
       </div>
       <div v-if="GraphTypes === 'Line AQI chart'">
@@ -72,7 +71,8 @@
       </div>
       <div v-if="GraphTypes === 'Nightingale chart'">
         <nightingale-chart
-            :title="ChangeGraphName">
+            :title="ChangeGraphName"
+            :dataset="PieDataset">
         </nightingale-chart>
       </div>
       <div v-if="GraphTypes === 'Series layout bar chart'">
@@ -244,25 +244,30 @@ export default {
                 return obj.count;
               });
 
-              // bar brush              
-              const grouped = _.chain(this.filterData)
-                  .groupBy(obj => obj.timestamp).mapValues(arr => {
-                    return _.chain(arr)
-                        .groupBy(obj => obj.sections[0].components[5].componentValue[0])
-                        .mapValues(arr => arr.length)
-                        .value()
-                  })
-                  .value()
-
-              const processedData = Object.keys(grouped).map(key => {
-                return {
-                  timestamp: key,
-                  data: grouped[key]
-                }
-              })
-
-              this.FinalData = processedData
-              console.log("pie "+JSON.stringify( this.FinalData))
+              // // bar brush              
+              // const grouped = _.chain(this.filterData)
+              //     .groupBy(obj => obj.timestamp).mapValues(arr => {
+              //       return _.chain(arr)
+              //           .groupBy(obj => obj.sections[0].components[5].componentValue[0])
+              //           .mapValues(arr => arr.length)
+              //           .value()
+              //     })
+              //     .value()
+              // const areasCount = 0;
+              // const processedData = Object.keys(grouped).map(key => {
+              //   return {
+              //     name: this.areas[areasCount],
+              //     type: "bar",
+              //     stack: "one",
+              //     emphasis: 'emphasisStyle',
+              //     timestamp: key,
+              //     data: grouped[key]
+              //   }
+              // })
+              //
+              // this.FinalData = processedData
+              // console.log("pie "+JSON.stringify( this.FinalData))
+              
               // x data: basic bar, bar brush
               this.XData = this.FinalData.map((obj) => {
                 return obj.timestamp;

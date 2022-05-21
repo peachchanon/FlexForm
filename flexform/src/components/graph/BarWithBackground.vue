@@ -33,9 +33,8 @@ export default {
   props: { // prop รับค่าจากข้างนอกมาสร้างกราฟ
     title:String,
     value: {
-      type: Number,
-      required: true,
-      default: 90,
+      type: Array,
+      required: true
     },
     dataset: {
       type: Array,
@@ -45,6 +44,11 @@ export default {
   data() {
     return {
       option: {},
+    }
+  },
+  watch:{
+    dataset(){
+      this.initialEcharts()
     }
   },
   mounted() {
@@ -69,14 +73,14 @@ export default {
         },
         xAxis: {
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.dataset
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            data: [120, 200, 150, 80, 70, 110, 130],
+            data: this.value,
             type: 'bar',
             showBackground: true,
             backgroundStyle: {
