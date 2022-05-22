@@ -105,7 +105,7 @@
             <div
                 class="button__text white"
                 :class="{'button__text white': !StateShowToolsSidebar, 'active': StateShowToolsSidebar}"
-                v-if="StatePage==='Build'"
+                v-if="StatePage==='Build' && FormData.useTemplate === false"
                 @click="doButtonOnBlueNavigation('ButtonTools')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil"/>
@@ -136,7 +136,7 @@
             <div
                 class="button__text white"
                 :class="{'button__text white': !StateShowPropertiesSidebar, 'active': StateShowPropertiesSidebar}"
-                v-if="StatePage==='Build'"
+                v-if="StatePage==='Build' && FormData.useTemplate === false"
                 @click="doButtonOnBlueNavigation('ButtonProperties')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil-alt"/>
@@ -1090,6 +1090,7 @@
               class="tw-w-full tw-flex tw-flex-col tw-items-center"
               v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
           >
+            <div v-if="FormData.useTemplate === false">
             <base-navigation-tools-section-form-builder 
               :sectionName="itemSection.SectionName"
               :sectionIndex="indexSection"
@@ -1099,6 +1100,12 @@
               @callbackAction="doNavigationToolsSectionFormBuilder"
               @callbackRenameValue="doRenameSection"
             ></base-navigation-tools-section-form-builder>
+              </div>
+            <div v-if="FormData.useTemplate === true" class="section__top__style tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3">
+                <div class="medium16 blue10">
+                  {{itemSection.SectionName}}
+                </div>
+            </div>
               <div
                   class="section__style"
                   :class="[
@@ -1192,6 +1199,7 @@
                         }"
                         ></choice-component>
                       </div>
+                      <div v-if="FormData.useTemplate === false">
                       <base-tools-component-form-builder
                           class="tw-absolute tw-z-1"
                           style="right: -60px"
@@ -1203,6 +1211,7 @@
                           :componentData="FormStructure.Sections[indexSection].Components"
                           @callbackAction="doToolsComponent"
                       ></base-tools-component-form-builder>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1577,7 +1586,7 @@ export default {
     
     this.StateShowContentForWindowSize = window.innerWidth >= 768
     if(this.CreateForm === false && this.ClickedForm !== undefined){
-    axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+    axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/' + this.ClickedForm)
         .then(response => {
           if(response.status===200 && response.data) {
             this.FormData = response.data
@@ -1693,7 +1702,7 @@ export default {
         console.log(this.FormStructure)
         this.StateBadgeSaveComplete = true
         setTimeout(() => this.StateBadgeSaveComplete = false, 5000)
-        axios.post('http://localhost:4000/api/Flexform/CreateForm', this.FormStructure)
+        axios.post(process.env.VUE_APP_API_URL + '/api/Flexform/CreateForm', this.FormStructure)
             .then(response => {
               console.log(response.status)
               if (response.status === 200 && response.data) {
@@ -1707,7 +1716,7 @@ export default {
         const current = new Date() //แปลง string เป็น Date
         this.FormStructure.ModifiedByUser = localStorage.getItem('username')
         this.FormStructure.FormModifiedTimestamp = current.toISOString()
-        axios.put('http://localhost:4000/api/Flexform/' + this.ClickedForm, this.FormStructure)
+        axios.put(process.env.VUE_APP_API_URL + '/api/Flexform/' + this.ClickedForm, this.FormStructure)
             .then(response => {
               console.log(response.status)
               this.StateBadgeSaveComplete = true

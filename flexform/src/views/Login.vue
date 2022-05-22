@@ -111,7 +111,7 @@ export default {
     async login(){
       //console.log(dataLogin)
       try {
-        const response = await axios.post('http://localhost:4000/api/User/Authenticate', {
+        const response = await axios.post(process.env.VUE_APP_API_URL + '/api/User/Authenticate', {
           username :this.dataLogin.username,
           password: this.dataLogin.password
         })

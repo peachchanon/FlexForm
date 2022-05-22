@@ -100,7 +100,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('http://localhost:4000/api/Flexform/TicketInput/AllTicketInput')
+    axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/TicketInput/AllTicketInput')
         .then(response => {
           if (response.status === 200 && response.data) {
             this.GraphData = response.data
@@ -193,7 +193,7 @@ export default {
             this.PieAreaDataset = processedDataPie
           }
         })
-    axios.get('http://localhost:4000/api/Flexform/AllForm')
+    axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/AllForm')
         .then(response => {
           if (response.status === 200 && response.data) {
             

@@ -356,7 +356,7 @@ export default {
   async mounted() {
     // Form Structure open for the first time
     if(this.PropFormId !== undefined){
-      await axios.get('http://localhost:4000/api/FlexForm/' + this.PropFormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/' + this.PropFormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormStructureData = response.data
@@ -368,7 +368,7 @@ export default {
           })
       // Form Response
       console.log('Form Response')
-      await axios.get('http://localhost:4000/api/Flexform/FormInput/FormInput/' + this.PropFormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/FormInput/FormInput/' + this.PropFormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data
@@ -384,7 +384,7 @@ export default {
     this.FormId = localStorage.getItem('formid')
     // reload page
     if(this.PropFormId === undefined){
-      await axios.get('http://localhost:4000/api/FlexForm/' + this.FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/' + this.FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormStructureData = response.data
@@ -396,7 +396,7 @@ export default {
           })
       // Form Response
       //console.log('Form Response')
-      await axios.get('http://localhost:4000/api/Flexform/FormInput/FormInput/' +this.FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/FormInput/FormInput/' +this.FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data
@@ -532,7 +532,7 @@ export default {
   methods:{
     async GoExport(){
       await axios({
-            url: 'http://localhost:4000/api/Flexform/exportBasic?id=' + this.FormId,
+            url: process.env.VUE_APP_API_URL + '/api/Flexform/exportBasic?id=' + this.FormId,
             method: 'GET',
             responseType: 'blob',})
           .then((response) => {
@@ -674,7 +674,7 @@ export default {
       )
       console.log(this.FormResponseData[this.indexSelectRow])
       // Axios
-      axios.put('http://localhost:4000/api/Flexform/FormInput/'+this.FormResponseData[this.indexSelectRow].id, this.FormResponseData[this.indexSelectRow])
+      axios.put(process.env.VUE_APP_API_URL + '/api/Flexform/FormInput/'+this.FormResponseData[this.indexSelectRow].id, this.FormResponseData[this.indexSelectRow])
           .then(response => {
             if (response.status === 200 && response.data) {
               console.log('Update Complete!')
@@ -696,7 +696,7 @@ export default {
       this.FormResponseData.splice(this.indexSelectRow,1)
       console.log(this.FormResponseData)
       // Axios
-      axios.delete('http://localhost:4000/api/Flexform/FormInput/Delete/Mongo/'+idMongo)
+      axios.delete(process.env.VUE_APP_API_URL + '/api/Flexform/FormInput/Delete/Mongo/'+idMongo)
           .then(response => {
             if (response.status === 200 && response.data) {
               console.log('Delete Complete!')

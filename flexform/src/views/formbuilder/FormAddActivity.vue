@@ -244,7 +244,7 @@ export default {
     }
     if(this.PropFormId !== undefined && this.PropTicketId !== undefined && this.PropTicketName !== undefined && this.PropIncident !== undefined ) {
       console.log('Found')
-      axios.get('http://localhost:4000/api/Flexform/' + FormId)
+      axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
@@ -292,7 +292,7 @@ export default {
       this.TicketId = window.localStorage.getItem('ticketid')
       Incident = JSON.parse(window.localStorage.getItem('activityincident'))
       this.TicketName = window.localStorage.getItem('ticketname')
-      axios.get('http://localhost:4000/api/Flexform/' + FormId)
+      axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
@@ -449,7 +449,7 @@ export default {
       )
       if(this.componentNoValueCount === 0) {
         console.log(this.FormInput)
-        axios.post('http://localhost:4000/api/Flexform/TicketInput/CreateTicketInput/', this.FormInput)
+        axios.post(process.env.VUE_APP_API_URL + '/api/Flexform/TicketInput/CreateTicketInput/', this.FormInput)
             .then(response => {
               console.log(response.status)
               if (response.status === 200 && response.data) {

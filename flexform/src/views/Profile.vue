@@ -418,7 +418,7 @@ export default {
     }
     this.StateShowContentForWindowSize = window.innerWidth >= 768
     this.LocalUsername = localStorage.getItem('username')
-    await axios.get('http://localhost:4000/api/User/'+this.LocalUsername)
+    await axios.get(process.env.VUE_APP_API_URL + '/api/User/'+this.LocalUsername)
         .then(response => {
           if(response.status === 200 && response.data) {
             console.log(response.status)

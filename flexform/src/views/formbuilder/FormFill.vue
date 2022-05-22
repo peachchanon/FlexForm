@@ -276,7 +276,7 @@ export default {
   mounted() {
     console.log(this.ClickedForm)
     if(this.ClickedForm !== undefined){
-      axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+      axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/' + this.ClickedForm)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
@@ -444,7 +444,7 @@ export default {
       )
       
       if(this.componentNoValueCount === 0) {
-        axios.post('http://localhost:4000/api/Flexform/FormInput/CreateFormInput', this.FormInput)
+        axios.post(process.env.VUE_APP_API_URL + '/api/Flexform/FormInput/CreateFormInput', this.FormInput)
             .then(response => {
               console.log(response.status)
               if (response.status === 200 && response.data) {

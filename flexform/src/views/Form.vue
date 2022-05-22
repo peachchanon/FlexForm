@@ -489,7 +489,7 @@ export default {
     this.StateShowContentForWindowSize = window.innerWidth >= 768
     this.WindowSize = window.innerWidth >= 1024
     this.Username = localStorage.getItem('username') // check user ว่ามี my template อะไรบ้าง
-    await axios.get('http://localhost:4000/api/Flexform/AllForm')
+    await axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/AllForm')
         .then(response => {
           if(response.status===200 && response.data) {
             // this.FormData = response.data[1]["createdByUser"]
@@ -530,7 +530,7 @@ export default {
       this.showFormBuilderLayout = !this.showFormBuilderLayout
     },
     async DoDeleteForm(formid){
-      await axios.delete('http://localhost:4000/api/Flexform/' + formid)
+      await axios.delete(process.env.VUE_APP_API_URL + '/api/Flexform/' + formid)
           .then(response => {
             if(response.status===200) {
               console.log("Delete Successfully")
@@ -614,7 +614,7 @@ export default {
     },
     async GoExport(formid,formname){
       await axios({
-        url: 'http://localhost:4000/api/Flexform/exportBasic?id=' + formid,
+        url: process.env.VUE_APP_API_URL + '/api/Flexform/exportBasic?id=' + formid,
         method: 'GET',
         responseType: 'blob',})
           .then((response) => {

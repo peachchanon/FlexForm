@@ -233,7 +233,7 @@ export default {
     this.StateShowContentForWindowSize = window.innerWidth >= 768
     //console.log(this.ClickedForm)
     if(this.ClickedForm !== undefined){
-      axios.get('http://localhost:4000/api/Flexform/TicketInput/' + this.ClickedForm)
+      axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/TicketInput/' + this.ClickedForm)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormData = response.data
@@ -250,7 +250,7 @@ export default {
             // this.errors.push(error)
             console.log(error)
           })
-      await axios.get('http://localhost:4000/api/Flexform/' + this.ClickedForm)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/' + this.ClickedForm)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.TicketName = response.data.formName

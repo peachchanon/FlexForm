@@ -486,7 +486,7 @@ export default {
   async mounted() {
     window.onresize=()=> {this.flapWindowResize()}
     this.StateShowContentForWindowSize = window.innerWidth >= 768
-    await axios.get('http://localhost:4000/api/User')
+    await axios.get(process.env.VUE_APP_API_URL + '/api/User')
         .then((response)=>{
           if(response.status === 200 && response.data){
             console.log('Import User Complete!')
@@ -627,7 +627,7 @@ export default {
     async doRegister() {
       // this.StateCheckUsername
       console.log(this.UserRegister.username)
-      await axios.get('http://localhost:4000/api/User/'+this.UserRegister.username)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/User/'+this.UserRegister.username)
           .then(response => {
             if(response.status === 200 && response.data) {
               console.log(response.status)
@@ -650,7 +650,7 @@ export default {
         user.activated = true
         user.profile_pic= 'string'
         console.log(user)
-        await axios.post('http://localhost:4000/api/User/Register', user)
+        await axios.post(process.env.VUE_APP_API_URL + '/api/User/Register', user)
             .then(response => {
               if(response.status === 200 && response.data) {
                 console.log(response.status)
@@ -687,7 +687,7 @@ export default {
       console.log(this.SelectUserIndexRow)
       let username = this.ManageUsersData.find(item=>item.employee_id===this.SelectUserId).username
       console.log(username)
-      await axios.delete('http://localhost:4000/api/User/'+username)
+      await axios.delete(process.env.VUE_APP_API_URL + '/api/User/'+username)
           .then(response => {
             if(response.status === 200 && response.data) {
               console.log(response.status)

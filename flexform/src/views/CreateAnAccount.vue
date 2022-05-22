@@ -354,7 +354,7 @@ export default {
       this.stateProfile.division_id = this.stateRegister.division_id !== '';
       console.log('state register' + this.stateRegister)
       try{
-        const response = await axios.post('http://localhost:4000/api/User/Register', {
+        const response = await axios.post(process.env.VUE_APP_API_URL + '/api/User/Register', {
           username :this.stateRegister.username,
           password:this.stateRegister.password,
           gender:this.stateRegister.gender,

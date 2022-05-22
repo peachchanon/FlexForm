@@ -201,7 +201,7 @@ export default {
     // Not Reload page
     if(FormId !== undefined && TicketId !== undefined){
       // Form Structure
-      await axios.get('http://localhost:4000/api/FlexForm/' + FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormStructureData = response.data
@@ -212,7 +212,7 @@ export default {
           })
       console.log(this.FormStructureData)
       // Ticket Response
-      await axios.get('http://localhost:4000/api/FlexForm/TicketInput/' + FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/TicketInput/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data
@@ -229,7 +229,7 @@ export default {
       FormId = window.localStorage.getItem('formid')
       TicketId = window.localStorage.getItem('ticketid')
       // Form Structure
-      await axios.get('http://localhost:4000/api/FlexForm/' + FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormStructureData = response.data
@@ -240,7 +240,7 @@ export default {
           })
       console.log(this.FormStructureData)
       // Ticket Response
-      await axios.get('http://localhost:4000/api/FlexForm/TicketInput/' + FormId)
+      await axios.get(process.env.VUE_APP_API_URL + '/api/FlexForm/TicketInput/' + FormId)
           .then(response => {
             if (response.status === 200 && response.data) {
               this.FormResponseData = response.data

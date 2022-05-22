@@ -94,7 +94,7 @@ export default {
       this.flapWindowResize()
     }
     this.ShowContent = window.innerWidth >= 1440
-    await axios.get('http://localhost:4000/api/Flexform/AllForm')
+    await axios.get(process.env.VUE_APP_API_URL + '/api/Flexform/AllForm')
         .then(response => {
           if(response.status===200 && response.data) {
             // this.FormData = response.data[1]["createdByUser"]
