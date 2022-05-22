@@ -44,7 +44,8 @@
             </div>
             <!-- Form list-->
             <div v-for="FormData in filteredList" :key="FormData.formId">
-              <div v-if="(FormData.useTemplate === true && namePage==='All Form') || (FormData.useTemplate === true && namePage==='Ticket')">
+              <div v-if="(FormData.useTemplate === true && namePage==='All Form' && FormData.sections[0].components[0].componentTemplate === false) || 
+              (FormData.useTemplate === true && namePage==='Ticket' && FormData.sections[0].components[0].componentTemplate === false)">
                 <div class="tw-my-2">
                   <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between">
                     <div class="tw-flex tw-flex-row" style="width: 100%; max-width: 700px">
@@ -354,7 +355,7 @@
                         </div>
                         <div class="scroller">
                           <div v-for="FormData in filteredListModal" :key="FormData.formId">
-                            <div v-if="FormData.useTemplate === true && FormData.ticketId ===''">
+                            <div v-if="FormData.useTemplate === true && FormData.ticketId ==='' && FormData.sections[0].components[0].componentTemplate === true">
                               <div class="tw-ml-3 tw-my-3">
                                 <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                                   <div class="tw-flex tw-flex-row">

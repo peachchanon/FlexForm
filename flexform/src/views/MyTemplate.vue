@@ -13,7 +13,7 @@
       </div>
       <div class="scroller">
       <div v-for="FormData in filteredList" :key="FormData.formId">
-        <div v-if="FormData.useTemplate === true && FormData.ticketId ===''">
+        <div v-if="FormData.useTemplate === true && FormData.ticketId ==='' && FormData.sections[0].components[0].componentTemplate === true">
             <div class="tw-ml-3 tw-my-3">
               <div class="bg-white base-padding base-shadow radius12px tw-flex tw-flex-row tw-items-start tw-justify-between tw-w-full">
                 <div class="tw-flex tw-flex-row">

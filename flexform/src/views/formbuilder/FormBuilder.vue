@@ -1727,6 +1727,11 @@ export default {
         this.FormStructure.FormId = this.uuidv4()
         this.FormStructure.Sections[0].SectionId = this.uuidv4()
         this.FormStructure.Sections[0].Components[0].ComponentId = this.uuidv4()
+        this.FormStructure.Sections.forEach(elementSection => {
+          elementSection.Components.forEach(elementComponent => {
+            elementComponent.ComponentTemplate = false
+          })
+        })
         const current = new Date() //แปลง string เป็น Date
         this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
         this.FormStructure.FormModifiedTimestamp = current.toISOString()
