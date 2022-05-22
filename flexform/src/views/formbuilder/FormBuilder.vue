@@ -105,7 +105,7 @@
             <div
                 class="button__text white"
                 :class="{'button__text white': !StateShowToolsSidebar, 'active': StateShowToolsSidebar}"
-                v-if="StatePage==='Build' && FormData.useTemplate === false"
+                v-if="StatePage==='Build' && FormStructure.UseTemplate === false"
                 @click="doButtonOnBlueNavigation('ButtonTools')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil"/>
@@ -131,12 +131,12 @@
             -->
             <div class="button__text green" v-if="StatePage==='Build'" @click="SaveFormStructure">
               <Icon class="icon__style__large tw-mr-2" icon="iconoir:save-floppy-disk"/>
-              <span>Save Form</span>
+              <span>Save Form </span>
             </div>
             <div
                 class="button__text white"
                 :class="{'button__text white': !StateShowPropertiesSidebar, 'active': StateShowPropertiesSidebar}"
-                v-if="StatePage==='Build' && FormData.useTemplate === false"
+                v-if="StatePage==='Build' && FormStructure.UseTemplate === false"
                 @click="doButtonOnBlueNavigation('ButtonProperties')"
             >
               <Icon class="icon__style__large tw-mr-2" icon="heroicons-outline:pencil-alt"/>
@@ -1090,7 +1090,7 @@
               class="tw-w-full tw-flex tw-flex-col tw-items-center"
               v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
           >
-            <div v-if="FormData.useTemplate === false">
+            <div v-if="FormStructure.UseTemplate === false">
             <base-navigation-tools-section-form-builder 
               :sectionName="itemSection.SectionName"
               :sectionIndex="indexSection"
@@ -1101,7 +1101,7 @@
               @callbackRenameValue="doRenameSection"
             ></base-navigation-tools-section-form-builder>
               </div>
-            <div v-if="FormData.useTemplate === true" class="section__top__style tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3">
+            <div v-if="FormStructure.UseTemplate === true" class="section__top__style tw-flex tw-flex-row tw-items-center tw-justify-between tw-my-3">
                 <div class="medium16 blue10">
                   {{itemSection.SectionName}}
                 </div>
@@ -1199,7 +1199,7 @@
                         }"
                         ></choice-component>
                       </div>
-                      <div v-if="FormData.useTemplate === false">
+                      <div v-if="FormStructure.UseTemplate === false">
                       <base-tools-component-form-builder
                           class="tw-absolute tw-z-1"
                           style="right: -60px"
@@ -1221,9 +1221,18 @@
               class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end"
               :class="{'active__action__button__properties': StatePropSelectActionButton, '': !StatePropSelectActionButton}"
           >
-            <div
+            <div v-if="FormStructure.UseTemplate === true"
                 :class="[{'select__component__inactive': !StatePropSelectActionButton},{'select__component__active':StatePropSelectActionButton}]"
-                @click="doStateActionButtonProperties"
+            >
+              <button-section
+                  :propDataName="FormStructure.ActionButton.ActionButtonName"
+                  :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+                  :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+              ></button-section>
+            </div>
+            <div v-if="FormStructure.UseTemplate === false"
+                 :class="[{'select__component__inactive': !StatePropSelectActionButton},{'select__component__active':StatePropSelectActionButton}]"
+                 @click="doStateActionButtonProperties"
             >
               <button-section
                   :propDataName="FormStructure.ActionButton.ActionButtonName"
@@ -1690,7 +1699,31 @@ export default {
     // Save formstructure to database
     async SaveFormStructure(){
       console.log(this.CreateForm)
+      console.log(this.FormStructure.Id)
       if(this.CreateForm === true) {
+        this.FormStructure.FormId = this.uuidv4()
+        this.FormStructure.Sections[0].SectionId = this.uuidv4()
+        this.FormStructure.Sections[0].Components[0].ComponentId = this.uuidv4()
+        const current = new Date() //แปลง string เป็น Date
+        this.FormStructure.FormCreatedTimestamp = current.toISOString() // แปลงเป็นระบบ IsoString
+        this.FormStructure.FormModifiedTimestamp = current.toISOString()
+        this.FormStructure.CreatedByUser = localStorage.getItem('username')
+        this.FormStructure.ModifiedByUser = localStorage.getItem('username')
+        console.log(this.FormStructure)
+        this.StateBadgeSaveComplete = true
+        setTimeout(() => this.StateBadgeSaveComplete = false, 5000)
+        axios.post(process.env.VUE_APP_API_URL + '/api/Flexform/CreateForm', this.FormStructure)
+            .then(response => {
+              console.log(response.status)
+              if (response.status === 200 && response.data) {
+                console.log(response.status)
+                console.log(response.data)
+                setTimeout(() => this.$router.push('/form'),1000)
+              }
+            })
+      }
+      if(this.FormStructure.UseTemplate === true) {
+        this.FormStructure.Id = ""
         this.FormStructure.FormId = this.uuidv4()
         this.FormStructure.Sections[0].SectionId = this.uuidv4()
         this.FormStructure.Sections[0].Components[0].ComponentId = this.uuidv4()
