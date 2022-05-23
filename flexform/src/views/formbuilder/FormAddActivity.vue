@@ -11,9 +11,81 @@
         <Icon class="icon__style__large blue10 tw-mr-4" icon="heroicons-outline:ticket"/>
         <span class="semibold18 blue10">{{TicketName}}</span>
       </div>
+      <div class="tw-w-full tw-flex tw-flex-row tw-justify-end tw-items-center" v-if="!StateShowFormImport">
+        <Icon class="icon__style__large tw-mr-2 blue10" icon="heroicons-outline:inbox-in"/>
+        <input type="file" class="custom-file-input  tw-transition tw-ease-in" @change="doImport($event)">
+      </div>
+      <div class="tw-w-full tw-flex tw-flex-row tw-justify-end tw-items-center red5 hover:tw-text-red4 tw-cursor-pointer" v-if="StateShowFormImport">
+        <span class="medium16 tw-mr-3">{{FileName}}</span>
+        <div @click="cancelImport">
+          <Icon class="icon__style__large" icon="heroicons-solid:x-circle"/>
+        </div>
+      </div>
+    </div>
+    <!-- Import Data-->
+    <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 110px" v-if="StateShowFormImport">
+      <div
+          class="tw-w-full tw-flex tw-flex-col tw-items-center"
+          v-for="(itemSection, indexSection) in FormStructure.Sections" :key="indexSection"
+      >
+        <div class="section__top__style tw-w-full tw-flex tw-flex-col tw-items-start" v-if="indexSection!==0">
+          <span class="medium16 blue10 tw-my-3">{{itemSection.SectionName}}</span>
+        </div>
+        <div
+            v-if="indexSection===1"
+            class="section__style"
+            :class="[
+                    FormStructure.Sections[indexSection].SectionProperties.SectionFontColor,
+                    FormStructure.Sections[indexSection].SectionProperties.SectionBackgroundColor
+                    ]"
+            :style="doSectionStyleConfig(indexSection)"
+        >
+          <div v-for="(componentElement, componentIndex) in FormStructure.Sections[indexSection].Components" :key="componentIndex">
+            <div class="tw-flex tw-flex-row tw-relative">
+              <!-- Short Input -->
+              <div v-if="componentElement.ComponentType === 'short-input'" class="tw-w-full base-padding">
+                <div class="tw-flex tw-flex-row tw-">
+                  <div class="tw-w-1/2">{{componentElement.ComponentProperties.LabelText}}</div>
+                  <div class="tw-w-1/2 bg-grey1 grey5 radius12px base-padding">{{FormInput.Sections[1].Components[componentIndex-1].ComponentValue[0]}}</div>
+                </div>
+              </div>
+              <!-- Long Input -->
+              <div v-if="componentElement.ComponentType === 'long-input'" class="tw-w-full base-padding">
+                <div class="tw-flex tw-flex-row tw-">
+                  <div class="tw-w-1/2">{{componentElement.ComponentProperties.LabelText}}</div>
+                  <div class="tw-w-1/2 bg-grey1 grey5 radius12px base-padding">{{FormInput.Sections[1].Components[componentIndex-1].ComponentValue[0]}}</div>
+                </div>
+              </div>
+              <!-- Dropdown -->
+              <div v-if="componentElement.ComponentType === 'dropdown'" class="tw-w-full base-padding">
+                <div class="tw-flex tw-flex-row tw-">
+                  <div class="tw-w-1/2">{{componentElement.ComponentProperties.LabelText}}</div>
+                  <div class="tw-w-1/2 bg-grey1 grey5 radius12px base-padding">{{FormInput.Sections[1].Components[componentIndex-1].ComponentValue[0]}}</div>
+                </div>
+              </div>
+              <!-- Choice -->
+              <div v-if="componentElement.ComponentType === 'choice'" class="tw-w-full base-padding">
+                <div class="tw-flex tw-flex-row tw-">
+                  <div class="tw-w-1/2">{{componentElement.ComponentProperties.LabelText}}</div>
+                  <div class="tw-w-1/2 bg-grey1 grey5 radius12px base-padding">{{FormInput.Sections[1].Components[componentIndex-1].ComponentValue[0]}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section__bottom__style tw-w-full tw-py-3 tw-flex tw-flex-row tw-justify-end tw-mb-10">
+        <div @click="doActionButton">
+          <button-section
+              :propDataName="FormStructure.ActionButton.ActionButtonName"
+              :propDataFontColor="FormStructure.ActionButton.ActionButtonProperties.FontColor"
+              :propDataBgColor="FormStructure.ActionButton.ActionButtonProperties.BackgroundColor"
+          ></button-section>
+        </div>
+      </div>
     </div>
     <!-- Form -->
-    <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 80px">
+    <div class="tw-w-full tw-flex tw-flex-col tw-items-center" style="padding-top: 110px" v-if="!StateShowFormImport">
       <div class="tw-w-full tw-flex tw-flex-col tw-items-center">
         <div
             class="tw-w-full tw-flex tw-flex-col tw-items-center"
@@ -29,7 +101,8 @@
                     FormStructure.Sections[indexSection].SectionProperties.SectionFontColor,
                     FormStructure.Sections[indexSection].SectionProperties.SectionBackgroundColor
                     ]"
-              :style="doSectionStyleConfig(indexSection)">
+              :style="doSectionStyleConfig(indexSection)"
+          >
             <!-- Blank data -->
             <div
                 v-if="FormStructure.Sections[indexSection].Components.length===0"
@@ -227,6 +300,10 @@ export default {
       TicketName: String,
       TicketId: String,
       componentNoValueCount: 0,
+      csv: '',
+      convertJson: {},
+      StateShowFormImport: false,
+      FileName: ''
     }
   },
   async mounted() {
@@ -474,7 +551,83 @@ export default {
           PropTicketId: this.PropTicketId,
         }
       })
-    }
+    },
+    toJson(csv){
+      let newKey = []
+      let oldKey = []
+      let lines = csv.split('\n')
+      let keys = lines[0].split(',')
+      let value = lines.slice(1).map(line => {
+        return line.split(',').reduce((acc, cur, i) => {
+          const toAdd = {}
+          toAdd[ keys[i].split('\r') ] = cur.split('\r')[0]
+          return { ...acc, ...toAdd }
+        }, {})
+      })
+      value.pop()
+      value.forEach(element => {
+        newKey = Object.keys(element)
+        oldKey = Object.keys(element)
+      })
+      value.forEach(
+          (element)=>{
+            element[ newKey[newKey.length-1].split(',')[0] ] = element[ oldKey[newKey.length-1] ]
+            delete element[ oldKey[newKey.length-1] ]
+          }
+      )
+      return value
+    },
+    doImport(event) {
+      this.FileName = event.target.files[0].name
+      let file = event.target.files[0]
+      let reader = new FileReader()
+      reader.onload = (e) => {
+        this.csv = e.target.result
+        this.convertJson = this.toJson(this.csv);
+        this.matchJsonAndTicket()
+      }
+      reader.readAsText(file)
+    },
+    matchJsonAndTicket(){
+      console.log(this.convertJson[0])
+      this.FormInput.Sections.forEach(
+          (section, sectiionIndex)=>{
+            if(sectiionIndex===1){
+              section.Components.forEach(
+                  (component)=>{
+                    let key = Object.keys(this.convertJson[0]).find(item=>item===component.ComponentLabel[0])
+                    if( key === component.ComponentLabel[0]) {
+                      console.log('Match Value')
+                      component.ComponentValue.push(this.convertJson[0][ key ])
+                    }
+                  }
+              )
+            }
+          }
+      )
+      console.log(this.FormInput)
+      this.StateShowFormImport = true
+    },
+    cancelImport(){
+      this.FormInput.Sections.forEach(
+          (section, sectiionIndex)=>{
+            if(sectiionIndex===1){
+              section.Components.forEach(
+                  (component)=>{
+                    let key = Object.keys(this.convertJson[0]).find(item=>item===component.ComponentLabel[0])
+                    if( key === component.ComponentLabel[0]) {
+                      console.log('Clear Value')
+                      //component.ComponentValue.push(this.convertJson[0][ key ])
+                      component.ComponentValue = []
+                    }
+                  }
+              )
+            }
+          }
+      )
+      this.FileName = ''
+      this.StateShowFormImport = false
+    },
   }
 }
 </script>
@@ -534,5 +687,19 @@ export default {
     width: 320px;
   }
   .with-line:before,.with-line:after {width: 4rem;}
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input{
+  width: 150px;
+  cursor: pointer;
+  color: $blue10;
+  &:hover{
+    color: $blue5;
+  }
+}
+.custom-file-input::before {
+  content: 'Import Response';
 }
 </style>
