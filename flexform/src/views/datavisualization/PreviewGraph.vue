@@ -244,29 +244,23 @@ export default {
                 return obj.count;
               });
 
-              // // bar brush              
-              // const grouped = _.chain(this.filterData)
-              //     .groupBy(obj => obj.timestamp).mapValues(arr => {
-              //       return _.chain(arr)
-              //           .groupBy(obj => obj.sections[0].components[5].componentValue[0])
-              //           .mapValues(arr => arr.length)
-              //           .value()
-              //     })
-              //     .value()
-              // const areasCount = 0;
-              // const processedData = Object.keys(grouped).map(key => {
-              //   return {
-              //     name: this.areas[areasCount],
-              //     type: "bar",
-              //     stack: "one",
-              //     emphasis: 'emphasisStyle',
-              //     timestamp: key,
-              //     data: grouped[key]
-              //   }
-              // })
-              //
-              // this.FinalData = processedData
-              // console.log("pie "+JSON.stringify( this.FinalData))
+              // bar brush              
+              const grouped = _.chain(this.filterData)
+                  .groupBy(obj => obj.timestamp).mapValues(arr => {
+                    return _.chain(arr)
+                        .groupBy(obj => obj.sections[0].components[5].componentValue[0])
+                        .mapValues(arr => arr.length)
+                        .value()
+                  })
+                  .value()
+              const processedData = Object.keys(grouped).map(key => {
+                return {
+                  timestamp: key,
+                  data: grouped[key]
+                }
+              })
+              this.FinalData = processedData
+              console.log("pie "+JSON.stringify( this.FinalData))
               
               // x data: basic bar, bar brush
               this.XData = this.FinalData.map((obj) => {
